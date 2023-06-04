@@ -4,14 +4,17 @@ output:
     variant: markdown_github
 ---
 
-# Purpose
+# Global Dividend Portfolios
 
-Purpose of this work folder.
+Divdend portfolios should provide some extra return beyond non dividend paying stock because of their income componenet that makes up total return. For my thesis I plan to investigate whtere there is some signalling of returns from dividend paying stock. Then after I look at available benchmark and stylized indexes will then venture into creating my own dividend portfolios that are created according to the scetor that they orginate. 
 
-Ideally store a minimum working example data set in data folder.
+The rationale for that approach is that 
 
-Add binary files in bin, and closed R functions in code. Human Readable settings files (e.g. csv) should be placed in settings/
+-To get a clear picture of dividend paying securities whilst aggregating a global opputunity set.
 
+-some sectors may have better signalling than others, in the portfolios we constrcut we will try to uncover whter thios is true or not
+
+# Systematic Dividend Indexes and Benchmark Performance
 
 ```{r}
 
@@ -19,6 +22,8 @@ rm(list = ls()) # Clean your environment:
 gc() # garbage collection - It can be useful to call gc after a large object has been removed, as this may prompt R to return memory to the operating system.
 library(tidyverse)
 list.files('code/', full.names = T, recursive = T) %>% .[grepl('.R', .)] %>% as.list() %>% walk(~source(.))
+
+readxl::read_xlsx("data/Systematic.xlsx")
 ```
 
 
