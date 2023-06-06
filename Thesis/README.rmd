@@ -30,15 +30,16 @@ Following this I will create my own portfolio that aim to capture a global oppor
 rm(list = ls()) # Clean your environment:
 gc() # garbage collection - It can be useful to call gc after a large object has been removed, as this may prompt R to return memory to the operating system.
 library(tidyverse)
-list.files('code/', full.names = T, recursive = T) %>% .[grepl('.R', .)] %>% as.list() %>% walk(~source(.))
+install.packages("PerformanceAnalytics")
+library(PerformanceAnalytics)
 
 Dividend_portfolios <- readxl::read_xlsx("data/Systematic.xlsx")
 ```
 # Cumulative Returns 
 
 In this sections I aim to graph cumulative returns for each index. I will superimpose the benchmark on each stylized index, that way I can get a clear picture of how the dividend portfolio may have performed. 
-```{r}
 
+```{r}
 # Get simple returns and make a new dataframe
 Returns_df <- Dividend_portfolios %>%
   mutate(across(.cols = 2:24, .fns = ~ ( . - lag(.) ) / lag(.) * 100, .names = "R_{.col}" )) %>%
@@ -52,9 +53,13 @@ cumulative_df <- Returns_df %>%
   mutate(across(starts_with("R"), ~ cumprod(1 + .) - 1, .names = "C_{.col}")) %>%
   select(Date, starts_with("C")) %>% arrange(Date)
 
-#Trial Cumulative returns, this is just to see if the above code gives the visuals im looking
 
-Trial_cumulative_df <- cumulative_df %>% select(Date, C_R_FUDP, C_R_M2EFDY)
+```
+
+
+```{r}
+#Trial Cumulative returns, this is just to see if the above code gives the visuals im looking
+Trial_cumulative_df <- cumulative_df %>% select(Date,C_R_M2GBDY , C_R_GDDUUK)
 
 
 # Making it tidy
@@ -70,4 +75,7 @@ g <- ggplot(plot_data_trial, aes(x = Date, y = returns, color = variable)) +
 g + facet_wrap(~variable)
 ```
 
+```{r}
+
+```
 
