@@ -1,58 +1,38 @@
 # Intro
 
 For my thesis my ultimate aim is to find out the signalling of returns
-by dividend portfolios. To find out, one could use an active or passive
-approach to portfolio construction. I will be considering a passive
-approach because in its methodology of construction is transparent and
-systematic. This means a lot of the human error such as bias component
-dissipates therefore I can get a true/ organic reflection of dividend
-signalling to returns.
+by dividend portfolios. One could use an active or passive approach in
+portfolio construction to study the objective. I will be considering a
+passive approach due to its transparent and systematic qualities,
+meaning the the true effect of dividend signalling can be studied
+without any influence from human decisions.
 
 # Dividend Growth and High Yield Portfloios
 
 Passive equity investment offers transparent, investable and a
 rules-based approach, avoiding the need to identify mispriced securities
 commonly associated with active portfolio construction. To construct an
-index or portfolio, there are two main approaches to consider: passive
-factor strategies and market-cap weighted indexing. Both strategies aim
-to replicate the activity of the desired asset class while minimizing
-unsystematic risk. Factor-based strategies seek to improve the risk and
-return characteristics of the market-cap weighted index. They achieve
-this through selective exposure or factor tilts, focusing on factors
-like growth, value, size, yield, momentum, quality, and volatility.
-Within factor-based strategies, there are different methods to achieve
-desired returns being return, risk and diversification strategies.
-First, return-oriented strategies can focus on dividend yield which can
-be captured by growth and/or absolute value, while risk-oriented
-strategies may employ volatility weighting or minimum variance
-investing. Diversification strategies can use equally weighted indexes
-or maximum diversification techniques. This leads to a natural
-conclusion of using a return-oriented approach in studying the
-predictive power of dividends to returns.
+index, there are two main approaches to consider: passive factor
+strategies and market-cap weighted indexing. Both strategies aim to
+replicate the performance of the desired asset class while minimizing
+unsystematic risk.
 
-## Dividend As Proxy For Value
-
-Dividends are a capital budgeting decision and indirectly implies that
-investors could infer about management quality overtime by studying
-dividend yield. Management quality here refers to cash flow management
-and management skill in identifying and monetizing investment
-opportunities. Therefore, considering the dividend yield equation below
-and assuming that the dividend payout ratio (DPR) is constant we notice
-that dividend yield (DY) becomes a function of the earnings yield
-(EPS/Price). Figure 1, shows the 12 month net trailing dividend yield of
-Standard Bank relative to the log of the price since 2010. It shows the
-clear and expected negative correlation between DY and price over time
-(during a period where the dividend per share payment increased at best
-uniformly and moderately. Since value investing is concerned with
-identifying stocks that are priced below their market value, studies
-that confirm the existence of dividend signalling predicting power of
-returns validate that the existence of a value signal and dividends can
-be used as a proxy. This conclusion is important for establishing the
-portfolio construction.
+Factor-based strategies seek to improve the risk and return
+characteristics of the market-cap weighted index. They achieve this
+through selective exposure or factor tilts, focusing on factors like
+growth, value, size, yield, momentum, quality, and volatility. Within
+factor-based strategies, there are different methods to achieve desired
+returns being return, risk and diversification strategies. First,
+return-oriented strategies can focus on dividend yield which can be
+captured by growth and/or absolute value, while risk-oriented strategies
+may employ volatility weighting or minimum variance investing.
+Diversification strategies can use equally weighted indexes or maximum
+diversification techniques. This leads to a natural conclusion of using
+a return-oriented approach in studying the predictive power of dividends
+to returns.
 
 *D**Y* = *E**P**S*/*P**r**i**c**e* \* *D**P**R*
-
-# When Dividends Matter
+\# When Dividends Matter
 
 Studying whether dividend payments as a signal can have informative
 return predictive value we consider excess banchmark returns of several
@@ -93,6 +73,10 @@ Table 7 below. For the South African Dividend Aristocrats index, the
 benchmark is replaced with the JSE All Share Index as Bloomberg’s
 pricing data of the actual benchmark (S&P SA Composite Index) only
 begins in 2014.
+
+Noticed that Indexes created often track a benchmark. Creating the
+portfolio that I want has operational challenges becasuse there isnt a
+benchmark. Some solutions to this problem is to
 
 # Cumulative Returns
 
