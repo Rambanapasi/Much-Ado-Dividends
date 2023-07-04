@@ -1,0 +1,17 @@
+---
+title: "Literature Review"
+author: "Gabriel Rambanapasi"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+# A dividend 
+
+A dividend is a direct payment of capital from a firm to its shareholders. All dividends barring stock dividends reduce shareholder equity. The most common type of dividend is a cash dividend that is typcially paid on a annual basis. A board of a corporation is reponsible for dividend policy and once a dividend is declared it is a legal obligation thus beocmes a libaility on a companies balance sheet. 
+
+
+## Why do firms pay dividends
+
+To answer this we have to consider the dividend puzzel, Well this is the dividend puzzel, as a form of capital payment to shareholder, dividends reduce equity value and should not make sense. However, this has caused vast debate amongst academics, and practioners alike. There are various arguments for this but first we start with the dividend irrelevance theory, which states that shareholders are indifferent about payments of dividends and their level. As such, there is no optimal dividend policy and all policies are as good as each other. However, this theory developed under every strict contraints renders the school of thought unrealistic. 
+
+As with most theories, examing this theory can provide for some useful insights into effect of dividends on share price by considering various real world constraints such as floation, transaction, and agency costs. Also taxes, inf
