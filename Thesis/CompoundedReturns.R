@@ -2,6 +2,9 @@ if (!require("rmsfuns")) install.packages("rmsfuns")
 
 pacman::p_load("xts", "tidyverse", "tbl2xts", "PerformanceAnalytics", 
                "lubridate", "glue")
+library(tbl2xts)
+library(tidyverse)
+library(xts)
 # load any data just amek sure that the date is in the first column, this will be foe easy use of the xts package
 
 data <- readxl::read_xlsx("data/MAD Dividend index series-2.xlsx")
@@ -50,6 +53,7 @@ d2 <- data %>%
 
 d2$value <- as.numeric(d2$value)
 
+compounded_returns %>% names
 
 #  These are just the normal componded returns
 compounded_returns <- d2 %>%
@@ -65,12 +69,14 @@ compounded_returns <- d2 %>%
   mutate(MonthlyReturn = dailyIndex/lag(dailyIndex) - 1) %>% 
   select(Date, index, dailyIndex)
 
+compounded_returns %>% tbl_xts(., cols_to_xts = dailyIndex, spread_by = index)
+
 
 compounded_returns %>%
   ggplot(aes(Date, dailyIndex, color = index, group = index)) +
-  geom_line() +
-  facet_wrap(~ index) +
-  theme(legend.position = "none")
+  geom_line() 
+  # # facet_wrap(~ index) +
+  # theme(legend.position = "none")
 
 
   

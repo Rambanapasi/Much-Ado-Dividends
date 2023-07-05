@@ -36,76 +36,10 @@ The Dividend Aristocrats indexes are thus constructed using DPSG strategies, whe
 Noticed that Indexes created often track a benchmark. Creating the portfolio that I want has operational challenges becasuse there isnt a benchmark. Some solutions to this problem is to 
 
 
-```{r Settings, include=FALSE}
-# # rm(list = ls()) # Clean your environment:
-# gc() # garbage collection - It can be useful to call gc after a large object has been removed, as this may prompt R to return memory to the operating system.
-# # Set CRAN mirror
-# chooseCRANmirror()
-# 
-# library(tidyverse)
-# install.packages("PerformanceAnalytics")
-# library(PerformanceAnalytics)
-# source("code/Return_formulas.R")
-# 
-# Dividend_portfolios <- readxl::read_xlsx("data/Systematic.xlsx")
-# 
-# Dividend_portfolios <- Dividend_portfolios %>%
-#   rename(
-#     MSCI_EM_HDY_GR = M2EFDY,
-#     FTSE_100_TR_GBP = TUKXG,
-#     MSCI_Daily_TR_Gross_EM_USD = GDUEEGF,
-#     MSCI_UK_HDY_GR = M2GBDY,
-#     MSCI_Daily_TR_Gross_UK_U = GDDUUK,
-#     MSCI_JAPAN_HDY_GR = M2JPDY,
-#     MSCI_Daily_TR_Gross_Europe_Ex = M2JPDY,
-#     MSCI_USA_HDY_GR = M2USADVD,
-#     MSCI_WORLD_HDY_GR = M2WDHDVD...12,
-#     MSCI_Daily_TR_Gross_USA_USD = GDDUUS...13,
-#     MSCI_Daily_TR_Gross_World_USD = GDDUWI,
-#     `S&P_EUpe_350_Dvd_Aris_TR` = SPDAEET,
-#     `S&P_Europe_350_Gross_TR` = SPTR350E,
-#     `S&P/JPX_Dvd_Arist_TR` = SPJXDAJT,
-#     `S&P_500_Div_Aristocrt_TR` = SPDAUDT,
-#     `S&P_500_Total_Return` = SPXT,
-#     `TOPIX_TR_Index` = TPXDDVD,
-#     `S&P_SAf_DvdArist_ZAR_GTR` = SPSADAZT,
-#     `FTSE/JSE_AllShr_Tot_Rtn` = JALSH,
-#     `FTSE/JSE_DIVIDEND_TR` = TJDIVD
-#   )
-
-```
 # Cumulative Returns
 
 The cumulative monthly excess returns of each of these indexes relative to their respective benchmarks can be seen below. 
-```{r Wrangling}
-# # Date wrangling
-# df_1 <- Date_wragler(Dividend_portfolios)
-# 
-# # get tidy monthly returns
-# 
-# df_2 <- Tidy_Monthly_returns(df_1)
-# 
-# # get cum returns 
-# 
-# df_3 <- cumulative_returns(df_2) %>% ungroup()
-# 
-# df_3 <- df_3 %>% filter(MonthYear > "Dec19")
-```
 
-```{r message=FALSE, warning=FALSE}
-#  graphing 
 
-# df_3 %>%
-#   ggplot() +
-#   geom_smooth(aes(MonthYear,Cumulative_Return, group = Index , color = Index )) +
-#   facet_wrap(~ Index, scales = "free_y") +
-#   xlab("MonthYear") +
-#   ylab("Cumulative Return") +
-#   ggtitle("Cumulative Returns by Index")+
-#   theme(legend.position = "none")
-
-```
 The figure above is not entirely suggestive of a clear and consistent outperformance or underperformance of dividend strategies over the entire considered period, whether using DY or DPSG, globally. 
-```{r}
-```
 

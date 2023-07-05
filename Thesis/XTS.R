@@ -46,10 +46,7 @@ xts.data.padded <- na.locf(xts.data, na.rm = F, maxgap = 10)
 xts.data.padded.monthly <- xts.data.padded[endpoints(xts.data.padded, 
                                                      "months", k = 3)]
 
-
-------------------
-  # The actual work 
--------------------
+# The actual work
 
 
 
