@@ -7,7 +7,6 @@ output:
     latex_engine: pdflatex
     keep_tex: true
     template:
-      - default-1.17.0.2.tex
   html_document: default
 ---
 
@@ -15,10 +14,12 @@ output:
 # What constitutes a dividend?
 
 
-Dividends are a form of cash payout that companies distribute to their shareholders. They can take various forms, such as cash, stock, liquidating, scrip, or property dividends. However, cash dividends are the most common type. The decision to issue dividends is typically made by the board of directors, taking into account the company's operating needs for a given financial year. When a dividend is announced, it has an impact on the financial statements of a company. It creates a liability in the form of current liabilities and decreases shareholder equity, specifically retained earnings, on the balance sheet. In other words, the company incurs an obligation to pay out the dividend, and the value of the company retained by shareholders decreases accordingly.
+Dividends are cash payouts that companies distribute to their shareholders. They can take various forms, such as cash, stock, liquidating, scrip, or property dividends. However, cash dividends are the most common type. The decision to issue dividends is typically made by the board of directors, taking into account the company's operating needs for a given financial year. When a dividend is announced, it has an impact on the financial statements of a company. It creates a liability in the form of current liabilities and decreases shareholder equity, specifically retained earnings, on the balance sheet. In other words, the company incurs an obligation to pay out the dividend, and the value of the company retained by shareholders decreases accordingly.
 
-Cash dividends, although widely used, are not as tax-efficient as other types of dividends, such as share buybacks. Share buybacks have gained popularity in advanced economies, particularly in the United States, where they reached a high of $437 billion in 2018. Surprisingly, their adoption has been relatively slow in South Africa. According to a study by Wesson, Muller, and Ward in 2014, there were only 195 open market share repurchases announced in South Africa from 1999 to 2009. In comparison, Manconi, Peyer, and Vermaelen estimated that share repurchases constituted approximately 58% of total announcements in the United States, 15% in Canada, and 11% in Japan over the same period. This indicates a significant disparity in the adoption of share buybacks between South Africa and these other countries. 
+Cash dividends, although widely used, are not as tax-efficient as other types of dividends, such as share buybacks. Share buybacks have gained popularity in advanced economies, particularly in the United States, where they reached a high of $437 billion in 2018. Surprisingly, their adoption has been relatively slow in South Africa. According to a study by Wesson, Muller, and Ward in 2014, there were only 195 open market share repurchases announced in South Africa from 1999 to 2009. In comparison, Manconi, Peyer, and Vermaelen estimated that share repurchases constituted approximately 58% of total announcements in the United States, 15% in Canada, and 11% in Japan over the same period. This indicates a significant disparity in the adoption of share buybacks between South Africa and these other countries.  
 
+Where else are share buybacks less popular versus dividends 
+Are dividends still relevant
 
 ## Why do firms pay dividends
 
@@ -31,7 +32,9 @@ Information asymmetry between shareholders and managers is another factor that g
 
 # When Would Dividends Matter 
 
-We now step away from the why onto the when - thus studying whether dividend payments as a signal can have informative return predictive value (irrespective of whether it is due to a value- or cash-flow management proxy, or through a direct preference premium
+Studies in dividend signalling for returns can be divided into two broad categories: academic return signalling studies or the more practitioner‐oriented long‐term return studies. For the former Fama and French (1988), found that increasing predictive power has a positive correlation to the forecast horizon, that is,  extending forecasts from months to years induced more predictive power. Subsequent studies suggest otherwise, Bekaert and Ang (2001) used dividend yield, earnings yield and short rate to predict stock return by imposing a constant risk preimuim to examine the finite sample evidence on predictability, they posit no evidence of long term predictability once finite sample influence was taken into account. Moreover, Ang and Bekaert (2006) found similar results thus suggesting that dividend yield ceases to be a good predictor of subsequent return. A possible explanation for decreasing predictive power could be the use of share buy‐backs to return capital to shareholder, as distributing capital through these methods reduces dividend yield contribution to total return  (Robertson and Wright, 2006). 
+
+The practitioner oriented literature is investigate returns of long term strategies of systematic dividend portfolios and is more concerned with long‐term returns investment strategies. A popular strategy is the "Dogs of the Dow (DOD)". DOD is a investment strategy that involves creating a portfolio of top 10 highest paying dividend stock on the Dow Jones Industrial Index, at the start of the year (based on dividends paid in the last 12 months). The holding period is typically 12 months with the same procedure repeated the following year, therefore adjustments to portfolios will only occur once a year. There have been multiple variations of this study across different time periods and jurisdictions with significant results that the DOD or some variation of a high yield dividend strategy against the market index provides superior risk adjusted return, examples of the studies are the following (Alles and Sheng, 2008, in Australia; Visscher and Filbeck, 2003, in Canada; Kotkamp and Otte, 2001, in Germany; Wang et al., 2011, in China; Da Silva, 2001, in Latin America).
 
 
 
