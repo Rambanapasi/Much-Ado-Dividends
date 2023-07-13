@@ -66,4 +66,4 @@ Cum_returns <- simple_return %>%
   select(Date, Index, DaliyIndex)
 
 ```
-
+Fub

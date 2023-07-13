@@ -46,4 +46,4 @@ knitr::kable(Table_data)
 
 # Portfolios
 
-![](README_files/figure-markdown_github/Cumulative%20Return-1.png)
+![](README_files/figure-markdown_github/Cumulative%20Return-1.png) Fub
