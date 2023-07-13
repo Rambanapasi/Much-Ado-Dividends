@@ -26,7 +26,7 @@ knitr::kable(Table_data)
 
 # Portfolios  
 
-```{r Cumulative Return, message=FALSE, warning=FALSE, include=FALSE}
+```{r Cumulative Return, echo=FALSE, message=FALSE, warning=FALSE}
 pacman::p_load("xts", "tidyverse", "tbl2xts", "PerformanceAnalytics", 
                "lubridate", "glue")
 library(tbl2xts)

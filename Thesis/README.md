@@ -45,3 +45,5 @@ knitr::kable(Table_data)
 | VIHAX US Equity   | VANGUARD INTL HI DVD YLD-ADM | FTSE All-World ex U.S. High Dividend Yield Index                | GPVAN0TR Index | Vanguard International High Dividend Yield Index Fund aims to track the performance of the FTSE All-World ex U.S. High Dividend Yield Index by focusing on companies located in developed and emerging markets that are forecasted to have above-average dividend yields.                                                                                                                |
 
 # Portfolios
+
+![](README_files/figure-markdown_github/Cumulative%20Return-1.png)
