@@ -40,7 +40,7 @@ Studies on dividend signaling for returns can be categorized into academic retur
 
 On the other hand, practitioner-oriented literature focuses on the long-term returns of systematic dividend portfolios. One popular strategy is the "Dogs of the Dow (DOD)," which involves creating a portfolio of the top 10 highest-paying dividend stocks on the Dow Jones Industrial Index at the beginning of the year based on the dividends paid in the previous 12 months. The portfolio is held for 12 months, and the process is repeated annually. Various studies have examined the DOD strategy or similar high-yield dividend strategies in different time periods and regions, consistently showing superior risk-adjusted returns compared to the market index. Examples of such studies include Da Silva (2001) in Latin America, Alles and Sheng (2008) in Australia, Visscher and Filbeck (2003) in Canada, Kotkamp and Otte (2001) in Germany, and Wang et al. (2011) in China. More recently, Filbeck (2017) investigated the performance of DOD against a high-yield portfolio of Fortune Most Desired Companies (MAC) compared to the Dow Jones Industrial Average and the S&P 500. The study found significantly higher risk-adjusted returns for the DOD strategy.
 
-* Give a summary of the indexes and methodology used in all the papers listed. 
+* Give a summary of the indexes and methodology used in all the papers listed. Put this in excel and make into a table. 
 * Look at papers that investigate dividend signalling by sector, this moves it away from just bunching all sectors into one portfolio
 * 
 
