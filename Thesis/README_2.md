@@ -23,6 +23,12 @@ geographical option that we often see practitioners construct.
 
 # Instruments
 
+``` r
+library(knitr)
+Table_data <- readxl::read_xlsx("data/Systematic Indices and Benchmarks.xlsx")
+knitr::kable(Table_data) 
+```
+
 | Index Ticker      | Index Name                   | Benchmark                                                       | Ticker         | Description                                                                                                                                                                                                                                                                                                                                                                              |
 |:---|:----|:---------|:--|:--------------------------------------------------|
 | DASHDVD CH Equity | DACHENG CSI DVD INDEX FUND A | CSI Dividend Index                                              | SH000922 Index | Dacheng CSI Dividend Index Fund s an open-ended fund incorporated in China. The Fund’s objective is to closely replicates the performance of the CSI Dividend Index and minimizing the tracking error. The fund invests at least 90% of it’s total asset in the members of the tracking index.                                                                                           |
@@ -40,4 +46,4 @@ geographical option that we often see practitioners construct.
 
 # Portfolios
 
-![](README_files/figure-markdown_github/Cumulative%20Return-1.png)
+![](README_2_files/figure-markdown_github/Cumulative%20Return-1.png) Fub

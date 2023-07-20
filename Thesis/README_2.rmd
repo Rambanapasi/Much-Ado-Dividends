@@ -18,7 +18,7 @@ After this I will build global dividend portfolios by sector and assess whether 
 
 # Instruments 
 
-```{r Instruments, echo=FALSE, message=FALSE, warning=FALSE}
+```{r Instruments, echo=TRUE, message=FALSE, warning=FALSE}
 library(knitr)
 Table_data <- readxl::read_xlsx("data/Systematic Indices and Benchmarks.xlsx")
 knitr::kable(Table_data) 
@@ -67,6 +67,4 @@ compoond.returns %>%
   theme_minimal() +
   theme(legend.position = "none")
 ```
-
-
-
+Fub
