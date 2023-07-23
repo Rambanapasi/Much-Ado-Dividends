@@ -8,9 +8,9 @@ output:
 
 The goal is to assess the performance of dividend yield as an investment strategy. I plan to use optimized portfolios of the highest paying dividend stock and/or highest growth in dividends for a group of assets. However, first I want to calculate all cumulative returns for all indexes and their benchmarks. 
 
-##  Approach to Use
+##  Approach
 
-Passive equity investment offers transparent, investable and a rules-based approach, avoiding the need to identify mispriced securities commonly associated with active portfolio construction. Before we build our own portfolios I will compare performance indexes against their benchmarks across the globally.
+To evaluate these portfolios, I will systematic portolios which falls under passive equity portfolio constrcution.  Passive equity investment offers transparent, investable and a rules-based approach, avoiding the need to identify mispriced securities commonly associated with active portfolio construction. Before we build our own portfolios I will compare performance indexes against their benchmarks across the globally.
 
 I will present this in tabular form showing a comparison between index and benchmark. 
 
@@ -44,13 +44,14 @@ compoond.returns <- raw.indexes %>%
   gather(Index, Level, -Date) %>%
   group_by(Index) %>%
   mutate(Level = as.numeric(Level),
-         Daily_return = Level / lag(Level)) %>% 
+         Daily_return = Level / lag(Level)-1) %>% 
   ungroup()
 
 compoond.returns <-  compoond.returns %>% 
   mutate(Daily_return = coalesce(Daily_return, 0)) %>% 
   mutate(Compound = cumprod(1+Daily_return)) %>% 
   mutate( YM = format(Date, "%Y%b")) %>% 
+  filter(Date > lubridate::ymd(20130110)) %>% 
   group_by(YM ) %>% 
   filter(Date == last(Date)) %>% 
   group_by(Index) %>% 
@@ -68,5 +69,154 @@ compoond.returns %>%
   theme(legend.position = "none")
 ```
 
+# Fund Performance Across regions 
 
+
+- why do we have to back and forth from tidy to xts to tidy. 
+
+- be congizant about the region that you want to study, what in the filtering the country also mind which benchmark to use. 
+
+```{r}
+# settinconditionMessage
+
+pacman::p_load(tidyverse);pacman::p_load(tbl2xts,gt,lubridate)
+
+
+# get returns of the indexes you want
+
+indexes <- 
+fmxdat::SA_Indexes %>% select(date, Tickers, Price) %>% 
+  arrange(date) %>% 
+  group_by(Tickers) %>% mutate(Ret = Price / lag(Price) - 1) %>% ungroup()
+
+funds <- raw.indexes %>%
+  arrange(Date)  %>%
+  gather(Tickers, Level, -Date) %>%
+  group_by(Tickers) %>%
+  mutate(Level = as.numeric(Level),
+         Ret = Level / lag(Level)-1) %>% 
+  select(Date, Tickers, Ret) %>% 
+  ungroup()
+
+
+#  parameters:SA
+
+BM <- "JSHRALTR Index"
+Yrs_LookBack <- 5
+NA_Check <- 0.8 # atleast 80% of obs not-NA.
+
+
+ Moments_Comp <- function(funds, BM, Yrs_LookBack, NA_Check){
+  
+  funds_considered <- 
+    funds %>% filter(date >= fmxdat::safe_year_min(datesel = last(date), N = Yrs_LookBack))
+  
+  Funds_Cons <- 
+    funds_considered %>% 
+    group_by(Tickers) %>% 
+    summarise(N_noNA = sum(!is.na(Ret)) / length(unique(funds_considered$date)) ) %>% 
+    filter(N_noNA > NA_Check) %>% pull(Tickers)
+  
+    Fundxts <- 
+      funds_considered %>% filter(Tickers %in% Funds_Cons) %>% 
+      tbl_xts(cols_to_xts = Ret, spread_by = Tickers, Colnames_Exact = T)
+  
+    BMxts <- 
+      funds_considered %>% filter(Tickers %in% BM) %>% 
+      tbl_xts(cols_to_xts = Ret, Colnames_Exact = T) 
+
+  library(PerformanceAnalytics)
+    
+  Moms <- 
+      bind_rows(
+        data.frame(Return.cumulative(Fundxts) ) %>% round(., 3),
+        data.frame(Return.annualized(Fundxts, scale = 12, geometric = T)) %>% round(., 3),
+        data.frame(PerformanceAnalytics::Return.annualized.excess(Fundxts, BMxts) ) %>% round(., 3),
+        data.frame(sd.annualized(Fundxts, scale = 12, geometric = T)) %>% round(., 3),
+        
+        data.frame(PerformanceAnalytics::AdjustedSharpeRatio( Fundxts ) ) %>% round(., 3),
+        data.frame(PainIndex(Fundxts, scale = 12, geometric = T)) %>% round(., 3),
+        data.frame(AverageDrawdown(Fundxts, scale = 12)) %>% round(., 3),
+        
+        data.frame(fmxdat::Safe_TE(Ra = Fundxts, Rb = BMxts, scale = 12)) %>% round(., 3),
+        data.frame(PerformanceAnalytics::InformationRatio(Ra = Fundxts, Rb = BMxts)) %>% round(., 3),
+        data.frame(PerformanceAnalytics::CAPM.beta(Ra = Fundxts, Rb = BMxts, Rf = 0)) %>% round(., 3),
+        data.frame(PerformanceAnalytics::CAPM.beta.bull(Ra = Fundxts, Rb = BMxts, Rf = 0)) %>% round(., 3),
+        data.frame(PerformanceAnalytics::CAPM.beta.bear(Ra = Fundxts, Rb = BMxts, Rf = 0)) %>% round(., 3),
+        data.frame(PerformanceAnalytics::UpDownRatios(Ra = Fundxts, Rb = BMxts, method = "Percent", side = "Up")) %>% round(., 3),
+        data.frame(PerformanceAnalytics::CVaR(R = Fundxts, p = 0.05, method = "modified")) %>% round(., 3)
+        ) %>% 
+        
+        tibble::rownames_to_column("Info") %>%
+        mutate(Period = glue::glue("Last {Yrs_LookBack} Years"), Info = c("Cum Returns", "Returns (Ann.)", "Returns Excess (Ann.)", "SD (Ann.)", "Adj. Sharpe Ratio", "Pain Index", 
+                                                 "Avg DD", "Tracking Error", "Information Ratio", "Beta", "Beta Bull", "Beta Bear", "Up-Down Ratio", "Modified CVaR")) %>% 
+        relocate(Period, .before = Info) %>% as_tibble() 
+  
+  # This line replaces the `.` with a space.
+  # Note the forward slashes, as `.` there means everything, `\\.` means a full-stop
+  colnames(Moms) <- gsub("\\.", " ", colnames(Moms))
+  
+  Moms
+  }
+
+# fund selection
+
+
+Fundselected <- c("SPSADAZT", "JALSH")
+Tab_stats <- 
+bind_rows(
+  Moments_Comp(funds %>% filter(Tickers %in% Fundselected), BM, Yrs_LookBack = 3, NA_Check),
+  Moments_Comp(funds %>% filter(Tickers %in% Fundselected), BM, Yrs_LookBack = 5, NA_Check)
+)
+  
+
+Make_perc <- 
+  c( "Cum Returns", "Returns (Ann.)", "Returns Excess (Ann.)", "SD (Ann.)",
+     "Avg DD", "Tracking Error")
+
+Rows_to_Perc <- 
+  Tab_stats %>% mutate(RN=row_number()) %>% filter(Info %in% Make_perc) %>% pull(RN)
+colnams <- colnames(Tab_stats)[-1:-2]
+Cols_length <- ncol(Tab_stats)
+library(gt)
+
+tab <- 
+  
+  Tab_stats %>% 
+  
+  gt::gt(groupname_col = 'Period', caption = 'Fund Moments Comparison') %>% 
+      tab_header(title = glue::glue("Index Statistics: Relative to {BM}")) %>% 
+      fmt_percent(
+      columns = 3:Cols_length,
+      rows = Rows_to_Perc,
+      decimals = 1
+    ) %>%   
+  sub_missing(
+    columns = all_of(colnams),
+    missing_text = '-'
+  ) %>%
+  
+   tab_footnote( footnote = 'JSAPY is the local property index, consisting of REITS companies.',
+                locations = cells_column_labels(columns = contains('JSAPYTR'))) %>%
+  
+      tab_style(
+        style = list(
+            cell_fill(color = 'gray27', alpha = 0.15),
+            cell_text(size = 'large', weight = 'bold',align = 'left')
+
+        ),
+        locations = cells_row_groups()) 
+
+tab %>% 
+  
+  tab_options(data_row.padding = px(4),table.width = pct(100),
+            column_labels.font.size = pct(50),
+            column_labels.vlines.width = 1, table.font.size = pct(80)) %>%
+                tab_options(data_row.padding = px(6),
+                column_labels.font.size = pct(100)) %>% 
+  tab_style(style = cell_text(weight = 1200, align = 'left'),locations = cells_title(groups = 'title')) %>%
+    tab_style(style = cell_text(color = 'darkgrey', transform = 'uppercase', align = 'center'),
+              locations = cells_column_labels(everything()))
+
+```
 

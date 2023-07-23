@@ -1,0 +1,590 @@
+\documentclass[11pt,preprint, authoryear]{elsarticle}
+
+\usepackage{lmodern}
+%%%% My spacing
+\usepackage{setspace}
+\setstretch{1.2}
+\DeclareMathSizes{12}{14}{10}{10}
+
+% Wrap around which gives all figures included the [H] command, or places it "here". This can be tedious to code in Rmarkdown.
+\usepackage{float}
+\let\origfigure\figure
+\let\endorigfigure\endfigure
+\renewenvironment{figure}[1][2] {
+    \expandafter\origfigure\expandafter[H]
+} {
+    \endorigfigure
+}
+
+\let\origtable\table
+\let\endorigtable\endtable
+\renewenvironment{table}[1][2] {
+    \expandafter\origtable\expandafter[H]
+} {
+    \endorigtable
+}
+
+
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+    \usepackage{xltxtra,xunicode}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+  \newcommand{\euro}{€}
+\fi
+
+\usepackage{amssymb, amsmath, amsthm, amsfonts}
+
+\def\bibsection{\section*{References}} %%% Make "References" appear before bibliography
+
+
+\usepackage[round]{natbib}
+
+\usepackage{longtable}
+\usepackage[margin=2.3cm,bottom=2cm,top=2.5cm, includefoot]{geometry}
+\usepackage{fancyhdr}
+\usepackage[bottom, hang, flushmargin]{footmisc}
+\usepackage{graphicx}
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+\numberwithin{table}{section}
+\setlength{\parindent}{0cm}
+\setlength{\parskip}{1.3ex plus 0.5ex minus 0.3ex}
+\usepackage{textcomp}
+\renewcommand{\headrulewidth}{0.2pt}
+\renewcommand{\footrulewidth}{0.3pt}
+
+\usepackage{array}
+\newcolumntype{x}[1]{>{\centering\arraybackslash\hspace{0pt}}p{#1}}
+
+%%%%  Remove the "preprint submitted to" part. Don't worry about this either, it just looks better without it:
+\makeatletter
+\def\ps@pprintTitle{%
+  \let\@oddhead\@empty
+  \let\@evenhead\@empty
+  \let\@oddfoot\@empty
+  \let\@evenfoot\@oddfoot
+}
+\makeatother
+
+ \def\tightlist{} % This allows for subbullets!
+
+\usepackage{hyperref}
+\hypersetup{breaklinks=true,
+            bookmarks=true,
+            colorlinks=true,
+            citecolor=blue,
+            urlcolor=blue,
+            linkcolor=blue,
+            pdfborder={0 0 0}}
+
+
+% The following packages allow huxtable to work:
+\usepackage{siunitx}
+\usepackage{multirow}
+\usepackage{hhline}
+\usepackage{calc}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{caption}
+
+
+\newenvironment{columns}[1][]{}{}
+
+\newenvironment{column}[1]{\begin{minipage}{#1}\ignorespaces}{%
+\end{minipage}
+\ifhmode\unskip\fi
+\aftergroup\useignorespacesandallpars}
+
+\def\useignorespacesandallpars#1\ignorespaces\fi{%
+#1\fi\ignorespacesandallpars}
+
+\makeatletter
+\def\ignorespacesandallpars{%
+  \@ifnextchar\par
+    {\expandafter\ignorespacesandallpars\@gobble}%
+    {}%
+}
+\makeatother
+
+\newenvironment{CSLReferences}[2]{%
+}
+
+\urlstyle{same}  % don't use monospace font for urls
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\setcounter{secnumdepth}{5}
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+
+%%% Include extra packages specified by user
+
+%%% Hard setting column skips for reports - this ensures greater consistency and control over the length settings in the document.
+%% page layout
+%% paragraphs
+\setlength{\baselineskip}{12pt plus 0pt minus 0pt}
+\setlength{\parskip}{12pt plus 0pt minus 0pt}
+\setlength{\parindent}{0pt plus 0pt minus 0pt}
+%% floats
+\setlength{\floatsep}{12pt plus 0 pt minus 0pt}
+\setlength{\textfloatsep}{20pt plus 0pt minus 0pt}
+\setlength{\intextsep}{14pt plus 0pt minus 0pt}
+\setlength{\dbltextfloatsep}{20pt plus 0pt minus 0pt}
+\setlength{\dblfloatsep}{14pt plus 0pt minus 0pt}
+%% maths
+\setlength{\abovedisplayskip}{12pt plus 0pt minus 0pt}
+\setlength{\belowdisplayskip}{12pt plus 0pt minus 0pt}
+%% lists
+\setlength{\topsep}{10pt plus 0pt minus 0pt}
+\setlength{\partopsep}{3pt plus 0pt minus 0pt}
+\setlength{\itemsep}{5pt plus 0pt minus 0pt}
+\setlength{\labelsep}{8mm plus 0mm minus 0mm}
+\setlength{\parsep}{\the\parskip}
+\setlength{\listparindent}{\the\parindent}
+%% verbatim
+\setlength{\fboxsep}{5pt plus 0pt minus 0pt}
+
+
+
+\begin{document}
+
+
+
+\begin{frontmatter}  %
+
+\title{Literature Review}
+
+% Set to FALSE if wanting to remove title (for submission)
+
+
+
+
+\author[Add1]{Gabriel Rambanapasi}
+\ead{gabriel.rams44@gmail.com}
+
+
+
+
+
+\address[Add1]{Stellenbosch University, Cape Town, South Africa}
+
+\cortext[cor]{Corresponding author: Gabriel Rambanapasi}
+
+\begin{abstract}
+\small{
+A discussion of past literature that has influenced the investigation
+into dividend strategies. We take a novel approach in combining firms of
+the same sectors but in different geographical regional. Overall we find
+that the effect is much more pronounced used a forward and backward
+looking indicator.
+}
+\end{abstract}
+
+\vspace{1cm}
+
+
+\begin{keyword}
+\footnotesize{
+Multivariate GARCH \sep Kalman Filter \sep Copula \\
+\vspace{0.3cm}
+}
+\footnotesize{
+\textit{JEL classification} L250 \sep L100
+}
+\end{keyword}
+
+
+
+\vspace{0.5cm}
+
+\end{frontmatter}
+
+\setcounter{footnote}{0}
+
+
+
+%________________________
+% Header and Footers
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagestyle{fancy}
+\chead{}
+\rhead{}
+\lfoot{}
+\rfoot{\footnotesize Page \thepage}
+\lhead{}
+%\rfoot{\footnotesize Page \thepage } % "e.g. Page 2"
+\cfoot{}
+
+%\setlength\headheight{30pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%________________________
+
+\headsep 35pt % So that header does not go over title
+
+
+
+
+\hypertarget{introduction}{%
+\section{\texorpdfstring{Introduction
+\label{Introduction}}{Introduction }}\label{introduction}}
+
+\hypertarget{dividends-constitution-and-impliaction-on-stakeholder-and-firms}{%
+\section{Dividends constitution and Impliaction on Stakeholder and
+Firms}\label{dividends-constitution-and-impliaction-on-stakeholder-and-firms}}
+
+Dividends are cash payouts that companies use to distribute capital to
+their shareholders. They can take various forms, such as cash, stock,
+liquidating, scrip, or property dividends. However, cash dividends are
+the most common type. The decision to issue dividends is typically made
+by the board of directors, taking into account the company's operating
+needs for a given financial year. When a dividend is announced, it has
+an impact on the financial statements of a company. Resultantly,
+dividend announcements create a liability which impacts the balance
+sheet by increasing the current liabilities and decreases shareholder
+equity, specifically retained earnings, on the balance sheet. In other
+words, the company incurs an obligation to pay out the dividend, and the
+value of the company retained by shareholders decreases accordingly.
+Various literature have shown that in some countries shareholder values
+dcreases in line with dividend payments. Vijayakumar (2010), Hussainey,
+Mgbame, and Chijoke-Mgbame (2011) and Masum (2014) show negative effect
+on prices on ex dividend day following the payments of dividends. This
+effectively means that value of a shareholder remains the same as
+capital its just swapped for cash Suwanna
+(\protect\hyperlink{ref-suwanna2012impacts}{2012}).
+
+Cash dividends, although widely used, are not as tax-efficient as other
+types of capital distributions, such as share buybacks. Share buybacks
+have gained popularity in advanced economies, particularly in the United
+States, where they reached a high of \$437 billion in 2018.
+Surprisingly, their adoption has been relatively slow in South Africa.
+According to a study by Wesson, Muller, and Ward in 2014, there were
+only 195 open market share repurchases announced in South Africa from
+1999 to 2009. In comparison, Manconi, Peyer, and Vermaelen estimated
+that share repurchases constituted approximately 58\% of total
+announcements in the United States, 15\% in Canada, and 11\% in Japan
+over the same period. This indicates a significant disparity in the
+adoption of share buybacks across the world, despite their popularity in
+the United States.
+
+\begin{itemize}
+\tightlist
+\item
+  update argument on sharebuybacks and why you just mentioned them
+  instead of others
+\end{itemize}
+
+\hypertarget{why-do-firms-pay-dividends}{%
+\subsection{Why do firms pay
+dividends}\label{why-do-firms-pay-dividends}}
+
+The issue of dividend policy and its impact on shareholder wealth has
+sparked debates and opposing arguments in financial literature. On one
+hand, the dividend puzzle suggests that dividends reduce equity value
+and make investors worse off. According to this view, dividends can be
+seen as a reward for investors who bear the risk associated with their
+investments. Additionally, dividends can be considered a return on
+investment rather than relying solely on capital gains. Various
+literature has emerged trying to solve the puzzel, either supporting
+irrelevance or relevance in dividend payments.The Modigliani-Miller (MM)
+theory opines that dividends are irrelevant, it argues that shareholders
+are indifferent to dividend payments, implying that there is no optimal
+dividend policy. They contend that all dividend policies are equally
+good and thus payments of dividends could easily be reinvested in shares
+and make no difference to share holder wealth. However, the MM theorem
+fails to consider real-world market imperfections that may give
+relevance to dividend payments. Global assets market face multiple
+constraints or imperfections namely flotation costs, transaction costs
+(e.g., taxes and flotation costs), information asymmetry, and
+principal-agent problems.
+
+Tax preferences play a role in the argument for dividend relevance.
+Different investors may be attracted to different stocks based on their
+tax treatments, thus investors choose stocks based on their individual
+investment needs. However, supporters of the MM theorem argue that
+changes in dividend policy should not significantly impact stock prices
+due to the substitution effect. According to this effect, allocation
+decisions of firms occur almost simultaneously, resulting in a net zero
+effect on prices. Flotation costs refer to the opportunity costs
+incurred by a firm when paying dividends. By distributing dividends,
+companies forego opportunities to expand their operations using retained
+earnings. In a world without flotation costs, as suggested by the MM
+theorem, management would be indifferent between issuing dividends and
+borrowing from the market. However, in reality, external financing comes
+at a higher cost, leading to trade-offs in dividend policy decisions.
+
+Information asymmetry between shareholders and managers is another
+factor that gives relevance to dividend payments. Investors rely on
+dividend announcements to assess a company's stock price. Dividend
+signaling conveys information about the company's quality. Investors
+compare dividend announcements to historical levels while considering
+company fundamentals. However, there is a risk of manipulation by
+management, making the dividend signal imperfect for determining share
+prices. Extending the argument on information asymmetry leads to the
+principal-agent problem, where management and shareholders may have
+differing goals for the use of retained earnings, leading to conflicts.
+The free cash flow hypothesis suggests that dividend payments force
+management to raise capital from external sources, which increases
+borrowing costs and scrutiny from capital markets. This, in turn,
+reduces management's ability to make sub optimal investments.
+
+\hypertarget{dividend-portfolios-to-signal-returns}{%
+\subsection{Dividend Portfolios To Signal
+Returns}\label{dividend-portfolios-to-signal-returns}}
+
+\begin{itemize}
+\tightlist
+\item
+  Include the argumemt that there are a proxy for value
+\end{itemize}
+
+Studies on dividend signaling for returns can be categorized into
+academic return signaling studies and practitioner-oriented long-term
+return studies. Academic studies, such as Fama and French (1988),
+initially found a positive correlation between increasing predictive
+power and longer forecast horizons. However, subsequent studies like
+Bekaert and Ang (2001) and Ang and Bekaert (2006) found no evidence of
+long-term predictability in stock returns when considering finite sample
+influence. This suggests that dividend yield may not be a reliable
+predictor of subsequent returns. One possible reason for this declining
+predictive power is the increasing use of share buybacks as an
+alternative means for capital distribution, which reduces the
+contribution of dividend yield to total return (Robertson and Wright,
+2006).
+
+On the other hand, practitioner-oriented literature focuses on the
+long-term returns of systematic dividend portfolios. One popular
+strategy is the ``Dogs of the Dow (DOD),'' which involves creating a
+portfolio of the top 10 highest-paying dividend stocks on the Dow Jones
+Industrial Index at the beginning of the year based on the dividends
+paid in the previous 12 months. The portfolio is held for 12 months, and
+the process is repeated annually. Various studies have examined the DOD
+strategy or similar high-yield dividend strategies in different time
+periods and regions, consistently showing superior risk-adjusted returns
+compared to the market index. Examples of such studies include Da Silva
+(2001) in Latin America, Alles and Sheng (2008) in Australia, Visscher
+and Filbeck (2003) in Canada, Kotkamp and Otte (2001) in Germany, and
+Wang et al.~(2011) in China. More recently, Filbeck (2017) investigated
+the performance of DOD against a high-yield portfolio of Fortune Most
+Desired Companies (MAC) compared to the Dow Jones Industrial Average and
+the S\&P 500. The study found significantly higher risk-adjusted returns
+for the DOD strategy.
+
+\begin{longtable}[]{@{}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.0060}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.0251}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1623}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.0644}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.7422}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedleft
+Year
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Author
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Objectives
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Methodology
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Findings
+\end{minipage} \\
+\midrule()
+\endhead
+1997 & Filbeck & Testing the performance of the top paying dividend
+stock in the UK market index. & Optimization, equally dollar weighting
+stock. & Dividend yield investment strategy in Britain was not effective
+between March 1984 and February 1994. The portfolio returns exceeded the
+market returns on both unadjusted and risk adjusted bases, in only four
+years. The superior multiple year Top Ten portfolio performances were
+primarily due to the outstanding second year returns \\
+2001 & Da Silva & Investigate dividend-driven trading strategies based
+on dividend yield growth effects in the Polish stock market in the years
+1994--2004 & NA & NA \\
+2003 & Visscher and Filbeck & Test the Dividends of the Dog Strategy in
+Canada. & High dividend yield strategy to the Toronto 35 Index. & Top 10
+highest performing portolios returns were high enough to compnesate for
+transaction costs and taxes. The Dogs Strategy also performed well
+against the Toronto 35 index. \\
+2007 & Brzeszczyński & Testing the Dogs Strategy in Poland & NA &
+Dividend yield growth portfolios were capable of beating the market in
+the entire sample period. Their performance, however, was not consistent
+over time and the highest returns were obtained during final
+years.different types of portfolios demonstrate the importance of
+dividends as a source of significant fundamental information items from
+stock market companies. At the same time, they show that a dividend
+investment strategy for the Polish stock market is most successful when
+the selection of stocks for the dividend yield growth portfolios is
+subject to further restrictions, most notably concerning company
+size. \\
+2007 & Fama and Eugene & investigate the contributions to return for
+value versus growth stock & NA & Returns are higher for value than there
+are for growth stock. However, that result result is only special from
+the period 1964-2004. From 1927 to 1963 the contribution of dividends to
+return is not different between value and growth stock. \\
+2011 & Wang et al & Test the Dividends of the Dog Strategy in China. &
+Optimiization & Dow Dogs portfolios significantly outperform the market
+benchmark for the period of 1994 to 2009 in China‟s markets. Further
+analysis indicates that (1) The fewer Dogs included in the portfolio,
+the greater the portfolio abnormal returns; (2) In general, the shorter
+holding period (in months), the greater the portfolio abnormal
+returns \\
+2011 & Rennie & Assess the performance of the Dogs of the Dow strategy
+in Finland & Optimiization & The Dogs of the Dow Strategy out performs
+the market index. Outperformance is more pronounced in market
+downturns. \\
+2015 & Lemmon & The dividend yield effect is tested in Hong Kong where
+no taxes exist on either dividend income or capital gain. & NA & paper
+documents a robust dividend yield effect in the Hong Kong market and
+suggests that nontax reasons help to explain the yield effect. \\
+2017 & Filbeck & Test the Dividends of the Dog Strategy against Most
+Admired Companies and the Dow Jones Industrial Average. & Optimiization
+& MAC Dogs provide significantly higher raw returns than both the DOW
+and the standard DoD strategy. Moreover, the MAC Dogs provide
+significantly higher raw and risk-adjusted returns against our
+benchmarks. Our results remain robust when using either alternative
+dividend-yield cutoff points or alternative event windows surrounding
+the issue dates for Fortune \\
+2017 & You & Performance of Dogs versus Market index in Taiwan. &
+Optimization & DY portfolios provide significant yield and investor
+appear to have a lagged reaction to dividend announcements. \\
+\bottomrule()
+\end{longtable}
+
+\begin{itemize}
+\tightlist
+\item
+  Give a summary of the indexes and methodology used in all the papers
+  listed. Put this in excel and make into a table.
+\item
+  Look at papers that investigate dividend signalling by sector.
+\item
+\end{itemize}
+
+References are to be made as follows: Fama \& French
+(\protect\hyperlink{ref-fama1997}{1997: 33}) and Grinold \& Kahn
+(\protect\hyperlink{ref-grinold2000}{2000}) Such authors could also be
+referenced in brackets (\protect\hyperlink{ref-grinold2000}{Grinold \&
+Kahn, 2000}) and together Grinold \& Kahn
+(\protect\hyperlink{ref-grinold2000}{2000}). Source the reference code
+from scholar.google.com by clicking on ``cite'\,' below article name.
+Then select BibTeX at the bottom of the Cite window, and proceed to copy
+and paste this code into your ref.bib file, located in the directory's
+Tex folder. Open this file in Rstudio for ease of management, else open
+it in your preferred Tex environment. Add and manage your article
+details here for simplicity - once saved, it will self-adjust in your
+paper.
+
+\begin{quote}
+I suggest renaming the top line after @article, as done in the template
+ref.bib file, to something more intuitive for you to remember. Do not
+change the rest of the code. Also, be mindful of the fact that bib
+references from google scholar may at times be incorrect. Reference
+Latex forums for correct bibtex notation.
+\end{quote}
+
+To reference a section, you have to set a label using
+``\textbackslash label'\,' in R, and then reference it in-text as
+e.g.~referencing a later section, Section \ref{Meth}.
+
+\newpage
+
+\hypertarget{references}{%
+\section*{References}\label{references}}
+\addcontentsline{toc}{section}{References}
+
+\hypertarget{refs}{}
+\begin{CSLReferences}{1}{0}
+\leavevmode\vadjust pre{\hypertarget{ref-bhattacharyya2007dividend}{}}%
+Bhattacharyya, N. 2007. Dividend policy: A review. \emph{Managerial
+Finance}. 33(1):4--13.
+
+\leavevmode\vadjust pre{\hypertarget{ref-black1976dividend}{}}%
+Black, F. 1976. The dividend puzzle. \emph{The journal of portfolio
+management}. 2(2):5--8.
+
+\leavevmode\vadjust pre{\hypertarget{ref-cornell2014dividend}{}}%
+Cornell, B. 2014. Dividend-price ratios and stock returns: International
+evidence. \emph{Journal of Portfolio management}. 40(2):122.
+
+\leavevmode\vadjust pre{\hypertarget{ref-deangelo2006}{}}%
+DeAngelo, H. \& DeAngelo, L. 2006. The irrelevance of the MM dividend
+irrelevance theorem. \emph{Journal of financial economics}.
+79(2):293--315.
+
+\leavevmode\vadjust pre{\hypertarget{ref-fama1997}{}}%
+Fama, E.F. \& French, K.R. 1997. Industry costs of equity. \emph{Journal
+of financial economics}. 43(2):153--193.
+
+\leavevmode\vadjust pre{\hypertarget{ref-gordon1963optimal}{}}%
+Gordon, M.J. 1963. Optimal investment and financing policy. \emph{The
+Journal of finance}. 18(2):264--272.
+
+\leavevmode\vadjust pre{\hypertarget{ref-grinold2000}{}}%
+Grinold, R.C. \& Kahn, R.N. 2000. Active portfolio management.
+
+\leavevmode\vadjust pre{\hypertarget{ref-jensen1976theory}{}}%
+Jensen, M.C. \& Meckling, W.H. 1976. Theory of the firm: Managerial
+behavior, agency costs and ownership structure. \emph{Journal of
+financial economics}. 3(4):305--360.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Texevier}{}}%
+Katzke, N.F. 2017. \emph{{Texevier}: {P}ackage to create elsevier
+templates for rmarkdown}. Stellenbosch, South Africa: Bureau for
+Economic Research.
+
+\leavevmode\vadjust pre{\hypertarget{ref-10.2307ux2f3694818}{}}%
+Koch, A.S. \& Sun, A.X. 2004. Dividend changes and the persistence of
+past earnings changes. \emph{The Journal of Finance}. 59(5):2093--2116.
+
+\leavevmode\vadjust pre{\hypertarget{ref-lintner1956distribution}{}}%
+Lintner, J. 1956. Distribution of incomes of corporations among
+dividends, retained earnings, and taxes. \emph{The American economic
+review}. 46(2):97--113.
+
+\leavevmode\vadjust pre{\hypertarget{ref-miller1985dividend}{}}%
+Miller, M.H. \& Rock, K. 1985. Dividend policy under asymmetric
+information. \emph{The Journal of finance}. 40(4):1031--1051.
+
+\leavevmode\vadjust pre{\hypertarget{ref-rangvid2014dividend}{}}%
+Rangvid, J., Schmeling, M. \& Schrimpf, A. 2014. Dividend predictability
+around the world. \emph{Journal of Financial and Quantitative Analysis}.
+49(5-6):1255--1277.
+
+\leavevmode\vadjust pre{\hypertarget{ref-suwanna2012impacts}{}}%
+Suwanna, T. 2012. Impacts of dividend announcement on stock return.
+\emph{Procedia-Social and Behavioral Sciences}. 40:721--725.
+
+\end{CSLReferences}
+
+\hypertarget{appendix}{%
+\section*{Appendix}\label{appendix}}
+\addcontentsline{toc}{section}{Appendix}
+
+\hypertarget{appendix-a}{%
+\subsection*{Appendix A}\label{appendix-a}}
+\addcontentsline{toc}{subsection}{Appendix A}
+
+Some appendix information here
+
+\hypertarget{appendix-b}{%
+\subsection*{Appendix B}\label{appendix-b}}
+\addcontentsline{toc}{subsection}{Appendix B}
+
+\bibliography{Tex/ref}
+
+
+
+
+
+\end{document}

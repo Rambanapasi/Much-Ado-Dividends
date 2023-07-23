@@ -1,0 +1,233 @@
+---
+# IMPORTANT: Change settings here, but DO NOT change the spacing.
+# Remove comments and add values where applicable.
+# The descriptions below should be self-explanatory
+
+title: "Literature Review"
+#subtitle: "This will appear as Right Header"
+
+documentclass: "elsarticle"
+
+# --------- Thesis title (Optional - set to FALSE by default).
+# You can move the details below around as you please.
+Thesis_FP: FALSE
+# Entry1: "An unbelievable study with a title spanning multiple lines."
+# Entry2: "\\textbf{Some Guy}" # textbf for bold
+# Entry3: "A thesis submitted toward the degree of Doctor of Philosophy"
+# Uni_Logo: Tex/Logo.png # Place a logo in the indicated location (from your root, e.g. defaults to ~/Tex/Logo.png) and uncomment this line. Leave uncommented for no image
+# Logo_width: 0.3 # If using a logo - use this to set width (size) of image
+# Entry4: "Under the supervision of: \\vfill Prof. Joe Smith and Dr. Frank Smith"
+# Entry5: "Stellenbosch University"
+# Entry6: April 2020
+# Entry7:
+# Entry8:
+
+# --------- Front Page
+# Comment: ----- Follow this pattern for up to 5 authors
+AddTitle: TRUE # Use FALSE when submitting to peer reviewed platform. This will remove author names.
+Author1: "Gabriel Rambanapasi"  # First Author - note the thanks message displayed as an italic footnote of first page.
+Ref1: "Stellenbosch University, Cape Town, South Africa" # First Author's Affiliation
+Email1: "gabriel.rams44\\@gmail.com" # First Author's Email address
+
+# Author2: "John Smith"
+# Ref2: "Some other Institution, Cape Town, South Africa"
+# Email2: "John\\@gmail.com"
+# CommonAffiliation_12: TRUE # If Author 1 and 2 have a common affiliation. Works with _13, _23, etc.
+
+# Author3: "John Doe"
+# Email3: "Joe\\@gmail.com"
+
+CorrespAuthor_1: TRUE  # If corresponding author is author 3, e.g., use CorrespAuthor_3: TRUE
+
+# Comment out below to remove both. JEL Codes only given if keywords also given.
+keywords: "Multivariate GARCH \\sep Kalman Filter \\sep Copula" # Use \\sep to separate
+JELCodes: "L250 \\sep L100"
+
+# ----- Manage headers and footers:
+#BottomLFooter: $Title$
+#BottomCFooter:
+#TopLHeader: \leftmark # Adds section name at topleft. Remove comment to add it.
+BottomRFooter: "\\footnotesize Page \\thepage" # Add a '#' before this line to remove footer.
+addtoprule: TRUE
+addfootrule: TRUE               # Use if footers added. Add '#' to remove line.
+
+# --------- page margins:
+margin: 2.3 # Sides
+bottom: 2 # bottom
+top: 2.5 # Top
+HardSet_layout: TRUE # Hard-set the spacing of words in your document. This will stop LaTeX squashing text to fit on pages, e.g.
+# This is done by hard-setting the spacing dimensions. Set to FALSE if you want LaTeX to optimize this for your paper.
+
+# --------- Line numbers
+linenumbers: FALSE # Used when submitting to journal
+
+# ---------- References settings:
+# You can download cls format here: https://www.zotero.org/ - simply search for your institution. You can also edit and save cls formats here: https://editor.citationstyles.org/about/
+# Hit download, store it in Tex/ folder, and change reference below - easy.
+bibliography: Tex/ref.bib       # Do not edit: Keep this naming convention and location.
+csl: Tex/harvard-stellenbosch-university.csl # referencing format used.
+# By default, the bibliography only displays the cited references. If you want to change this, you can comment out one of the following:
+nocite: '@*' # Add all items in bibliography, whether cited or not
+ # nocite: |  # add specific references that aren't cited
+# @grinold2000
+#  @Someoneelse2010
+
+# ---------- General:
+RemovePreprintSubmittedTo: TRUE  # Removes the 'preprint submitted to...' at bottom of titlepage
+Journal: "Journal of Finance"   # Journal that the paper will be submitting to, if RemovePreprintSubmittedTo is set to TRUE.
+toc: FALSE                       # Add a table of contents
+numbersections: TRUE             # Should sections (and thus figures and tables) be numbered?
+fontsize: 11pt                  # Set fontsize
+linestretch: 1.2                # Set distance between lines.
+link-citations: TRUE            # This creates dynamic links to the papers in reference list.
+
+### Adding additional latex packages:
+# header-includes:
+#    - \usepackage{colortbl} # Add additional packages here.
+
+output:
+  pdf_document:
+    keep_tex: TRUE
+    template: Tex/TexDefault.txt
+    fig_width: 3.5 # Adjust default figure sizes. This can also be done in the chunks of the text.
+    fig_height: 3.5
+abstract: |
+  A discussion of past literature that has influenced the investigation into dividend strategies. We take a novel approach in combining firms of the same sectors but in different geographical regional. Overall we find that the effect is much more pronounced used a forward and backward looking indicator. 
+---
+
+<!-- First: Set your default preferences for chunk options: -->
+
+<!-- If you want a chunk's code to be printed, set echo = TRUE. message = FALSE stops R printing ugly package loading details in your final paper too. I also suggest setting warning = FALSE and checking for warnings in R, else you might find ugly warnings in your paper. -->
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, fig.width = 6, fig.height = 5, fig.pos="H", fig.pos = 'H')
+# Note: Include = FALSE implies the code is executed, but not printed in your pdf.
+# warning and message = FALSE implies ugly messages and warnings are removed from your pdf.
+# These should be picked up when you execute the command chunks (code sections below) in your rmd, not printed in your paper!
+
+# Lets load in example data, and see how this can be stored and later called from your 'data' folder.
+if(!require("tidyverse")) install.packages("tidyverse")
+library(tidyverse)
+Example_data <- Texevier::Ex_Dat
+
+# Notice that as you are working in a .Rproj file (I am assuming you are) - the relative paths of your directories start at your specified root.
+# This means that when working in a .Rproj file, you never need to use getwd() - it is assumed as your base root automatically.
+
+
+```
+
+
+<!-- ############################## -->
+<!-- # Start Writing here: -->
+<!-- ############################## -->
+
+# Introduction \label{Introduction}
+
+
+# Dividends constitution and Impliaction on Stakeholder and Firms
+
+Dividends are cash payouts that companies use to distribute capital to their shareholders. They can take various forms, such as cash, stock, liquidating, scrip, or property dividends. However, cash dividends are the most common type. The decision to issue dividends is typically made by the board of directors, taking into account the company's operating needs for a given financial year. When a dividend is announced, it has an impact on the financial statements of a company. Resultantly, dividend announcements create a liability which impacts the balance sheet by increasing the current liabilities and decreases shareholder equity, specifically retained earnings, on the balance sheet. In other words, the company incurs an obligation to pay out the dividend, and the value of the company retained by shareholders decreases accordingly. Various literature have shown that in some countries shareholder values dcreases in line with dividend payments. Vijayakumar (2010), Hussainey, Mgbame, and
+Chijoke-Mgbame (2011) and Masum (2014) show negative effect on prices on ex dividend day following the payments of dividends. This effectively means that value of a shareholder remains the same as capital its just swapped for cash @suwanna2012impacts. 
+
+Cash dividends, although widely used, are not as tax-efficient as other types of capital distributions, such as share buybacks. Share buybacks have gained popularity in advanced economies, particularly in the United States, where they reached a high of $437 billion in 2018. Surprisingly, their adoption has been relatively slow in South Africa. According to a study by Wesson, Muller, and Ward in 2014, there were only 195 open market share repurchases announced in South Africa from 1999 to 2009. In comparison, Manconi, Peyer, and Vermaelen estimated that share repurchases constituted approximately 58% of total announcements in the United States, 15% in Canada, and 11% in Japan over the same period. This indicates a significant disparity in the adoption of share buybacks across the world, despite their popularity in the United States.  
+
+* update argument on sharebuybacks and why you just mentioned them instead of others
+
+## Why do firms pay dividends
+
+The issue of dividend policy and its impact on shareholder wealth has sparked debates and opposing arguments in financial literature. On one hand, the dividend puzzle suggests that dividends reduce equity value and make investors worse off. According to this view, dividends can be seen as a reward for investors who bear the risk associated with their investments. Additionally, dividends can be considered a return on investment rather than relying solely on capital gains. Various literature has emerged trying to solve the puzzel, either supporting irrelevance or relevance in dividend payments.The Modigliani-Miller (MM) theory opines that dividends are irrelevant, it argues that shareholders are indifferent to dividend payments, implying that there is no optimal dividend policy. They contend that all dividend policies are equally good and thus payments of dividends could easily be reinvested in shares and make no difference to share holder wealth. However, the MM theorem fails to consider real-world market imperfections that may give relevance to dividend payments. Global assets market face multiple constraints or imperfections namely flotation costs, transaction costs (e.g., taxes and flotation costs), information asymmetry, and principal-agent problems. 
+
+Tax preferences play a role in the argument for dividend relevance. Different investors may be attracted to different stocks based on their tax treatments, thus investors choose stocks based on their individual investment needs. However, supporters of the MM theorem argue that changes in dividend policy should not significantly impact stock prices due to the substitution effect. According to this effect, allocation decisions of firms occur almost simultaneously, resulting in a net zero effect on prices. Flotation costs refer to the opportunity costs incurred by a firm when paying dividends. By distributing dividends, companies forego opportunities to expand their operations using retained earnings. In a world without flotation costs, as suggested by the MM theorem, management would be indifferent between issuing dividends and borrowing from the market. However, in reality, external financing comes at a higher cost, leading to trade-offs in dividend policy decisions. 
+
+Information asymmetry between shareholders and managers is another factor that gives relevance to dividend payments. Investors rely on dividend announcements to assess a company's stock price. Dividend signaling conveys information about the company's quality. Investors compare dividend announcements to historical levels while considering company fundamentals. However, there is a risk of manipulation by management, making the dividend signal imperfect for determining share prices. Extending the argument on information asymmetry leads to the principal-agent problem, where management and shareholders may have differing goals for the use of retained earnings, leading to conflicts. The free cash flow hypothesis suggests that dividend payments force management to raise capital from external sources, which increases borrowing costs and scrutiny from capital markets. This, in turn, reduces management's ability to make sub optimal investments.
+  
+
+## Dividend Portfolios To Signal Returns 
+* Include the argumemt that there are a proxy for value
+
+Studies on dividend signaling for returns can be categorized into academic return signaling studies and practitioner-oriented long-term return studies. Academic studies, such as Fama and French (1988), initially found a positive correlation between increasing predictive power and longer forecast horizons. However, subsequent studies like Bekaert and Ang (2001) and Ang and Bekaert (2006) found no evidence of long-term predictability in stock returns when considering finite sample influence. This suggests that dividend yield may not be a reliable predictor of subsequent returns. One possible reason for this declining predictive power is the increasing use of share buybacks as an alternative means for capital distribution, which reduces the contribution of dividend yield to total return (Robertson and Wright, 2006).
+
+On the other hand, practitioner-oriented literature focuses on the long-term returns of systematic dividend portfolios. One popular strategy is the "Dogs of the Dow (DOD)," which involves creating a portfolio of the top 10 highest-paying dividend stocks on the Dow Jones Industrial Index at the beginning of the year based on the dividends paid in the previous 12 months. The portfolio is held for 12 months, and the process is repeated annually. Various studies have examined the DOD strategy or similar high-yield dividend strategies in different time periods and regions, consistently showing superior risk-adjusted returns compared to the market index. Examples of such studies include Da Silva (2001) in Latin America, Alles and Sheng (2008) in Australia, Visscher and Filbeck (2003) in Canada, Kotkamp and Otte (2001) in Germany, and Wang et al. (2011) in China. More recently, Filbeck (2017) investigated the performance of DOD against a high-yield portfolio of Fortune Most Desired Companies (MAC) compared to the Dow Jones Industrial Average and the S&P 500. The study found significantly higher risk-adjusted returns for the DOD strategy.
+
+```{r}
+
+```
+
+* Give a summary of the indexes and methodology used in all the papers listed. Put this in excel and make into a table. 
+* Look at papers that investigate dividend signalling by sector. 
+* 
+
+References are to be made as follows: @fama1997[p. 33] and @grinold2000 Such authors could also be referenced in brackets [@grinold2000] and together [@fama1997 \& @grinold2000]. Source the reference code from scholar.google.com by clicking on ``cite'' below article name. Then select BibTeX at the bottom of the Cite window, and proceed to copy and paste this code into your ref.bib file, located in the directory's Tex folder. Open this file in Rstudio for ease of management, else open it in your preferred Tex environment. Add and manage your article details here for simplicity - once saved, it will self-adjust in your paper. 
+
+
+> I suggest renaming the top line after \@article, as done in the template ref.bib file, to something more intuitive for you to remember. Do not change the rest of the code. Also, be mindful of the fact that bib references from google scholar may at times be incorrect. Reference Latex forums for correct bibtex notation.
+
+To reference a section, you have to set a label using ``\\label'' in R, and then reference it in-text as e.g. referencing a later section, Section \ref{Meth}.
+
+
+```{r Figure1,  warning =  FALSE, fig.align = 'center', fig.cap = "Caption Here \\label{Figure1}", fig.ext = 'png', fig.height = 3, fig.width = 6}
+
+  # This is just a random plot to show you a plot. This is done if the getwd() does not point to your Template's directory.
+  # Set WD below to your project's working directory.
+
+#   g <-
+#   ggplot(data = mtcars) +
+#   geom_point(aes(x = disp, y = hp, color = cyl)) +
+#   theme_bw() +
+#   # theme(legend.position = "none") +
+#   theme(plot.title = element_text(size = 10)) +
+#   theme(axis.title = element_text(size = 10),
+#         axis.title.x = element_text()) +
+#   labs(y = "y-axis", x = "x-axis", title = "Some amazing plot")
+# 
+# g
+
+```
+
+
+
+```{r Figure2, warning =  FALSE, fig.align = 'center', fig.cap = "Caption Here \\label{Figure2}", fig.height = 3, fig.width = 6, dev = 'png'}
+# 
+# ExampleData <- read_rds( "data/Example_data.rds")
+# 
+# source("code/Example_Plot_Scatter.R") # Load a function from your 'code' folder. This e.g. plots scatters to your own preferences.
+# source( "code/Data_Create.R") #
+# 
+# ExampleData <- Data_Create(N = 100) # Same as the ExampleData loaded above - this is just a function to create the stored data.
+
+# g <- Example_Plot_Scatter(DataInput = ExampleData,
+#                           X = "Height_Score",
+#                           Y = "Weight_Score",
+#                           Z = "Agility_Score",
+#                           Theme = theme_bw(), # run ?ggthemes for other themes.
+#                           Title = "", # I prefer to use the caption set above.
+#                           Ylab = "Height",
+#                           Xlab = "Lenght",
+#                           LegendTitle = "Agility",
+#                           TitleSize = 10,
+#                           LabSize = 10)
+# 
+# g
+
+# Although the functions above are really simple, the principle is simple: containing calculations and data wrangling in their own functions will make this template much cleaner and more manageable.
+# When you start working, delete these meaningless functions and replace with your own...
+
+```
+
+
+
+\newpage
+
+# References {-}
+
+<div id="refs"></div>
+
+
+# Appendix {-}
+
+## Appendix A {-}
+
+Some appendix information here
+
+## Appendix B {-}
+
