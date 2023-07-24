@@ -45,24 +45,22 @@ cumdata_Logret_Monthly <-
 
 d2 <- data %>% 
   arrange(Date) %>% 
-  mutate(YM = Year_Month(Date)) %>% 
   gather(index, value, -Date) %>% 
-  group_by(index) 
+  group_by(index)  
 
 #  Just converting it to be numeric
 
 d2$value <- as.numeric(d2$value)
 
-compounded_returns %>% names
-
 #  These are just the normal componded returns
 compounded_returns <- d2 %>%
-  mutate(YM = Year_Month(Date)) %>% 
+  arrange(Date) %>% 
   mutate(dailyReturn = value/lag(value) - 1) %>% 
-  filter(Date >= lubridate::ymd(20130128)) %>% 
-  # coalesce returns NULL or NA 
+  filter(Date >= lubridate::ymd(20130128))%>%
+  group_by(index) %>% 
   mutate(daliyReturn = coalesce(dailyReturn, 0)) %>% 
   mutate(dailyIndex = cumprod(1 + dailyReturn)) %>% 
+  mutate(YM = format(Date, "%y%b")) %>%
   group_by(YM) %>% 
   filter(Date == last(Date)) %>% 
   group_by(index) %>% 
