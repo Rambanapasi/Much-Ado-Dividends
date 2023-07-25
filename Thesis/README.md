@@ -8,22 +8,30 @@ indexes and their benchmarks.
 
 ## Approach
 
-To evaluate these portfolios, I will systematic portolios which falls
-under passive equity portfolio constrcution. Passive equity investment
+To evaluate these portfolios, I will systematic portfolios which falls
+under passive equity portfolio construction. Passive equity investment
 offers transparent, investable and a rules-based approach, avoiding the
 need to identify mispriced securities commonly associated with active
 portfolio construction. Before we build our own portfolios I will
 compare performance indexes against their benchmarks across the
 globally.
 
-I will present this in tabular form showing a comparison between index
-and benchmark.
+-   I will present this in tabular form showing a comparison between
+    index and benchmark.
 
-After this I will build global dividend portfolios by sector and assess
-whether there performance offers superior excess return over the generic
-geographical option that we often see practitioners construct.
+-   I will build global dividend portfolios by jurisdiction and assess
+    relative performnace relative to benchmark offered by MSCI, S&P and
+    Russel.
+
+-   So the plan is simple. Use dividend yield and dividend growth per
+    share as signals. Construct geographical specific portfolios and
+    analyze
 
 # Instruments
+
+The global dividend portfolios considered in the table below are sourced
+from various literature from a practitioner perspective. They represent
+stylized portfolio constructed from respective market indexes.
 
 | Index Ticker      | Index Name                   | Benchmark                                                       | Ticker         | Description                                                                                                                                                                                                                                                                                                                                                                              |
 |:---|:----|:---------|:--|:--------------------------------------------------|
@@ -40,67 +48,6 @@ geographical option that we often see practitioners construct.
 | VIAAX US Equity   | VANGUARD INTL DVD AP IDX-ADM | Nasdaq International Dividend Achievers Select Index            | DVGITR Index   | Vanguard International Dividend Appreciation Index Fund aims to track the performance of the Nasdaq International Dividend Achievers Select Index. The Fund focuses on high quality companies located in developed and emerging markets that have both the ability and the commitment to grow their dividends over time.                                                                 |
 | VIHAX US Equity   | VANGUARD INTL HI DVD YLD-ADM | FTSE All-World ex U.S. High Dividend Yield Index                | GPVAN0TR Index | Vanguard International High Dividend Yield Index Fund aims to track the performance of the FTSE All-World ex U.S. High Dividend Yield Index by focusing on companies located in developed and emerging markets that are forecasted to have above-average dividend yields.                                                                                                                |
 
-# Portfolios
-
-![](README_files/figure-markdown_github/Cumulative%20Return-1.png)
+# Indexes
 
 # Fund Performance Across regions
-
--   why do we have to back and forth from tidy to xts to tidy.
-
--   
-
-``` r
- Moments_Comp <- function(funds, BM, Yrs_LookBack, NA_Check){
-  
-  funds_considered <- 
-    funds %>% filter(date >= fmxdat::safe_year_min(datesel = last(date), N = Yrs_LookBack))
-  
-  Funds_Cons <- 
-    funds_considered %>% 
-    group_by(Tickers) %>% 
-    summarise(N_noNA = sum(!is.na(Ret)) / length(unique(funds_considered$date)) ) %>% 
-    filter(N_noNA > NA_Check) %>% pull(Tickers)
-  
-    Fundxts <- 
-      funds_considered %>% filter(Tickers %in% Funds_Cons) %>% 
-      tbl_xts(cols_to_xts = Ret, spread_by = Tickers, Colnames_Exact = T)
-  
-    BMxts <- 
-      funds_considered %>% filter(Tickers %in% BM) %>% 
-      tbl_xts(cols_to_xts = Ret, Colnames_Exact = T) 
-
-  library(PerformanceAnalytics)
-    
-  Moms <- 
-      bind_rows(
-        data.frame(Return.cumulative(Fundxts) ) %>% round(., 3),
-        data.frame(Return.annualized(Fundxts, scale = 12, geometric = T)) %>% round(., 3),
-        data.frame(PerformanceAnalytics::Return.annualized.excess(Fundxts, BMxts) ) %>% round(., 3),
-        data.frame(sd.annualized(Fundxts, scale = 12, geometric = T)) %>% round(., 3),
-        
-        data.frame(PerformanceAnalytics::AdjustedSharpeRatio( Fundxts ) ) %>% round(., 3),
-        data.frame(PainIndex(Fundxts, scale = 12, geometric = T)) %>% round(., 3),
-        data.frame(AverageDrawdown(Fundxts, scale = 12)) %>% round(., 3),
-        
-        data.frame(fmxdat::Safe_TE(Ra = Fundxts, Rb = BMxts, scale = 12)) %>% round(., 3),
-        data.frame(PerformanceAnalytics::InformationRatio(Ra = Fundxts, Rb = BMxts)) %>% round(., 3),
-        data.frame(PerformanceAnalytics::CAPM.beta(Ra = Fundxts, Rb = BMxts, Rf = 0)) %>% round(., 3),
-        data.frame(PerformanceAnalytics::CAPM.beta.bull(Ra = Fundxts, Rb = BMxts, Rf = 0)) %>% round(., 3),
-        data.frame(PerformanceAnalytics::CAPM.beta.bear(Ra = Fundxts, Rb = BMxts, Rf = 0)) %>% round(., 3),
-        data.frame(PerformanceAnalytics::UpDownRatios(Ra = Fundxts, Rb = BMxts, method = "Percent", side = "Up")) %>% round(., 3),
-        data.frame(PerformanceAnalytics::CVaR(R = Fundxts, p = 0.05, method = "modified")) %>% round(., 3)
-        ) %>% 
-        
-        tibble::rownames_to_column("Info") %>%
-        mutate(Period = glue::glue("Last {Yrs_LookBack} Years"), Info = c("Cum Returns", "Returns (Ann.)", "Returns Excess (Ann.)", "SD (Ann.)", "Adj. Sharpe Ratio", "Pain Index", 
-                                                 "Avg DD", "Tracking Error", "Information Ratio", "Beta", "Beta Bull", "Beta Bear", "Up-Down Ratio", "Modified CVaR")) %>% 
-        relocate(Period, .before = Info) %>% as_tibble() 
-  
-  # This line replaces the `.` with a space.
-  # Note the forward slashes, as `.` there means everything, `\\.` means a full-stop
-  colnames(Moms) <- gsub("\\.", " ", colnames(Moms))
-  
-  Moms
-  }
-```

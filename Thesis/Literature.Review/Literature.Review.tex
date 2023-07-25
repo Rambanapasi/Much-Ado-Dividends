@@ -3,7 +3,7 @@
 \usepackage{lmodern}
 %%%% My spacing
 \usepackage{setspace}
-\setstretch{1.2}
+\setstretch{1.5}
 \DeclareMathSizes{12}{14}{10}{10}
 
 % Wrap around which gives all figures included the [H] command, or places it "here". This can be tedious to code in Rmarkdown.
@@ -130,6 +130,21 @@
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 
 %%% Include extra packages specified by user
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+\usepackage{caption}
 
 %%% Hard setting column skips for reports - this ensures greater consistency and control over the length settings in the document.
 %% page layout
@@ -182,28 +197,10 @@
 
 \cortext[cor]{Corresponding author: Gabriel Rambanapasi}
 
-\begin{abstract}
-\small{
-A discussion of past literature that has influenced the investigation
-into dividend strategies. We take a novel approach in combining firms of
-the same sectors but in different geographical regional. Overall we find
-that the effect is much more pronounced used a forward and backward
-looking indicator.
-}
-\end{abstract}
 
 \vspace{1cm}
 
 
-\begin{keyword}
-\footnotesize{
-Multivariate GARCH \sep Kalman Filter \sep Copula \\
-\vspace{0.3cm}
-}
-\footnotesize{
-\textit{JEL classification} L250 \sep L100
-}
-\end{keyword}
 
 
 
@@ -236,13 +233,9 @@ Multivariate GARCH \sep Kalman Filter \sep Copula \\
 
 
 
-\hypertarget{introduction}{%
-\section{\texorpdfstring{Introduction
-\label{Introduction}}{Introduction }}\label{introduction}}
-
-\hypertarget{dividends-constitution-and-impliaction-on-stakeholder-and-firms}{%
-\section{Dividends constitution and Impliaction on Stakeholder and
-Firms}\label{dividends-constitution-and-impliaction-on-stakeholder-and-firms}}
+\hypertarget{literature-review}{%
+\section{\texorpdfstring{Literature Review
+\label{Literature Review}}{Literature Review }}\label{literature-review}}
 
 Dividends are cash payouts that companies use to distribute capital to
 their shareholders. They can take various forms, such as cash, stock,
@@ -258,7 +251,7 @@ shareholder equity, specifically retained earnings, on the balance Baker
 In other words, the company incurs an obligation to pay out the
 dividend, and the value of the company retained by shareholders
 decreases accordingly. Various literature have shown that in some
-countries shareholder values dcreases in line with dividend payments.
+countries shareholder values decreases in line with dividend payments.
 Vijayakumar (\protect\hyperlink{ref-vijayakumar2010effect}{2010}),
 Hussainey, Mgbame \& Chijoke-Mgbame
 (\protect\hyperlink{ref-hussainey2011dividend}{2011}) and Masum
@@ -269,22 +262,22 @@ capital its just swapped for cash.
 
 Cash dividends, although widely used, are not as tax-efficient as other
 types of capital distributions, such as share buybacks or stock
-repurchases. This form of capital redistribution a firm exchanges assets
-for outstanding shares, which shrinks the company's assets by the amount
-of cash paid out. This action too reduces both its borrowing base and
-the shareholders' aggregate equity Baker \& Powell
+repurchases. In this form of capital redistribution, a firm exchanges
+assets for outstanding shares, which shrinks the company's assets by the
+amount of cash paid out. This action too reduces both its borrowing base
+and the shareholders' aggregate equity Baker \& Powell
 (\protect\hyperlink{ref-baker2009understanding}{2009: 429}). A clear
 benefit to the company is that it is more flexible when compared to the
 rigid dividend payout structures. To most higher net worth investors,
-tax benefits in the form of lower capital gains taxes also apply in most
-jurisdictions. It is thus no surprise that this form of earnings
-redistribution has gained traction in some advanced economies such as
-the US (with the Financial Times recently reporting that announced stock
-buybacks in the US reached an all time high of \$437 billion in 2018).
-Surprisingly, their adoption has been relatively slow in some emerging
-economies. According to a study by Wesson, Muller \& Ward
-(\protect\hyperlink{ref-wesson2014market}{2014}), there were only 195
-open market share repurchases announced in South Africa from 1999 to
+tax benefits in the form of lower capital gains taxes result in greater
+preference for sharebuybacks. It is thus no surprise that this form of
+earnings redistribution has gained traction in some advanced economies
+such as the US (with the Financial Times recently reporting that
+announced stock buybacks in the US reached an all time high of \$437
+billion in 2018). Surprisingly, their adoption has been relatively slow
+in some emerging economies. According to a study by Wesson, Muller \&
+Ward (\protect\hyperlink{ref-wesson2014market}{2014}), there were only
+195 open market share repurchases announced in South Africa from 1999 to
 2009. In comparison, Manconi, Peyer \& Vermaelen
 (\protect\hyperlink{ref-manconi2014buybacks}{2014}) estimated that share
 repurchases constituted approximately 58\% of total announcements in the
@@ -294,53 +287,58 @@ across the world, despite their popularity in the United States.
 
 The logical question then is why do firms pay dividends? Miller \& Rock
 (\protect\hyperlink{ref-miller1985dividend}{1985}) opines that dividends
-are irrelevant (MM theory), it argues that shareholders are indifferent
+are irrelevant (MM theory), he argues that shareholders are indifferent
 to dividend payments, implying that there is no optimal dividend policy.
-They contend that all dividend policies are equally good and thus
-payments of dividends could easily be reinvested in shares and make no
-difference to share holder wealth. However, the MM theorem fails to
-consider real-world market imperfections that may give relevance to
-dividend payments. To this end we we unpack the dividend puzzel that
-suggest dividends reduce equity value and make investors worse off Black
+Following this school of thought implies that all dividend policies are
+equally good and thus payments of dividends could easily be reinvested
+in shares and make no difference to share holder wealth. However, the MM
+theorem fails to consider real-world market imperfections that may give
+relevance to dividend payments. Considering these constraints the
+dividend puzzle gives an interesting take on its relevance and
+irrelevance, suggesting that dividends reduce equity value and make
+investors worse off Black
 (\protect\hyperlink{ref-black1996dividend}{1996}). However, dividends
 can be seen as a reward to investors who bear the risk associated with
 their investments. Also, dividends can be considered a return on
 investment rather than relying solely on capital gains Black
 (\protect\hyperlink{ref-black1996dividend}{1996}). Various literature
 has emerged trying to solve the puzzel, either supporting irrelevance or
-relevance in dividend payments.Global assets market face multiple
-constraints or imperfections namely flotation costs, transaction costs
-(e.g., taxes and flotation costs), information asymmetry, and
-principal-agent problems.
+relevance in dividend payments.
 
-Tax preferences play a role in the argument for dividend relevance.
-Different investors may be attracted to different stocks based on their
-tax treatments, thus investors choose stocks based on their individual
-investment needs Van Deventer, Imai \& Mesler
-(\protect\hyperlink{ref-van2013advanced}{2013}) Baker \& Powell
-(\protect\hyperlink{ref-baker2009understanding}{2009}). However,
-supporters of the MM theorem argue that changes in dividend policy
-should not significantly impact stock prices due to the substitution
-effect. According to this effect, allocation decisions of firms occur
-almost simultaneously, resulting in a net zero effect on prices
-{[}baker2009understanding{]}. Flotation costs refer to the opportunity
-costs incurred by a firm when paying dividends. By distributing
-dividends, companies forego opportunities to expand their operations
-using retained earnings. In a world without flotation costs, as
-suggested by the MM theorem, management would be indifferent between
+Global assets market face multiple constraints or imperfections namely
+transaction costs (e.g., taxes and flotation costs), information
+asymmetry, and principal-agent problems Baker \& Powell
+(\protect\hyperlink{ref-baker2009understanding}{2009}). Taxes play a
+role in the argument for dividend relevance. Different investors may be
+attracted to different stocks based on their tax treatments, thus
+investors choose stocks based on their individual investment needs Van
+Deventer, Imai \& Mesler (\protect\hyperlink{ref-van2013advanced}{2013})
+Baker \& Powell (\protect\hyperlink{ref-baker2009understanding}{2009}).
+However, supporters of the MM theorem argue that changes in dividend
+policy should not significantly impact stock prices due to the
+substitution effect. According to this effect, allocation decisions of
+firms occur almost simultaneously, resulting in a net zero effect on
+prices {[}baker2009understanding{]}. Flotation costs refer to the
+opportunity costs incurred by a firm when paying dividends. By
+distributing dividends, companies forego opportunities to expand their
+operations using retained earnings. In a world without flotation costs,
+as suggested by the MM theorem, management would be indifferent between
 issuing dividends and borrowing from the market. However, in reality,
 external financing comes at a higher cost, leading to trade-offs in
 dividend policy decisions.
 
 Information asymmetry between shareholders and managers is another
-factor that gives relevance to dividend payments. Investors rely on
-dividend announcements to assess a company's stock price. Dividend
-signaling conveys information about the company's quality
-{[}al2018revisiting \& baker1999corporate{]}. Investors compare dividend
-announcements to historical levels while considering company
-fundamentals. However, there is a risk of manipulation by management,
-making the dividend signal imperfect for determining share prices.
-Extending the argument on information asymmetry leads to the
+factor that gives relevance to dividend payments. Managers of businesses
+typically have greater knowledge of operations thus value of a business
+at any given point more than shareholders. As such, investors rely on
+dividend announcements to assess a company's valuation. Dividend
+signaling conveys information about the company's quality Al-Najjar \&
+Kilincarslan (\protect\hyperlink{ref-al2018revisiting}{2018}) and Baker
+\& Powell (\protect\hyperlink{ref-baker1999corporate}{1999}). Investors
+compare dividend announcements to historical levels while considering
+company fundamentals. However, there is a risk of manipulation by
+management, making the dividend signal imperfect for determining share
+prices. Extending the argument on information asymmetry leads to the
 principal-agent problem, where management and shareholders may have
 differing goals for the use of retained earnings, leading to conflict
 {[}baker2009understanding{]}. The free cash flow hypothesis suggests
@@ -349,12 +347,13 @@ sources, which increases borrowing costs and scrutiny from capital
 markets. This, in turn, reduces management's ability to make sub optimal
 investments {[}baker2009understanding{]}.
 
-Studies on dividend signaling for returns can be categorized into
-academic return signaling studies and practitioner-oriented long-term
-return studies. Academic studies, such as Fama \& French
-(\protect\hyperlink{ref-fama1988permanent}{1988}), initially found a
-positive correlation between increasing predictive power and longer
-forecast horizons. However, subsequent studies like Ang \& Bekaert
+Dividend payments and growth in dividends provides a return cue and over
+the years studies on dividend signaling can be categorized into academic
+return signaling studies and practitioner-oriented long-term return
+studies. Academic studies, such as Fama \& French
+(\protect\hyperlink{ref-fama1988permanent}{1988}), found a positive
+correlation between increasing predictive power and longer forecast
+horizons. However, subsequent studies like Ang \& Bekaert
 (\protect\hyperlink{ref-ang2007stock}{2007}) found no evidence of
 long-term predictability in stock returns when considering finite sample
 influence. This suggests that dividend yield may not be a reliable
@@ -366,15 +365,17 @@ contribution of dividend yield to total return
 
 On the other hand, practitioner-oriented literature focuses on the
 long-term returns of systematic dividend portfolios. One popular
-strategy is the ``Dogs of the Dow (DOD),'' which involves creating a
+strategy is the ``Dogs of the Dow (DOD),'' which involves constructing a
 portfolio of the top 10 highest-paying dividend stocks on the Dow Jones
 Industrial Index at the beginning of the year based on the dividends
-paid in the previous 12 months. The portfolio is held for 12 months, and
-the process is repeated annually. Various studies have examined the DOD
-strategy or similar high-yield dividend strategies in different time
-periods and regions, consistently showing superior risk-adjusted returns
-compared to the market index. Examples of such studies include Lemmon \&
-Nguyen (\protect\hyperlink{ref-lemmon2015dividend}{2015}) in Hong Kong,
+paid in the previous 12 months, therefore this entail deploying a high
+yield strategy. The most common methodology used in The portfolio is
+held for 12 months, and the process is repeated annually. Various
+studies have examined the DOD strategy or similar high-yield dividend
+strategies in different time periods and regions, consistently showing
+superior risk-adjusted returns compared to the market index. Examples of
+such studies include Lemmon \& Nguyen
+(\protect\hyperlink{ref-lemmon2015dividend}{2015}) in Hong Kong,
 Brzeszczyński \& Gajdka
 (\protect\hyperlink{ref-brzeszczynski2007dividend}{2007}) in Poland,
 Visscher \& Filbeck (\protect\hyperlink{ref-visscher2003dividend}{2003})
@@ -389,11 +390,99 @@ Desired Companies (MAC) compared to the Dow Jones Industrial Average and
 the S\&P 500. The study found significantly higher risk-adjusted returns
 for the DOD strategy.
 
-\begin{itemize}
-\tightlist
-\item
-  Look at papers that investigate dividend signalling by sector.
-\end{itemize}
+\newpage
+\begin{longtable}{rllll}
+\caption*{
+{\large Global Dividend Portfolio Signalling Results}
+} \\ 
+\toprule
+Year & Author & Geography & Signal & Result \\ 
+\midrule
+1997 & Filbeck & United Kingdom & High Dividend Yield & Dividend portfolio outperformed market index. \\ 
+2001 & Da Silva & Brazil & High Dividend Yield & Dividend portfolio outperformed market index. \\ 
+2003 & Visscher and Filbeck & Canada & Dividend Growth & Dividend portfolio outperformed market index. \\ 
+2007 & Brzeszczyński & Poland & Dividend Growth & Dividend portfolio outperformed market index. \\ 
+2007 & Fama and Eugene & US & High Dividend Yield & Dividend portfolio outperformed market index. \\ 
+2011 & Wang et al & China & High Dividend Yield & Dividend portfolio outperformed market index. \\ 
+2011 & Rennie & Optimiization & High Dividend Yield & Dividend portfolio outperformed market index. \\ 
+2015 & Lemmon & Hong Kong & High Dividend Yield & Dividend portfolio outperformed market index. \\ 
+2017 & Filbeck & US & High Dividend Yield & Dividend portfolio outperformed market index. \\ 
+2017 & You & Taiwan & High Dividend Yield & Dividend portfolio outperformed market index. \\ 
+\bottomrule
+\end{longtable}
+
+\newpage
+
+\hypertarget{methodology}{%
+\section{Methodology}\label{methodology}}
+
+\hypertarget{tax-considerations}{%
+\subsection{Tax considerations}\label{tax-considerations}}
+
+Portfolio theory was developed in a perfect world without friction. In
+practice, frictions need to be considered and in portfolio construction
+this often entails considering the effect of taxes on income and capital
+gains as they can erode returns and significantly alter risks and return
+characteristics of shares. The contribution of dividends and capital
+gains to total return can lead to varying tax efficiencies for shares as
+most jurisdictions imposed higher taxes than on capital gains. Therefore
+shares with higher contribution of dividends will be less tax efficient
+than those with a higher capital gains component and with timing most
+jurisdictions tax dividends in the year that they are received\^{}\{See
+Deloitte's tax guides and country highlights:
+\url{https://dits.deloitte.com/\#TaxGuides}\}.
+
+Jurisdictional laws can also affect the distribution of taxable returns
+amongst shares depending on their class namely ordinary shares or
+preferred shares. Preferred shares are viewed as a substitute for bonds
+and income from preferred shares are often given tax at a lower rate
+than those from dividends from ordinary shares.
+
+We will not survey global tax regimes or incorporate all potential tax
+complexities into the portfolio construction but assume a high level
+commonalities exists amongst all jurisdictions this study uses. This is
+a resonable assumption considering the summary of taxes on dividends and
+capital gains from major economies. For simplicity, we will assume a
+basic tax regime includes the key elements of investment-related taxes
+that are representative of what a typical taxable asset owner of a
+global portfolio will contend with. The proposed methodology to employ
+on the dividend portfolios use the following methodology.
+
+\[
+r_{a t}=p_d r_{p t}\left(1-t_d\right)+p_a r_{p t}\left(1-t_{c g}\right)
+\] where \(r_{a t}\) the after tax return, \(p_d=\) the proportion of
+\(r_{p t}\) attributed to dividend income, \(p_a=\) the proportion of
+\(r_{p t}\) attributed to price appreciation, \(t_d=\) the dividend tax
+rate and \(t_{c g}=\) the capital gains tax rate
+
+\newpage
+
+\hypertarget{portfolio-construction}{%
+\subsection{Portfolio Construction}\label{portfolio-construction}}
+
+First, we rebalance at the end of March and September and construct
+fully invested, long only portfolios. On each re balancing date, we
+first take the top 100 stocks by market capitalization (MC), and then
+select the top quintile (20 stocks) based on the relevant signal scores
+. We then apply 25bps trading costs to both buying and selling of
+stocks, and (where applicable) replace delisted stocks with cash.
+
+We will then use total return values, adjust for stock splits and other
+distorting effects on prices to calculate portfolio returns. We also
+carefully apply back-dated adjustments to dividends paid to accurately
+arrive at on-the-day dividends and actual closing prices when
+calculating our Dividend Yield and Dividend Per Share Growth measures.
+
+We also apply at each rebalancing several portfolio optimization
+routines (minimum variance, equal risk contribution (ERC), mean-variance
+and max diversification measures. The optimizations are constrained to
+have minimum and maximum weight exposure of 0.5 and 1.5 times the equal
+weighted alternative.With our quintile portfolios, this implies weights
+ranging between 2.5\% and 7.5\%.
+
+Following this we will construct back-tests on the subset of local data
+for the choose dividend signal portfolios. The factor portfolios
+considered are as follows
 
 \newpage
 
