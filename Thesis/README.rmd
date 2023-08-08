@@ -35,4 +35,7 @@ library(tbl2xts)
 library(tidyverse)
 library(xts)
 
-data <- readxl::read_xlsx("data/MAD .xlsx")
+source("code/EXCESSRETURN.R")
+
+df <- readxl::read_xlsx("data/MAD .xlsx")
+b <- df %>% MY_excess_return(., "GDUEEGF", "M2EFDY")
