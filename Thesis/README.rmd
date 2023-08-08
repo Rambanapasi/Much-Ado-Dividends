@@ -26,7 +26,7 @@ knitr::kable(Table_data)
 
 Excess returns here are calculated as the difference between cumulative index return and benchmark return. 
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
+```{r}
 # loadings 
 
 pacman::p_load("xts", "tidyverse", "tbl2xts", "PerformanceAnalytics", 

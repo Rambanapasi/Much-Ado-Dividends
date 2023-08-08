@@ -8,7 +8,8 @@ MY_excess_return <-  function(df, index_name, benchmark_name) {
     tbl2xts::xts_tbl() %>% 
     mutate(ex.ret = Index - Benchmark) %>% 
     mutate(cum_return = cumprod(1+ex.ret)) %>% 
-    select(date, cum_return)
+    select(date, cum_return) %>% 
+    rename(., index_name = cum_return)
   df
 }
 
