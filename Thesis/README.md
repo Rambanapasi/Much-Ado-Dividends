@@ -1,37 +1,22 @@
-# Roadmap
+# Objective
 
 The goal is to assess the performance of dividend yield as an investment
 strategy. I plan to use optimized portfolios of the highest paying
 dividend stock and/or highest growth in dividends for a group of assets.
-However, first I want to calculate all cumulative returns for all
-indexes and their benchmarks.
 
-## Approach
-
-To evaluate these portfolios, I will systematic portfolios which falls
-under passive equity portfolio construction. Passive equity investment
-offers transparent, investable and a rules-based approach, avoiding the
-need to identify mispriced securities commonly associated with active
-portfolio construction. Before we build our own portfolios I will
-compare performance indexes against their benchmarks across the
-globally.
-
--   I will present this in tabular form showing a comparison between
-    index and benchmark.
-
--   I will build global dividend portfolios by jurisdiction and assess
-    relative performnace relative to benchmark offered by MSCI, S&P and
-    Russel.
-
--   So the plan is simple. Use dividend yield and dividend growth per
-    share as signals. Construct geographical specific portfolios and
-    analyze
+-   First calculate the excess returns for indices and their benchmarks
+-   Explain relationships within the return series for each region with
+    and without stratifying the sample.
+-   Then maybe look to build own dividend portfolios to see how that
+    would have performed.
 
 # Instruments
 
 The global dividend portfolios considered in the table below are sourced
 from various literature from a practitioner perspective. They represent
-stylized portfolio constructed from respective market indexes.
+stylized portfolio constructed from respective market indexes. Using a
+similar approach I will consider broad market indices that are used to
+construct the dividend portfolios listed below.
 
 | Index Ticker      | Index Name                   | Benchmark                                                       | Ticker         | Description                                                                                                                                                                                                                                                                                                                                                                              |
 |:---|:----|:---------|:--|:--------------------------------------------------|
@@ -48,6 +33,7 @@ stylized portfolio constructed from respective market indexes.
 | VIAAX US Equity   | VANGUARD INTL DVD AP IDX-ADM | Nasdaq International Dividend Achievers Select Index            | DVGITR Index   | Vanguard International Dividend Appreciation Index Fund aims to track the performance of the Nasdaq International Dividend Achievers Select Index. The Fund focuses on high quality companies located in developed and emerging markets that have both the ability and the commitment to grow their dividends over time.                                                                 |
 | VIHAX US Equity   | VANGUARD INTL HI DVD YLD-ADM | FTSE All-World ex U.S. High Dividend Yield Index                | GPVAN0TR Index | Vanguard International High Dividend Yield Index Fund aims to track the performance of the FTSE All-World ex U.S. High Dividend Yield Index by focusing on companies located in developed and emerging markets that are forecasted to have above-average dividend yields.                                                                                                                |
 
-# Indexes
+## Excess Return
 
-# Fund Performance Across regions
+Excess returns here are calculated as the difference between cumulative
+index return and benchmark return.

@@ -160,7 +160,7 @@ Table
 
 # Data 
 
-
+%>% 
 # Methodology 
 
 ## Tax considerations
@@ -189,7 +189,7 @@ capitalization (MC), and then select the top quintile (20 stocks) based on the r
 
 We will then use total return values, adjust for stock splits and other distorting effects on prices to calculate portfolio returns. We also carefully apply back-dated adjustments to dividends paid to accurately arrive at on-the-day dividends and actual closing prices when calculating our Dividend Yield and Dividend Per Share Growth measures.
 
-We also apply at each rebalancing several portfolio optimization routines (minimum variance, equal risk contribution (ERC), mean-variance and max diversification measures. The optimizations are constrained to have minimum and maximum weight exposure of 0.5 and 1.5 times the equal weighted alternative.With our quintile portfolios, this implies weights ranging between 2.5% and 7.5%.
+We also apply at each rebalancing several portfolio optimization routines (minimum variance, equal risk contribution (ERC), mean-variance and max diversification measures. The optimization are constrained to have minimum and maximum weight exposure of 0.5 and 1.5 times the equal weighted alternative.With our quintile portfolios, this implies weights ranging between 2.5% and 7.5%.
 
 Following this we will construct back-tests on the subset of local data for the choose dividend signal portfolios. The factor portfolios considered are as follows 
 

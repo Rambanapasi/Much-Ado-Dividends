@@ -4,23 +4,17 @@ output:
     variant: markdown_github
 ---
 
-# Roadmap
+# Objective
 
-The goal is to assess the performance of dividend yield as an investment strategy. I plan to use optimized portfolios of the highest paying dividend stock and/or highest growth in dividends for a group of assets. However, first I want to calculate all cumulative returns for all indexes and their benchmarks. 
+The goal is to assess the performance of dividend yield as an investment strategy. I plan to use optimized portfolios of the highest paying dividend stock and/or highest growth in dividends for a group of assets.
 
-##  Approach
-
-To evaluate these portfolios, I will systematic portfolios which falls under passive equity portfolio construction.  Passive equity investment offers transparent, investable and a rules-based approach, avoiding the need to identify mispriced securities commonly associated with active portfolio construction. Before we build our own portfolios I will compare performance indexes against their benchmarks across the globally.
-
-- I will present this in tabular form showing a comparison between index and benchmark. 
-
-- I will build global dividend portfolios by jurisdiction and assess relative performnace relative to benchmark offered by MSCI, S&P and Russel. 
-
-- So the plan is simple. Use dividend yield and dividend growth per share as signals. Construct geographical specific portfolios and analyze 
+- First calculate the excess returns for indices and their benchmarks
+- Explain relationships within the return series for each region with and without stratifying the sample. 
+- Then maybe look to build own dividend portfolios to see how that would have performed.
 
 # Instruments 
 
-The global dividend portfolios considered in the table below are sourced from various literature from a practitioner perspective. They represent stylized portfolio constructed from respective market indexes. 
+The global dividend portfolios considered in the table below are sourced from various literature from a practitioner perspective. They represent stylized portfolio constructed from respective market indexes. Using a similar approach I will consider broad market indices that are used to construct the dividend portfolios listed below.
 
 ```{r Instruments, echo=FALSE, message=FALSE, warning=FALSE}
 library(knitr)
@@ -28,47 +22,17 @@ Table_data <- readxl::read_xlsx("data/Systematic Indices and Benchmarks.xlsx")
 knitr::kable(Table_data) 
 ```
 
-# Indexes
+##  Excess Return
 
-```{r Cumulative Return, echo=FALSE, message=FALSE, warning=FALSE}
+Excess returns here are calculated as the difference between cumulative index return and benchmark return. 
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+# loadings 
+
 pacman::p_load("xts", "tidyverse", "tbl2xts", "PerformanceAnalytics", 
                "lubridate", "glue")
 library(tbl2xts)
 library(tidyverse)
 library(xts)
 
-# Load the data 
-
-data <- readxl::read_xlsx("data/Benckmarks.xlsx")
-
-# Tidy the data and get simple returns
-d2 <- data %>% 
-  arrange(Date) %>% 
-  gather(index, value, -Date) %>% 
-  group_by(index)  
-
-#  Just converting it to be numeric
-
-d2$value <- as.numeric(d2$value)
-
-#  These are just the normal componded returns
-compounded_returns <- d2 %>%
-  arrange(Date) %>% 
-  mutate(dailyReturn = value/lag(value) - 1) %>% 
-  filter(Date >= lubridate::ymd(20130128))%>%
-  group_by(index) %>% 
-  mutate(daliyReturn = coalesce(dailyReturn, 0)) %>% 
-  mutate(dailyIndex = cumprod(1 + dailyReturn)) %>% 
-  mutate(YM = format(Date, "%y%b")) %>%
-  group_by(YM) %>% 
-  filter(Date == last(Date)) %>% 
-  group_by(index) %>% 
-  mutate(MonthlyReturn = dailyIndex/lag(dailyIndex) - 1) %>% 
-  select(Date, index, dailyIndex)
-
-```
-
-# Fund Performance Across regions 
-
-
-
+data <- readxl::read_xlsx("data/MAD .xlsx")
