@@ -37,3 +37,5 @@ construct the dividend portfolios listed below.
 
 Excess returns here are calculated as the difference between cumulative
 index return and benchmark return.
+
+![](README_files/figure-markdown_github/unnamed-chunk-1-1.png)

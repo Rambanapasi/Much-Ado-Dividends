@@ -26,16 +26,45 @@ knitr::kable(Table_data)
 
 Excess returns here are calculated as the difference between cumulative index return and benchmark return. 
 
-```{r}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 # loadings 
-
 pacman::p_load("xts", "tidyverse", "tbl2xts", "PerformanceAnalytics", 
                "lubridate", "glue")
 library(tbl2xts)
 library(tidyverse)
 library(xts)
-
 source("code/EXCESSRETURN.R")
 
 df <- readxl::read_xlsx("data/MAD .xlsx")
-b <- df %>% MY_excess_return(., "GDUEEGF", "M2EFDY")
+
+
+# get all permutatation 
+A <- df %>% MY_excess_return(.,"FUDP", "TUKXG") 
+B <- df %>% MY_excess_return(., "M2EFDY", "GDUEEGF") 
+C <- df %>% MY_excess_return(., "M2EUGDY", "GDDUE15X") 
+D <- df %>% MY_excess_return(., "M2GBDY", "GDDUUK") 
+E <- df %>% MY_excess_return(., "M2JPDY", "TJDIVD") 
+F1 <- df %>% MY_excess_return(., "M2USADVD", "GDDUUS") 
+G <- df %>% MY_excess_return(., "M2WDHDVD", "GDDUWI") 
+H <- df %>% MY_excess_return(., "SPDAEET", "SPTR350E") 
+I <- df %>% MY_excess_return(., "SPDAUDT", "SPXT") 
+J <- df %>% MY_excess_return(., "SPJXDAJT", "TPXDDVD") 
+K <- df %>% MY_excess_return(., "SPSADAZT", "JALSH") 
+L <- df %>% MY_excess_return(., "TJDIVD", "JALSH")
+
+joined_df <- bind_cols(A, B, C, D, E, F1, G, H, I, J, K, L) 
+
+compare <- joined_df %>% select(date...1, FUDP, M2EFDY, M2EUGDY, M2GBDY, M2JPDY, M2USADVD, M2WDHDVD, SPDAEET, SPDAUDT, SPJXDAJT, SPSADAZT, TJDIVD) %>% gather(Index , Return , -date...1)
+
+plot <- compare %>% ggplot(aes(x = date...1, y = Return, color = Index)) +
+  geom_line() +
+  labs(x = "Date", y = "Return", color = "Index") +
+  theme_minimal() +
+  facet_wrap(~ Index, scales = "free_y", ncol = 4)
+
+plot
+```
+
+
+
+
