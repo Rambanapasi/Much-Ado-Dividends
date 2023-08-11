@@ -28,7 +28,7 @@ I calculate excess returns as the monthly difference return for index and benchm
 
 The indices across regions have different inception dates therefore not purely comparable across regions. 
 
-From the figure below, results of dividend strategies (High Yield or Dividend Growth) all over the world have been consistently returned  a positive excess over the market index, even though sometimes volatile.  
+From the figure below, results of dividend strategies (High Yield or Dividend Growth) at different inception dates have been consistently returned  a positive excess over the market index, even though sometimes volatile.  This shows full sample performance. 
 
 - consider the mix between high dividend yield versus dividend growth portfolios, so color coordinate the different strategies?
 
@@ -71,6 +71,8 @@ plot <- compare %>% ggplot(aes(x = date...1, y = Return)) +
 
 plot
 ```
+## Performance Stats
+
 ```{r}
 funds <- readxl::read_xlsx("data/MAD .xlsx")
 source("code/Statistics.R")
@@ -84,14 +86,16 @@ funds <- funds %>%
 
 BM <- "TUKXG"
 
-funds %>% Moments_Comp(., BM = BM, Yrs_LookBack = 1, NA_Check = 0.9)
-funds %>% Moments_Comp(., BM = BM, Yrs_LookBack = 3, NA_Check = 0.9)
-funds %>% Moments_Comp(., BM = BM, Yrs_LookBack = 5, NA_Check = 0.9)
+One_year <- funds %>% Moments_Comp(., BM = BM, Yrs_LookBack = 1, NA_Check = 0.9)
+Three_year <- funds %>% Moments_Comp(., BM = BM, Yrs_LookBack = 3, NA_Check = 0.9)
+Five_year <- funds %>% Moments_Comp(., BM = BM, Yrs_LookBack = 5, NA_Check = 0.9)
 
+kable(One_year)
+kable(Three_year)
+kable(Five_year)
 ```
 
-
-## Stratification 
+## Stratification to diffrent time periods
 
 
 ```{r}
