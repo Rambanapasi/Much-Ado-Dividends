@@ -12,56 +12,43 @@ stock and/or highest growth in dividends for a group of assets.
 
 # Instruments
 
-The global dividend portfolios considered in the table below are sourced
-from various literature from a practitioner perspective. They represent
-stylized portfolio constructed from respective market indexes.
+To investigate the performance of dividend paying strategies, either
+dividend yield or dividend growth I will consider globally traded
+indices and their benchmarks. For concreteness, I will look at those
+prescribed in literature. From this I will find the excess return.
 
-Using a similar approach I will consider broad market indices that are
-used to construct the dividend portfolios listed below.
-
-| Index Ticker      | Index Name                   | Benchmark                                                       | Ticker         | Description                                                                                                                                                                                                                                                                                                                                                                              |
-|:---|:----|:---------|:--|:--------------------------------------------------|
-| DASHDVD CH Equity | DACHENG CSI DVD INDEX FUND A | CSI Dividend Index                                              | SH000922 Index | Dacheng CSI Dividend Index Fund s an open-ended fund incorporated in China. The Fund’s objective is to closely replicates the performance of the CSI Dividend Index and minimizing the tracking error. The fund invests at least 90% of it’s total asset in the members of the tracking index.                                                                                           |
-| SAMEUVK FH Equity | DANSKE INVEST- EUR HI DIV -G | MSCI EMU Value -index                                           | MXEM000V Index | Danske Invest Europe High Dividend Fund is an open-end fund registered in Finland. The Fund invests in equities and equity-related securities of value companies in Europe. The Fund’s aim is to exceed the performance of MSCI EMU Value -index in the long term.                                                                                                                       |
-| 2236 JP Equity    | GX S&P 500 DVD ARISTOCRATS   | S&P 500 Dividend Aristocrats Price Index                        | SPDAUDP Index  | Global X S&P 500 Dividend Aristocrats ETF is an exchange-traded fund incorporated in Japan. The objective is to provide investment results that corresponds to the performance of S&P 500 Dividend Aristocrats Price Index.                                                                                                                                                              |
-| TVEAX US Equity   | GUGGENHEIM RBP DIVIDEND-A    | Dow Jones RBP U.S. Dividend Index                               | INDU Index     | Guggenheim RBP Dividend Fund seeks investment results that correspond generally to the total return performance of the Dow Jones RBP U.S. Dividend Index by investing all of the securities comprising the Index in proportion to the weightings in the Index.                                                                                                                           |
-| GVIYX US Equity   | GUIDESTONE VAL EQTY INDX-INS | Russell 1000 Value Index                                        | RU10VATR Index | Guidestone Value Equity Index Fund aims to provide investment results approximating the aggregate price and dividend performance of the securities included in the Russell 1000 Value Index. The Fund invests in equity securities in the Russell 1000 Value Index, in weightings that approximate the relative composition of the securities contained in the Russell 1000 Value Index. |
-| 315960 KS Equity  | KBSTAR LC HIGH DVD 10 TR ETF | WISE Large Cap High Dividend 10 Total Return Index              | WFNILCHD Index | KB KBSTAR Large Cap High Dividend10TR ETF is an exchange-traded fund established in South Korea. The fund’s objective is to provide investment return that tracks the performance of WISE Large Cap High Dividend 10 Total Return Index.                                                                                                                                                 |
-| SIMDPB1 SJ Equity | SATRIX DIVIDEND+ INDEX FU A2 | FTSE/ JSE Top 40 and FTSE/JSE Mid Cap Index (excl. Real Estate) | NA             | Satrix Dividend+ Index Fund is an open-end fund incorporated in South Africa. The Fund’s objective is to replicate the FTSE/JSE Dividend+ Index. The index consists of 30 high dividend yielding companies within the universe of the FTSE/ JSE Top 40 and FTSE/JSE Mid Cap Index (excl. Real Estate) that are expected to pay the best normal dividends over the forthcoming year.      |
-| LGSEADV FP Equity | STRATEGIE EUROACTION DIV     | MSCI EMU High Dividend Yield en Euro                            | MXEMHDVD Index | Strategie EuroActions Dividendes is an open-end fund registered in France. The objective of the Fund is to obtain an performance at least equal to its index: MSCI EMU High Dividend Yield en Euro. The Fund invest at least 75 percent of its assets in securities listed on that index.                                                                                                |
-| TISCOHD TB Equity | TISCO HIGH DIVIDEND EQUITY   | SET High Dividend 30 Index                                      | SETHDTR Index  | TISCO High Dividend Equity Fund is an open-end fund incorporated in Thailand. The Fund invests at least 80% of its portfolio in the members of the SET High Dividend 30 Index.                                                                                                                                                                                                           |
-| VHYAX US Equity   | VANGUARD HI DVD YLD INDX-ADM | FTSE High Dividend Yield                                        | TGPVAN Index   | Vanguard High Dividend Yield Index Fund seeks the performance of the FTSE High Dividend Yield Index which consists of common stocks of companies that pay higher than average dividends by replicating the index by investing it assets the stocks that make up the index at the same proportion as its weighting in the index.                                                          |
-| VIAAX US Equity   | VANGUARD INTL DVD AP IDX-ADM | Nasdaq International Dividend Achievers Select Index            | DVGITR Index   | Vanguard International Dividend Appreciation Index Fund aims to track the performance of the Nasdaq International Dividend Achievers Select Index. The Fund focuses on high quality companies located in developed and emerging markets that have both the ability and the commitment to grow their dividends over time.                                                                 |
-| VIHAX US Equity   | VANGUARD INTL HI DVD YLD-ADM | FTSE All-World ex U.S. High Dividend Yield Index                | GPVAN0TR Index | Vanguard International High Dividend Yield Index Fund aims to track the performance of the FTSE All-World ex U.S. High Dividend Yield Index by focusing on companies located in developed and emerging markets that are forecasted to have above-average dividend yields.                                                                                                                |
+| TICKER   | NAME                                                                      | Benchmark Ticker | Benchmark Name                          |
+|:-----|:------------------------------------|:---------|:--------------------|
+| FUDP     | FTSE UK Dividend+ Index                                                   | TUKXG            | FTSE 100 Total Return Index GBP         |
+| M2EFDY   | MSCI EM Emerging Markets High Dividend Yield Gross Total Return USD Index | GDUEEGF          | MSCI Daily TR Gross EM USD              |
+| M2GBDY   | MSCI United Kingdom High Dividend Yield Gross Total Return USD Index      | GDDUUK           | MSCI UK Gross Total Return USD Index    |
+| M2JPDY   | MSCI Japan High Dividend Yield Gross Total Return USD                     | TPXDDVD          | Topix Total Return Index JPY            |
+| M2USADVD | MSCI USA Hdy Gross Total Return USD Index                                 | GDDUUS           | MSCI Daily TR Gross USA USD             |
+| M2WDHDVD | MSCI World HIGH DIVIDEND YIELD Gross Total Return Total Return USD Index  | GDDUWI           | MSCI Daily TR Gross World USD           |
+| SPDAEET  | S&P Europe 350 Dividends Aristocrats Total Return Index                   | SPTR350E         | S&P Europe 350 Gross Total Return Index |
+| SPJXDAJT | S&P/JPX Dividend Aristocrats Total Return Index                           | SPXT             | S&P 500 Total Return Index              |
+| SPDAUDT  | S&P 500 Dividend Aristocrats Total Return Index                           | SPXT             | S&P 500 Total Return Index              |
+| SPSADAZT | S&P South Africa Dividend Aristocrats Index ZAR Gross TR                  | JALSH            | FTSE/JSE Africa All Share Index         |
+| TJDIVD   | FTSE/JSE Dividend+ Index Total Return Index                               | JALSH            | FTSE/JSE Africa All Share Index         |
+| M2EUGDY  | MSCI Europe Ex UK High Dividend Yield Gross Total Return USD Index        | GDDUE15X         | MSCI Daily TR Gross Europe Ex UK USD    |
 
 ## Excess Return
 
-Excess returns here are calculated as the difference between cumulative
-index return and benchmark return of several globally traded dividend
-investment portfolios. All of the indexes considered gross total return
-and are compared to the performance of the relevant universe benchmark
-in the same currency.
+I calculate excess returns as the monthly difference return for index
+and benchmark, then calculate cumulative returns for the result.
 
-Cumulative returns are not comparable across different indexes for the
-different durations. Mind that in the analysis.
+The indices across regions have different inception dates therefore not
+purely comparable across regions.
 
-From the results dividend strategies all over the world have been
-consistently giving a positive premium over the market index. Some
-indices have been more successful that others, FUDP giving the highest
-cumulative return amongst all of them.
+From the figure below, results of dividend strategies (High Yield or
+Dividend Growth) all over the world have been consistently returned a
+positive excess over the market index, even though sometimes volatile.
 
 -   consider the mix between high dividend yield versus dividend growth
-    portfolios.
-
--   make the inception date the same just to get comparability across
-    different markets
+    portfolios, so color coordinate the different strategies?
 
 ![](README_files/figure-markdown_github/unnamed-chunk-1-1.png) \##
 Stratification
-
-If we stratify these samples into different equity market stability
-cycles, we can then dichipher when these dividend strategies really
-work.
 
 ``` r
 # retrieve from yahoo
@@ -154,13 +141,13 @@ joined_df <- bind_cols(A, B, C, D, E, F1, G, H, I, J, K, L)
 ``` r
 compare <- joined_df %>% select(date...1, FUDP, M2EFDY, M2EUGDY, M2GBDY, M2JPDY, M2USADVD, M2WDHDVD, SPDAEET, SPDAUDT, SPJXDAJT, SPSADAZT, TJDIVD) %>% gather(Index , Return , -date...1)
 
-plot <- compare %>% ggplot(aes(x = date...1, y = Return, color = Index)) +
-  geom_line() +
-  labs(x = "Date", y = "Return", color = "Index") +
-  theme_minimal() +
-  facet_wrap(~ Index, scales = "free_y", ncol = 4)
+g <- compare %>% ggplot(., aes(x = date...1, y = Return)) +
+geom_line() +
+labs(x = "Date", y = "Return") +
+theme_minimal() +
+facet_wrap(~ Index, scales = "free_y", ncol = 4)
 
-plot 
+g
 ```
 
 ![](README_files/figure-markdown_github/unnamed-chunk-2-1.png)

@@ -14,30 +14,23 @@ The goal is to assess the performance of dividend yield as an investment strateg
 
 # Instruments 
 
-The global dividend portfolios considered in the table below are sourced from various literature from a practitioner perspective. They represent stylized portfolio constructed from respective market indexes. 
-
-Using a similar approach I will consider broad market indices that are used to construct the dividend portfolios listed below.
+To investigate the performance of dividend paying strategies, either dividend yield or dividend growth I will consider globally traded indices and their benchmarks. For concreteness, I will look at those prescribed in literature. From this I will find the excess return. 
 
 ```{r Instruments, echo=FALSE, message=FALSE, warning=FALSE}
 library(knitr)
-Table_data <- readxl::read_xlsx("data/Systematic Indices and Benchmarks.xlsx")
+Table_data <- readxl::read_xlsx("data/Instruments from MAD.xlsx")
 knitr::kable(Table_data) 
 ```
 
 ##  Excess Return
 
-Excess returns here are calculated as the difference between cumulative index return and benchmark return of several globally traded dividend investment portfolios. All of the indexes considered gross total return and are compared to the performance of the relevant universe benchmark in the same currency.
+I calculate excess returns as the monthly difference return for index and benchmark, then calculate cumulative returns for the result. 
 
-Cumulative returns are not comparable across different indexes for the different durations. Mind that in the analysis. 
+The indices across regions have different inception dates therefore not purely comparable across regions. 
 
-From the results dividend strategies all over the world have been consistently giving a positive premium over the market index. Some indices have been more successful that others, FUDP giving the highest cumulative return amongst all of them.
+From the figure below, results of dividend strategies (High Yield or Dividend Growth) all over the world have been consistently returned  a positive excess over the market index, even though sometimes volatile.  
 
-
-
-- consider the mix between high dividend yield versus dividend growth portfolios. 
-
-- make the inception date the same just to get comparability across different markets
-
+- consider the mix between high dividend yield versus dividend growth portfolios, so color coordinate the different strategies?
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 # loadings 
@@ -47,6 +40,7 @@ library(tbl2xts)
 library(tidyverse)
 library(xts)
 source("code/EXCESSRETURN.R")
+source("code/EXCESSRETURN2.R")
 library(quantmod)
 
 df <- readxl::read_xlsx("data/MAD .xlsx") 
@@ -69,9 +63,9 @@ joined_df <- bind_cols(A, B, C, D, E, F1, G, H, I, J, K, L)
 
 compare <- joined_df %>% select(date...1, FUDP, M2EFDY, M2EUGDY, M2GBDY, M2JPDY, M2USADVD, M2WDHDVD, SPDAEET, SPDAUDT, SPJXDAJT, SPSADAZT, TJDIVD) %>% gather(Index , Return , -date...1)
 
-plot <- compare %>% ggplot(aes(x = date...1, y = Return, color = Index)) +
+plot <- compare %>% ggplot(aes(x = date...1, y = Return)) +
   geom_line() +
-  labs(x = "Date", y = "Return", color = "Index") +
+  labs(x = "Date", y = "Return") +
   theme_minimal() +
   facet_wrap(~ Index, scales = "free_y", ncol = 4)
 
@@ -79,7 +73,6 @@ plot
 ```
 ## Stratification 
 
-If we stratify these samples into different equity market stability cycles, we can then dichipher when these dividend strategies really work. 
 
 ```{r}
 # retrieve from yahoo
@@ -134,13 +127,13 @@ joined_df <- bind_cols(A, B, C, D, E, F1, G, H, I, J, K, L)
 
 compare <- joined_df %>% select(date...1, FUDP, M2EFDY, M2EUGDY, M2GBDY, M2JPDY, M2USADVD, M2WDHDVD, SPDAEET, SPDAUDT, SPJXDAJT, SPSADAZT, TJDIVD) %>% gather(Index , Return , -date...1)
 
-plot <- compare %>% ggplot(aes(x = date...1, y = Return, color = Index)) +
-  geom_line() +
-  labs(x = "Date", y = "Return", color = "Index") +
-  theme_minimal() +
-  facet_wrap(~ Index, scales = "free_y", ncol = 4)
+g <- compare %>% ggplot(., aes(x = date...1, y = Return)) +
+geom_line() +
+labs(x = "Date", y = "Return") +
+theme_minimal() +
+facet_wrap(~ Index, scales = "free_y", ncol = 4)
 
-plot 
+g
 ```
 
 
