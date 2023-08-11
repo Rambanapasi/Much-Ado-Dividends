@@ -47,107 +47,96 @@ positive excess over the market index, even though sometimes volatile.
 -   consider the mix between high dividend yield versus dividend growth
     portfolios, so color coordinate the different strategies?
 
-![](README_files/figure-markdown_github/unnamed-chunk-1-1.png) \##
-Stratification
+![](README_files/figure-markdown_github/unnamed-chunk-1-1.png)
 
 ``` r
-# retrieve from yahoo
-vix <- getSymbols("VIX")
+funds <- readxl::read_xlsx("data/MAD .xlsx")
+source("code/Statistics.R")
+
+funds <- funds %>% 
+  gather(Tickers, Value, -Date) %>% 
+  arrange(Date) %>% group_by(Tickers) %>%
+  mutate(Ret = Value/lag(Value)-1) %>% 
+  mutate(Ret =coalesce(Ret,0)) %>% 
+  ungroup()
+
+BM <- "TUKXG"
+
+funds %>% Moments_Comp(., BM = BM, Yrs_LookBack = 1, NA_Check = 0.9)
 ```
 
-    ## Warning: VIX contains missing values. Some functions will not work if objects
-    ## contain missing values in the middle of the series. Consider using na.omit(),
-    ## na.approx(), na.fill(), etc to remove or replace them.
+    ## # A tibble: 14 × 24
+    ##    Period      Info    FUDP M2EFDY   TUKXG GDUEEGF M2GBDY GDDUUK M2JPDY GDDUE15X
+    ##    <glue>      <chr>  <dbl>  <dbl>   <dbl>   <dbl>  <dbl>  <dbl>  <dbl>    <dbl>
+    ##  1 Last 1 Yea… Cum … -0.04   0.133   0.078   0.052  0.128  0.166  0.219    0.277
+    ##  2 Last 1 Yea… Retu… -0.002  0.006   0.004   0.003  0.006  0.008  0.01     0.012
+    ##  3 Last 1 Yea… Retu… -0.113  0.053   0      -0.024  0.048  0.085  0.136    0.191
+    ##  4 Last 1 Yea… SD (…  0.033  0.029   0.026   0.035  0.05   0.04   0.038    0.044
+    ##  5 Last 1 Yea… Adj.… -0.271  1.00    0.581   0.344  0.561  0.806  1.26     1.30 
+    ##  6 Last 1 Yea… Pain…  0.057  0.026   0.021   0.052  0.066  0.031  0.022    0.029
+    ##  7 Last 1 Yea… Avg …  0.033  0.024   0.021   0.057  0.04   0.031  0.024    0.036
+    ##  8 Last 1 Yea… Trac…  0.016  0.032   0       0.037  0.038  0.026  0.045    0.031
+    ##  9 Last 1 Yea… Info… -1.61   0.388 NaN      -0.156  0.295  0.755  0.718    1.44 
+    ## 10 Last 1 Yea… Beta   1.11   0.363   1       0.397  1.27   1.16   0.09     1.20 
+    ## 11 Last 1 Yea… Beta…  1.16   0.311   1       0.345  1.38   1.17   0.117    1.28 
+    ## 12 Last 1 Yea… Beta…  1.07   0.282   1       0.283  1.14   1.16   0.111    1.12 
+    ## 13 Last 1 Yea… Up-D…  0.469  0.383   0       0.391  0.57   0.586  0.422    0.586
+    ## 14 Last 1 Yea… Modi… -0.022 -0.015  -0.023  -0.017 -0.032 -0.03  -0.022   -0.026
+    ## # ℹ 14 more variables: M2USADVD <dbl>, GDDUUS <dbl>, M2WDHDVD <dbl>,
+    ## #   GDDUWI <dbl>, SPDAEET <dbl>, SPTR350E <dbl>, SPJXDAJT <dbl>, SPDAUDT <dbl>,
+    ## #   SPXT <dbl>, TPXDDVD <dbl>, SPSADAZT <dbl>, JALSH <dbl>, TJDIVD <dbl>,
+    ## #   M2EUGDY <dbl>
 
 ``` r
-# Turn to tibble 
-VIX <- VIX %>%
-  tbl2xts::xts_tbl(.)
-  
-VIX <- VIX %>% select(date, VIX.Close) %>% 
-  rename(., close = VIX.Close)
-# get rolling volatilty 
-
-RollSD <- VIX %>%  arrange(date) %>%
-  mutate(YM = format(date, "%Y-%b")) %>% 
-  group_by(YM) %>% 
-  mutate(ret = log(close)- lag(log(close))) %>% 
-  mutate(ret = coalesce(ret, 0)) %>% 
-  mutate(RollSD = RcppRoll::roll_sd(1+ret, 12, fill = NA, align = "right") * 
-           sqrt(12)) %>% 
-  ungroup() %>% 
-  filter(!is.na(RollSD)) %>% 
-  select(date, RollSD)
-# label and pull dates 
-strat_df <- 
-  RollSD %>% mutate(topQ = quantile(RollSD, probs = 0.8), 
-                botQ = quantile(RollSD, probs = 0.2),
-                Strat = ifelse(RollSD >= topQ, "HiVol", 
-                               ifelse(RollSD <= botQ, "LowVol", "Normal_Vol")))
-#  lets pull dates for the high vol period
-hivol_per_vector <- strat_df %>% filter(Strat %in% "HiVol") %>% pull(date)
-
-# use dates to get returns for indexes and benchamrks, I will use the comparison dataframe, that has excess returns to do a crude analysis on excess returns during these periods 
-
-df %>% filter(Date %in% hivol_per_vector) %>% MY_excess_return(.,"FUDP", "TUKXG") 
+funds %>% Moments_Comp(., BM = BM, Yrs_LookBack = 3, NA_Check = 0.9)
 ```
 
-    ## # A tibble: 207 × 2
-    ##    date                 FUDP
-    ##    <dttm>              <dbl>
-    ##  1 2014-12-19 00:00:00 0.998
-    ##  2 2014-12-22 00:00:00 0.996
-    ##  3 2014-12-23 00:00:00 0.997
-    ##  4 2014-12-24 00:00:00 0.997
-    ##  5 2014-12-26 00:00:00 0.998
-    ##  6 2014-12-29 00:00:00 0.996
-    ##  7 2014-12-30 00:00:00 0.995
-    ##  8 2014-12-31 00:00:00 0.993
-    ##  9 2015-01-20 00:00:00 0.994
-    ## 10 2015-01-21 00:00:00 0.990
-    ## # ℹ 197 more rows
+    ## # A tibble: 14 × 24
+    ##    Period      Info    FUDP M2EFDY   TUKXG GDUEEGF M2GBDY GDDUUK M2JPDY GDDUE15X
+    ##    <glue>      <chr>  <dbl>  <dbl>   <dbl>   <dbl>  <dbl>  <dbl>  <dbl>    <dbl>
+    ##  1 Last 3 Yea… Cum …  0.136  0.154   0.347   0.004  0.288  0.371  0.376    0.255
+    ##  2 Last 3 Yea… Retu…  0.002  0.002   0.005   0      0.004  0.005  0.005    0.004
+    ##  3 Last 3 Yea… Retu… -0.055 -0.05    0      -0.092 -0.015  0.006  0.007   -0.023
+    ##  4 Last 3 Yea… SD (…  0.035  0.03    0.031   0.036  0.047  0.041  0.036    0.043
+    ##  5 Last 3 Yea… Adj.…  0.265  0.345   0.647   0.008  0.39   0.535  0.666    0.387
+    ##  6 Last 3 Yea… Pain…  0.07   0.113   0.021   0.179  0.077  0.046  0.063    0.084
+    ##  7 Last 3 Yea… Avg …  0.03   0.034   0.023   0.037  0.042  0.033  0.028    0.029
+    ##  8 Last 3 Yea… Trac…  0.014  0.032   0       0.037  0.033  0.022  0.045    0.028
+    ##  9 Last 3 Yea… Info… -0.915 -0.372 NaN      -0.604 -0.108  0.064  0.037   -0.199
+    ## 10 Last 3 Yea… Beta   1.02   0.417   1       0.464  1.11   1.14   0.119    1.05 
+    ## 11 Last 3 Yea… Beta…  0.992  0.256   1       0.255  1.02   1.12   0.087    1.00 
+    ## 12 Last 3 Yea… Beta…  1.02   0.532   1       0.57   1.13   1.20   0.17     1.12 
+    ## 13 Last 3 Yea… Up-D…  0.449  0.336   0       0.366  0.53   0.571  0.328    0.505
+    ## 14 Last 3 Yea… Modi… -0.025 -0.022  -0.024  -0.022 -0.033 -0.032 -0.021   -0.029
+    ## # ℹ 14 more variables: M2USADVD <dbl>, GDDUUS <dbl>, M2WDHDVD <dbl>,
+    ## #   GDDUWI <dbl>, SPDAEET <dbl>, SPTR350E <dbl>, SPJXDAJT <dbl>, SPDAUDT <dbl>,
+    ## #   SPXT <dbl>, TPXDDVD <dbl>, SPSADAZT <dbl>, JALSH <dbl>, TJDIVD <dbl>,
+    ## #   M2EUGDY <dbl>
 
 ``` r
-A <- df %>%filter(Date %in% hivol_per_vector) %>%  MY_excess_return(.,"FUDP", "TUKXG") 
-B <- df %>%filter(Date %in% hivol_per_vector) %>%  MY_excess_return(., "M2EFDY", "GDUEEGF") 
-C <- df %>% filter(Date %in% hivol_per_vector) %>% MY_excess_return(., "M2EUGDY", "GDDUE15X") 
-D <- df %>%filter(Date %in% hivol_per_vector) %>%  MY_excess_return(., "M2GBDY", "GDDUUK") 
-E <- df %>%filter(Date %in% hivol_per_vector) %>%  MY_excess_return(., "M2JPDY", "TJDIVD") 
-F1 <- df %>%filter(Date %in% hivol_per_vector) %>%  MY_excess_return(., "M2USADVD", "GDDUUS") 
-G <- df %>% filter(Date %in% hivol_per_vector) %>% MY_excess_return(., "M2WDHDVD", "GDDUWI") 
-H <- df %>% filter(Date %in% hivol_per_vector) %>% MY_excess_return(., "SPDAEET", "SPTR350E") 
-I <- df %>%filter(Date %in% hivol_per_vector) %>%  MY_excess_return(., "SPDAUDT", "SPXT") 
-J <- df %>%filter(Date %in% hivol_per_vector) %>%  MY_excess_return(., "SPJXDAJT", "TPXDDVD") 
-K <- df %>%filter(Date %in% hivol_per_vector) %>%  MY_excess_return(., "SPSADAZT", "JALSH") 
-L <- df %>%filter(Date %in% hivol_per_vector) %>%  MY_excess_return(., "TJDIVD", "JALSH")
-  
-joined_df <- bind_cols(A, B, C, D, E, F1, G, H, I, J, K, L) 
+funds %>% Moments_Comp(., BM = BM, Yrs_LookBack = 5, NA_Check = 0.9)
 ```
 
-    ## New names:
-    ## • `date` -> `date...1`
-    ## • `date` -> `date...3`
-    ## • `date` -> `date...5`
-    ## • `date` -> `date...7`
-    ## • `date` -> `date...9`
-    ## • `date` -> `date...11`
-    ## • `date` -> `date...13`
-    ## • `date` -> `date...15`
-    ## • `date` -> `date...17`
-    ## • `date` -> `date...19`
-    ## • `date` -> `date...21`
-    ## • `date` -> `date...23`
+    ## # A tibble: 14 × 24
+    ##    Period      Info    FUDP M2EFDY   TUKXG GDUEEGF M2GBDY GDDUUK M2JPDY GDDUE15X
+    ##    <glue>      <chr>  <dbl>  <dbl>   <dbl>   <dbl>  <dbl>  <dbl>  <dbl>    <dbl>
+    ##  1 Last 5 Yea… Cum … -0.257  0.078   0.182   0.107  0.11   0.202  0.3      0.368
+    ##  2 Last 5 Yea… Retu… -0.003  0.001   0.002   0.001  0.001  0.002  0.002    0.003
+    ##  3 Last 5 Yea… Retu… -0.087 -0.018   0      -0.013 -0.012  0.003  0.019    0.029
+    ##  4 Last 5 Yea… SD (…  0.045  0.034   0.038   0.038  0.053  0.046  0.039    0.044
+    ##  5 Last 5 Yea… Adj.… -0.272  0.095   0.182   0.114  0.084  0.167  0.294    0.283
+    ##  6 Last 5 Yea… Pain…  0.152  0.108   0.057   0.134  0.109  0.075  0.078    0.077
+    ##  7 Last 5 Yea… Avg …  0.471  0.049   0.04    0.043  0.078  0.058  0.045    0.038
+    ##  8 Last 5 Yea… Trac…  0.02   0.033   0       0.036  0.035  0.022  0.049    0.026
+    ##  9 Last 5 Yea… Info… -0.989 -0.122 NaN      -0.079 -0.079  0.033  0.087    0.251
+    ## 10 Last 5 Yea… Beta   1.06   0.51    1       0.547  1.07   1.08   0.204    0.948
+    ## 11 Last 5 Yea… Beta…  1.08   0.427   1       0.444  1.09   1.11   0.266    0.903
+    ## 12 Last 5 Yea… Beta…  1.10   0.611   1       0.633  1.14   1.11   0.257    0.983
+    ## 13 Last 5 Yea… Up-D…  0.442  0.339   0       0.36   0.5    0.521  0.31     0.48 
+    ## 14 Last 5 Yea… Modi… -0.037 -0.033  -0.04   -0.033 -0.043 -0.04  -0.025   -0.049
+    ## # ℹ 14 more variables: M2USADVD <dbl>, GDDUUS <dbl>, M2WDHDVD <dbl>,
+    ## #   GDDUWI <dbl>, SPDAEET <dbl>, SPTR350E <dbl>, SPJXDAJT <dbl>, SPDAUDT <dbl>,
+    ## #   SPXT <dbl>, TPXDDVD <dbl>, SPSADAZT <dbl>, JALSH <dbl>, TJDIVD <dbl>,
+    ## #   M2EUGDY <dbl>
 
-``` r
-compare <- joined_df %>% select(date...1, FUDP, M2EFDY, M2EUGDY, M2GBDY, M2JPDY, M2USADVD, M2WDHDVD, SPDAEET, SPDAUDT, SPJXDAJT, SPSADAZT, TJDIVD) %>% gather(Index , Return , -date...1)
-
-g <- compare %>% ggplot(., aes(x = date...1, y = Return)) +
-geom_line() +
-labs(x = "Date", y = "Return") +
-theme_minimal() +
-facet_wrap(~ Index, scales = "free_y", ncol = 4)
-
-g
-```
-
-![](README_files/figure-markdown_github/unnamed-chunk-2-1.png)
+## Stratification
