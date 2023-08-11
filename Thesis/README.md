@@ -159,4 +159,8 @@ plot <- compare %>% ggplot(aes(x = date...1, y = Return, color = Index)) +
   labs(x = "Date", y = "Return", color = "Index") +
   theme_minimal() +
   facet_wrap(~ Index, scales = "free_y", ncol = 4)
+
+plot 
 ```
+
+![](README_files/figure-markdown_github/unnamed-chunk-2-1.png)
