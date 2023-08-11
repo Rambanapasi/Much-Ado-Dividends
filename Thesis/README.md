@@ -1,8 +1,8 @@
 # Objective
 
 The goal is to assess the performance of dividend yield as an investment
-strategy. I plan to use optimized portfolios of the highest paying
-dividend stock and/or highest growth in dividends for a group of assets.
+strategy. I plan to optimize portfolios of the highest paying dividend
+stock and/or highest growth in dividends for a group of assets.
 
 -   First calculate the excess returns for indices and their benchmarks
 -   Explain relationships within the return series for each region with
@@ -14,9 +14,10 @@ dividend stock and/or highest growth in dividends for a group of assets.
 
 The global dividend portfolios considered in the table below are sourced
 from various literature from a practitioner perspective. They represent
-stylized portfolio constructed from respective market indexes. Using a
-similar approach I will consider broad market indices that are used to
-construct the dividend portfolios listed below.
+stylized portfolio constructed from respective market indexes.
+
+Using a similar approach I will consider broad market indices that are
+used to construct the dividend portfolios listed below.
 
 | Index Ticker      | Index Name                   | Benchmark                                                       | Ticker         | Description                                                                                                                                                                                                                                                                                                                                                                              |
 |:---|:----|:---------|:--|:--------------------------------------------------|
@@ -36,6 +37,126 @@ construct the dividend portfolios listed below.
 ## Excess Return
 
 Excess returns here are calculated as the difference between cumulative
-index return and benchmark return.
+index return and benchmark return of several globally traded dividend
+investment portfolios. All of the indexes considered gross total return
+and are compared to the performance of the relevant universe benchmark
+in the same currency.
 
-![](README_files/figure-markdown_github/unnamed-chunk-1-1.png)
+Cumulative returns are not comparable across different indexes for the
+different durations. Mind that in the analysis.
+
+From the results dividend strategies all over the world have been
+consistently giving a positive premium over the market index. Some
+indices have been more successful that others, FUDP giving the highest
+cumulative return amongst all of them.
+
+-   consider the mix between high dividend yield versus dividend growth
+    portfolios.
+
+-   make the inception date the same just to get comparability across
+    different markets
+
+![](README_files/figure-markdown_github/unnamed-chunk-1-1.png) \##
+Stratification
+
+If we stratify these samples into different equity market stability
+cycles, we can then dichipher when these dividend strategies really
+work.
+
+``` r
+# retrieve from yahoo
+vix <- getSymbols("VIX")
+```
+
+    ## Warning: VIX contains missing values. Some functions will not work if objects
+    ## contain missing values in the middle of the series. Consider using na.omit(),
+    ## na.approx(), na.fill(), etc to remove or replace them.
+
+``` r
+# Turn to tibble 
+VIX <- VIX %>%
+  tbl2xts::xts_tbl(.)
+  
+VIX <- VIX %>% select(date, VIX.Close) %>% 
+  rename(., close = VIX.Close)
+# get rolling volatilty 
+
+RollSD <- VIX %>%  arrange(date) %>%
+  mutate(YM = format(date, "%Y-%b")) %>% 
+  group_by(YM) %>% 
+  mutate(ret = log(close)- lag(log(close))) %>% 
+  mutate(ret = coalesce(ret, 0)) %>% 
+  mutate(RollSD = RcppRoll::roll_sd(1+ret, 12, fill = NA, align = "right") * 
+           sqrt(12)) %>% 
+  ungroup() %>% 
+  filter(!is.na(RollSD)) %>% 
+  select(date, RollSD)
+# label and pull dates 
+strat_df <- 
+  RollSD %>% mutate(topQ = quantile(RollSD, probs = 0.8), 
+                botQ = quantile(RollSD, probs = 0.2),
+                Strat = ifelse(RollSD >= topQ, "HiVol", 
+                               ifelse(RollSD <= botQ, "LowVol", "Normal_Vol")))
+#  lets pull dates for the high vol period
+hivol_per_vector <- strat_df %>% filter(Strat %in% "HiVol") %>% pull(date)
+
+# use dates to get returns for indexes and benchamrks, I will use the comparison dataframe, that has excess returns to do a crude analysis on excess returns during these periods 
+
+df %>% filter(Date %in% hivol_per_vector) %>% MY_excess_return(.,"FUDP", "TUKXG") 
+```
+
+    ## # A tibble: 207 × 2
+    ##    date                 FUDP
+    ##    <dttm>              <dbl>
+    ##  1 2014-12-19 00:00:00 0.998
+    ##  2 2014-12-22 00:00:00 0.996
+    ##  3 2014-12-23 00:00:00 0.997
+    ##  4 2014-12-24 00:00:00 0.997
+    ##  5 2014-12-26 00:00:00 0.998
+    ##  6 2014-12-29 00:00:00 0.996
+    ##  7 2014-12-30 00:00:00 0.995
+    ##  8 2014-12-31 00:00:00 0.993
+    ##  9 2015-01-20 00:00:00 0.994
+    ## 10 2015-01-21 00:00:00 0.990
+    ## # ℹ 197 more rows
+
+``` r
+A <- df %>%filter(Date %in% hivol_per_vector) %>%  MY_excess_return(.,"FUDP", "TUKXG") 
+B <- df %>%filter(Date %in% hivol_per_vector) %>%  MY_excess_return(., "M2EFDY", "GDUEEGF") 
+C <- df %>% filter(Date %in% hivol_per_vector) %>% MY_excess_return(., "M2EUGDY", "GDDUE15X") 
+D <- df %>%filter(Date %in% hivol_per_vector) %>%  MY_excess_return(., "M2GBDY", "GDDUUK") 
+E <- df %>%filter(Date %in% hivol_per_vector) %>%  MY_excess_return(., "M2JPDY", "TJDIVD") 
+F1 <- df %>%filter(Date %in% hivol_per_vector) %>%  MY_excess_return(., "M2USADVD", "GDDUUS") 
+G <- df %>% filter(Date %in% hivol_per_vector) %>% MY_excess_return(., "M2WDHDVD", "GDDUWI") 
+H <- df %>% filter(Date %in% hivol_per_vector) %>% MY_excess_return(., "SPDAEET", "SPTR350E") 
+I <- df %>%filter(Date %in% hivol_per_vector) %>%  MY_excess_return(., "SPDAUDT", "SPXT") 
+J <- df %>%filter(Date %in% hivol_per_vector) %>%  MY_excess_return(., "SPJXDAJT", "TPXDDVD") 
+K <- df %>%filter(Date %in% hivol_per_vector) %>%  MY_excess_return(., "SPSADAZT", "JALSH") 
+L <- df %>%filter(Date %in% hivol_per_vector) %>%  MY_excess_return(., "TJDIVD", "JALSH")
+  
+joined_df <- bind_cols(A, B, C, D, E, F1, G, H, I, J, K, L) 
+```
+
+    ## New names:
+    ## • `date` -> `date...1`
+    ## • `date` -> `date...3`
+    ## • `date` -> `date...5`
+    ## • `date` -> `date...7`
+    ## • `date` -> `date...9`
+    ## • `date` -> `date...11`
+    ## • `date` -> `date...13`
+    ## • `date` -> `date...15`
+    ## • `date` -> `date...17`
+    ## • `date` -> `date...19`
+    ## • `date` -> `date...21`
+    ## • `date` -> `date...23`
+
+``` r
+compare <- joined_df %>% select(date...1, FUDP, M2EFDY, M2EUGDY, M2GBDY, M2JPDY, M2USADVD, M2WDHDVD, SPDAEET, SPDAUDT, SPJXDAJT, SPSADAZT, TJDIVD) %>% gather(Index , Return , -date...1)
+
+plot <- compare %>% ggplot(aes(x = date...1, y = Return, color = Index)) +
+  geom_line() +
+  labs(x = "Date", y = "Return", color = "Index") +
+  theme_minimal() +
+  facet_wrap(~ Index, scales = "free_y", ncol = 4)
+```
