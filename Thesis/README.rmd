@@ -97,6 +97,7 @@ kable(Five_year)
 
 ## Stratification to diffrent time periods
 
+Next I will stratify retur
 
 ```{r}
 
