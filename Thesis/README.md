@@ -17,20 +17,510 @@ dividend yield or dividend growth I will consider globally traded
 indices and their benchmarks. For concreteness, I will look at those
 prescribed in literature. From this I will find the excess return.
 
-| TICKER   | NAME                                                                      | Benchmark Ticker | Benchmark Name                          |
-|:-----|:------------------------------------|:---------|:--------------------|
-| FUDP     | FTSE UK Dividend+ Index                                                   | TUKXG            | FTSE 100 Total Return Index GBP         |
-| M2EFDY   | MSCI EM Emerging Markets High Dividend Yield Gross Total Return USD Index | GDUEEGF          | MSCI Daily TR Gross EM USD              |
-| M2GBDY   | MSCI United Kingdom High Dividend Yield Gross Total Return USD Index      | GDDUUK           | MSCI UK Gross Total Return USD Index    |
-| M2JPDY   | MSCI Japan High Dividend Yield Gross Total Return USD                     | TPXDDVD          | Topix Total Return Index JPY            |
-| M2USADVD | MSCI USA Hdy Gross Total Return USD Index                                 | GDDUUS           | MSCI Daily TR Gross USA USD             |
-| M2WDHDVD | MSCI World HIGH DIVIDEND YIELD Gross Total Return Total Return USD Index  | GDDUWI           | MSCI Daily TR Gross World USD           |
-| SPDAEET  | S&P Europe 350 Dividends Aristocrats Total Return Index                   | SPTR350E         | S&P Europe 350 Gross Total Return Index |
-| SPJXDAJT | S&P/JPX Dividend Aristocrats Total Return Index                           | SPXT             | S&P 500 Total Return Index              |
-| SPDAUDT  | S&P 500 Dividend Aristocrats Total Return Index                           | SPXT             | S&P 500 Total Return Index              |
-| SPSADAZT | S&P South Africa Dividend Aristocrats Index ZAR Gross TR                  | JALSH            | FTSE/JSE Africa All Share Index         |
-| TJDIVD   | FTSE/JSE Dividend+ Index Total Return Index                               | JALSH            | FTSE/JSE Africa All Share Index         |
-| M2EUGDY  | MSCI Europe Ex UK High Dividend Yield Gross Total Return USD Index        | GDDUE15X         | MSCI Daily TR Gross Europe Ex UK USD    |
+<div id="zlhdmbwbev" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#zlhdmbwbev table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#zlhdmbwbev thead, #zlhdmbwbev tbody, #zlhdmbwbev tfoot, #zlhdmbwbev tr, #zlhdmbwbev td, #zlhdmbwbev th {
+  border-style: none;
+}
+
+#zlhdmbwbev p {
+  margin: 0;
+  padding: 0;
+}
+
+#zlhdmbwbev .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#zlhdmbwbev .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#zlhdmbwbev .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#zlhdmbwbev .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#zlhdmbwbev .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#zlhdmbwbev .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#zlhdmbwbev .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#zlhdmbwbev .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#zlhdmbwbev .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#zlhdmbwbev .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#zlhdmbwbev .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#zlhdmbwbev .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#zlhdmbwbev .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#zlhdmbwbev .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#zlhdmbwbev .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#zlhdmbwbev .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#zlhdmbwbev .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#zlhdmbwbev .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#zlhdmbwbev .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#zlhdmbwbev .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#zlhdmbwbev .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#zlhdmbwbev .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#zlhdmbwbev .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#zlhdmbwbev .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#zlhdmbwbev .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#zlhdmbwbev .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#zlhdmbwbev .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#zlhdmbwbev .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#zlhdmbwbev .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#zlhdmbwbev .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#zlhdmbwbev .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#zlhdmbwbev .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#zlhdmbwbev .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#zlhdmbwbev .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#zlhdmbwbev .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#zlhdmbwbev .gt_left {
+  text-align: left;
+}
+
+#zlhdmbwbev .gt_center {
+  text-align: center;
+}
+
+#zlhdmbwbev .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#zlhdmbwbev .gt_font_normal {
+  font-weight: normal;
+}
+
+#zlhdmbwbev .gt_font_bold {
+  font-weight: bold;
+}
+
+#zlhdmbwbev .gt_font_italic {
+  font-style: italic;
+}
+
+#zlhdmbwbev .gt_super {
+  font-size: 65%;
+}
+
+#zlhdmbwbev .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#zlhdmbwbev .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#zlhdmbwbev .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#zlhdmbwbev .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#zlhdmbwbev .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#zlhdmbwbev .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#zlhdmbwbev .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="TICKER">TICKER</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="NAME">NAME</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="Benchmark Ticker">Benchmark Ticker</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="Benchmark Name">Benchmark Name</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="TICKER" class="gt_row gt_left">FUDP</td>
+<td headers="NAME" class="gt_row gt_left">FTSE UK Dividend+ Index</td>
+<td headers="Benchmark Ticker" class="gt_row gt_left">TUKXG</td>
+<td headers="Benchmark Name" class="gt_row gt_left">FTSE 100 Total Return Index GBP</td></tr>
+    <tr><td headers="TICKER" class="gt_row gt_left">M2EFDY</td>
+<td headers="NAME" class="gt_row gt_left">MSCI EM Emerging Markets High Dividend Yield Gross Total Return USD Index</td>
+<td headers="Benchmark Ticker" class="gt_row gt_left">GDUEEGF</td>
+<td headers="Benchmark Name" class="gt_row gt_left">MSCI Daily TR Gross EM USD</td></tr>
+    <tr><td headers="TICKER" class="gt_row gt_left">M2GBDY</td>
+<td headers="NAME" class="gt_row gt_left">MSCI United Kingdom High Dividend Yield Gross Total Return USD Index</td>
+<td headers="Benchmark Ticker" class="gt_row gt_left">GDDUUK</td>
+<td headers="Benchmark Name" class="gt_row gt_left">MSCI UK Gross Total Return USD Index</td></tr>
+    <tr><td headers="TICKER" class="gt_row gt_left">M2JPDY</td>
+<td headers="NAME" class="gt_row gt_left">MSCI Japan High Dividend Yield Gross Total Return USD</td>
+<td headers="Benchmark Ticker" class="gt_row gt_left">TPXDDVD</td>
+<td headers="Benchmark Name" class="gt_row gt_left">Topix Total Return Index JPY</td></tr>
+    <tr><td headers="TICKER" class="gt_row gt_left">M2USADVD</td>
+<td headers="NAME" class="gt_row gt_left">MSCI USA Hdy Gross Total Return USD Index</td>
+<td headers="Benchmark Ticker" class="gt_row gt_left">GDDUUS</td>
+<td headers="Benchmark Name" class="gt_row gt_left">MSCI Daily TR Gross USA USD</td></tr>
+    <tr><td headers="TICKER" class="gt_row gt_left">M2WDHDVD</td>
+<td headers="NAME" class="gt_row gt_left">MSCI World HIGH DIVIDEND YIELD Gross Total Return Total Return USD Index</td>
+<td headers="Benchmark Ticker" class="gt_row gt_left">GDDUWI</td>
+<td headers="Benchmark Name" class="gt_row gt_left">MSCI Daily TR Gross World USD</td></tr>
+    <tr><td headers="TICKER" class="gt_row gt_left">SPDAEET</td>
+<td headers="NAME" class="gt_row gt_left">S&amp;P Europe 350 Dividends Aristocrats Total Return Index</td>
+<td headers="Benchmark Ticker" class="gt_row gt_left">SPTR350E</td>
+<td headers="Benchmark Name" class="gt_row gt_left">S&amp;P Europe 350 Gross Total Return Index</td></tr>
+    <tr><td headers="TICKER" class="gt_row gt_left">SPJXDAJT</td>
+<td headers="NAME" class="gt_row gt_left">S&amp;P/JPX Dividend Aristocrats Total Return Index</td>
+<td headers="Benchmark Ticker" class="gt_row gt_left">SPXT</td>
+<td headers="Benchmark Name" class="gt_row gt_left">S&amp;P 500 Total Return Index</td></tr>
+    <tr><td headers="TICKER" class="gt_row gt_left">SPDAUDT</td>
+<td headers="NAME" class="gt_row gt_left">S&amp;P 500 Dividend Aristocrats Total Return Index</td>
+<td headers="Benchmark Ticker" class="gt_row gt_left">SPXT</td>
+<td headers="Benchmark Name" class="gt_row gt_left">S&amp;P 500 Total Return Index</td></tr>
+    <tr><td headers="TICKER" class="gt_row gt_left">SPSADAZT</td>
+<td headers="NAME" class="gt_row gt_left">S&amp;P South Africa Dividend Aristocrats Index ZAR Gross TR</td>
+<td headers="Benchmark Ticker" class="gt_row gt_left">JALSH</td>
+<td headers="Benchmark Name" class="gt_row gt_left">FTSE/JSE Africa All Share Index</td></tr>
+    <tr><td headers="TICKER" class="gt_row gt_left">TJDIVD</td>
+<td headers="NAME" class="gt_row gt_left">FTSE/JSE Dividend+ Index Total Return Index</td>
+<td headers="Benchmark Ticker" class="gt_row gt_left">JALSH</td>
+<td headers="Benchmark Name" class="gt_row gt_left">FTSE/JSE Africa All Share Index</td></tr>
+    <tr><td headers="TICKER" class="gt_row gt_left">M2EUGDY</td>
+<td headers="NAME" class="gt_row gt_left">MSCI Europe Ex UK High Dividend Yield Gross Total Return USD Index</td>
+<td headers="Benchmark Ticker" class="gt_row gt_left">GDDUE15X</td>
+<td headers="Benchmark Name" class="gt_row gt_left">MSCI Daily TR Gross Europe Ex UK USD</td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
 
 ## Excess Return
 
@@ -51,83 +541,624 @@ volatile. This shows full sample performance.
 ![](README_files/figure-markdown_github/unnamed-chunk-1-1.png) \##
 Performance Stats
 
-``` r
-funds <- readxl::read_xlsx("data/MAD .xlsx")
-source("code/Statistics.R")
+## Stratification
 
-funds <- funds %>% 
-  gather(Tickers, Value, -Date) %>% 
-  arrange(Date) %>% group_by(Tickers) %>%
-  mutate(Ret = Value/lag(Value)-1) %>% 
-  mutate(Ret =coalesce(Ret,0)) %>% 
-  ungroup()
+Applying a top down approach means that it would be prudent to consider
+returns of the dividend portfolios under different time periods
 
-BM <- "TUKXG"
+I will use volatility and interest rate cycles.
 
-One_year <- funds %>% Moments_Comp(., BM = BM, Yrs_LookBack = 1, NA_Check = 0.9)
-Three_year <- funds %>% Moments_Comp(., BM = BM, Yrs_LookBack = 3, NA_Check = 0.9)
-Five_year <- funds %>% Moments_Comp(., BM = BM, Yrs_LookBack = 5, NA_Check = 0.9)
+-   For volatility I will use the historical series for the CBOE VIX
+    index. I will get the roll standard deviation and separate values
+    according to their percentile to get periods that expirienced the
+    most volatility during the period. then bucket the two periods in
+    either low or high vol So periods of high volatility and low
+    volatility.
 
-kable(One_year)
-```
+-   then annulized measure to get out excess returns on a three, five
+    and ten year basis.
 
-| Period       | Info                  |   FUDP | M2EFDY |  TUKXG | GDUEEGF | M2GBDY | GDDUUK | M2JPDY | GDDUE15X | M2USADVD | GDDUUS | M2WDHDVD | GDDUWI | SPDAEET | SPTR350E | SPJXDAJT | SPDAUDT |   SPXT | TPXDDVD | SPSADAZT |  JALSH | TJDIVD | M2EUGDY |
-|:---|:------|--:|--:|--:|--:|--:|--:|--:|---:|---:|--:|---:|--:|--:|---:|---:|--:|--:|--:|---:|--:|--:|--:|
-| Last 1 Years | Cum Returns           | -0.040 |  0.133 |  0.078 |   0.052 |  0.128 |  0.166 |  0.219 |    0.277 |    0.091 |  0.158 |    0.129 |  0.167 |   0.072 |    0.133 |    0.287 |   0.157 |  0.208 |   0.229 |    0.055 |  0.090 | -0.100 |   0.294 |
-| Last 1 Years | Returns (Ann.)        | -0.002 |  0.006 |  0.004 |   0.003 |  0.006 |  0.008 |  0.010 |    0.012 |    0.004 |  0.007 |    0.006 |  0.008 |   0.003 |    0.006 |    0.012 |   0.007 |  0.009 |   0.010 |    0.003 |  0.004 | -0.005 |   0.013 |
-| Last 1 Years | Returns Excess (Ann.) | -0.113 |  0.053 |  0.000 |  -0.024 |  0.048 |  0.085 |  0.136 |    0.191 |    0.012 |  0.077 |    0.049 |  0.085 |  -0.006 |    0.053 |    0.201 |   0.076 |  0.125 |   0.145 |   -0.022 |  0.012 | -0.170 |   0.208 |
-| Last 1 Years | SD (Ann.)             |  0.033 |  0.029 |  0.026 |   0.035 |  0.050 |  0.040 |  0.038 |    0.044 |    0.033 |  0.040 |    0.026 |  0.035 |   0.032 |    0.030 |    0.028 |   0.036 |  0.039 |   0.029 |    0.043 |  0.036 |  0.042 |   0.041 |
-| Last 1 Years | Adj. Sharpe Ratio     | -0.271 |  1.003 |  0.581 |   0.344 |  0.561 |  0.806 |  1.265 |    1.296 |    0.620 |  0.866 |    1.071 |  1.027 |   0.517 |    0.905 |    0.406 |   0.983 |  1.099 |   1.569 |    0.297 |  0.568 | -0.524 |   1.415 |
-| Last 1 Years | Pain Index            |  0.057 |  0.026 |  0.021 |   0.052 |  0.066 |  0.031 |  0.022 |    0.029 |    0.035 |  0.033 |    0.023 |  0.029 |   0.027 |    0.021 |    0.018 |   0.027 |  0.028 |   0.021 |    0.064 |  0.042 |  0.096 |   0.027 |
-| Last 1 Years | Avg DD                |  0.033 |  0.024 |  0.021 |   0.057 |  0.040 |  0.031 |  0.024 |    0.036 |    0.034 |  0.027 |    0.023 |  0.027 |   0.029 |    0.021 |    0.019 |   0.027 |  0.020 |   0.024 |    0.032 |  0.027 |  0.050 |   0.022 |
-| Last 1 Years | Tracking Error        |  0.016 |  0.032 |  0.000 |   0.037 |  0.038 |  0.026 |  0.045 |    0.031 |    0.032 |  0.038 |    0.024 |  0.030 |   0.024 |    0.016 |    0.036 |   0.035 |  0.037 |   0.035 |    0.038 |  0.029 |  0.038 |   0.029 |
-| Last 1 Years | Information Ratio     | -1.611 |  0.388 |    NaN |  -0.156 |  0.295 |  0.755 |  0.718 |    1.441 |    0.089 |  0.480 |    0.477 |  0.662 |  -0.056 |    0.771 |    1.311 |   0.518 |  0.786 |   0.969 |   -0.135 |  0.096 | -1.068 |   1.711 |
-| Last 1 Years | Beta                  |  1.106 |  0.363 |  1.000 |   0.397 |  1.274 |  1.157 |  0.090 |    1.195 |    0.535 |  0.628 |    0.580 |  0.706 |   0.827 |    0.956 |    0.112 |   0.553 |  0.604 |   0.180 |    0.784 |  0.850 |  0.732 |   1.149 |
-| Last 1 Years | Beta Bull             |  1.158 |  0.311 |  1.000 |   0.345 |  1.377 |  1.171 |  0.117 |    1.280 |    0.660 |  0.790 |    0.700 |  0.821 |   0.790 |    0.894 |   -0.081 |   0.699 |  0.776 |   0.026 |    1.237 |  1.011 |  0.842 |   1.294 |
-| Last 1 Years | Beta Bear             |  1.072 |  0.282 |  1.000 |   0.283 |  1.144 |  1.161 |  0.111 |    1.116 |    0.349 |  0.375 |    0.412 |  0.518 |   0.650 |    0.914 |    0.181 |   0.435 |  0.377 |   0.278 |    0.399 |  0.763 |  0.565 |   1.096 |
-| Last 1 Years | Up-Down Ratio         |  0.469 |  0.383 |  0.000 |   0.391 |  0.570 |  0.586 |  0.422 |    0.586 |    0.383 |  0.430 |    0.414 |  0.469 |   0.477 |    0.547 |    0.391 |   0.359 |  0.438 |   0.352 |    0.461 |  0.484 |  0.438 |   0.586 |
-| Last 1 Years | Modified CVaR         | -0.022 | -0.015 | -0.023 |  -0.017 | -0.032 | -0.030 | -0.022 |   -0.026 |   -0.019 | -0.022 |   -0.014 | -0.018 |  -0.018 |   -0.020 |   -0.022 |  -0.019 | -0.021 |  -0.017 |   -0.021 | -0.018 | -0.026 |  -0.025 |
+-   For interest rate cycles use periods of interest cutting and hiking.
 
 ``` r
-kable(Three_year)
+# get vol data from yahoo 
+library(quantmod)
+library(tidyverse)
+
+source("code/uncompoundedexcess.R")
+source("code/simpleexcessreturn.R")
+vix <- getSymbols("VIX")
 ```
 
-| Period       | Info                  |   FUDP | M2EFDY |  TUKXG | GDUEEGF | M2GBDY | GDDUUK | M2JPDY | GDDUE15X | M2USADVD | GDDUUS | M2WDHDVD | GDDUWI | SPDAEET | SPTR350E | SPJXDAJT | SPDAUDT |   SPXT | TPXDDVD | SPSADAZT |  JALSH | TJDIVD | M2EUGDY |
-|:---|:------|--:|--:|--:|--:|--:|--:|--:|---:|---:|--:|---:|--:|--:|---:|---:|--:|--:|--:|---:|--:|--:|--:|
-| Last 3 Years | Cum Returns           |  0.136 |  0.154 |  0.347 |   0.004 |  0.288 |  0.371 |  0.376 |    0.255 |    0.304 |  0.328 |    0.304 |  0.298 |   0.217 |    0.391 |    0.581 |   0.562 |  0.454 |   0.451 |    0.341 |  0.304 |  0.504 |   0.273 |
-| Last 3 Years | Returns (Ann.)        |  0.002 |  0.002 |  0.005 |   0.000 |  0.004 |  0.005 |  0.005 |    0.004 |    0.004 |  0.004 |    0.004 |  0.004 |   0.003 |    0.005 |    0.007 |   0.007 |  0.006 |   0.006 |    0.005 |  0.004 |  0.006 |   0.004 |
-| Last 3 Years | Returns Excess (Ann.) | -0.055 | -0.050 |  0.000 |  -0.092 | -0.015 |  0.006 |  0.007 |   -0.023 |   -0.010 | -0.005 |   -0.011 | -0.012 |  -0.033 |    0.011 |    0.054 |   0.050 |  0.026 |   0.025 |   -0.001 | -0.011 |  0.037 |  -0.018 |
-| Last 3 Years | SD (Ann.)             |  0.035 |  0.030 |  0.031 |   0.036 |  0.047 |  0.041 |  0.036 |    0.043 |    0.031 |  0.040 |    0.026 |  0.034 |   0.031 |    0.033 |    0.032 |   0.034 |  0.039 |   0.032 |    0.044 |  0.037 |  0.042 |   0.040 |
-| Last 3 Years | Adj. Sharpe Ratio     |  0.265 |  0.345 |  0.647 |   0.008 |  0.390 |  0.535 |  0.666 |    0.387 |    0.617 |  0.512 |    0.732 |  0.554 |   0.466 |    0.692 |    1.037 |   0.924 |  0.693 |   0.854 |    0.510 |  0.529 |  0.727 |   0.434 |
-| Last 3 Years | Pain Index            |  0.070 |  0.113 |  0.021 |   0.179 |  0.077 |  0.046 |  0.063 |    0.084 |    0.033 |  0.077 |    0.036 |  0.074 |   0.066 |    0.037 |    0.048 |   0.032 |  0.059 |   0.043 |    0.054 |  0.045 |  0.058 |   0.075 |
-| Last 3 Years | Avg DD                |  0.030 |  0.034 |  0.023 |   0.037 |  0.042 |  0.033 |  0.028 |    0.029 |    0.020 |  0.020 |    0.019 |  0.021 |   0.022 |    0.018 |    0.027 |   0.022 |  0.018 |   0.029 |    0.042 |  0.031 |  0.036 |   0.030 |
-| Last 3 Years | Tracking Error        |  0.014 |  0.032 |  0.000 |   0.037 |  0.033 |  0.022 |  0.045 |    0.028 |    0.032 |  0.040 |    0.024 |  0.031 |   0.023 |    0.016 |    0.040 |   0.035 |  0.038 |   0.039 |    0.040 |  0.030 |  0.037 |   0.025 |
-| Last 3 Years | Information Ratio     | -0.915 | -0.372 |    NaN |  -0.604 | -0.108 |  0.064 |  0.037 |   -0.199 |   -0.078 | -0.029 |   -0.108 | -0.095 |  -0.345 |    0.160 |    0.322 |   0.348 |  0.160 |   0.154 |   -0.008 | -0.085 |  0.243 |  -0.175 |
-| Last 3 Years | Beta                  |  1.021 |  0.417 |  1.000 |   0.464 |  1.111 |  1.145 |  0.119 |    1.054 |    0.458 |  0.521 |    0.548 |  0.607 |   0.718 |    0.933 |    0.176 |   0.478 |  0.503 |   0.253 |    0.666 |  0.742 |  0.707 |   1.012 |
-| Last 3 Years | Beta Bull             |  0.992 |  0.256 |  1.000 |   0.255 |  1.025 |  1.123 |  0.087 |    1.004 |    0.563 |  0.581 |    0.607 |  0.622 |   0.688 |    0.891 |    0.089 |   0.612 |  0.587 |   0.148 |    0.729 |  0.639 |  0.668 |   1.040 |
-| Last 3 Years | Beta Bear             |  1.024 |  0.532 |  1.000 |   0.570 |  1.129 |  1.202 |  0.170 |    1.122 |    0.413 |  0.445 |    0.547 |  0.577 |   0.689 |    0.961 |    0.237 |   0.438 |  0.423 |   0.348 |    0.624 |  0.832 |  0.761 |   1.087 |
-| Last 3 Years | Up-Down Ratio         |  0.449 |  0.336 |  0.000 |   0.366 |  0.530 |  0.571 |  0.328 |    0.505 |    0.308 |  0.409 |    0.308 |  0.412 |   0.384 |    0.482 |    0.333 |   0.346 |  0.399 |   0.328 |    0.396 |  0.412 |  0.407 |   0.455 |
-| Last 3 Years | Modified CVaR         | -0.025 | -0.022 | -0.024 |  -0.022 | -0.033 | -0.032 | -0.021 |   -0.029 |   -0.021 | -0.028 |   -0.017 | -0.023 |  -0.020 |   -0.024 |   -0.020 |  -0.022 | -0.027 |  -0.020 |   -0.023 | -0.023 | -0.026 |  -0.028 |
+    ## Warning: VIX contains missing values. Some functions will not work if objects
+    ## contain missing values in the middle of the series. Consider using na.omit(),
+    ## na.approx(), na.fill(), etc to remove or replace them.
 
 ``` r
-kable(Five_year)
+VIX <- VIX %>% tbl2xts::xts_tbl(.)
+VIX <- VIX %>% select(date, VIX.Close)
+
+# get rolling sd for the volatility index 
+
+Roll.sd <- VIX%>% rename(Close = VIX.Close) %>% 
+  mutate(Ret = log(Close)- lag (log(Close))) %>% 
+  filter(date > first(date)) %>% 
+  mutate(RollSD = RcppRoll::roll_sd(1 + Ret, 12, fill = NA, align = "right") * 
+    sqrt(12))
+
+Roll.sd <- Roll.sd %>% filter(!is.na(RollSD))
+
+# get the top quartile and bottom quartile
+
+strat_df <- 
+Roll.sd %>% mutate(topQ = quantile(RollSD, probs = 0.8), 
+              botQ = quantile(RollSD, probs = 0.2),
+              Strat = ifelse(RollSD >= topQ, "HiVol", 
+                          ifelse(RollSD <= botQ, "LowVol", "Normal_Vol")))
+
+hivol_per_vector <- strat_df %>% filter(Strat %in% "HiVol") %>% pull(date)
+lovol_per_vector <- strat_df %>% filter(Strat %in% "LowVol") %>% pull(date)
+
+
+# get entire returns and apply the vector above 
+# voldata <-df %>% monthlyret(.) 
+
+# get all permutatation 
+A <- df %>% simple_excess_return(.,"FUDP", "TUKXG") 
+B <- df %>% simple_excess_return(., "M2EFDY", "GDUEEGF") 
+C <- df %>% simple_excess_return(., "M2EUGDY", "GDDUE15X") 
+D <- df %>% simple_excess_return(., "M2GBDY", "GDDUUK") 
+E <- df %>% simple_excess_return(., "M2JPDY", "TJDIVD") 
+F1 <- df %>% simple_excess_return(., "M2USADVD", "GDDUUS") 
+G <- df %>% simple_excess_return(., "M2WDHDVD", "GDDUWI") 
+H <- df %>% simple_excess_return(., "SPDAEET", "SPTR350E") 
+I <- df %>% simple_excess_return(., "SPDAUDT", "SPXT") 
+J <- df %>% simple_excess_return(., "SPJXDAJT", "TPXDDVD") 
+K <- df %>% simple_excess_return(., "SPSADAZT", "JALSH") 
+L <- df %>% simple_excess_return(., "TJDIVD", "JALSH")
+
+#  cexcess returns in a single data frame
+excessreturns <- list(A, B, C, D, E, F1, G,H,J, K, L) %>%
+  reduce(inner_join, by='date') %>% gather(ticker, excess, -date)
+
+# hivol <- voldata %>%
+#   filter(Date %in% hivol_per_vector) %>% 
+#   filter(Date >= fmxdat::safe_month_min(last(Date), N = 36)) %>%
+#   group_by(Tickers) %>% 
+#   summarise(Hivol_return = prod(1+ret, na.rm=T) ^ (12/(36)) -1 ) 
+# 
+# lovol <-  voldata %>%
+#   filter(Date %in% lovol_per_vector) %>% 
+#   filter(Date >= fmxdat::safe_month_min(last(Date), N = 36)) %>%
+#   group_by(Tickers) %>% 
+#   summarise(Lovol_return = prod(1+ret, na.rm=T) ^ (12/(36)) -1 ) 
+
+hivol <- excessreturns %>%
+  filter(date %in% hivol_per_vector) %>% 
+  filter(date >= fmxdat::safe_month_min(last(date), N = 36)) %>%
+  group_by(ticker) %>% 
+  summarise(Hivol_return = prod(1+excess, na.rm=T) ^ (12/(36)) -1 ) 
+
+lovol <-  excessreturns%>%
+  filter(date %in% lovol_per_vector) %>% 
+  filter(date >= fmxdat::safe_month_min(last(date), N = 36)) %>%
+  group_by(ticker) %>% 
+  summarise(lovol_return = prod(1+excess, na.rm=T) ^ (12/(36)) -1 ) 
+
+volreturns <- left_join(hivol, lovol, by = "ticker") %>% 
+  mutate(trend = case_when(
+    Hivol_return > lovol_return ~ "higher",
+    TRUE ~ "lower"
+  ))
+
+ vol_table <- volreturns %>%
+  gt::gt() %>%
+  fmt_number(
+    columns = everything(),
+    decimals = 2,
+    use_seps = FALSE
+  )
+ 
+ vol_table
 ```
 
-| Period       | Info                  |   FUDP | M2EFDY |  TUKXG | GDUEEGF | M2GBDY | GDDUUK | M2JPDY | GDDUE15X | M2USADVD | GDDUUS | M2WDHDVD | GDDUWI | SPDAEET | SPTR350E | SPJXDAJT | SPDAUDT |   SPXT | TPXDDVD | SPSADAZT |  JALSH | TJDIVD | M2EUGDY |
-|:---|:------|--:|--:|--:|--:|--:|--:|--:|---:|---:|--:|---:|--:|--:|---:|---:|--:|--:|--:|---:|--:|--:|--:|
-| Last 5 Years | Cum Returns           | -0.257 |  0.078 |  0.182 |   0.107 |  0.110 |  0.202 |  0.300 |    0.368 |    0.406 |  0.689 |    0.386 |  0.536 |   0.280 |    0.406 |    0.368 |   0.835 |  0.764 |   0.433 |    0.026 |  0.218 |  0.405 |   0.316 |
-| Last 5 Years | Returns (Ann.)        | -0.003 |  0.001 |  0.002 |   0.001 |  0.001 |  0.002 |  0.002 |    0.003 |    0.003 |  0.005 |    0.003 |  0.004 |   0.002 |    0.003 |    0.003 |   0.006 |  0.005 |   0.003 |    0.000 |  0.002 |  0.003 |   0.003 |
-| Last 5 Years | Returns Excess (Ann.) | -0.087 | -0.018 |  0.000 |  -0.013 | -0.012 |  0.003 |  0.019 |    0.029 |    0.035 |  0.072 |    0.032 |  0.053 |   0.016 |    0.034 |    0.029 |   0.090 |  0.082 |   0.038 |   -0.027 |  0.006 |  0.034 |   0.021 |
-| Last 5 Years | SD (Ann.)             |  0.045 |  0.034 |  0.038 |   0.038 |  0.053 |  0.046 |  0.039 |    0.044 |    0.041 |  0.047 |    0.033 |  0.040 |   0.036 |    0.038 |    0.035 |   0.043 |  0.046 |   0.035 |    0.045 |  0.042 |  0.046 |   0.044 |
-| Last 5 Years | Adj. Sharpe Ratio     | -0.272 |  0.095 |  0.182 |   0.114 |  0.084 |  0.167 |  0.294 |    0.283 |    0.324 |  0.414 |    0.338 |  0.389 |   0.274 |    0.326 |    0.385 |   0.459 |  0.433 |   0.436 |    0.024 |  0.197 |  0.313 |   0.244 |
-| Last 5 Years | Pain Index            |  0.152 |  0.108 |  0.057 |   0.134 |  0.109 |  0.075 |  0.078 |    0.077 |    0.038 |  0.065 |    0.044 |  0.065 |   0.075 |    0.056 |    0.074 |   0.037 |  0.055 |   0.053 |    0.102 |  0.060 |  0.076 |   0.076 |
-| Last 5 Years | Avg DD                |  0.471 |  0.049 |  0.040 |   0.043 |  0.078 |  0.058 |  0.045 |    0.038 |    0.024 |  0.022 |    0.024 |  0.025 |   0.032 |    0.026 |    0.039 |   0.024 |  0.022 |   0.042 |    0.065 |  0.045 |  0.042 |   0.040 |
-| Last 5 Years | Tracking Error        |  0.020 |  0.033 |  0.000 |   0.036 |  0.035 |  0.022 |  0.049 |    0.026 |    0.036 |  0.041 |    0.025 |  0.031 |   0.022 |    0.016 |    0.043 |   0.037 |  0.040 |   0.043 |    0.040 |  0.032 |  0.037 |   0.025 |
-| Last 5 Years | Information Ratio     | -0.989 | -0.122 |    NaN |  -0.079 | -0.079 |  0.033 |  0.087 |    0.251 |    0.218 |  0.400 |    0.283 |  0.383 |   0.161 |    0.478 |    0.151 |   0.551 |  0.461 |   0.204 |   -0.153 |  0.041 |  0.209 |   0.193 |
-| Last 5 Years | Beta                  |  1.056 |  0.510 |  1.000 |   0.547 |  1.074 |  1.079 |  0.204 |    0.948 |    0.641 |  0.700 |    0.657 |  0.716 |   0.782 |    0.923 |    0.272 |   0.684 |  0.688 |   0.307 |    0.648 |  0.759 |  0.753 |   0.961 |
-| Last 5 Years | Beta Bull             |  1.079 |  0.427 |  1.000 |   0.444 |  1.089 |  1.109 |  0.266 |    0.903 |    0.710 |  0.770 |    0.696 |  0.753 |   0.764 |    0.880 |    0.239 |   0.806 |  0.763 |   0.282 |    0.627 |  0.694 |  0.731 |   0.995 |
-| Last 5 Years | Beta Bear             |  1.099 |  0.611 |  1.000 |   0.633 |  1.138 |  1.111 |  0.257 |    0.983 |    0.759 |  0.801 |    0.756 |  0.804 |   0.829 |    0.976 |    0.360 |   0.791 |  0.794 |   0.394 |    0.691 |  0.857 |  0.810 |   1.031 |
-| Last 5 Years | Up-Down Ratio         |  0.442 |  0.339 |  0.000 |   0.360 |  0.500 |  0.521 |  0.310 |    0.480 |    0.322 |  0.396 |    0.301 |  0.387 |   0.368 |    0.457 |    0.294 |   0.348 |  0.387 |   0.288 |    0.390 |  0.390 |  0.414 |   0.443 |
-| Last 5 Years | Modified CVaR         | -0.037 | -0.033 | -0.040 |  -0.033 | -0.043 | -0.040 | -0.025 |   -0.049 |   -0.022 | -0.039 |   -0.030 | -0.039 |  -0.040 |   -0.046 |   -0.024 |  -0.028 | -0.036 |  -0.023 |   -0.034 | -0.041 | -0.039 |  -0.044 |
+<div id="wtpcyfgfaa" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#wtpcyfgfaa table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
-## Stratification to diffrent time periods
+#wtpcyfgfaa thead, #wtpcyfgfaa tbody, #wtpcyfgfaa tfoot, #wtpcyfgfaa tr, #wtpcyfgfaa td, #wtpcyfgfaa th {
+  border-style: none;
+}
+
+#wtpcyfgfaa p {
+  margin: 0;
+  padding: 0;
+}
+
+#wtpcyfgfaa .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#wtpcyfgfaa .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#wtpcyfgfaa .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#wtpcyfgfaa .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#wtpcyfgfaa .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#wtpcyfgfaa .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#wtpcyfgfaa .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#wtpcyfgfaa .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#wtpcyfgfaa .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#wtpcyfgfaa .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#wtpcyfgfaa .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#wtpcyfgfaa .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#wtpcyfgfaa .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#wtpcyfgfaa .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#wtpcyfgfaa .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#wtpcyfgfaa .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#wtpcyfgfaa .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#wtpcyfgfaa .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#wtpcyfgfaa .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#wtpcyfgfaa .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#wtpcyfgfaa .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#wtpcyfgfaa .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#wtpcyfgfaa .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#wtpcyfgfaa .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#wtpcyfgfaa .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#wtpcyfgfaa .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#wtpcyfgfaa .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#wtpcyfgfaa .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#wtpcyfgfaa .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#wtpcyfgfaa .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#wtpcyfgfaa .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#wtpcyfgfaa .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#wtpcyfgfaa .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#wtpcyfgfaa .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#wtpcyfgfaa .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#wtpcyfgfaa .gt_left {
+  text-align: left;
+}
+
+#wtpcyfgfaa .gt_center {
+  text-align: center;
+}
+
+#wtpcyfgfaa .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#wtpcyfgfaa .gt_font_normal {
+  font-weight: normal;
+}
+
+#wtpcyfgfaa .gt_font_bold {
+  font-weight: bold;
+}
+
+#wtpcyfgfaa .gt_font_italic {
+  font-style: italic;
+}
+
+#wtpcyfgfaa .gt_super {
+  font-size: 65%;
+}
+
+#wtpcyfgfaa .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#wtpcyfgfaa .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#wtpcyfgfaa .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#wtpcyfgfaa .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#wtpcyfgfaa .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#wtpcyfgfaa .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#wtpcyfgfaa .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="ticker">ticker</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Hivol_return">Hivol_return</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="lovol_return">lovol_return</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="trend">trend</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="ticker" class="gt_row gt_left">FUDP</td>
+<td headers="Hivol_return" class="gt_row gt_right">0.01</td>
+<td headers="lovol_return" class="gt_row gt_right">0.03</td>
+<td headers="trend" class="gt_row gt_left">lower</td></tr>
+    <tr><td headers="ticker" class="gt_row gt_left">M2EFDY</td>
+<td headers="Hivol_return" class="gt_row gt_right">0.01</td>
+<td headers="lovol_return" class="gt_row gt_right">−0.01</td>
+<td headers="trend" class="gt_row gt_left">higher</td></tr>
+    <tr><td headers="ticker" class="gt_row gt_left">M2EUGDY</td>
+<td headers="Hivol_return" class="gt_row gt_right">0.00</td>
+<td headers="lovol_return" class="gt_row gt_right">0.00</td>
+<td headers="trend" class="gt_row gt_left">lower</td></tr>
+    <tr><td headers="ticker" class="gt_row gt_left">M2GBDY</td>
+<td headers="Hivol_return" class="gt_row gt_right">0.00</td>
+<td headers="lovol_return" class="gt_row gt_right">0.01</td>
+<td headers="trend" class="gt_row gt_left">lower</td></tr>
+    <tr><td headers="ticker" class="gt_row gt_left">M2JPDY</td>
+<td headers="Hivol_return" class="gt_row gt_right">0.00</td>
+<td headers="lovol_return" class="gt_row gt_right">0.01</td>
+<td headers="trend" class="gt_row gt_left">lower</td></tr>
+    <tr><td headers="ticker" class="gt_row gt_left">M2USADVD</td>
+<td headers="Hivol_return" class="gt_row gt_right">0.00</td>
+<td headers="lovol_return" class="gt_row gt_right">0.00</td>
+<td headers="trend" class="gt_row gt_left">lower</td></tr>
+    <tr><td headers="ticker" class="gt_row gt_left">M2WDHDVD</td>
+<td headers="Hivol_return" class="gt_row gt_right">0.00</td>
+<td headers="lovol_return" class="gt_row gt_right">0.00</td>
+<td headers="trend" class="gt_row gt_left">lower</td></tr>
+    <tr><td headers="ticker" class="gt_row gt_left">SPDAEET</td>
+<td headers="Hivol_return" class="gt_row gt_right">0.00</td>
+<td headers="lovol_return" class="gt_row gt_right">−0.02</td>
+<td headers="trend" class="gt_row gt_left">higher</td></tr>
+    <tr><td headers="ticker" class="gt_row gt_left">SPJXDAJT</td>
+<td headers="Hivol_return" class="gt_row gt_right">−0.03</td>
+<td headers="lovol_return" class="gt_row gt_right">0.01</td>
+<td headers="trend" class="gt_row gt_left">lower</td></tr>
+    <tr><td headers="ticker" class="gt_row gt_left">SPSADAZT</td>
+<td headers="Hivol_return" class="gt_row gt_right">0.00</td>
+<td headers="lovol_return" class="gt_row gt_right">0.00</td>
+<td headers="trend" class="gt_row gt_left">higher</td></tr>
+    <tr><td headers="ticker" class="gt_row gt_left">TJDIVD</td>
+<td headers="Hivol_return" class="gt_row gt_right">0.02</td>
+<td headers="lovol_return" class="gt_row gt_right">−0.02</td>
+<td headers="trend" class="gt_row gt_left">higher</td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
