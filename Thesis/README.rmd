@@ -170,13 +170,16 @@ volreturns <- left_join(hivol, lovol, by = "ticker") %>%
     TRUE ~ "lower"
   ))
 
- vol_table <- volreturns %>%
-  gt::gt() %>%
-  fmt_number(
-    columns = everything(),
-    decimals = 2,
-    use_seps = FALSE
-  )
+suppressMessages({
+  vol_table <- volreturns %>%
+    gt::gt() %>%
+    fmt_number(
+      columns = everything(),
+      decimals = 2,
+      use_seps = FALSE
+    )
+})
+
  
  vol_table
 ```
