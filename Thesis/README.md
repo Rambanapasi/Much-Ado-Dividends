@@ -17,23 +17,23 @@ dividend yield or dividend growth I will consider globally traded
 indices and their benchmarks. For concreteness, I will look at those
 prescribed in literature. From this I will find the excess return.
 
-<div id="zlhdmbwbev" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#zlhdmbwbev table {
+<div id="voltbokrls" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#voltbokrls table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#zlhdmbwbev thead, #zlhdmbwbev tbody, #zlhdmbwbev tfoot, #zlhdmbwbev tr, #zlhdmbwbev td, #zlhdmbwbev th {
+#voltbokrls thead, #voltbokrls tbody, #voltbokrls tfoot, #voltbokrls tr, #voltbokrls td, #voltbokrls th {
   border-style: none;
 }
 
-#zlhdmbwbev p {
+#voltbokrls p {
   margin: 0;
   padding: 0;
 }
 
-#zlhdmbwbev .gt_table {
+#voltbokrls .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -59,12 +59,12 @@ prescribed in literature. From this I will find the excess return.
   border-left-color: #D3D3D3;
 }
 
-#zlhdmbwbev .gt_caption {
+#voltbokrls .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#zlhdmbwbev .gt_title {
+#voltbokrls .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -76,7 +76,7 @@ prescribed in literature. From this I will find the excess return.
   border-bottom-width: 0;
 }
 
-#zlhdmbwbev .gt_subtitle {
+#voltbokrls .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -88,7 +88,7 @@ prescribed in literature. From this I will find the excess return.
   border-top-width: 0;
 }
 
-#zlhdmbwbev .gt_heading {
+#voltbokrls .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -100,13 +100,13 @@ prescribed in literature. From this I will find the excess return.
   border-right-color: #D3D3D3;
 }
 
-#zlhdmbwbev .gt_bottom_border {
+#voltbokrls .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#zlhdmbwbev .gt_col_headings {
+#voltbokrls .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -121,7 +121,7 @@ prescribed in literature. From this I will find the excess return.
   border-right-color: #D3D3D3;
 }
 
-#zlhdmbwbev .gt_col_heading {
+#voltbokrls .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -141,7 +141,7 @@ prescribed in literature. From this I will find the excess return.
   overflow-x: hidden;
 }
 
-#zlhdmbwbev .gt_column_spanner_outer {
+#voltbokrls .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -153,15 +153,15 @@ prescribed in literature. From this I will find the excess return.
   padding-right: 4px;
 }
 
-#zlhdmbwbev .gt_column_spanner_outer:first-child {
+#voltbokrls .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#zlhdmbwbev .gt_column_spanner_outer:last-child {
+#voltbokrls .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#zlhdmbwbev .gt_column_spanner {
+#voltbokrls .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -173,11 +173,11 @@ prescribed in literature. From this I will find the excess return.
   width: 100%;
 }
 
-#zlhdmbwbev .gt_spanner_row {
+#voltbokrls .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#zlhdmbwbev .gt_group_heading {
+#voltbokrls .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -203,7 +203,7 @@ prescribed in literature. From this I will find the excess return.
   text-align: left;
 }
 
-#zlhdmbwbev .gt_empty_group_heading {
+#voltbokrls .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -218,15 +218,15 @@ prescribed in literature. From this I will find the excess return.
   vertical-align: middle;
 }
 
-#zlhdmbwbev .gt_from_md > :first-child {
+#voltbokrls .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#zlhdmbwbev .gt_from_md > :last-child {
+#voltbokrls .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#zlhdmbwbev .gt_row {
+#voltbokrls .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -245,7 +245,7 @@ prescribed in literature. From this I will find the excess return.
   overflow-x: hidden;
 }
 
-#zlhdmbwbev .gt_stub {
+#voltbokrls .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -258,7 +258,7 @@ prescribed in literature. From this I will find the excess return.
   padding-right: 5px;
 }
 
-#zlhdmbwbev .gt_stub_row_group {
+#voltbokrls .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -272,15 +272,15 @@ prescribed in literature. From this I will find the excess return.
   vertical-align: top;
 }
 
-#zlhdmbwbev .gt_row_group_first td {
+#voltbokrls .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#zlhdmbwbev .gt_row_group_first th {
+#voltbokrls .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#zlhdmbwbev .gt_summary_row {
+#voltbokrls .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -290,16 +290,16 @@ prescribed in literature. From this I will find the excess return.
   padding-right: 5px;
 }
 
-#zlhdmbwbev .gt_first_summary_row {
+#voltbokrls .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#zlhdmbwbev .gt_first_summary_row.thick {
+#voltbokrls .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#zlhdmbwbev .gt_last_summary_row {
+#voltbokrls .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -309,7 +309,7 @@ prescribed in literature. From this I will find the excess return.
   border-bottom-color: #D3D3D3;
 }
 
-#zlhdmbwbev .gt_grand_summary_row {
+#voltbokrls .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -319,7 +319,7 @@ prescribed in literature. From this I will find the excess return.
   padding-right: 5px;
 }
 
-#zlhdmbwbev .gt_first_grand_summary_row {
+#voltbokrls .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -329,7 +329,7 @@ prescribed in literature. From this I will find the excess return.
   border-top-color: #D3D3D3;
 }
 
-#zlhdmbwbev .gt_last_grand_summary_row_top {
+#voltbokrls .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -339,11 +339,11 @@ prescribed in literature. From this I will find the excess return.
   border-bottom-color: #D3D3D3;
 }
 
-#zlhdmbwbev .gt_striped {
+#voltbokrls .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#zlhdmbwbev .gt_table_body {
+#voltbokrls .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -352,7 +352,7 @@ prescribed in literature. From this I will find the excess return.
   border-bottom-color: #D3D3D3;
 }
 
-#zlhdmbwbev .gt_footnotes {
+#voltbokrls .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -366,7 +366,7 @@ prescribed in literature. From this I will find the excess return.
   border-right-color: #D3D3D3;
 }
 
-#zlhdmbwbev .gt_footnote {
+#voltbokrls .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -375,7 +375,7 @@ prescribed in literature. From this I will find the excess return.
   padding-right: 5px;
 }
 
-#zlhdmbwbev .gt_sourcenotes {
+#voltbokrls .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -389,7 +389,7 @@ prescribed in literature. From this I will find the excess return.
   border-right-color: #D3D3D3;
 }
 
-#zlhdmbwbev .gt_sourcenote {
+#voltbokrls .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -397,63 +397,63 @@ prescribed in literature. From this I will find the excess return.
   padding-right: 5px;
 }
 
-#zlhdmbwbev .gt_left {
+#voltbokrls .gt_left {
   text-align: left;
 }
 
-#zlhdmbwbev .gt_center {
+#voltbokrls .gt_center {
   text-align: center;
 }
 
-#zlhdmbwbev .gt_right {
+#voltbokrls .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#zlhdmbwbev .gt_font_normal {
+#voltbokrls .gt_font_normal {
   font-weight: normal;
 }
 
-#zlhdmbwbev .gt_font_bold {
+#voltbokrls .gt_font_bold {
   font-weight: bold;
 }
 
-#zlhdmbwbev .gt_font_italic {
+#voltbokrls .gt_font_italic {
   font-style: italic;
 }
 
-#zlhdmbwbev .gt_super {
+#voltbokrls .gt_super {
   font-size: 65%;
 }
 
-#zlhdmbwbev .gt_footnote_marks {
+#voltbokrls .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#zlhdmbwbev .gt_asterisk {
+#voltbokrls .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#zlhdmbwbev .gt_indent_1 {
+#voltbokrls .gt_indent_1 {
   text-indent: 5px;
 }
 
-#zlhdmbwbev .gt_indent_2 {
+#voltbokrls .gt_indent_2 {
   text-indent: 10px;
 }
 
-#zlhdmbwbev .gt_indent_3 {
+#voltbokrls .gt_indent_3 {
   text-indent: 15px;
 }
 
-#zlhdmbwbev .gt_indent_4 {
+#voltbokrls .gt_indent_4 {
   text-indent: 20px;
 }
 
-#zlhdmbwbev .gt_indent_5 {
+#voltbokrls .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -538,8 +538,47 @@ volatile. This shows full sample performance.
 -   consider the mix between high dividend yield versus dividend growth
     portfolios, so color coordinate the different strategies?
 
-![](README_files/figure-markdown_github/unnamed-chunk-1-1.png) \##
-Performance Stats
+``` r
+# loadings 
+pacman::p_load("xts", "tidyverse", "tbl2xts", "PerformanceAnalytics", 
+               "lubridate", "glue")
+library(tbl2xts)
+library(tidyverse)
+library(xts)
+source("code/EXCESSRETURN.R")
+source("code/EXCESSRETURN2.R")
+library(quantmod)
+
+df <- readxl::read_xlsx("data/MAD .xlsx") 
+
+# get all permutatation 
+A <- df %>% MY_excess_return(.,"FUDP", "TUKXG") 
+B <- df %>% MY_excess_return(., "M2EFDY", "GDUEEGF") 
+C <- df %>% MY_excess_return(., "M2EUGDY", "GDDUE15X") 
+D <- df %>% MY_excess_return(., "M2GBDY", "GDDUUK") 
+E <- df %>% MY_excess_return(., "M2JPDY", "TJDIVD") 
+F1 <- df %>% MY_excess_return(., "M2USADVD", "GDDUUS") 
+G <- df %>% MY_excess_return(., "M2WDHDVD", "GDDUWI") 
+H <- df %>% MY_excess_return(., "SPDAEET", "SPTR350E") 
+I <- df %>% MY_excess_return(., "SPDAUDT", "SPXT") 
+J <- df %>% MY_excess_return(., "SPJXDAJT", "TPXDDVD") 
+K <- df %>% MY_excess_return(., "SPSADAZT", "JALSH") 
+L <- df %>% MY_excess_return(., "TJDIVD", "JALSH")
+
+#  cumulative excess returns in a single data frame
+compare <- list(A, B, C, D, E, F1, G,H,J, K, L) %>%
+  reduce(inner_join, by='date') %>% gather(ticker, excess, -date)
+
+plot <- compare %>% ggplot(aes(x = date, y = excess)) +
+  geom_line() +
+  labs(x = "Date", y = "Return") +
+  theme_minimal() +
+  facet_wrap(~ ticker, scales = "free_y", ncol = 4)
+
+plot
+```
+
+![](README_files/figure-markdown_github/unnamed-chunk-1-1.png)
 
 ## Stratification
 
@@ -568,13 +607,6 @@ library(tidyverse)
 source("code/uncompoundedexcess.R")
 source("code/simpleexcessreturn.R")
 vix <- getSymbols("VIX")
-```
-
-    ## Warning: VIX contains missing values. Some functions will not work if objects
-    ## contain missing values in the middle of the series. Consider using na.omit(),
-    ## na.approx(), na.fill(), etc to remove or replace them.
-
-``` r
 VIX <- VIX %>% tbl2xts::xts_tbl(.)
 VIX <- VIX %>% select(date, VIX.Close)
 
@@ -662,23 +694,23 @@ volreturns <- left_join(hivol, lovol, by = "ticker") %>%
  vol_table
 ```
 
-<div id="wtpcyfgfaa" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#wtpcyfgfaa table {
+<div id="sxhyqbgcgt" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#sxhyqbgcgt table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#wtpcyfgfaa thead, #wtpcyfgfaa tbody, #wtpcyfgfaa tfoot, #wtpcyfgfaa tr, #wtpcyfgfaa td, #wtpcyfgfaa th {
+#sxhyqbgcgt thead, #sxhyqbgcgt tbody, #sxhyqbgcgt tfoot, #sxhyqbgcgt tr, #sxhyqbgcgt td, #sxhyqbgcgt th {
   border-style: none;
 }
 
-#wtpcyfgfaa p {
+#sxhyqbgcgt p {
   margin: 0;
   padding: 0;
 }
 
-#wtpcyfgfaa .gt_table {
+#sxhyqbgcgt .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -704,12 +736,12 @@ volreturns <- left_join(hivol, lovol, by = "ticker") %>%
   border-left-color: #D3D3D3;
 }
 
-#wtpcyfgfaa .gt_caption {
+#sxhyqbgcgt .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#wtpcyfgfaa .gt_title {
+#sxhyqbgcgt .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -721,7 +753,7 @@ volreturns <- left_join(hivol, lovol, by = "ticker") %>%
   border-bottom-width: 0;
 }
 
-#wtpcyfgfaa .gt_subtitle {
+#sxhyqbgcgt .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -733,7 +765,7 @@ volreturns <- left_join(hivol, lovol, by = "ticker") %>%
   border-top-width: 0;
 }
 
-#wtpcyfgfaa .gt_heading {
+#sxhyqbgcgt .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -745,13 +777,13 @@ volreturns <- left_join(hivol, lovol, by = "ticker") %>%
   border-right-color: #D3D3D3;
 }
 
-#wtpcyfgfaa .gt_bottom_border {
+#sxhyqbgcgt .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#wtpcyfgfaa .gt_col_headings {
+#sxhyqbgcgt .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -766,7 +798,7 @@ volreturns <- left_join(hivol, lovol, by = "ticker") %>%
   border-right-color: #D3D3D3;
 }
 
-#wtpcyfgfaa .gt_col_heading {
+#sxhyqbgcgt .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -786,7 +818,7 @@ volreturns <- left_join(hivol, lovol, by = "ticker") %>%
   overflow-x: hidden;
 }
 
-#wtpcyfgfaa .gt_column_spanner_outer {
+#sxhyqbgcgt .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -798,15 +830,15 @@ volreturns <- left_join(hivol, lovol, by = "ticker") %>%
   padding-right: 4px;
 }
 
-#wtpcyfgfaa .gt_column_spanner_outer:first-child {
+#sxhyqbgcgt .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#wtpcyfgfaa .gt_column_spanner_outer:last-child {
+#sxhyqbgcgt .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#wtpcyfgfaa .gt_column_spanner {
+#sxhyqbgcgt .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -818,11 +850,11 @@ volreturns <- left_join(hivol, lovol, by = "ticker") %>%
   width: 100%;
 }
 
-#wtpcyfgfaa .gt_spanner_row {
+#sxhyqbgcgt .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#wtpcyfgfaa .gt_group_heading {
+#sxhyqbgcgt .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -848,7 +880,7 @@ volreturns <- left_join(hivol, lovol, by = "ticker") %>%
   text-align: left;
 }
 
-#wtpcyfgfaa .gt_empty_group_heading {
+#sxhyqbgcgt .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -863,15 +895,15 @@ volreturns <- left_join(hivol, lovol, by = "ticker") %>%
   vertical-align: middle;
 }
 
-#wtpcyfgfaa .gt_from_md > :first-child {
+#sxhyqbgcgt .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#wtpcyfgfaa .gt_from_md > :last-child {
+#sxhyqbgcgt .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#wtpcyfgfaa .gt_row {
+#sxhyqbgcgt .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -890,7 +922,7 @@ volreturns <- left_join(hivol, lovol, by = "ticker") %>%
   overflow-x: hidden;
 }
 
-#wtpcyfgfaa .gt_stub {
+#sxhyqbgcgt .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -903,7 +935,7 @@ volreturns <- left_join(hivol, lovol, by = "ticker") %>%
   padding-right: 5px;
 }
 
-#wtpcyfgfaa .gt_stub_row_group {
+#sxhyqbgcgt .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -917,15 +949,15 @@ volreturns <- left_join(hivol, lovol, by = "ticker") %>%
   vertical-align: top;
 }
 
-#wtpcyfgfaa .gt_row_group_first td {
+#sxhyqbgcgt .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#wtpcyfgfaa .gt_row_group_first th {
+#sxhyqbgcgt .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#wtpcyfgfaa .gt_summary_row {
+#sxhyqbgcgt .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -935,16 +967,16 @@ volreturns <- left_join(hivol, lovol, by = "ticker") %>%
   padding-right: 5px;
 }
 
-#wtpcyfgfaa .gt_first_summary_row {
+#sxhyqbgcgt .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#wtpcyfgfaa .gt_first_summary_row.thick {
+#sxhyqbgcgt .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#wtpcyfgfaa .gt_last_summary_row {
+#sxhyqbgcgt .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -954,7 +986,7 @@ volreturns <- left_join(hivol, lovol, by = "ticker") %>%
   border-bottom-color: #D3D3D3;
 }
 
-#wtpcyfgfaa .gt_grand_summary_row {
+#sxhyqbgcgt .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -964,7 +996,7 @@ volreturns <- left_join(hivol, lovol, by = "ticker") %>%
   padding-right: 5px;
 }
 
-#wtpcyfgfaa .gt_first_grand_summary_row {
+#sxhyqbgcgt .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -974,7 +1006,7 @@ volreturns <- left_join(hivol, lovol, by = "ticker") %>%
   border-top-color: #D3D3D3;
 }
 
-#wtpcyfgfaa .gt_last_grand_summary_row_top {
+#sxhyqbgcgt .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -984,11 +1016,11 @@ volreturns <- left_join(hivol, lovol, by = "ticker") %>%
   border-bottom-color: #D3D3D3;
 }
 
-#wtpcyfgfaa .gt_striped {
+#sxhyqbgcgt .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#wtpcyfgfaa .gt_table_body {
+#sxhyqbgcgt .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -997,7 +1029,7 @@ volreturns <- left_join(hivol, lovol, by = "ticker") %>%
   border-bottom-color: #D3D3D3;
 }
 
-#wtpcyfgfaa .gt_footnotes {
+#sxhyqbgcgt .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1011,7 +1043,7 @@ volreturns <- left_join(hivol, lovol, by = "ticker") %>%
   border-right-color: #D3D3D3;
 }
 
-#wtpcyfgfaa .gt_footnote {
+#sxhyqbgcgt .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1020,7 +1052,7 @@ volreturns <- left_join(hivol, lovol, by = "ticker") %>%
   padding-right: 5px;
 }
 
-#wtpcyfgfaa .gt_sourcenotes {
+#sxhyqbgcgt .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1034,7 +1066,7 @@ volreturns <- left_join(hivol, lovol, by = "ticker") %>%
   border-right-color: #D3D3D3;
 }
 
-#wtpcyfgfaa .gt_sourcenote {
+#sxhyqbgcgt .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1042,63 +1074,63 @@ volreturns <- left_join(hivol, lovol, by = "ticker") %>%
   padding-right: 5px;
 }
 
-#wtpcyfgfaa .gt_left {
+#sxhyqbgcgt .gt_left {
   text-align: left;
 }
 
-#wtpcyfgfaa .gt_center {
+#sxhyqbgcgt .gt_center {
   text-align: center;
 }
 
-#wtpcyfgfaa .gt_right {
+#sxhyqbgcgt .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#wtpcyfgfaa .gt_font_normal {
+#sxhyqbgcgt .gt_font_normal {
   font-weight: normal;
 }
 
-#wtpcyfgfaa .gt_font_bold {
+#sxhyqbgcgt .gt_font_bold {
   font-weight: bold;
 }
 
-#wtpcyfgfaa .gt_font_italic {
+#sxhyqbgcgt .gt_font_italic {
   font-style: italic;
 }
 
-#wtpcyfgfaa .gt_super {
+#sxhyqbgcgt .gt_super {
   font-size: 65%;
 }
 
-#wtpcyfgfaa .gt_footnote_marks {
+#sxhyqbgcgt .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#wtpcyfgfaa .gt_asterisk {
+#sxhyqbgcgt .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#wtpcyfgfaa .gt_indent_1 {
+#sxhyqbgcgt .gt_indent_1 {
   text-indent: 5px;
 }
 
-#wtpcyfgfaa .gt_indent_2 {
+#sxhyqbgcgt .gt_indent_2 {
   text-indent: 10px;
 }
 
-#wtpcyfgfaa .gt_indent_3 {
+#sxhyqbgcgt .gt_indent_3 {
   text-indent: 15px;
 }
 
-#wtpcyfgfaa .gt_indent_4 {
+#sxhyqbgcgt .gt_indent_4 {
   text-indent: 20px;
 }
 
-#wtpcyfgfaa .gt_indent_5 {
+#sxhyqbgcgt .gt_indent_5 {
   text-indent: 25px;
 }
 </style>

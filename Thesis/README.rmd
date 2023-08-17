@@ -33,7 +33,7 @@ From the figure below, results of dividend strategies (High Yield or Dividend Gr
 
 - consider the mix between high dividend yield versus dividend growth portfolios, so color coordinate the different strategies?
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+```{r echo=TRUE, message=FALSE, warning=FALSE}
 # loadings 
 pacman::p_load("xts", "tidyverse", "tbl2xts", "PerformanceAnalytics", 
                "lubridate", "glue")
@@ -72,30 +72,6 @@ plot <- compare %>% ggplot(aes(x = date, y = excess)) +
 
 plot
 ```
-## Performance Stats
-
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-# funds <- readxl::read_xlsx("data/MAD .xlsx")
-# source("code/Statistics.R")
-# source("code/SmallerStatsTable.R")
-# 
-# funds <- funds %>% 
-#   gather(Tickers, Value, -Date) %>% 
-#   arrange(Date) %>% group_by(Tickers) %>%
-#   mutate(Ret = Value/lag(Value)-1) %>% 
-#   mutate(Ret =coalesce(Ret,0)) %>% 
-#   ungroup()
-# 
-# BM <- "TUKXG"
-# 
-# One_year <- funds %>% Moments_comp(., BM = BM, Yrs_LookBack = 1, NA_Check = 0.9)
-# Three_year <- funds %>% Moments_comp(., BM = BM, Yrs_LookBack = 3, NA_Check = 0.9)
-# Five_year <- funds %>% Moments_comp(., BM = BM, Yrs_LookBack = 5, NA_Check = 0.9)
-# 
-# kable(One_year)
-# kable(Three_year)
-# kable(Five_year)
-```
 
 ## Stratification 
 
@@ -110,7 +86,7 @@ I will use volatility and interest rate cycles.
 - For interest rate cycles use periods of interest cutting and hiking. 
 
 
-```{r}
+```{r echo=TRUE, message=FALSE, warning=FALSE}
 # get vol data from yahoo 
 library(quantmod)
 library(tidyverse)
