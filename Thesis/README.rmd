@@ -18,9 +18,8 @@ To investigate the performance of dividend paying strategies, either dividend yi
 
 ```{r Instruments, echo=FALSE, message=FALSE, warning=FALSE}
 Table_data <- readxl::read_xlsx("data/Instruments from MAD.xlsx")
-library(gt)
-Table_data %>%
-  gt::gt()
+library(knitr)
+kable(Table_data)
 ```
 
 ##  Excess Return
@@ -170,18 +169,7 @@ volreturns <- left_join(hivol, lovol, by = "ticker") %>%
     TRUE ~ "lower"
   ))
 
-suppressMessages({
-  vol_table <- volreturns %>%
-    gt::gt() %>%
-    fmt_number(
-      columns = everything(),
-      decimals = 2,
-      use_seps = FALSE
-    )
-})
-
- 
- vol_table
+kable( volreturns)
 ```
 
 
