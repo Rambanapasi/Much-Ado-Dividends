@@ -244,8 +244,9 @@ g <- ggplot(plotdf, aes(date, RollRets, color = ticker)) +
 g
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-2-1.png) \#
-Observations
+![](README_files/figure-markdown_github/unnamed-chunk-2-1.png)
+
+# Observations
 
 -   we have dividend portfolios of HY and DGPS in US, UK, JAPAN, EM and
     SA.

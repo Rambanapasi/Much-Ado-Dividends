@@ -205,6 +205,8 @@ g
 
 
 ```
+
+
 # Observations
 
 - we have dividend portfolios of HY and DGPS in US, UK, JAPAN, EM and SA. 
