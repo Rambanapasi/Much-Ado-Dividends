@@ -57,7 +57,10 @@ library(tidyverse)
 library(xts)
 source("code/EXCESSRETURN.R")
 source("code/EXCESSRETURN2.R")
+source("code/monthlyreturns.R")
 library(quantmod)
+source("code/uncompoundedexcess.R")
+source("code/simpleexcessreturn.R")
 
 df <- readxl::read_xlsx("data/MAD .xlsx") 
 
@@ -90,6 +93,10 @@ plot
 
 ![](README_files/figure-markdown_github/unnamed-chunk-1-1.png)
 
+``` r
+# Now for standard deviation 
+```
+
 ## Stratification
 
 Applying a top down approach means that it would be prudent to consider
@@ -111,11 +118,7 @@ I will use volatility and interest rate cycles.
 
 ``` r
 # get vol data from yahoo 
-library(quantmod)
-library(tidyverse)
 
-source("code/uncompoundedexcess.R")
-source("code/simpleexcessreturn.R")
 vix <- getSymbols("VIX")
 VIX <- VIX %>% tbl2xts::xts_tbl(.)
 VIX <- VIX %>% select(date, VIX.Close)
@@ -209,3 +212,27 @@ kable( volreturns)
 | SPJXDAJT |   -0.0250483 |    0.0114127 | lower  |
 | SPSADAZT |    0.0038972 |   -0.0027403 | higher |
 | TJDIVD   |    0.0225298 |   -0.0237987 | higher |
+
+``` r
+# rolling returns 
+
+plotdf <- excessreturns %>% 
+  group_by(ticker) %>% 
+  mutate(RollRets = RcppRoll::roll_prod(1 + excess, 36, fill = NA, 
+    align = "right")^(12/36) - 1) %>% 
+  group_by(date) %>% filter(any(!is.na(RollRets))) %>% 
+  ungroup()
+
+g <- ggplot(plotdf, aes(date, RollRets, color = ticker)) +
+  geom_line(alpha = 0.5, size = 1) +
+  labs(
+    title = "Rolling 3 Year Annualized Returns",
+    subtitle = "",
+    x = "",
+    y = "Rolling 3 year Returns (Ann.)",
+    caption = "Source: Bloomberg"
+  )
+g
+```
+
+![](README_files/figure-markdown_github/unnamed-chunk-2-1.png)

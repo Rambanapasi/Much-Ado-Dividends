@@ -41,7 +41,10 @@ library(tidyverse)
 library(xts)
 source("code/EXCESSRETURN.R")
 source("code/EXCESSRETURN2.R")
+source("code/monthlyreturns.R")
 library(quantmod)
+source("code/uncompoundedexcess.R")
+source("code/simpleexcessreturn.R")
 
 df <- readxl::read_xlsx("data/MAD .xlsx") 
 
@@ -70,6 +73,8 @@ plot <- compare %>% ggplot(aes(x = date, y = excess)) +
   facet_wrap(~ ticker, scales = "free_y", ncol = 4)
 
 plot
+
+# Now for standard deviation 
 ```
 
 ## Stratification 
@@ -87,11 +92,7 @@ I will use volatility and interest rate cycles.
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
 # get vol data from yahoo 
-library(quantmod)
-library(tidyverse)
 
-source("code/uncompoundedexcess.R")
-source("code/simpleexcessreturn.R")
 vix <- getSymbols("VIX")
 VIX <- VIX %>% tbl2xts::xts_tbl(.)
 VIX <- VIX %>% select(date, VIX.Close)
@@ -170,6 +171,29 @@ volreturns <- left_join(hivol, lovol, by = "ticker") %>%
   ))
 
 kable( volreturns)
+
+
+# rolling returns 
+
+plotdf <- excessreturns %>% 
+  group_by(ticker) %>% 
+  mutate(RollRets = RcppRoll::roll_prod(1 + excess, 36, fill = NA, 
+    align = "right")^(12/36) - 1) %>% 
+  group_by(date) %>% filter(any(!is.na(RollRets))) %>% 
+  ungroup()
+
+g <- ggplot(plotdf, aes(date, RollRets, color = ticker)) +
+  geom_line(alpha = 0.5, size = 1) +
+  labs(
+    title = "Rolling 3 Year Annualized Returns",
+    subtitle = "",
+    x = "",
+    y = "Rolling 3 year Returns (Ann.)",
+    caption = "Source: Bloomberg"
+  )
+g
+
+
 ```
 
 
