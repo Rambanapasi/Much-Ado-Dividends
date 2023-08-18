@@ -86,7 +86,14 @@ plot <- compare %>% ggplot(aes(x = date, y = excess)) +
   geom_line() +
   labs(x = "Date", y = "Return") +
   theme_minimal() +
-  facet_wrap(~ ticker, scales = "free_y", ncol = 4)
+  facet_wrap(~ ticker, scales = "free_y", ncol = 4)+
+   labs(
+    title = "Cumulative Excess Returns",
+    subtitle = "Start dates differ amongst portfolios",
+    x = "",
+    y = "Cum Returns",
+    caption = "Source: Bloomberg"
+  )
 
 plot
 ```
@@ -115,6 +122,8 @@ I will use volatility and interest rate cycles.
     and ten year basis.
 
 -   For interest rate cycles use periods of interest cutting and hiking.
+
+\_ rolling returns, cant you rank them on
 
 ``` r
 # get vol data from yahoo 
@@ -235,4 +244,34 @@ g <- ggplot(plotdf, aes(date, RollRets, color = ticker)) +
 g
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-2-1.png)
+![](README_files/figure-markdown_github/unnamed-chunk-2-1.png) \#
+Observations
+
+-   we have dividend portfolios of HY and DGPS in US, UK, JAPAN, EM and
+    SA.
+
+In cumulative returns - FUDP (HY) had the most impressive
+
+These next two show marginal improvements over market indices -
+M2EUGDY - M2GBDY
+
+Overall a positive excess return does show some gain to harvesting such
+portfolios.
+
+Stratification analysis
+
+If we just consider the level of volatility in global financial markets.
+we can see a clear trend.
+
+-   most poortfolios give lower returns when in high vol versus low vol
+-   except for SPSADAZT, TJDIVD, SPDAEET and M2EFDY.
+
+Rolling returns
+
+Overall, massive divergence followed by a convergence in rolling excess
+returns. There is some divergence towards the end of the sample period.
+
+-   FUDP, SPSADAZT, TJDIVD visually have massive varinace in their
+    rolling excess returns.
+
+-   Others dont have worrying movements in rolling returns
