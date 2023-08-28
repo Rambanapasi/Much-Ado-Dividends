@@ -251,28 +251,79 @@ g
 -   we have dividend portfolios of HY and DGPS in US, UK, JAPAN, EM and
     SA.
 
-In cumulative returns - FUDP (HY) had the most impressive
+## Cumulative returns
+
+-   FUDP-UK (HY) had the most impressive
 
 These next two show marginal improvements over market indices -
-M2EUGDY - M2GBDY
+M2EUGDY-EU (HY) - M2GBDY-UK (HY)
 
 Overall a positive excess return does show some gain to harvesting such
 portfolios.
 
-Stratification analysis
+## Stratification analysis
 
 If we just consider the level of volatility in global financial markets.
 we can see a clear trend.
 
--   most poortfolios give lower returns when in high vol versus low vol
--   except for SPSADAZT, TJDIVD, SPDAEET and M2EFDY.
+-   most portfolios give lower returns when in high vol versus low vol
+-   except for SPSADAZT-SA (DGPS), TJDIVD-SA(HY), SPDAEET-EU(DGPS) and
+    M2EFDY (HY)-EM.
 
-Rolling returns
+## Rolling returns
 
 Overall, massive divergence followed by a convergence in rolling excess
 returns. There is some divergence towards the end of the sample period.
 
--   FUDP, SPSADAZT, TJDIVD visually have massive varinace in their
-    rolling excess returns.
+-   FUDP-UK (HY), SPSADAZT-SA (DGPS), TJDIVD-SA (HY) visually have
+    massive variance in their rolling excess returns.
 
--   Others dont have worrying movements in rolling returns
+-   Others don’t have erratic movements in rolling returns.
+
+# Analysis
+
+Dividend portfolios either HY or DGPS have overtime given some level of
+positive return, as measured by the cumulative return. However, HY
+indexes give above average excess return for the sample period. Overtime
+however, most portfolios have choppy excess cumulative returns. There is
+no super convincing signal that these portfolios give some consistent
+excess return.
+
+The moment we stratifying according to different periods of volatility
+we notice that during periods of high volatility, its less the type of
+signal and more of the region that plays a big part in explaining the
+performance. in that case emerging market assets perform better than in
+low volatility environments. Unusual given in this time there is a
+flight to safety and EM will be risky at this time. During periods of
+low vol, advanced market portfolios generally give higher returns that
+in high vol conditions.
+
+When we consider rolling returns, excess returns for most portfolios
+move in a similar direction, generally there are part of the same asset
+class, exposed to the same risk factors and should behave the same way.
+with the exception the SA portfolios. we notice that over three years,
+it has great variance in excess returns. This too can be said about the
+UK high yield portfolio.
+
+So what I can pick out is that dividend portfolios in EM behave
+different from advanced economies.
+
+To do - Will stratifying further, look at mid vol, inflation and
+interest rates?
+
+Working on the data section, where i describe the portfolios and their
+return signalling,
+
+Looked at cumulative excess return. no clear signal but for two HY
+portfolios. stratification, all portfolios perform as expected
+
+# Questions and some thoughts
+
+-   There is some story but can be substantiated by looking at the
+    constituents.
+
+-   I fear that this can turn into an opinion piece, so some direction,
+    should i just make conclusions based on the data and the
+    graphs/stats that i provide.
+
+-   can i see what you consider to be a good thesis for me to model.

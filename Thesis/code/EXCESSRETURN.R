@@ -1,6 +1,7 @@
 MY_excess_return <- function(df, index_name, benchmark_name) {
   df <- df %>%
     dplyr::rename(Index = index_name, Benchmark = benchmark_name) %>% 
+    filter(Date > ymd(20080101)) %>% 
     select(Date, Index, Benchmark) %>% 
     gather(Vehicle, Value, -Date) %>%
     mutate(YM = format(Date, "%b %y")) %>% 
@@ -13,6 +14,7 @@ MY_excess_return <- function(df, index_name, benchmark_name) {
     xts_tbl() %>% 
     mutate(ex.ret = Index - Benchmark) %>% 
     mutate(cum_return = cumprod(1 + ex.ret)) %>% 
+    mutate(cum_return = cum_return/first(cum_return)) %>% 
     select(date, cum_return) %>% 
     ungroup()
 

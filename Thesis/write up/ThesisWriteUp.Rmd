@@ -3,7 +3,7 @@
 # Remove comments and add values where applicable.
 # The descriptions below should be self-explanatory
 
-title: "Much Ado About Dividends: A Global Perspective"
+title: " A Dive into Dividend Portfolios, When and How to They Work "
 #subtitle: "This will appear as Right Header"
 
 documentclass: "elsarticle"
@@ -78,7 +78,7 @@ Journal: "Journal of Finance"   # Journal that the paper will be submitting to, 
 toc: FALSE                       # Add a table of contents
 numbersections: TRUE             # Should sections (and thus figures and tables) be numbered?
 fontsize: 11pt                  # Set fontsize
-linestretch: 1.5                # Set distance between lines.
+linestretch: 1.0                # Set distance between lines.
 link-citations: TRUE            # This creates dynamic links to the papers in reference list.
 
 ### Adding additional latex packages:
@@ -92,7 +92,7 @@ output:
     fig_width: 3.5 # Adjust default figure sizes. This can also be done in the chunks of the text.
     fig_height: 3.5
 abstract: |
-
+ Dividend paying stock offer an additional componenet to otherwise non dividend paying stock. This paper studies the return signalling cue from dividend portfolio. We find that dividend portfolios around the around offer downside protection. However emerging market portfolios have positive return during market turmoil which is considerably above returns from advanced economy portfolios. 
 ---
 
 <!-- First: Set your default preferences for chunk options: -->
@@ -128,7 +128,7 @@ list.literature <- readxl::read_xlsx("data/Literature Summary Table.xlsx")
 
 # Literature Review \label{Literature Review}
 
-## Theorectical underpinning of dividends 
+## What are dividends
 
 Dividends constitute a form of capital distribution by corporations towards shareholders. They exist in various forms, such as cash, stock, liquidating, scrip, or property dividends  @baker2009understanding, of which cash dividends and share repurchases being the most commonly used in practice. Within cash dividends, regular dividends are widely used by corporations and payment frequency across jurisdictions. The decision to issue dividends is typically made by the board of directors, and approved by shareholders, however practiced more in Europe and less so in the United States. The payout policy policy of a corporation, which are guiding principles for management and board of directors towards capital distributions considers company investment and is closely watched by investors and analysts. As such, management strives to grow or maintain a certain level of dividend payouts as this signals firm growth and investors share of profitability in the company. Various liertature has covered the effect of dividend announcements before and after ex -dividend dates. Figure 1 shows a  clear and direct relation with a decrease in share value to the proportionate to the dividend announcement. 
 
@@ -138,7 +138,7 @@ Taxe considerations argue in favor for dividend relevance. Across jurisdiction d
 
 Information asymmetry between shareholders and managers is another factor that gives relevance to dividend payments. Managers of businesses have greater knowledge of operations thus value of a business at any given point more than shareholders. As such,  investors rely on dividend announcements to assess a company's valuation. Dividend signaling conveys information about the company's quality @al2018revisiting  and @baker1999corporate. Investors compare dividend announcements to historical levels while considering company fundamentals. However, there is a risk of manipulation by management, making the dividend signal imperfect for determining share prices. Principal agency issues may give another reason for issuance of dividends. The free cash flow hypothesis suggests that dividend payments force management to raise capital from external sources, which increases borrowing costs and scrutiny from capital markets. This, in turn, reduces management's ability to make sub optimal investments and aligning management and shareholder objectives [@baker2009understanding]. Supporters of this theory ascertain that dividends payments by the mechanism encourage good business practices.
 
-## Dividend signals, theoreactial and practical evidence
+## Empirical review
 
 The various methods of capital distributions have varying impact on financial statements which is summarized in Table of the appendix. From the perceptive of an investor or analyst the dividend yield metric helps show the additional return dividends paying securities could add to a portfolio. Consider \ref{eq1} that describes the fundamentals that influence the dividend yield. Assuming a constant payout ratio, dividend yield is a function of earnings yield.  shows the correlation between DY and Price overtime for various securities. Various studies have identified a predictive power of dividend yield thus confirm the existence of a value signal. Also, another signal for dividends is dividend growth per share for corporations, and unlike the dividend yield, it is not affected by price but maintain properties that allow for inference into management quality. As managemnet is aware of the signalling effect of dividends, this may induce the value trap, that forces management to continually increase dividends to maintain a certain valuation. However such companies are more vulnerable to facing financial distress.
 
@@ -171,9 +171,22 @@ Table
 
 \newpage
 
+# Methodology
+## Research Design 
+## Data collection 
+## Variables 
+## Methodolgy 
+## Hypothetical hypothesis 
 
+# Results 
+## Descriptive Statistics 
+## Optimization Results 
 
-# Methodology 
+# Discussion 
+
+## Limitations of the study
+
+# Conclusion
 
 ## Tax considerations
 
@@ -204,9 +217,6 @@ We also apply at each rebalancing several portfolio optimization routines (minim
 
 Following this we will construct back-tests on the subset of local data for the choose dividend signal portfolios. The factor portfolios considered are as follows 
 
-# Data
- 
-# Econometric Approach  
 \newpage
 
  
