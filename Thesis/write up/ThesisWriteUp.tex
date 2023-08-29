@@ -460,52 +460,119 @@ Year & Author & Signal & Methodology \\
 \hypertarget{methodology}{%
 \section{Methodology}\label{methodology}}
 
-\hypertarget{research-design}{%
-\subsection{Research Design}\label{research-design}}
+\hypertarget{introduction-1}{%
+\subsection{Introduction}\label{introduction-1}}
 
-\hypertarget{data-collection}{%
-\subsection{Data collection}\label{data-collection}}
+Portfolio optimization is conducted by most portfolio managers to group
+assets that have varying risk and and return attributes to give a mix
+that gives highest return whilst minimizing risk. There are various risk
+models that aim to achieve such a mix to address certain portfolio
+considerations. These techniques are Minimum variance, Equal risk
+contribution, Minimum volatility, Risk efficiency, other refinements
+from proprietary software such as Barras risk model that augments the
+Max utility operator that states risk as a variance of its returns. The
+latter allows managers to take on two perspectives on risk, either total
+risk or active risk of an asset in constructing the covariance matrix.
+The next section details all the risk models in portfolio optimization.
 
-\hypertarget{variables}{%
-\subsection{Variables}\label{variables}}
+\hypertarget{minimum-variance-portfolio-mv}{%
+\subsection{Minimum Variance Portfolio
+(MV)}\label{minimum-variance-portfolio-mv}}
 
-\hypertarget{methodolgy}{%
-\subsection{Methodolgy}\label{methodolgy}}
+The Markowitz Portfolio Theory is the benchmark for all risk models,
+formulated by Harry Markowitz in 1952. It details the a framework for
+constructing portfolios that maximizes expected return for a given level
+of risk, or minimizes risk for a given level of expected return. The
+theory introduces the concept of the ``Minimum Variance Portfolio'',
+which represents a corner solution portfolio the maximum possible
+expected return for a given level of risk.
 
-\hypertarget{hypothetical-hypothesis}{%
-\subsection{Hypothetical hypothesis}\label{hypothetical-hypothesis}}
+The mean return and risk can be specified as below.
 
-\hypertarget{results}{%
-\section{Results}\label{results}}
+\begin{align}
+\mu = w^TR \\ 
+\sigma^2 = w^T\sum
+w\end{align}
 
-\hypertarget{descriptive-statistics}{%
-\subsection{Descriptive Statistics}\label{descriptive-statistics}}
+Therefore the objective function to maximize return given a certain
+level of risk and constraint;
 
-\hypertarget{optimization-results}{%
-\subsection{Optimization Results}\label{optimization-results}}
+\begin{align}
+Maximise \ w^TR \sum w<=\sigma^2\ and\ \sum_{i = 1}^{N}w{_i}=1
+\end{align}
 
-\hypertarget{discussion}{%
-\section{Discussion}\label{discussion}}
+\hypertarget{equal-risk-contribution-erc}{%
+\subsection{Equal Risk Contribution
+(ERC)}\label{equal-risk-contribution-erc}}
 
-\hypertarget{limitations-of-the-study}{%
-\subsection{Limitations of the study}\label{limitations-of-the-study}}
+Equal risk contribution is a return free approach that seeks to equalize
+risk contributions from the universe of selected assets thus ensuring it
+is fully diversified from a risk perspective. Let sigma measure
+portfolio risk and C(x) defined to be the risk contribution of asset i.
+If the portfolio risk is measured as by the variance of its return then
+is
 
-\hypertarget{conclusion}{%
-\section{Conclusion}\label{conclusion}}
+\begin{align}
+\sigma^2 = x^TQ{x}\\ and \ C_i(x)= x_i(Qx)_i \\
+\quad where\ (Qx)_i =\sum_{i = 1}^{N}Q_ijxj
+\end{align}
 
-\hypertarget{tax-considerations}{%
-\subsection{Tax considerations}\label{tax-considerations}}
+\begin{align}
+x^{ERC} \ satisfies \ C_i(x^{ERC}) = (R(x^{ERC})/N) \ for \ i = 1,...., N.
+\end{align}
+
+From this we conclude that the variance and standard deviation measures
+are the same for and when can then only the variance risk measure
+appreciating that all results apply equally to standard deviation.
+
+\hypertarget{minimum-volatility-minvol}{%
+\subsection{Minimum Volatility
+(MinVol)}\label{minimum-volatility-minvol}}
+
+\hypertarget{risk-efficiency-risk-eff}{%
+\subsection{Risk Efficiency (Risk Eff)}\label{risk-efficiency-risk-eff}}
+
+\hypertarget{barra-max-utility-operator}{%
+\subsection{Barra Max Utility
+Operator}\label{barra-max-utility-operator}}
+
+Barra definition of portfolio risk extends that from the Modern
+Portfolio theory. It defines variance as the decomposition of the
+variance of returns. Using Barra multifactor model, the return (r) of a
+portfolio can be decomposed into both a common factor return (Xf) and
+asset specific return (u) components as: \[
+\begin{align} 
+r= Xf + u
+\end{align}
+\] The multifactor approach entails the creation of a factor covariance
+matrix. This is a short term risk forecast that describes trade off of
+each common fator within the model. This approach requires periodic
+return calculation to these exposures. The upshot is that the
+methodology provides an forecast of each assets specific risk.
+
+The coveraince matric is defined as \[
+\begin{align}
+ XFX^T + D\\ where \ X = n*k \ matrix\ of\ asset\ exposures to the factors\\
+F = k*k\ positive semi-definite factor covariance matrix, and \\
+D = n×n\ positive\ semi-definite\ covariance\ matrix\ representing\ a
+forecast\ of \ asset \ specific \ risk.
+\end{align}
+\]
+
+\hypertarget{tax-considerations-in-portfolio-construction}{%
+\subsection{Tax considerations in Portfolio
+Construction}\label{tax-considerations-in-portfolio-construction}}
 
 Portfolio theory was developed in a perfect world without friction. In
 practice, frictions need to be considered and in portfolio construction
 this often entails considering the effect of taxes on income and capital
 gains as they can erode returns and significantly alter risks and return
 characteristics of shares. The contribution of dividends and capital
-gains to total return can lead to varying tax efficiencies for shares as
-most jurisdictions imposed higher taxes than on capital gains. Therefore
-shares with higher contribution of dividends will be less tax efficient
-than those with a higher capital gains component and with timing most
-jurisdictions tax dividends in the year that they are
+gains to total return can lead to varying tax inefficiencies for shares
+as most jurisdictions imposed higher taxes than on capital gains.
+Therefore shares with higher contribution of dividends will be less tax
+efficient than those with a higher capital gains component and with
+timing most jurisdictions tax dividends in the year that they are
 receive\footnote{See Deloitte's tax guides and country highlights:
   \url{https://dits.deloitte.com/\#TaxGuides}}.
 
@@ -525,12 +592,14 @@ that are representative of what a typical taxable asset owner of a
 global portfolio will contend with. The proposed methodology to employ
 on the dividend portfolios use the following methodology.
 
-\(r_{a t}=p_d r_{p t}\left(1-t_d\right)+p_a r_{p t}\left(1-t_{c g}\right)\)
+\begin{align}
+r_{a t}=p_d r_{p t}\left(1-t_d\right)+p_a r_{p t}\left(1-t_{c g}\right)
+\end{align}
 
-where \(r_{a t}\) the after tax return, \(p_d=\) the proportion of
-\(r_{p t}\) attributed to dividend income, \(p_a=\) the proportion of
-\(r_{p t}\) attributed to price appreciation, \(t_d=\) the dividend tax
-rate and \(t_{c g}=\) the capital gains tax rate
+where r\_\{a t\}~the~after~tax~return,\textbackslash{} p\_d= the
+proportion of r\_\{p t\} attributed to dividend income,\textbackslash{}
+p\_a= the proportion of r\_\{p t\} attributed to price appreciation,
+t\_d= the dividend tax rate and t\_\{c g\}= the capital gains tax rate
 
 \newpage
 
@@ -560,6 +629,47 @@ ranging between 2.5\% and 7.5\%.
 Following this we will construct back-tests on the subset of local data
 for the choose dividend signal portfolios. The factor portfolios
 considered are as follows
+
+\hypertarget{research-design}{%
+\subsection{Research Design}\label{research-design}}
+
+\hypertarget{data-collection}{%
+\subsection{Data collection}\label{data-collection}}
+
+All the data used in this paper was retrieved from Bloomberg. We
+downloaded daily price and level data on indices and benchmarks,
+starting from 31 January of 2003 to January 31 January 2023. We also
+stratify the sample using proxies of the market cycles and volatility by
+considering the policy rates for the United States, Europe and South
+Africa central bank respectively. Regarding volatility we considered the
+Chicago Board of Options Exchange (CBOE) VIX Index (US), Euro Stock 50
+Volatility (V2X) and South African Volatility Index (SAVI) to measure
+volatility in the US, EU and Emerging Markets, respectively. To
+appreciate fully the variables, inception date, geographical origination
+of all tickers, information on indices and respective benchmarks are
+given in the table 1 in the appendix \footnote{create an table showing
+  all of these indices}.
+
+\hypertarget{hypothesis}{%
+\subsection{Hypothesis}\label{hypothesis}}
+
+\hypertarget{results}{%
+\section{Results}\label{results}}
+
+\hypertarget{descriptive-statistics}{%
+\subsection{Descriptive Statistics}\label{descriptive-statistics}}
+
+\hypertarget{results-1}{%
+\subsection{Results}\label{results-1}}
+
+\hypertarget{discussion}{%
+\section{Discussion}\label{discussion}}
+
+\hypertarget{limitations-of-the-study}{%
+\subsection{Limitations of the study}\label{limitations-of-the-study}}
+
+\hypertarget{conclusion}{%
+\section{Conclusion}\label{conclusion}}
 
 \newpage
 
