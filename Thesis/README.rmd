@@ -248,10 +248,13 @@ kable(divi_vol_df)
 ```
 # Interest rate cycles
 
-Given a series of central bank interest rate. I want to get date of consecutive interest rate changes . 
+Given a series of central bank interest rates. I want to get dates of n consecutive interest rate changes. 
 
--  I will create a column that gives either a value of 1 or 0 if there has been a change or not
--  if there has been a change for more than 4 quarters take the date of the start to the end of the period. 
+-  I will create a column that conditions if there was a rate change or nt.
+-  if there has been a change for more than 4 quarters take the date. 
+
+- if theres is either a hiking or cutting over 5 periods then label. 
+- take those dates, use group bys well here
 
 ## notes 
 
@@ -277,9 +280,11 @@ tidy_interest <- interest %>%
   group_by(Bank) %>% 
   ungroup()
 
-#  
+#  subset dates to just consider the quarterly figures
+
 quarters <- c("Mar", "Jun", "Sep", "Dec")
 
+#  With that subset of interest rates now use if else and group by date to count times when there was a hiking or cutting 
 rateschanges <- tidy_interest %>%
   group_by (YM, Bank) %>% 
   filter(Date == last(Date)) %>% 
@@ -287,30 +292,44 @@ rateschanges <- tidy_interest %>%
   arrange(Date) %>% 
   group_by(Bank) %>% 
   mutate(diff = Rate - lag(Rate)) %>% 
-  mutate(Changes = ifelse(diff > 0.00, "Hiking", ifelse(diff< 0.00, "Cutting", "Hold"))) %>% 
-  ungroup()
+  mutate(Year = format(Date, "%Y")) %>% 
+  group_by(Year) %>% 
+  mutate(
+    Changes = case_when(
+      sum(diff > 0, na.rm = TRUE) > 4 ~ "Hiking",
+      sum(diff < 0, na.rm = TRUE) > 4 ~ "Cutting",
+      TRUE ~ "Hold"
+    )
+  ) %>% 
+  ungroup() 
 
 # extract the dates 
 
 source("code/regimeextractor.R")
 
 sa_rate_high_vol <- rateschanges %>% 
-  regime_date_extractor(. , Regime = "Hiking", Bank = "SA") %>% as.Date()
+  regime_date_extractor(. , Regime = "Hiking", Bank = "Fed") %>% as.Date() %>% unique() 
 #  now lets get its return, use the same df from the other vol stratification 
 
-regime_return <- function (df, filter_vector, )df %>% 
+regime_return <- function (df, filter_vector ){
+  df <- df %>% 
   gather(Index, Price, -Date) %>% 
   arrange(Date) %>% 
   mutate(YM = format(Date , "%y %b ")) %>% 
   group_by(Index) %>% 
   mutate(Ret = Price / lag(Price)) %>% 
   # this should be a variable
-  filter(Date %in% sa_rate_high_vol) %>% 
+  filter(Date %in% filter_vector) %>% 
   #  get a vector of all indices 
   mutate(Year = format(Date, "%y")) %>% 
-  group_by(Year) %>% 
+  group_by(Index) %>% 
   mutate(Count = n())
   
+  df}
+
+df %>% regime_return (., sa_rate_high_vol)
+
+
   
   
 ```
