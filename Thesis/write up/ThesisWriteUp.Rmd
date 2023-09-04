@@ -1,0 +1,523 @@
+---
+# IMPORTANT: Change settings here, but DO NOT change the spacing.
+# Remove comments and add values where applicable.
+# The descriptions below should be self-explanatory
+
+title: " A Dive into Dividend Portfolios, When and How to They Work "
+#subtitle: "This will appear as Right Header"
+
+documentclass: "elsarticle"
+
+# --------- Thesis title (Optional - set to FALSE by default).
+# You can move the details below around as you please.
+Thesis_FP: FALSE
+# Entry1: "An unbelievable study with a title spanning multiple lines."
+# Entry2: "\\textbf{Some Guy}" # textbf for bold
+# Entry3: "A thesis submitted toward the degree of Doctor of Philosophy"
+# Uni_Logo: Tex/Logo.png # Place a logo in the indicated location (from your root, e.g. defaults to ~/Tex/Logo.png) and uncomment this line. Leave uncommented for no image
+# Logo_width: 0.3 # If using a logo - use this to set width (size) of image
+# Entry4: "Under the supervision of: \\vfill Prof. Joe Smith and Dr. Frank Smith"
+# Entry5: "Stellenbosch University"
+# Entry6: April 2020
+# Entry7:
+# Entry8:
+
+# --------- Front Page
+# Comment: ----- Follow this pattern for up to 5 authors
+AddTitle: TRUE # Use FALSE when submitting to peer reviewed platform. This will remove author names.
+Author1: "Gabriel Rambanapasi"  # First Author - note the thanks message displayed as an italic footnote of first page.
+Ref1: "Stellenbosch University, Cape Town, South Africa" # First Author's Affiliation
+Email1: "gabriel.rams44\\@gmail.com" # First Author's Email address
+
+# Author2: "John Smith"
+# Ref2: "Some other Institution, Cape Town, South Africa"
+# Email2: "John\\@gmail.com"
+# CommonAffiliation_12: TRUE # If Author 1 and 2 have a common affiliation. Works with _13, _23, etc.
+
+# Author3: "John Doe"
+# Email3: "Joe\\@gmail.com"
+
+CorrespAuthor_1: TRUE  # If corresponding author is author 3, e.g., use CorrespAuthor_3: TRUE
+
+# Comment out below to remove both. JEL Codes only given if keywords also given.
+keywords: "" # Use \\sep to separate
+JELCodes: ""
+
+# ----- Manage headers and footers:
+#BottomLFooter: $Title$
+#BottomCFooter:
+#TopLHeader: \leftmark # Adds section name at topleft. Remove comment to add it.
+BottomRFooter: "\\footnotesize Page \\thepage" # Add a '#' before this line to remove footer.
+addtoprule: TRUE
+addfootrule: TRUE               # Use if footers added. Add '#' to remove line.
+
+# --------- page margins:
+margin: 2.3 # Sides
+bottom: 2 # bottom
+top: 2.5 # Top
+HardSet_layout: TRUE # Hard-set the spacing of words in your document. This will stop LaTeX squashing text to fit on pages, e.g.
+# This is done by hard-setting the spacing dimensions. Set to FALSE if you want LaTeX to optimize this for your paper.
+
+# --------- Line numbers
+linenumbers: FALSE # Used when submitting to journal
+
+# ---------- References settings:
+# You can download cls format here: https://www.zotero.org/ - simply search for your institution. You can also edit and save cls formats here: https://editor.citationstyles.org/about/
+# Hit download, store it in Tex/ folder, and change reference below - easy.
+bibliography: Tex/ref.bib       # Do not edit: Keep this naming convention and location.
+csl: Tex/harvard-stellenbosch-university.csl # referencing format used.
+# By default, the bibliography only displays the cited references. If you want to change this, you can comment out one of the following:
+nocite: '@*' # Add all items in bibliography, whether cited or not
+ # nocite: |  # add specific references that aren't cited
+# @grinold2000
+#  @Someoneelse2010
+
+# ---------- General:
+RemovePreprintSubmittedTo: TRUE  # Removes the 'preprint submitted to...' at bottom of titlepage
+Journal: "Journal of Finance"   # Journal that the paper will be submitting to, if RemovePreprintSubmittedTo is set to TRUE.
+toc: FALSE                       # Add a table of contents
+numbersections: TRUE             # Should sections (and thus figures and tables) be numbered?
+fontsize: 12pt                  # Set fontsize
+linestretch: 2.0                # Set distance between lines.
+link-citations: TRUE            # This creates dynamic links to the papers in reference list.
+
+### Adding additional latex packages:
+# header-includes:
+#    - \usepackage{colortbl} # Add additional packages here.
+
+output:
+  pdf_document:
+    keep_tex: TRUE
+    template: Tex/TexDefault.txt
+    fig_width: 3.5 # Adjust default figure sizes. This can also be done in the chunks of the text.
+    fig_height: 3.5
+abstract: |
+ Dividend paying stock offer an additional componenet to otherwise non dividend paying stock. This paper studies the return signalling cue from dividend portfolio. We find that dividend portfolios around the around offer downside protection. However emerging market portfolios have positive return during market turmoil which is considerably above returns from advanced economy portfolios. 
+---
+<!-- First: Set your default preferences for chunk options: -->
+
+<!-- If you want a chunk's code to be printed, set echo = TRUE. message = FALSE stops R printing ugly package loading details in your final paper too. I also suggest setting warning = FALSE and checking for warnings in R, else you might find ugly warnings in your paper. -->
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, fig.width = 6, fig.height = 5, fig.pos="H", fig.pos = 'H')
+# Note: Include = FALSE implies the code is executed, but not printed in your pdf.
+# warning and message = FALSE implies ugly messages and warnings are removed from your pdf.
+# These should be picked up when you execute the command chunks (code sections below) in your rmd, not printed in your paper!
+
+# Lets load in example data, and see how this can be stored and later called from your 'data' folder.
+if(!require("tidyverse")) install.packages("tidyverse")
+library(gt)
+library(tidyverse)
+library(huxtable)
+library(kableExtra)
+library(xtable)
+library(fmxdat)
+pacman::p_load("TTR")
+pacman::p_load("tidyr", "tbl2xts","devtools","lubridate", "readr", "PerformanceAnalytics", "ggplot2", "dplyr")
+
+source("code/uncompoundedexcess.R")
+source("code/simpleexcessreturn.R")
+source("code/EXCESSRETURN.R")
+source("code/monthlyreturns.R")
+df <- readxl::read_xlsx("data/MAD .xlsx") 
+# Notice that as you are working in a .Rproj file (I am assuming you are) - the relative paths of your directories start at your specified root.
+# This means that when working in a .Rproj file, you never need to use getwd() - it is assumed as your base root automatically.
+
+
+```
+
+
+<!-- ############################## -->
+<!-- # Start Writing here: -->
+<!-- ############################## -->
+
+# Introduction 
+
+# Literature Review \label{Literature Review}
+
+## What are dividends
+
+Dividends constitute a form of capital distribution by corporations towards shareholders. They exist in various forms, such as cash, stock, liquidating, scrip, or property dividends  @baker2009understanding, of which cash dividends and share repurchases being the most commonly used in practice. Within cash dividends, regular dividends are widely used by corporations and payment frequency across jurisdictions. The decision to issue dividends is typically made by the board of directors, and approved by shareholders, however practiced more in Europe and less so in the United States. The payout policy policy of a corporation, which are guiding principles for management and board of directors towards capital distributions considers company investment and is closely watched by investors and analysts. As such, management strives to grow or maintain a certain level of dividend payouts as this signals firm growth and investors share of profitability in the company. Various liertature has covered the effect of dividend announcements before and after ex -dividend dates. Figure 1 shows a  clear and direct relation with a decrease in share value to the proportionate to the dividend announcement. 
+
+Given the apparent decrease in shareholder value, the logical question has encouraged a long running debate on dividend relevance and irrelevance. In 1961, @miller1985dividend opined that dividends are irrelevant (MM theory), he argued that shareholders are indifferent to dividend payments, thus implying that there is no optimal dividend policy and that all dividend policies are equally good and payments of dividends could easily be reinvested in shares and make no difference to share holder wealth. However, the MM theorem fails to consider real-world market imperfections that may give relevance to dividend payments. The bird in the arguments opposes the MM theory, suggesting that investor would prefer to receive less risky cash flow in the form of dividends instead of potential capital gains at some point in the future [@gordon1962]. This permeates to the cost of equity, since dividends are less risky, companies that issue more dividends should have higher share prices.  However, propoents of the MM theory contend this suggesting the risk of future cash flow is affected by the payment of dividend, leading to negative effects on share prices after the ex-dividend date. The dividend puzzle considers real world constraints and gives an interesting take on its relevance and irrelevance, by suggesting that dividends reduce equity value and make investors worse off; however, are a reward to investors who bear the risk associated with their investments as it provides an additional source of return on investment from a share  @black1996dividend. Various literature has made convincing arguments for corporations to pay dividends which include Tax considerations, dividend signalling and agency costs in issuing dividends .
+
+Taxe considerations argue in favor for dividend relevance. Across jurisdiction dividends have different tax treatments to capital gains and often tax at a higher income tax rate, thus investors that have higher tax rates choose stocks with lower dividend payouts and tranversly pushes up the stock price, this is called the clientele effect [@van2013advanced \& @baker2009understanding]. Proponents of the MM theory suggest that the client effect causes major substitution effect, suggesting that if companies change their dividend policy, investors with preferential tax treatment will simply allocate more capital to that stock and those out of favor will sell their shares. Given the large number of investors versus listed companies the process is instantaneously causing a net zero effect on prices[@baker2009understanding].  Second, flotation costs refer to the opportunity costs incurred by a firm when paying dividends. Through distributing dividends, companies forego opportunities to expand their operations using retained earnings. In a world without flotation costs, as suggested by the MM theorem, management would be indifferent between issuing dividends and borrowing from the market thus have no effect on shares prices. However, in reality, external financing comes at a higher cost, leading to trade-offs in dividend policy decisions and ultimately share prices.
+
+Information asymmetry between shareholders and managers is another factor that gives relevance to dividend payments. Managers of businesses have greater knowledge of operations thus value of a business at any given point more than shareholders. As such,  investors rely on dividend announcements to assess a company's valuation. Dividend signaling conveys information about the company's quality @al2018revisiting  and @baker1999corporate. Investors compare dividend announcements to historical levels while considering company fundamentals. However, there is a risk of manipulation by management, making the dividend signal imperfect for determining share prices. Principal agency issues may give another reason for issuance of dividends. The free cash flow hypothesis suggests that dividend payments force management to raise capital from external sources, which increases borrowing costs and scrutiny from capital markets. This, in turn, reduces management's ability to make sub optimal investments and aligning management and shareholder objectives [@baker2009understanding]. Supporters of this theory ascertain that dividends payments by the mechanism encourage good business practices.
+
+## Empirical review
+
+The various methods of capital distributions have varying impact on financial statements which is summarized in Table of the appendix. From the perceptive of an investor or analyst the dividend yield metric helps show the additional return dividends paying securities could add to a portfolio. Consider  that describes the fundamentals that influence the dividend yield. Assuming a constant payout ratio, dividend yield is a function of earnings yield.  shows the correlation between DY and Price overtime for various securities. Various studies have identified a predictive power of dividend yield thus confirm the existence of a value signal. Also, another signal for dividends is dividend growth per share for corporations, and unlike the dividend yield, it is not affected by price but maintain properties that allow for inference into management quality. As managemnet is aware of the signalling effect of dividends, this may induce the value trap, that forces management to continually increase dividends to maintain a certain valuation. However such companies are more vulnerable to facing financial distress.
+
+
+Cash dividends, although widely used, are not as tax-efficient as share buybacks. In this form of capital redistribution, a firm exchanges assets for outstanding shares, which shrinks the company’s assets by the amount of cash paid out. This action too reduces both its borrowing base and the shareholders’ aggregate equity @baker2009understanding[p.429]. A clear benefit to the company is that it is more flexible when compared to the rigid dividend payout structures. To most higher net worth investors, tax benefits in the form of lower capital gains taxes result in greater preference for share buybacks.  Surprisingly, their adoption has been relatively slow in some emerging economies. According to a study by @wesson2014market, there were only 195 open market share repurchases announced in South Africa from 1999 to 2009. In comparison, @manconi2014buybacks estimated that share repurchases constituted approximately 58% of total announcements in the United States, 15% in Canada, and 11% in Japan over the same period, indicative of a significant disparity in the adoption of share buybacks across the world, despite their popularity in the United States.  
+
+Dividend payments and growth in dividends per share provides a return cue and over the years studies on dividend signaling studies can be categorized into academic and practitioner-oriented studies. Academic studies, such as @fama1988permanent, found a positive correlation between increasing predictive power and longer forecast horizons. However, subsequent studies like @ang2007stock found no evidence of long-term predictability in stock returns when considering finite sample influence. This suggests that dividend yield may not be a reliable predictor of subsequent returns. One possible reason for this declining predictive power is the increasing use of share buybacks as an alternative means for capital distribution, which reduces the contribution of dividend yield to total return [@robertson2006].
+
+On the other hand, practitioner-oriented literature focuses on the long-term returns of systematic dividend portfolios. One popular strategy is the "Dogs of the Dow (DOD)," which involves constructing a portfolio of the top 10 highest-paying dividend stocks on the Dow Jones Industrial Index at the beginning of the year based on the dividends paid in the previous 12 months, therefore this entail deploying a high yield strategy [@mcqueen1997does]. Various studies have examined the DOD strategy or similar high-yield dividend strategies in different time periods and regions, consistently showing superior risk-adjusted returns compared to the market index. Examples of such studies include @lemmon2015dividend in Hong Kong  @brzeszczynski2007dividend in Poland, @visscher2003dividend in Canada, @filbeck1997 in Britian, and @wang2011dogs in China. More recently, @filbeck2017dividend investigated the performance of DOD against a high-yield portfolio of Fortune Most Desired Companies (MAC) compared to the Dow Jones Industrial Average and the S&P 500. The study found significantly higher risk-adjusted returns for the DOD strategy.
+
+\newpage
+
+# Methodology
+
+## Introduction 
+
+Optimizing an asset portfolio involves carefully calibrating the trade-offs between risk and expected returns. Portfolio managers traditionally employ a range of optimization techniques to construct portfolios that not only yield high returns but also minimize risk exposure. We aim to investigate how different risk models can provide significant cues in forming dividend strategies. To this end, we employ Minimum Variance, Equal Risk Contribution, and Minimum Volatility. Additionally, this study incorporates more refinements models like Risk Efficiency and makes use of proprietary software-based approaches, specifically drawing upon the Barras risk model.Unique to the Barras model is the introduction of the Max Utility Operator, which allows for a more sophisticated interpretation of risk by focusing not only on the total risk but also the active risk associated with each asset. This dual perspective enables the construction of a more versatile covariance matrix, thereby enriching the portfolio optimization process.
+
+The following sections analytically describes the optimization problem  and risk models used in the study.
+
+# Portfolio Optimization
+
+Portfolio optimization consists of determining a set of assets, and their respective portfolio participation weights, which satisfy the investor concerning the combination of risk-return trade-off. @markowitz1959portfolio proposed the Mean-Variance (MV) model in which the expected return 4.1 is given by the a measure of the historical data of the stock’s return. For our study we geometrically chain return to measure true effects on portfolio returns overtime. The risk is calculated by the variance of these returns 4.2. The MV model treats returns of individual assets as random variables and to adopt the value of expected return and variance in order to quantify the return and investment risk, respectively [@zhang2018portfolio]. 
+ \begin{align}
+ \mu \quad = \quad w^TR \\ 
+\sigma^2 \quad  = \quad w^T\sum 
+w\end{align}
+The resulting objective function is to maximize return given a certain level of risk and constraint; 
+\begin{align}
+Maximise \ w^TR \sum w<=\sigma^2\ and\ \sum_{i = 1}^{N}w{_i}=1 \notag
+\end{align}
+
+Linear constraints are generally included in MV portfolio optimization. Optimization typically assume that portfolio weights sum to 1 and are non negative. This defines a linear equality constraint on the optimization. Another constraint typically used is no-short-selling condition is a set of sign constraints or linear inequalities. This reflects avoidance of unlimited liability investment often required in institutional contexts.
+
+This study will use a an extension of the MV that uses risk preferences to determine optimum allocation of assets within a portfolio. Barra definition of portfolio risk extends that from the Modern Portfolio theory. It defines risk as the decomposition of the variance of returns. Using Barra multifactor model, the return (r) of a portfolio can be decomposed into both a common factor return (Xf) and asset specific return (u) components as:
+\begin{align} 
+r= X_{F} + u \notag
+\end{align}
+
+The multi-factor approach entails the creation of a factor covariance matrix. This is a short term risk forecast that describes trade off of each common factor within the model. This approach requires periodic return calculation to these exposures. The upshot is that the methodology provides an forecast of each assets specific risk. 
+
+The covariance matrix is defined as 
+
+\begin{align}
+ XFX^T + D \label{eq1} \notag
+\end{align}
+
+where X = n x k matrix of asset exposures to the factors. F =  k x k positive semi-definite factor covariance matrix, and D = n × n positive semi-definite covariance matrix representing a forecast of asset specific risk.
+
+Expressing portfolio risk in decomposition allows for portfolio manager to optimize portfolio from either a total risk perspective or an active risk perspective. In total risk, portfolio holdings are only considered, and the benchmark
+holdings are treated as irrelevant for optimization purposes. Whereas in active risk, the tracking error in which the difference between the portfolio holdings and those of the benchmark is given primary consideration in the optimization problem. 
+
+\begin{align}
+ Total\ Risk : h^T(\lambda_FXFX^T + \lambda_D)h\\ \quad \quad  \notag 
+ Active \ Risk : (h-h_B)^T(\lambda_FXFX^T+\lambda_DD)(h-h_B) \notag
+\end{align}
+
+where, = 
+\begin{align}
+\lambda_f \quad \quad  = \quad common \ factor\ risk\ aversion\ parameter,\\ \lambda_d \quad \quad = \quad specific\ \notag risk\ aversion\ parameter,\\\ h \quad \quad = \quad n×1 \ vector\ of\ managed\ portfolio’s\ holdings,\\ and \quad \notag \quad \quad \quad \quad \quad \quad \quad \quad \quad\\h_B \quad \quad =\quad vector \ normal\ (benchmark)\ portfolio’s\ holdings \notag 
+\end{align} 
+
+The introduction of risk aversion parameters into Barra’s portfolio optimization is a form of a max utility operator that allows the portfolio managers to incorporate a numeric representation of personal risk preferences into the portfolio optimization process^[see https://www.sciencedirect.com/science/article/pii/S1057521921002556 for a detailed explanation on advantages of using maximum utility operators to efficiently factor investor risk preferences]. It also provides the opportunity to quantify relative aversion to common factor risk vis-à-vis specific risk. Consequently, these risk aversion parameters are important tools that are available to assist the portfolio manager in the construction of an optimal portfolio that is consistent with their goals. 
+
+## Equal Risk Contribution (ERC) 
+
+Equal risk contribution is a return free approach that seeks to equalize risk contributions from the universe of selected assets thus ensuring it is fully diversified from a risk perspective. Let sigma measure portfolio risk and C(x) defined to be the risk contribution of asset i. If the portfolio risk is measured as by the variance of its return then is;
+
+\begin{align}
+\sigma^2 = x^TQ{x}\\ and \ C_i(x)= x_i(Qx)_i \\ \notag
+\quad where\ (Qx)_i =\sum_{i = 1}^{N}Q_ijxj \notag
+\end{align}
+
+\begin{align}
+x^{ERC} \ satisfies \ C_i(x^{ERC}) = (R(x^{ERC})/N) \ for \ i = 1,...., N. \notag
+\end{align}
+
+From this we conclude that the variance and standard deviation measures are the same for and when can then only the variance risk measure appreciating that all results apply equally to standard deviation. 
+
+## Minimum Volatility (MinVol)
+
+Minimum-variance similar to ERC do not require return forecasts, there can be in some cases they may be more efficient than strategies that trade off expected risk and return.
+
+# Tax considerations
+
+Portfolio theory was developed in a perfect world without friction. In practice, frictions need to be considered and in portfolio construction this often entails considering the effect of taxes on income and capital gains as they can erode returns and significantly alter risks and return characteristics of shares. The contribution of dividends and capital gains to total return can lead to varying tax inefficiencies for shares as most  jurisdictions imposed higher taxes than on capital gains. Therefore shares with higher contribution of dividends will be less tax efficient than those with a higher capital gains component and with timing most jurisdictions tax dividends in the year that they are receive^[See Deloitte’s tax guides and country highlights: https://dits.deloitte.com/#TaxGuides].
+
+Jurisdictional laws can also affect the distribution of taxable returns amongst shares depending on their class namely ordinary shares or preferred shares. Preferred shares are viewed as a substitute for bonds and income from preferred shares are often given tax at a lower rate than those from dividends from ordinary shares.
+
+We will not survey global tax regimes or incorporate all potential tax complexities into the portfolio construction but  assume a  high level commonalities exists amongst all jurisdictions this study  uses. This is a resonable assumption considering  the summary of taxes on dividends and capital gains from major economies.  For simplicity, we will assume a basic tax regime  includes the key elements of investment-related taxes that are representative of what a typical taxable asset owner of a global portfolio will contend with. The proposed methodology to employ on the dividend portfolios use the following methodology. 
+
+\begin{align}
+r_{a t}=p_d r_{p t}\left(1-t_d\right)+p_a r_{p t}\left(1-t_{c g}\right)
+\end{align}
+
+where
+\begin{align}
+r_{a t} the after tax return,
+p_d= the proportion of r_{p t} attributed to dividend income,
+p_a= the proportion of r_{p t} attributed to price appreciation, 
+t_d= the dividend tax rate and 
+t_{c g}= the capital gains tax rate
+\end{align}
+\newpage
+
+## Portfolio Construction Process
+
+First, we rebalance at the end of March and September and construct fully invested, long only portfolios. On each re balancing date, we take the top 100 stocks by market capitalization (MC), and then select the top quintile (20 stocks) based on the relevant signal scores. We then apply 25 basis trading costs to both buying and selling of stocks, and 
+
+We will then use total return values, adjust for stock splits and other distorting effects on prices to calculate portfolio returns. We also carefully apply back-dated adjustments to dividends paid to accurately arrive at on-the-day dividends and actual closing prices when calculating our Dividend Yield and Dividend Per Share Growth measures.
+
+We also apply at each re balancing on the risk models mentioned previously. The optimization are constrained to have minimum and maximum weight exposure of 0.5 and 1.5 times the equal weighted alternative. With our quintile portfolios, this implies weights ranging between 2.5% and 7.5%.
+
+Following this we will construct back-tests on the subset of dividend signal portfolios.
+
+# Data Source and Stratification
+
+The data set for this research is sourced from Bloomberg with the sample period from January 31, 2003, to January 31, 2023. We collected daily price and level data for various indices, benchmarks, and their constituent stocks traded on the Johannesburg Stock Exchange. To  capture the dynamic nature of financial markets, we segmented the data using proxies that reflect market cycles and volatility levels. Acknowledging the global influence of the United States on financial markets, we utilized the Chicago Board of Options Exchange (CBOE) VIX Index and data from the Federal Reserve Bank of the United States. These metrics served as our stratifying variables, allowing us to categorize our sample across different market and interest rate cycles. This stratification aims to provide a nuanced understanding of how dividend-paying stocks on the JSE respond to shifts in volatility and monetary policy.After stratification, we geometrically chain the excess returns for the different periods before annualizing. This produces comparable cumulative annualized excess return (CAER) results, defined as:
+\begin{align}
+C A E R=\left[\prod_{t=1}^n\left(1+E R_t\right)\right]^{\frac{222}{n}}-1 \notag
+\end{align}
+The amount of daily data for the respective interest rate cycles is large enough to annualize, however, when the VIX,
+V2X or JALSH RV breach the top or bottom quintile for less than 50 trading days, the period is excluded in order to
+avoid annualizing small frequencies.
+
+
+We also downloaded constituent data for the indices from approximately 21 super sectors^[as defined by FTSE 100 white papers on the FTSE 1000 index construction see https://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=0CDcQw7AJahcKEwiA_4yu1pCBAxUAAAAAHQAAAAAQAw&url=https%3A%2F%2Fresearch.ftserussell.com%2FAnalytics%2FFactsheets%2FHome%2FDownloadSingleIssue%3FissueName%3DWORLDS%26IsManual%3Dfalse&psig=AOvVaw0ScIEuPFn-McGJKBFXvldA&ust=1693907242710751&opi=89978449].
+
+
+Table 1 describes the globally traded dividend portfolios investigated in this study. Subsequently, we delve into the results derived from applying various portfolio optimization techniques to dividend-paying stocks on the JSE. Through this lens, we assess how each model contributes to risk-adjusted returns and portfolio stability. The objective is to identify optimization strategies that offer the most favorable risk-return profile for portfolios focused on dividend-generating stocks.
+
+# Globally traded Dividend Portfolios
+
+\ref{tab1} offers a tabular representation excess cumulative returns for dividend portfolios.On average, these portfolios generate a positive premium relative to their respective market indices. However, there is an apparent lack of uniformity across various investment strategies. The FUDP index, a High Dividend Yield (HY) strategy that tracks the highest dividend-paying stocks on the London Stock Exchange, outperforms its peers but also returns a remarkable 3x on every rand invested over the sample period. In stark contrast, other HY strategies, specifically those focused on U.S. and South African markets—identified by their respective indices M2USADVD and TJDIVD fail to produce similarly impressive results.
+
+Despite the allure of their value proposition, based on cumulative returns there is no unequivocal evidence to suggest that dividend portfolios universally outperform market indices. 
+
+```{r Figure1,  warning =  FALSE, fig.align = 'center', fig.cap = "Caption Here \\label{Figure1}", fig.ext = 'png', fig.height = 3, fig.width = 6}
+
+# get all permutatation 
+A <- df %>% MY_excess_return(.,"FUDP", "TUKXG") 
+B <- df %>% MY_excess_return(., "M2EFDY", "GDUEEGF") 
+C <- df %>% MY_excess_return(., "M2EUGDY", "GDDUE15X") 
+D <- df %>% MY_excess_return(., "M2GBDY", "GDDUUK") 
+E <- df %>% MY_excess_return(., "M2JPDY", "TJDIVD") 
+F1 <- df %>% MY_excess_return(., "M2USADVD", "GDDUUS") 
+G <- df %>% MY_excess_return(., "M2WDHDVD", "GDDUWI") 
+H <- df %>% MY_excess_return(., "SPDAEET", "SPTR350E") 
+I <- df %>% MY_excess_return(., "SPDAUDT", "SPXT") 
+J <- df %>% MY_excess_return(., "SPJXDAJT", "TPXDDVD") 
+K <- df %>% MY_excess_return(., "SPSADAZT", "JALSH") 
+L <- df %>% MY_excess_return(., "TJDIVD", "JALSH")
+
+#  cumulative excess returns in a single data frame
+all_excess_returns_df  <- list(A, B, C, D, E, F1, G,H,J, K, L) %>%
+  reduce(inner_join, by='date') %>% gather(Ticker, excess, -date)
+
+Table <- all_excess_returns_df %>%  
+  group_by(Ticker) %>% 
+  summarise(Cumulative_mean_return = mean(excess), Median_cumulative_return = median(excess))
+
+data = Table %>% tibble::as_tibble()
+  addtorow          <- list()
+  addtorow$pos      <- list()
+  addtorow$pos[[1]] <- c(0)
+  addtorow$command  <- c(paste("\\hline \n",
+                               "\\endhead \n",
+                               "\\hline \n",
+                               "{\\footnotesize Continued on next page} \n",
+                               "\\endfoot \n",
+                               "\\endlastfoot \n",sep=""))
+  
+table <- xtable(data, caption = "Aggregate Dividend Effects")
+  print.xtable(table,
+             tabular.environment = "longtable",
+             floating = FALSE, # Leave this as is.
+             table.placement = 'H', # Leave this as is.
+             booktabs = T, # Aesthetics
+             include.rownames = FALSE,  # Typically you don't want this in a table.
+             add.to.row = addtorow, # For adding the Continued on next page part...
+             comment = FALSE,
+             caption.placement = 'top',  # Where do you want the caption?
+             size="\\fontsize{12pt}{13pt}\\selectfont"  # Size of text in table..
+             )
+
+```
+Stratifying the excess return according to different interest rate regimes and market cycles unearths interesting dynamics in the performance of dividend portfolios. The tables below summarize the performance of the different dividend strategies high volatility and low volatility, as well as hiking and cutting interest rates cyles. The results below suggest that dividend strategies outperform during periods of market distress and under perform during periods of market calm. In emerging markets however, we observe that during periods of low volatility these portfolios yield greater than high volatility.
+
+```{r}
+
+vol_data <- readxl::read_xlsx("data/volatility.xlsx")
+VIX <- vol_data %>% select(Date, VIX)
+V2X <- vol_data %>% select(Date, V2X)
+JSV <- vol_data %>% select(Date, JALSHVOL)
+# get rolling sd for the volatility index 
+
+source("code/rollingstarnddev.R")
+
+# US 
+
+Vixroll <- Rolling_sd(VIX ,"VIX")
+
+# get the top quartile and bottom quartil
+
+strat_df <- Vixroll %>% mutate(topQ = quantile(RollSD, probs = 0.8), 
+              botQ = quantile(RollSD, probs = 0.2),
+              Strat = ifelse(RollSD >= topQ, "HiVol", 
+                          ifelse(RollSD <= botQ, "LowVol", "Normal_Vol")))
+
+# US strat
+
+hivol_per_vector_us <- strat_df %>% filter(Strat %in% "HiVol") %>% pull(Date)
+lovol_per_vector_us <- strat_df %>% filter(Strat %in% "LowVol") %>% pull(Date)
+
+# Europe strat 
+
+Vixroll <- Rolling_sd(V2X ,"V2X")
+
+# get the top quartile and bottom quartil
+
+strat_df <- Vixroll %>% mutate(topQ = quantile(RollSD, probs = 0.8), 
+              botQ = quantile(RollSD, probs = 0.2),
+              Strat = ifelse(RollSD >= topQ, "HiVol", 
+                          ifelse(RollSD <= botQ, "LowVol", "Normal_Vol")))
+
+hivol_per_vector_eu  <- strat_df %>% filter(Strat %in% "HiVol") %>% pull(Date)
+lovol_per_vector_eu  <- strat_df %>% filter(Strat %in% "LowVol") %>% pull(Date)
+
+# SA 
+
+Vixroll <- Rolling_sd(JSV ,"JALSHVOL")
+
+# get the top quartile and bottom quartil
+
+strat_df <- Vixroll %>% mutate(topQ = quantile(RollSD, probs = 0.8), 
+              botQ = quantile(RollSD, probs = 0.2),
+              Strat = ifelse(RollSD >= topQ, "HiVol", 
+                          ifelse(RollSD <= botQ, "LowVol", "Normal_Vol")))
+
+hivol_per_vector_sa <- strat_df %>% filter(Strat %in% "HiVol") %>% pull(Date)
+lovol_per_vector_sa <- strat_df %>% filter(Strat %in% "LowVol") %>% pull(Date)
+
+
+# get all permutatation 
+A <- df %>% simple_excess_return(.,"FUDP", "TUKXG") 
+B <- df %>% simple_excess_return(., "M2EFDY", "GDUEEGF") 
+C <- df %>% simple_excess_return(., "M2EUGDY", "GDDUE15X") 
+D <- df %>% simple_excess_return(., "M2GBDY", "GDDUUK") 
+E <- df %>% simple_excess_return(., "M2JPDY", "TJDIVD") 
+F1 <- df %>% simple_excess_return(., "M2USADVD", "GDDUUS") 
+G <- df %>% simple_excess_return(., "M2WDHDVD", "GDDUWI") 
+H <- df %>% simple_excess_return(., "SPDAEET", "SPTR350E") 
+I <- df %>% simple_excess_return(., "SPDAUDT", "SPXT") 
+J <- df %>% simple_excess_return(., "SPJXDAJT", "TPXDDVD") 
+K <- df %>% simple_excess_return(., "SPSADAZT", "JALSH") 
+L <- df %>% simple_excess_return(., "TJDIVD", "JALSH")
+
+combined_simple<- list(A, B, C, D, E, F1, G,H,J, K, L) %>%
+  reduce(inner_join, by='date') %>% gather(ticker, excess, -date)
+#  US excess return
+excessreturns_us <- list( F1, I ,J) %>%
+  reduce(inner_join, by='date') %>% gather(ticker, excess, -date)
+
+# EU  excess return 
+excessreturns_eu <- list(A, C, D, H) %>%
+  reduce(inner_join, by='date') %>% gather(ticker, excess, -date)
+
+#  SA excess returns in a single data frame
+excessreturns_em <- list(B, K, L) %>%
+  reduce(inner_join, by='date') %>% gather(ticker, excess, -date)
+ 
+
+# US stat df
+
+hivol <- excessreturns_us %>%
+  filter(date %in% hivol_per_vector_us) %>% 
+  filter(date >= fmxdat::safe_month_min(last(date), N = 36)) %>%
+  group_by(ticker) %>% 
+  summarise(Hivol_return = prod(1+excess, na.rm=T) ^ (12/(36)) -1 ) 
+
+lovol <-  excessreturns_us %>%
+  filter(date %in% lovol_per_vector_us) %>% 
+  filter(date >= fmxdat::safe_month_min(last(date), N = 36)) %>%
+  group_by(ticker) %>% 
+  summarise(lovol_return = prod(1+excess, na.rm=T) ^ (12/(36)) -1 ) 
+
+Usvolcom <- left_join(hivol, lovol, by = "ticker")
+
+# EU strat df
+hivol <- excessreturns_eu %>%
+  filter(date %in% hivol_per_vector_eu) %>% 
+  filter(date >= fmxdat::safe_month_min(last(date), N = 36)) %>%
+  group_by(ticker) %>% 
+  summarise(Hivol_return = prod(1+excess, na.rm=T) ^ (12/(36)) -1 ) 
+
+lovol <-  excessreturns_eu %>%
+  filter(date %in% lovol_per_vector_eu) %>% 
+  filter(date >= fmxdat::safe_month_min(last(date), N = 36)) %>%
+  group_by(ticker) %>% 
+  summarise(lovol_return = prod(1+excess, na.rm=T) ^ (12/(36)) -1 ) 
+
+euvolcom <- left_join(hivol, lovol, by = "ticker")
+
+# EM strat df
+hivol <- excessreturns_em %>%
+  filter(date %in% hivol_per_vector_sa) %>% 
+  filter(date >= fmxdat::safe_month_min(last(date), N = 36)) %>%
+  group_by(ticker) %>% 
+  summarise(Hivol_return = prod(1+excess, na.rm=T) ^ (12/(36)) -1 ) 
+
+lovol <-  excessreturns_em %>%
+  filter(date %in% lovol_per_vector_sa) %>% 
+  filter(date >= fmxdat::safe_month_min(last(date), N = 36)) %>%
+  group_by(ticker) %>% 
+  summarise(lovol_return = prod(1+excess, na.rm=T) ^ (12/(36)) -1 ) 
+
+emvolcom <- left_join(hivol, lovol, by = "ticker")
+
+divi_vol_df <- bind_rows(Usvolcom, euvolcom, emvolcom)
+
+divi_vol_df  <- divi_vol_df %>% 
+  mutate(Volatility_Protection = case_when(
+    Hivol_return > lovol_return ~ "higher",
+    TRUE ~ "lower"
+  ))
+library(xtable)
+table <- xtable(divi_vol_df, caption = "Short Table Example \\label{tab1}")
+  print.xtable(table,
+             # tabular.environment = "longtable",
+             floating = TRUE,
+             table.placement = 'H',
+             # scalebox = 0.3,
+             comment = FALSE,
+             caption.placement = 'bottom'
+             )
+```
+\ref{Fig2} shows rolling returns for the dividend portfolios. Dividend portfolios broadly behave similarly. Buttressing results from stratifying according to volatility we notice that dividend portfolio failed to provide meaningful protection during the most recent crises, the COVID- 19 pandemic. Howver we do note out performance (above zero excess return) in FUDP and SPDAEET the over the past three years. Most dividend portfolios however have witnissed negative excess return over the most recent period
+```{r Figure2,  warning =  FALSE, fig.align = 'center', fig.cap = "Rolling 3 Year Returns \\label{Fig2}", fig.ext = 'png', fig.height = 5, fig.width = 8}
+
+plotdf <- combined_simple %>% 
+  group_by(ticker) %>% 
+  mutate(RollRets = RcppRoll::roll_prod(1 + excess, 36, fill = NA, 
+    align = "right")^(12/36) - 1) %>% 
+  group_by(date) %>% filter(any(!is.na(RollRets))) %>% 
+  ungroup()
+
+g <- ggplot(plotdf, aes(date, RollRets, color = ticker)) +
+  geom_line(alpha = 0.5, size = 0.5) +
+  # crisp colours:
+  fmxdat::fmx_cols() + 
+  
+  labs(x = "", y = "Cumulative  Returns", caption = "Data:\n Bloomberg ",
+       title = "Global Dividend Portfolio Rolling 3 Year Returns", 
+       legend = T) 
+
+g 
+
+```
+# Results and Analysis
+# Discussion 
+
+## Limitations of the study
+
+# Conclusion
+
+
+\newpage
+
+ 
+# References {-}
+
+<div id="refs"></div>
+
+
+

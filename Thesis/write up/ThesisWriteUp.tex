@@ -1,0 +1,967 @@
+\documentclass[12pt,preprint, authoryear]{elsarticle}
+
+\usepackage{lmodern}
+%%%% My spacing
+\usepackage{setspace}
+\setstretch{2}
+\DeclareMathSizes{12}{14}{10}{10}
+
+% Wrap around which gives all figures included the [H] command, or places it "here". This can be tedious to code in Rmarkdown.
+\usepackage{float}
+\let\origfigure\figure
+\let\endorigfigure\endfigure
+\renewenvironment{figure}[1][2] {
+    \expandafter\origfigure\expandafter[H]
+} {
+    \endorigfigure
+}
+
+\let\origtable\table
+\let\endorigtable\endtable
+\renewenvironment{table}[1][2] {
+    \expandafter\origtable\expandafter[H]
+} {
+    \endorigtable
+}
+
+
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+    \usepackage{xltxtra,xunicode}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+  \newcommand{\euro}{€}
+\fi
+
+\usepackage{amssymb, amsmath, amsthm, amsfonts}
+
+\def\bibsection{\section*{References}} %%% Make "References" appear before bibliography
+
+
+\usepackage[round]{natbib}
+
+\usepackage{longtable}
+\usepackage[margin=2.3cm,bottom=2cm,top=2.5cm, includefoot]{geometry}
+\usepackage{fancyhdr}
+\usepackage[bottom, hang, flushmargin]{footmisc}
+\usepackage{graphicx}
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+\numberwithin{table}{section}
+\setlength{\parindent}{0cm}
+\setlength{\parskip}{1.3ex plus 0.5ex minus 0.3ex}
+\usepackage{textcomp}
+\renewcommand{\headrulewidth}{0.2pt}
+\renewcommand{\footrulewidth}{0.3pt}
+
+\usepackage{array}
+\newcolumntype{x}[1]{>{\centering\arraybackslash\hspace{0pt}}p{#1}}
+
+%%%%  Remove the "preprint submitted to" part. Don't worry about this either, it just looks better without it:
+\makeatletter
+\def\ps@pprintTitle{%
+  \let\@oddhead\@empty
+  \let\@evenhead\@empty
+  \let\@oddfoot\@empty
+  \let\@evenfoot\@oddfoot
+}
+\makeatother
+
+ \def\tightlist{} % This allows for subbullets!
+
+\usepackage{hyperref}
+\hypersetup{breaklinks=true,
+            bookmarks=true,
+            colorlinks=true,
+            citecolor=blue,
+            urlcolor=blue,
+            linkcolor=blue,
+            pdfborder={0 0 0}}
+
+
+% The following packages allow huxtable to work:
+\usepackage{siunitx}
+\usepackage{multirow}
+\usepackage{hhline}
+\usepackage{calc}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{caption}
+
+
+\newenvironment{columns}[1][]{}{}
+
+\newenvironment{column}[1]{\begin{minipage}{#1}\ignorespaces}{%
+\end{minipage}
+\ifhmode\unskip\fi
+\aftergroup\useignorespacesandallpars}
+
+\def\useignorespacesandallpars#1\ignorespaces\fi{%
+#1\fi\ignorespacesandallpars}
+
+\makeatletter
+\def\ignorespacesandallpars{%
+  \@ifnextchar\par
+    {\expandafter\ignorespacesandallpars\@gobble}%
+    {}%
+}
+\makeatother
+
+\newenvironment{CSLReferences}[2]{%
+}
+
+\urlstyle{same}  % don't use monospace font for urls
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\setcounter{secnumdepth}{5}
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+
+%%% Include extra packages specified by user
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+
+%%% Hard setting column skips for reports - this ensures greater consistency and control over the length settings in the document.
+%% page layout
+%% paragraphs
+\setlength{\baselineskip}{12pt plus 0pt minus 0pt}
+\setlength{\parskip}{12pt plus 0pt minus 0pt}
+\setlength{\parindent}{0pt plus 0pt minus 0pt}
+%% floats
+\setlength{\floatsep}{12pt plus 0 pt minus 0pt}
+\setlength{\textfloatsep}{20pt plus 0pt minus 0pt}
+\setlength{\intextsep}{14pt plus 0pt minus 0pt}
+\setlength{\dbltextfloatsep}{20pt plus 0pt minus 0pt}
+\setlength{\dblfloatsep}{14pt plus 0pt minus 0pt}
+%% maths
+\setlength{\abovedisplayskip}{12pt plus 0pt minus 0pt}
+\setlength{\belowdisplayskip}{12pt plus 0pt minus 0pt}
+%% lists
+\setlength{\topsep}{10pt plus 0pt minus 0pt}
+\setlength{\partopsep}{3pt plus 0pt minus 0pt}
+\setlength{\itemsep}{5pt plus 0pt minus 0pt}
+\setlength{\labelsep}{8mm plus 0mm minus 0mm}
+\setlength{\parsep}{\the\parskip}
+\setlength{\listparindent}{\the\parindent}
+%% verbatim
+\setlength{\fboxsep}{5pt plus 0pt minus 0pt}
+
+
+
+\begin{document}
+
+
+
+\begin{frontmatter}  %
+
+\title{A Dive into Dividend Portfolios, When and How to They Work}
+
+% Set to FALSE if wanting to remove title (for submission)
+
+
+
+
+\author[Add1]{Gabriel Rambanapasi}
+\ead{gabriel.rams44@gmail.com}
+
+
+
+
+
+\address[Add1]{Stellenbosch University, Cape Town, South Africa}
+
+\cortext[cor]{Corresponding author: Gabriel Rambanapasi}
+
+\begin{abstract}
+\small{
+Dividend paying stock offer an additional componenet to otherwise non
+dividend paying stock. This paper studies the return signalling cue from
+dividend portfolio. We find that dividend portfolios around the around
+offer downside protection. However emerging market portfolios have
+positive return during market turmoil which is considerably above
+returns from advanced economy portfolios.
+}
+\end{abstract}
+
+\vspace{1cm}
+
+
+
+
+
+\vspace{0.5cm}
+
+\end{frontmatter}
+
+\setcounter{footnote}{0}
+
+
+
+%________________________
+% Header and Footers
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagestyle{fancy}
+\chead{}
+\rhead{}
+\lfoot{}
+\rfoot{\footnotesize Page \thepage}
+\lhead{}
+%\rfoot{\footnotesize Page \thepage } % "e.g. Page 2"
+\cfoot{}
+
+%\setlength\headheight{30pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%________________________
+
+\headsep 35pt % So that header does not go over title
+
+
+
+
+\hypertarget{introduction}{%
+\section{Introduction}\label{introduction}}
+
+\hypertarget{literature-review}{%
+\section{\texorpdfstring{Literature Review
+\label{Literature Review}}{Literature Review }}\label{literature-review}}
+
+\hypertarget{what-are-dividends}{%
+\subsection{What are dividends}\label{what-are-dividends}}
+
+Dividends constitute a form of capital distribution by corporations
+towards shareholders. They exist in various forms, such as cash, stock,
+liquidating, scrip, or property dividends
+(\protect\hyperlink{ref-baker2009understanding}{\textbf{baker2009understanding?}}),
+of which cash dividends and share repurchases being the most commonly
+used in practice. Within cash dividends, regular dividends are widely
+used by corporations and payment frequency across jurisdictions. The
+decision to issue dividends is typically made by the board of directors,
+and approved by shareholders, however practiced more in Europe and less
+so in the United States. The payout policy policy of a corporation,
+which are guiding principles for management and board of directors
+towards capital distributions considers company investment and is
+closely watched by investors and analysts. As such, management strives
+to grow or maintain a certain level of dividend payouts as this signals
+firm growth and investors share of profitability in the company. Various
+liertature has covered the effect of dividend announcements before and
+after ex -dividend dates. Figure 1 shows a clear and direct relation
+with a decrease in share value to the proportionate to the dividend
+announcement.
+
+Given the apparent decrease in shareholder value, the logical question
+has encouraged a long running debate on dividend relevance and
+irrelevance. In 1961, Miller \& Rock
+(\protect\hyperlink{ref-miller1985dividend}{1985}) opined that dividends
+are irrelevant (MM theory), he argued that shareholders are indifferent
+to dividend payments, thus implying that there is no optimal dividend
+policy and that all dividend policies are equally good and payments of
+dividends could easily be reinvested in shares and make no difference to
+share holder wealth. However, the MM theorem fails to consider
+real-world market imperfections that may give relevance to dividend
+payments. The bird in the arguments opposes the MM theory, suggesting
+that investor would prefer to receive less risky cash flow in the form
+of dividends instead of potential capital gains at some point in the
+future (\protect\hyperlink{ref-gordon1962}{Gordon, 1962}). This
+permeates to the cost of equity, since dividends are less risky,
+companies that issue more dividends should have higher share prices.
+However, propoents of the MM theory contend this suggesting the risk of
+future cash flow is affected by the payment of dividend, leading to
+negative effects on share prices after the ex-dividend date. The
+dividend puzzle considers real world constraints and gives an
+interesting take on its relevance and irrelevance, by suggesting that
+dividends reduce equity value and make investors worse off; however, are
+a reward to investors who bear the risk associated with their
+investments as it provides an additional source of return on investment
+from a share Black (\protect\hyperlink{ref-black1996dividend}{1996}).
+Various literature has made convincing arguments for corporations to pay
+dividends which include Tax considerations, dividend signalling and
+agency costs in issuing dividends .
+
+Taxe considerations argue in favor for dividend relevance. Across
+jurisdiction dividends have different tax treatments to capital gains
+and often tax at a higher income tax rate, thus investors that have
+higher tax rates choose stocks with lower dividend payouts and
+tranversly pushes up the stock price, this is called the clientele
+effect
+(\protect\hyperlink{ref-baker2009understanding}{\textbf{baker2009understanding?}}).
+Proponents of the MM theory suggest that the client effect causes major
+substitution effect, suggesting that if companies change their dividend
+policy, investors with preferential tax treatment will simply allocate
+more capital to that stock and those out of favor will sell their
+shares. Given the large number of investors versus listed companies the
+process is instantaneously causing a net zero effect on
+prices(\protect\hyperlink{ref-baker2009understanding}{\textbf{baker2009understanding?}}).
+Second, flotation costs refer to the opportunity costs incurred by a
+firm when paying dividends. Through distributing dividends, companies
+forego opportunities to expand their operations using retained earnings.
+In a world without flotation costs, as suggested by the MM theorem,
+management would be indifferent between issuing dividends and borrowing
+from the market thus have no effect on shares prices. However, in
+reality, external financing comes at a higher cost, leading to
+trade-offs in dividend policy decisions and ultimately share prices.
+
+Information asymmetry between shareholders and managers is another
+factor that gives relevance to dividend payments. Managers of businesses
+have greater knowledge of operations thus value of a business at any
+given point more than shareholders. As such, investors rely on dividend
+announcements to assess a company's valuation. Dividend signaling
+conveys information about the company's quality Al-Najjar \&
+Kilincarslan (\protect\hyperlink{ref-al2018revisiting}{2018}) and Baker
+\& Powell (\protect\hyperlink{ref-baker1999corporate}{1999}). Investors
+compare dividend announcements to historical levels while considering
+company fundamentals. However, there is a risk of manipulation by
+management, making the dividend signal imperfect for determining share
+prices. Principal agency issues may give another reason for issuance of
+dividends. The free cash flow hypothesis suggests that dividend payments
+force management to raise capital from external sources, which increases
+borrowing costs and scrutiny from capital markets. This, in turn,
+reduces management's ability to make sub optimal investments and
+aligning management and shareholder objectives
+(\protect\hyperlink{ref-baker2009understanding}{\textbf{baker2009understanding?}}).
+Supporters of this theory ascertain that dividends payments by the
+mechanism encourage good business practices.
+
+\hypertarget{empirical-review}{%
+\subsection{Empirical review}\label{empirical-review}}
+
+The various methods of capital distributions have varying impact on
+financial statements which is summarized in Table of the appendix. From
+the perceptive of an investor or analyst the dividend yield metric helps
+show the additional return dividends paying securities could add to a
+portfolio. Consider that describes the fundamentals that influence the
+dividend yield. Assuming a constant payout ratio, dividend yield is a
+function of earnings yield. shows the correlation between DY and Price
+overtime for various securities. Various studies have identified a
+predictive power of dividend yield thus confirm the existence of a value
+signal. Also, another signal for dividends is dividend growth per share
+for corporations, and unlike the dividend yield, it is not affected by
+price but maintain properties that allow for inference into management
+quality. As managemnet is aware of the signalling effect of dividends,
+this may induce the value trap, that forces management to continually
+increase dividends to maintain a certain valuation. However such
+companies are more vulnerable to facing financial distress.
+
+Cash dividends, although widely used, are not as tax-efficient as share
+buybacks. In this form of capital redistribution, a firm exchanges
+assets for outstanding shares, which shrinks the company's assets by the
+amount of cash paid out. This action too reduces both its borrowing base
+and the shareholders' aggregate equity
+(\protect\hyperlink{ref-baker2009understanding}{\textbf{baker2009understanding?}}).
+A clear benefit to the company is that it is more flexible when compared
+to the rigid dividend payout structures. To most higher net worth
+investors, tax benefits in the form of lower capital gains taxes result
+in greater preference for share buybacks. Surprisingly, their adoption
+has been relatively slow in some emerging economies. According to a
+study by Wesson, Muller \& Ward
+(\protect\hyperlink{ref-wesson2014market}{2014}), there were only 195
+open market share repurchases announced in South Africa from 1999 to
+2009. In comparison, Manconi, Peyer \& Vermaelen
+(\protect\hyperlink{ref-manconi2014buybacks}{2014}) estimated that share
+repurchases constituted approximately 58\% of total announcements in the
+United States, 15\% in Canada, and 11\% in Japan over the same period,
+indicative of a significant disparity in the adoption of share buybacks
+across the world, despite their popularity in the United States.
+
+Dividend payments and growth in dividends per share provides a return
+cue and over the years studies on dividend signaling studies can be
+categorized into academic and practitioner-oriented studies. Academic
+studies, such as Fama \& French
+(\protect\hyperlink{ref-fama1988permanent}{1988}), found a positive
+correlation between increasing predictive power and longer forecast
+horizons. However, subsequent studies like Ang \& Bekaert
+(\protect\hyperlink{ref-ang2007stock}{2007}) found no evidence of
+long-term predictability in stock returns when considering finite sample
+influence. This suggests that dividend yield may not be a reliable
+predictor of subsequent returns. One possible reason for this declining
+predictive power is the increasing use of share buybacks as an
+alternative means for capital distribution, which reduces the
+contribution of dividend yield to total return
+(\protect\hyperlink{ref-robertson2006}{Robertson \& Wright, 2006}).
+
+On the other hand, practitioner-oriented literature focuses on the
+long-term returns of systematic dividend portfolios. One popular
+strategy is the ``Dogs of the Dow (DOD),'' which involves constructing a
+portfolio of the top 10 highest-paying dividend stocks on the Dow Jones
+Industrial Index at the beginning of the year based on the dividends
+paid in the previous 12 months, therefore this entail deploying a high
+yield strategy (\protect\hyperlink{ref-mcqueen1997does}{McQueen, Shields
+\& Thorley, 1997}). Various studies have examined the DOD strategy or
+similar high-yield dividend strategies in different time periods and
+regions, consistently showing superior risk-adjusted returns compared to
+the market index. Examples of such studies include Lemmon \& Nguyen
+(\protect\hyperlink{ref-lemmon2015dividend}{2015}) in Hong Kong
+Brzeszczyński \& Gajdka
+(\protect\hyperlink{ref-brzeszczynski2007dividend}{2007}) in Poland,
+Visscher \& Filbeck (\protect\hyperlink{ref-visscher2003dividend}{2003})
+in Canada, Filbeck \& Visscher
+(\protect\hyperlink{ref-filbeck1997}{1997}) in Britian, and Wang,
+Larsen, Ainina, Akhbari \& Gressis
+(\protect\hyperlink{ref-wang2011dogs}{2011}) in China. More recently,
+Filbeck, Holzhauer \& Zhao
+(\protect\hyperlink{ref-filbeck2017dividend}{2017}) investigated the
+performance of DOD against a high-yield portfolio of Fortune Most
+Desired Companies (MAC) compared to the Dow Jones Industrial Average and
+the S\&P 500. The study found significantly higher risk-adjusted returns
+for the DOD strategy.
+
+\newpage
+
+\hypertarget{methodology}{%
+\section{Methodology}\label{methodology}}
+
+\hypertarget{introduction-1}{%
+\subsection{Introduction}\label{introduction-1}}
+
+Optimizing an asset portfolio involves carefully calibrating the
+trade-offs between risk and expected returns. Portfolio managers
+traditionally employ a range of optimization techniques to construct
+portfolios that not only yield high returns but also minimize risk
+exposure. We aim to investigate how different risk models can provide
+significant cues in forming dividend strategies. To this end, we employ
+Minimum Variance, Equal Risk Contribution, and Minimum Volatility.
+Additionally, this study incorporates more refinements models like Risk
+Efficiency and makes use of proprietary software-based approaches,
+specifically drawing upon the Barras risk model.Unique to the Barras
+model is the introduction of the Max Utility Operator, which allows for
+a more sophisticated interpretation of risk by focusing not only on the
+total risk but also the active risk associated with each asset. This
+dual perspective enables the construction of a more versatile covariance
+matrix, thereby enriching the portfolio optimization process.
+
+The following sections analytically describes the optimization problem
+and risk models used in the study.
+
+\hypertarget{portfolio-optimization}{%
+\section{Portfolio Optimization}\label{portfolio-optimization}}
+
+Portfolio optimization consists of determining a set of assets, and
+their respective portfolio participation weights, which satisfy the
+investor concerning the combination of risk-return trade-off. Markowitz
+(\protect\hyperlink{ref-markowitz1959portfolio}{1959}) proposed the
+Mean-Variance (MV) model in which the expected return 4.1 is given by
+the a measure of the historical data of the stock's return. For our
+study we geometrically chain return to measure true effects on portfolio
+returns overtime. The risk is calculated by the variance of these
+returns 4.2. The MV model treats returns of individual assets as random
+variables and to adopt the value of expected return and variance in
+order to quantify the return and investment risk, respectively
+(\protect\hyperlink{ref-zhang2018portfolio}{Zhang, Li \& Guo, 2018}).
+\begin{align}
+ \mu \quad = \quad w^TR \\ 
+\sigma^2 \quad  = \quad w^T\sum 
+w\end{align} The resulting objective function is to maximize return
+given a certain level of risk and constraint; \begin{align}
+Maximise \ w^TR \sum w<=\sigma^2\ and\ \sum_{i = 1}^{N}w{_i}=1 \notag
+\end{align}
+
+Linear constraints are generally included in MV portfolio optimization.
+Optimization typically assume that portfolio weights sum to 1 and are
+non negative. This defines a linear equality constraint on the
+optimization. Another constraint typically used is no-short-selling
+condition is a set of sign constraints or linear inequalities. This
+reflects avoidance of unlimited liability investment often required in
+institutional contexts.
+
+This study will use a an extension of the MV that uses risk preferences
+to determine optimum allocation of assets within a portfolio. Barra
+definition of portfolio risk extends that from the Modern Portfolio
+theory. It defines risk as the decomposition of the variance of returns.
+Using Barra multifactor model, the return (r) of a portfolio can be
+decomposed into both a common factor return (Xf) and asset specific
+return (u) components as: \begin{align} 
+r= X_{F} + u \notag
+\end{align}
+
+The multi-factor approach entails the creation of a factor covariance
+matrix. This is a short term risk forecast that describes trade off of
+each common factor within the model. This approach requires periodic
+return calculation to these exposures. The upshot is that the
+methodology provides an forecast of each assets specific risk.
+
+The covariance matrix is defined as
+
+\begin{align}
+ XFX^T + D \label{eq1} \notag
+\end{align}
+
+where X = n x k matrix of asset exposures to the factors. F = k x k
+positive semi-definite factor covariance matrix, and D = n × n positive
+semi-definite covariance matrix representing a forecast of asset
+specific risk.
+
+Expressing portfolio risk in decomposition allows for portfolio manager
+to optimize portfolio from either a total risk perspective or an active
+risk perspective. In total risk, portfolio holdings are only considered,
+and the benchmark holdings are treated as irrelevant for optimization
+purposes. Whereas in active risk, the tracking error in which the
+difference between the portfolio holdings and those of the benchmark is
+given primary consideration in the optimization problem.
+
+\begin{align}
+ Total\ Risk : h^T(\lambda_FXFX^T + \lambda_D)h\\ \quad \quad  \notag 
+ Active \ Risk : (h-h_B)^T(\lambda_FXFX^T+\lambda_DD)(h-h_B) \notag
+\end{align}
+
+where, = \begin{align}
+\lambda_f \quad \quad  = \quad common \ factor\ risk\ aversion\ parameter,\\ \lambda_d \quad \quad = \quad specific\ \notag risk\ aversion\ parameter,\\\ h \quad \quad = \quad n×1 \ vector\ of\ managed\ portfolio’s\ holdings,\\ and \quad \notag \quad \quad \quad \quad \quad \quad \quad \quad \quad\\h_B \quad \quad =\quad vector \ normal\ (benchmark)\ portfolio’s\ holdings \notag 
+\end{align}
+
+The introduction of risk aversion parameters into Barra's portfolio
+optimization is a form of a max utility operator that allows the
+portfolio managers to incorporate a numeric representation of personal
+risk preferences into the portfolio optimization process\footnote{see
+  \url{https://www.sciencedirect.com/science/article/pii/S1057521921002556}
+  for a detailed explanation on advantages of using maximum utility
+  operators to efficiently factor investor risk preferences}. It also
+provides the opportunity to quantify relative aversion to common factor
+risk vis-à-vis specific risk. Consequently, these risk aversion
+parameters are important tools that are available to assist the
+portfolio manager in the construction of an optimal portfolio that is
+consistent with their goals.
+
+\hypertarget{equal-risk-contribution-erc}{%
+\subsection{Equal Risk Contribution
+(ERC)}\label{equal-risk-contribution-erc}}
+
+Equal risk contribution is a return free approach that seeks to equalize
+risk contributions from the universe of selected assets thus ensuring it
+is fully diversified from a risk perspective. Let sigma measure
+portfolio risk and C(x) defined to be the risk contribution of asset i.
+If the portfolio risk is measured as by the variance of its return then
+is;
+
+\begin{align}
+\sigma^2 = x^TQ{x}\\ and \ C_i(x)= x_i(Qx)_i \\ \notag
+\quad where\ (Qx)_i =\sum_{i = 1}^{N}Q_ijxj \notag
+\end{align}
+
+\begin{align}
+x^{ERC} \ satisfies \ C_i(x^{ERC}) = (R(x^{ERC})/N) \ for \ i = 1,...., N. \notag
+\end{align}
+
+From this we conclude that the variance and standard deviation measures
+are the same for and when can then only the variance risk measure
+appreciating that all results apply equally to standard deviation.
+
+\hypertarget{minimum-volatility-minvol}{%
+\subsection{Minimum Volatility
+(MinVol)}\label{minimum-volatility-minvol}}
+
+Minimum-variance similar to ERC do not require return forecasts, there
+can be in some cases they may be more efficient than strategies that
+trade off expected risk and return.
+
+\hypertarget{tax-considerations}{%
+\section{Tax considerations}\label{tax-considerations}}
+
+Portfolio theory was developed in a perfect world without friction. In
+practice, frictions need to be considered and in portfolio construction
+this often entails considering the effect of taxes on income and capital
+gains as they can erode returns and significantly alter risks and return
+characteristics of shares. The contribution of dividends and capital
+gains to total return can lead to varying tax inefficiencies for shares
+as most jurisdictions imposed higher taxes than on capital gains.
+Therefore shares with higher contribution of dividends will be less tax
+efficient than those with a higher capital gains component and with
+timing most jurisdictions tax dividends in the year that they are
+receive\footnote{See Deloitte's tax guides and country highlights:
+  \url{https://dits.deloitte.com/\#TaxGuides}}.
+
+Jurisdictional laws can also affect the distribution of taxable returns
+amongst shares depending on their class namely ordinary shares or
+preferred shares. Preferred shares are viewed as a substitute for bonds
+and income from preferred shares are often given tax at a lower rate
+than those from dividends from ordinary shares.
+
+We will not survey global tax regimes or incorporate all potential tax
+complexities into the portfolio construction but assume a high level
+commonalities exists amongst all jurisdictions this study uses. This is
+a resonable assumption considering the summary of taxes on dividends and
+capital gains from major economies. For simplicity, we will assume a
+basic tax regime includes the key elements of investment-related taxes
+that are representative of what a typical taxable asset owner of a
+global portfolio will contend with. The proposed methodology to employ
+on the dividend portfolios use the following methodology.
+
+\begin{align}
+r_{a t}=p_d r_{p t}\left(1-t_d\right)+p_a r_{p t}\left(1-t_{c g}\right)
+\end{align}
+
+where \begin{align}
+r_{a t} the after tax return,
+p_d= the proportion of r_{p t} attributed to dividend income,
+p_a= the proportion of r_{p t} attributed to price appreciation, 
+t_d= the dividend tax rate and 
+t_{c g}= the capital gains tax rate
+\end{align} \newpage
+
+\hypertarget{portfolio-construction-process}{%
+\subsection{Portfolio Construction
+Process}\label{portfolio-construction-process}}
+
+First, we rebalance at the end of March and September and construct
+fully invested, long only portfolios. On each re balancing date, we take
+the top 100 stocks by market capitalization (MC), and then select the
+top quintile (20 stocks) based on the relevant signal scores. We then
+apply 25 basis trading costs to both buying and selling of stocks, and
+
+We will then use total return values, adjust for stock splits and other
+distorting effects on prices to calculate portfolio returns. We also
+carefully apply back-dated adjustments to dividends paid to accurately
+arrive at on-the-day dividends and actual closing prices when
+calculating our Dividend Yield and Dividend Per Share Growth measures.
+
+We also apply at each re balancing on the risk models mentioned
+previously. The optimization are constrained to have minimum and maximum
+weight exposure of 0.5 and 1.5 times the equal weighted alternative.
+With our quintile portfolios, this implies weights ranging between 2.5\%
+and 7.5\%.
+
+Following this we will construct back-tests on the subset of dividend
+signal portfolios.
+
+\hypertarget{data-source-and-stratification}{%
+\section{Data Source and
+Stratification}\label{data-source-and-stratification}}
+
+The data set for this research is sourced from Bloomberg with the sample
+period from January 31, 2003, to January 31, 2023. We collected daily
+price and level data for various indices, benchmarks, and their
+constituent stocks traded on the Johannesburg Stock Exchange. To capture
+the dynamic nature of financial markets, we segmented the data using
+proxies that reflect market cycles and volatility levels. Acknowledging
+the global influence of the United States on financial markets, we
+utilized the Chicago Board of Options Exchange (CBOE) VIX Index and data
+from the Federal Reserve Bank of the United States. These metrics served
+as our stratifying variables, allowing us to categorize our sample
+across different market and interest rate cycles. This stratification
+aims to provide a nuanced understanding of how dividend-paying stocks on
+the JSE respond to shifts in volatility and monetary policy.After
+stratification, we geometrically chain the excess returns for the
+different periods before annualizing. This produces comparable
+cumulative annualized excess return (CAER) results, defined as:
+\begin{align}
+C A E R=\left[\prod_{t=1}^n\left(1+E R_t\right)\right]^{\frac{222}{n}}-1 \notag
+\end{align} The amount of daily data for the respective interest rate
+cycles is large enough to annualize, however, when the VIX, V2X or JALSH
+RV breach the top or bottom quintile for less than 50 trading days, the
+period is excluded in order to avoid annualizing small frequencies.
+
+We also downloaded constituent data for the indices from approximately
+21 super sectors\footnote{as defined by FTSE 100 white papers on the
+  FTSE 1000 index construction see
+  \url{https://www.google.com/url?sa=i\&rct=j\&q=\&esrc=s\&source=web\&cd=\&cad=rja\&uact=8\&ved=0CDcQw7AJahcKEwiA_4yu1pCBAxUAAAAAHQAAAAAQAw\&url=https\%3A\%2F\%2Fresearch.ftserussell.com\%2FAnalytics\%2FFactsheets\%2FHome\%2FDownloadSingleIssue\%3FissueName\%3DWORLDS\%26IsManual\%3Dfalse\&psig=AOvVaw0ScIEuPFn-McGJKBFXvldA\&ust=1693907242710751\&opi=89978449}}.
+
+Table 1 describes the globally traded dividend portfolios investigated
+in this study. Subsequently, we delve into the results derived from
+applying various portfolio optimization techniques to dividend-paying
+stocks on the JSE. Through this lens, we assess how each model
+contributes to risk-adjusted returns and portfolio stability. The
+objective is to identify optimization strategies that offer the most
+favorable risk-return profile for portfolios focused on
+dividend-generating stocks.
+
+\hypertarget{globally-traded-dividend-portfolios}{%
+\section{Globally traded Dividend
+Portfolios}\label{globally-traded-dividend-portfolios}}
+
+\ref{tab1} offers a tabular representation excess cumulative returns for
+dividend portfolios.On average, these portfolios generate a positive
+premium relative to their respective market indices. However, there is
+an apparent lack of uniformity across various investment strategies. The
+FUDP index, a High Dividend Yield (HY) strategy that tracks the highest
+dividend-paying stocks on the London Stock Exchange, outperforms its
+peers but also returns a remarkable 3x on every rand invested over the
+sample period. In stark contrast, other HY strategies, specifically
+those focused on U.S. and South African markets---identified by their
+respective indices M2USADVD and TJDIVD fail to produce similarly
+impressive results.
+
+Despite the allure of their value proposition, based on cumulative
+returns there is no unequivocal evidence to suggest that dividend
+portfolios universally outperform market indices.
+
+\begin{verbatim}
+## \begingroup\fontsize{12pt}{13pt}\selectfont
+## \begin{longtable}{lrr}
+## \caption{Aggregate Dividend Effects} \\ 
+##   \toprule
+## Ticker & Cumulative\_mean\_return & Median\_cumulative\_return \\ 
+##   \hline 
+## \endhead 
+## \hline 
+## {\footnotesize Continued on next page} 
+## \endfoot 
+## \endlastfoot 
+##  \midrule
+## FUDP & 2.04 & 1.71 \\ 
+##   M2EFDY & 0.84 & 0.83 \\ 
+##   M2EUGDY & 1.09 & 1.08 \\ 
+##   M2GBDY & 1.38 & 1.37 \\ 
+##   M2JPDY & 1.29 & 1.29 \\ 
+##   M2USADVD & 0.93 & 0.90 \\ 
+##   M2WDHDVD & 1.08 & 1.07 \\ 
+##   SPDAEET & 0.79 & 0.76 \\ 
+##   SPJXDAJT & 0.73 & 0.70 \\ 
+##   SPSADAZT & 0.51 & 0.46 \\ 
+##   TJDIVD & 0.56 & 0.56 \\ 
+##    \bottomrule
+## \end{longtable}
+## \endgroup
+\end{verbatim}
+
+Stratifying the excess return according to different interest rate
+regimes and market cycles unearths interesting dynamics in the
+performance of dividend portfolios. The tables below summarize the
+performance of the different dividend strategies high volatility and low
+volatility, as well as hiking and cutting interest rates cyles. The
+results below suggest that dividend strategies outperform during periods
+of market distress and under perform during periods of market calm. In
+emerging markets however, we observe that during periods of low
+volatility these portfolios yield greater than high volatility.
+
+\begin{verbatim}
+## \begin{table}[H]
+## \centering
+## \begin{tabular}{rlrrl}
+##   \hline
+##  & ticker & Hivol\_return & lovol\_return & Volatility\_Protection \\ 
+##   \hline
+## 1 & M2USADVD & -0.00 & -0.04 & higher \\ 
+##   2 & SPDAUDT & 0.00 & -0.03 & higher \\ 
+##   3 & SPJXDAJT & 0.00 & -0.02 & higher \\ 
+##   4 & FUDP & 0.02 & -0.01 & higher \\ 
+##   5 & M2EUGDY & 0.00 & -0.00 & higher \\ 
+##   6 & M2GBDY & -0.01 & -0.04 & higher \\ 
+##   7 & SPDAEET & 0.01 & 0.02 & lower \\ 
+##   8 & M2EFDY & -0.00 & -0.01 & higher \\ 
+##   9 & SPSADAZT & 0.04 & -0.05 & higher \\ 
+##   10 & TJDIVD & 0.01 & -0.06 & higher \\ 
+##    \hline
+## \end{tabular}
+## \caption{Short Table Example \label{tab1}} 
+## \end{table}
+\end{verbatim}
+
+\ref{Fig2} shows rolling returns for the dividend portfolios. Dividend
+portfolios broadly behave similarly. Buttressing results from
+stratifying according to volatility we notice that dividend portfolio
+failed to provide meaningful protection during the most recent crises,
+the COVID- 19 pandemic. Howver we do note out performance (above zero
+excess return) in FUDP and SPDAEET the over the past three years. Most
+dividend portfolios however have witnissed negative excess return over
+the most recent period
+
+\begin{figure}[H]
+
+{\centering \includegraphics{ThesisWriteUp_files/figure-latex/Figure2-1} 
+
+}
+
+\caption{Rolling 3 Year Returns \label{Fig2}}\label{fig:Figure2}
+\end{figure}
+
+\hypertarget{results-and-analysis}{%
+\section{Results and Analysis}\label{results-and-analysis}}
+
+\hypertarget{discussion}{%
+\section{Discussion}\label{discussion}}
+
+\hypertarget{limitations-of-the-study}{%
+\subsection{Limitations of the study}\label{limitations-of-the-study}}
+
+\hypertarget{conclusion}{%
+\section{Conclusion}\label{conclusion}}
+
+\newpage
+
+\hypertarget{references}{%
+\section*{References}\label{references}}
+\addcontentsline{toc}{section}{References}
+
+\hypertarget{refs}{}
+\begin{CSLReferences}{1}{0}
+\leavevmode\vadjust pre{\hypertarget{ref-al2018revisiting}{}}%
+Al-Najjar, B. \& Kilincarslan, E. 2018. Revisiting firm-specific
+determinants of dividend policy: Evidence from turkey. \emph{Economic
+issues}. 23(1):3--34.
+
+\leavevmode\vadjust pre{\hypertarget{ref-ang2007stock}{}}%
+Ang, A. \& Bekaert, G. 2007. Stock return predictability: Is it there?
+\emph{The Review of Financial Studies}. 20(3):651--707.
+
+\leavevmode\vadjust pre{\hypertarget{ref-baker1999corporate}{}}%
+Baker, H.K. \& Powell, G.E. 1999. How corporate managers view dividend
+policy. \emph{Quarterly Journal of Business and Economics}. 17--35.
+
+\leavevmode\vadjust pre{\hypertarget{ref-bhattacharyya2007dividend}{}}%
+Bhattacharyya, N. 2007. Dividend policy: A review. \emph{Managerial
+Finance}. 33(1):4--13.
+
+\leavevmode\vadjust pre{\hypertarget{ref-black1996dividend}{}}%
+Black, F. 1996. The dividend puzzle. \emph{Journal of Portfolio
+Management}. 8.
+
+\leavevmode\vadjust pre{\hypertarget{ref-brzeszczynski2007dividend}{}}%
+Brzeszczyński, J. \& Gajdka, J. 2007. Dividend-driven trading
+strategies: Evidence from the warsaw stock exchange. \emph{International
+Advances in Economic Research}. 13:285--300.
+
+\leavevmode\vadjust pre{\hypertarget{ref-cornell2014dividend}{}}%
+Cornell, B. 2014. Dividend-price ratios and stock returns: International
+evidence. \emph{Journal of Portfolio management}. 40(2):122.
+
+\leavevmode\vadjust pre{\hypertarget{ref-deangelo2006irrelevance}{}}%
+DeAngelo, H. \& DeAngelo, L. 2006. The irrelevance of the MM dividend
+irrelevance theorem. \emph{Journal of financial economics}.
+79(2):293--315.
+
+\leavevmode\vadjust pre{\hypertarget{ref-fama1988permanent}{}}%
+Fama, E.F. \& French, K.R. 1988. Permanent and temporary components of
+stock prices. \emph{Journal of political Economy}. 96(2):246--273.
+
+\leavevmode\vadjust pre{\hypertarget{ref-filbeck1997}{}}%
+Filbeck, G. \& Visscher, S. 1997. Dividend yield strategies in the
+british stock market. \emph{The European Journal of Finance}.
+3(4):277--289.
+
+\leavevmode\vadjust pre{\hypertarget{ref-filbeck2017dividend}{}}%
+Filbeck, G., Holzhauer, H.M. \& Zhao, X. 2017. Dividend-yield
+strategies: A new breed of dogs. \emph{The Journal of Investing}.
+26(2):26--47.
+
+\leavevmode\vadjust pre{\hypertarget{ref-gordon1962}{}}%
+Gordon, M.J. 1962. The savings investment and valuation of a
+corporation. \emph{The Review of Economics and Statistics}. 37--51.
+
+\leavevmode\vadjust pre{\hypertarget{ref-gordon1963optimal}{}}%
+Gordon, M.J. 1963. Optimal investment and financing policy. \emph{The
+Journal of finance}. 18(2):264--272.
+
+\leavevmode\vadjust pre{\hypertarget{ref-hussainey2011dividend}{}}%
+Hussainey, K., Mgbame, C.O. \& Chijoke-Mgbame, A.M. 2011. Dividend
+policy and share price volatility: UK evidence. \emph{The Journal of
+risk finance}. 12(1):57--68.
+
+\leavevmode\vadjust pre{\hypertarget{ref-jensen1976theory}{}}%
+Jensen, M.C. \& Meckling, W.H. 1976. Theory of the firm: Managerial
+behavior, agency costs and ownership structure. \emph{Journal of
+financial economics}. 3(4):305--360.
+
+\leavevmode\vadjust pre{\hypertarget{ref-10.2307ux2f3694818}{}}%
+Koch, A.S. \& Sun, A.X. 2004. Dividend changes and the persistence of
+past earnings changes. \emph{The Journal of Finance}. 59(5):2093--2116.
+
+\leavevmode\vadjust pre{\hypertarget{ref-lemmon2015dividend}{}}%
+Lemmon, M.L. \& Nguyen, T. 2015. Dividend yields and stock returns in
+hong kong. \emph{Managerial Finance}. 41(2):164--181.
+
+\leavevmode\vadjust pre{\hypertarget{ref-lintner1956distribution}{}}%
+Lintner, J. 1956. Distribution of incomes of corporations among
+dividends, retained earnings, and taxes. \emph{The American economic
+review}. 46(2):97--113.
+
+\leavevmode\vadjust pre{\hypertarget{ref-maio2015dividend}{}}%
+Maio, P. \& Santa-Clara, P. 2015. Dividend yields, dividend growth, and
+return predictability in the cross section of stocks. \emph{Journal of
+Financial and Quantitative Analysis}. 50(1-2):33--60.
+
+\leavevmode\vadjust pre{\hypertarget{ref-manconi2014buybacks}{}}%
+Manconi, A., Peyer, U. \& Vermaelen, T. 2014. Buybacks around the world.
+\emph{European Corporate Governance Institute (ECGI)-Finance Working
+Paper}. 436.
+
+\leavevmode\vadjust pre{\hypertarget{ref-markowitz1959portfolio}{}}%
+Markowitz, H.M. 1959. Portfolio selection, 1952{]}: Portfolio selection.
+\emph{Journal of Finance}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-masum2014dividend}{}}%
+Masum, A. 2014. Dividend policy and its impact on stock price--a study
+on commercial banks listed in dhaka stock exchange. \emph{Global
+disclosure of Economics and Business}. 3(1).
+
+\leavevmode\vadjust pre{\hypertarget{ref-mcqueen1997does}{}}%
+McQueen, G., Shields, K. \& Thorley, S.R. 1997. Does the {``dow-10
+investment strategy''} beat the dow statistically and economically?
+\emph{Financial Analysts Journal}. 53(4):66--72.
+
+\leavevmode\vadjust pre{\hypertarget{ref-miller1985dividend}{}}%
+Miller, M.H. \& Rock, K. 1985. Dividend policy under asymmetric
+information. \emph{The Journal of finance}. 40(4):1031--1051.
+
+\leavevmode\vadjust pre{\hypertarget{ref-rangvid2014dividend}{}}%
+Rangvid, J., Schmeling, M. \& Schrimpf, A. n.d. Dividend predictability
+around the world. \emph{Journal of Financial and Quantitative Analysis}.
+49(5-6):1255--1277.
+
+\leavevmode\vadjust pre{\hypertarget{ref-robertson2006}{}}%
+Robertson, D. \& Wright, S. 2006. Dividends, total cash flow to
+shareholders, and predictive return regressions. \emph{Review of
+Economics and Statistics}. 88(1):91--99.
+
+\leavevmode\vadjust pre{\hypertarget{ref-suwanna2012impacts}{}}%
+Suwanna, T. 2012. Impacts of dividend announcement on stock return.
+\emph{Procedia-Social and Behavioral Sciences}. 40:721--725.
+
+\leavevmode\vadjust pre{\hypertarget{ref-van2013advanced}{}}%
+Van Deventer, D.R., Imai, K. \& Mesler, M. 2013. \emph{Advanced
+financial risk management: Tools and techniques for integrated credit
+risk and interest rate risk management}. John Wiley \& Sons.
+
+\leavevmode\vadjust pre{\hypertarget{ref-vijayakumar2010effect}{}}%
+Vijayakumar, A. 2010. Effect of financial performance on share prices in
+the indian corporate sector: An empirical study. \emph{Management and
+Labour Studies}. 35(3):369--381.
+
+\leavevmode\vadjust pre{\hypertarget{ref-visscher2003dividend}{}}%
+Visscher, S. \& Filbeck, G. 2003. Dividend-yield strategies in the
+canadian stock market. \emph{Financial Analysts Journal}. 59(1):99--106.
+
+\leavevmode\vadjust pre{\hypertarget{ref-wang2011dogs}{}}%
+Wang, C., Larsen, J.E., Ainina, M.F., Akhbari, M.L. \& Gressis, N. 2011.
+The dogs of the dow in china. \emph{International Journal of Business
+and Social Science}. 2(18).
+
+\leavevmode\vadjust pre{\hypertarget{ref-wesson2014market}{}}%
+Wesson, N., Muller, C. \& Ward, M. 2014. Market underreaction to open
+market share repurchases on the JSE. \emph{South African Journal of
+Business Management}. 45(4):59--69.
+
+\leavevmode\vadjust pre{\hypertarget{ref-zhang2018portfolio}{}}%
+Zhang, Y., Li, X. \& Guo, S. 2018. Portfolio selection problems with
+markowitz's mean--variance framework: A review of literature.
+\emph{Fuzzy Optimization and Decision Making}. 17:125--158.
+
+\end{CSLReferences}
+
+\bibliography{Tex/ref}
+
+
+
+
+
+\end{document}
