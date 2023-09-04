@@ -324,8 +324,6 @@ g
 
 ```
 
-# quartile performance
-
 
 # rolling standard deviatio
 

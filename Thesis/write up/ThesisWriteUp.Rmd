@@ -483,7 +483,7 @@ table <- xtable(divi_vol_df, caption = "Short Table Example \\label{tab1}")
              )
 ```
 \ref{Fig2} shows rolling returns for the dividend portfolios. Dividend portfolios broadly behave similarly. Buttressing results from stratifying according to volatility we notice that dividend portfolio failed to provide meaningful protection during the most recent crises, the COVID- 19 pandemic. Howver we do note out performance (above zero excess return) in FUDP and SPDAEET the over the past three years. Most dividend portfolios however have witnissed negative excess return over the most recent period
-```{r Figure2,  warning =  FALSE, fig.align = 'center', fig.cap = "Rolling 3 Year Returns \\label{Fig2}", fig.ext = 'png', fig.height = 5, fig.width = 8}
+```{r Figure2,  warning =  FALSE, fig.align = 'left', fig.cap = "Rolling 3 Year Returns \\label{Fig2}", fig.ext = 'png', fig.height = 5, fig.width = 8}
 
 plotdf <- combined_simple %>% 
   group_by(ticker) %>% 
