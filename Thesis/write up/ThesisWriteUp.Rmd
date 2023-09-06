@@ -77,8 +77,8 @@ RemovePreprintSubmittedTo: TRUE  # Removes the 'preprint submitted to...' at bot
 Journal: "Journal of Finance"   # Journal that the paper will be submitting to, if RemovePreprintSubmittedTo is set to TRUE.
 toc: FALSE                       # Add a table of contents
 numbersections: TRUE             # Should sections (and thus figures and tables) be numbered?
-fontsize: 12pt                  # Set fontsize
-linestretch: 2.0                # Set distance between lines.
+fontsize: 11pt                  # Set fontsize
+linestretch: 1.0                # Set distance between lines.
 link-citations: TRUE            # This creates dynamic links to the papers in reference list.
 
 ### Adding additional latex packages:
@@ -242,13 +242,12 @@ r_{a t}=p_d r_{p t}\left(1-t_d\right)+p_a r_{p t}\left(1-t_{c g}\right)
 \end{align}
 
 where
-\begin{align}
-r_{a t} the after tax return,
-p_d= the proportion of r_{p t} attributed to dividend income,
-p_a= the proportion of r_{p t} attributed to price appreciation, 
+r_{at} the after tax return,
+p_d= the proportion of r_{pt} attributed to dividend income,
+p_a= the proportion of r_{pt} attributed to price appreciation, 
 t_d= the dividend tax rate and 
-t_{c g}= the capital gains tax rate
-\end{align}
+t_{cg}= the capital gains tax rate
+
 \newpage
 
 ## Portfolio Construction Process
