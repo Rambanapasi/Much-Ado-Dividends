@@ -9,7 +9,7 @@ self explanotory, but incase you change the dataset be mindful of the number of 
 ```{r}
 # loadings
 pacman::p_load("xts", "tidyverse", "tbl2xts", "PerformanceAnalytics", 
-               "lubridate", "glue")
+               "lubridate", "glue", "zoo")
 
 original_df <- readxl::read_xlsx("data/MAD .xlsx")
 
@@ -68,11 +68,12 @@ source("code/simpleexcessreturn.R")
 source("code/EXCESSRETURN.R")
 library(glue)
 
-#  just simple excess returns
+#   calculate simple returns just simple excess returns
 
 A <- UK_df %>% MY_excess_return(., "UK_HY", "UK") 
 B <- UK_df %>% MY_excess_return(., "UK_HY_B", "UK_B")
 
+# get a df 
 UK <- left_join(A, B, "date")
 
 
@@ -97,6 +98,20 @@ A <- SA_df %>% MY_excess_return(., "SA_HY", "SA")
 B <- SA_df %>% MY_excess_return(., "SA_DG", "SA")
 
 SA <- left_join(A, B, "date")
+
+# Table to describe excess returns
+
+
+excess_return_df <- list( UK,US ,UK, JP, SA, EM) %>%
+  reduce(inner_join, by='date') %>% gather(Regions, Cumulative_Excess_Return, -date)
+
+cumulative_excess_return_df <- list( UK,US ,UK, JP, SA, EM) %>%
+  reduce(inner_join, by='date') %>% gather(Regions, Cumulative_Excess_Return, -date) %>% 
+  mutate(Year = as.numeric(format(date , "%Y"))) %>% 
+  group_by( Regions) %>% 
+  summarise(Cumulative_Excess_Return = last(Cumulative_Excess_Return), Median = median(Cumulative_Excess_Return) ) %>% distinct()
+
+#  we notice that growth portfolios dont add signifiant value, SA offers similar to HY and DG. Whats the reason? HY did good in most advanced market economies. Gving more than 1X in excess cumulatively, the best being UK assets high yeild. EM not so well on a cumulative basis
 ```
 
 ## Stratification 
@@ -112,59 +127,58 @@ After stratification, chain the excess returns for the different periods before 
 
 - for somereason dates are not at monthend 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
-# get vol data from yahoo 
+#   get the vol data and get some dates
 
-# vol_data <- readxl::read_xlsx("data/volatility.xlsx")
-# VIX <- vol_data %>% select(Date, VIX)
-# V2X <- vol_data %>% select(Date, V2X)
-# JSV <- vol_data %>% select(Date, JALSHVOL)
+ vol_data <- readxl::read_xlsx("data/volatility.xlsx")
+ VIX <- vol_data %>% select(Date, VIX)
+ V2X <- vol_data %>% select(Date, V2X)
+ JSV <- vol_data %>% select(Date, JALSHVOL)
 # get rolling sd for the volatility index 
 
-# source("code/rollingstarnddev.R")
+ source("code/rollingstarnddev.R")
 
 # US 
 
-# Vixroll <- Rolling_sd(VIX ,"VIX")
+ Vixroll <- Rolling_sd(VIX ,"VIX")
 # 
 # # get the top quartile and bottom quartil
 # 
-# strat_df <- Vixroll %>% mutate(topQ = quantile(RollSD, probs = 0.8), 
-#               botQ = quantile(RollSD, probs = 0.2),
-#               Strat = ifelse(RollSD >= topQ, "HiVol", 
-#                           ifelse(RollSD <= botQ, "LowVol", "Normal_Vol")))
-# 
+ strat_df <- Vixroll %>% mutate(topQ = quantile(RollSD, probs = 0.8), 
+               botQ = quantile(RollSD, probs = 0.2),
+               Strat = ifelse(RollSD >= topQ, "HiVol", 
+                           ifelse(RollSD <= botQ, "LowVol", "Normal_Vol")))
+ 
 # # US strat
-# 
-# hivol_per_vector_us <- strat_df %>% filter(Strat %in% "HiVol") %>% pull(Date)
-# lovol_per_vector_us <- strat_df %>% filter(Strat %in% "LowVol") %>% pull(Date)
+ 
+ hivol_per_vector_us <- strat_df %>% filter(Strat %in% "HiVol") %>% pull(Date)
+ lovol_per_vector_us <- strat_df %>% filter(Strat %in% "LowVol") %>% pull(Date)
 # 
 # # Europe strat 
 # 
-# Vixroll <- Rolling_sd(V2X ,"V2X")
+ Vixroll <- Rolling_sd(V2X ,"V2X")
+# get the top quartile and bottom quartil
+
+ strat_df <- Vixroll %>% mutate(topQ = quantile(RollSD, probs = 0.8), 
+               botQ = quantile(RollSD, probs = 0.2),
+              Strat = ifelse(RollSD >= topQ, "HiVol", 
+                          ifelse(RollSD <= botQ, "LowVol", "Normal_Vol")))
 # 
-# # get the top quartile and bottom quartil
-# 
-# strat_df <- Vixroll %>% mutate(topQ = quantile(RollSD, probs = 0.8), 
-#               botQ = quantile(RollSD, probs = 0.2),
-#               Strat = ifelse(RollSD >= topQ, "HiVol", 
-#                           ifelse(RollSD <= botQ, "LowVol", "Normal_Vol")))
-# 
-# hivol_per_vector_eu  <- strat_df %>% filter(Strat %in% "HiVol") %>% pull(Date)
-# lovol_per_vector_eu  <- strat_df %>% filter(Strat %in% "LowVol") %>% pull(Date)
+ hivol_per_vector_eu  <- strat_df %>% filter(Strat %in% "HiVol") %>% pull(Date)
+ lovol_per_vector_eu  <- strat_df %>% filter(Strat %in% "LowVol") %>% pull(Date)
 # 
 # # SA 
 # 
-# Vixroll <- Rolling_sd(JSV ,"JALSHVOL")
+ Vixroll <- Rolling_sd(JSV ,"JALSHVOL")
 # 
 # # get the top quartile and bottom quartil
 # 
-# strat_df <- Vixroll %>% mutate(topQ = quantile(RollSD, probs = 0.8), 
-#               botQ = quantile(RollSD, probs = 0.2),
-#               Strat = ifelse(RollSD >= topQ, "HiVol", 
-#                           ifelse(RollSD <= botQ, "LowVol", "Normal_Vol")))
+ strat_df <- Vixroll %>% mutate(topQ = quantile(RollSD, probs = 0.8), 
+               botQ = quantile(RollSD, probs = 0.2),
+               Strat = ifelse(RollSD >= topQ, "HiVol", 
+                           ifelse(RollSD <= botQ, "LowVol", "Normal_Vol")))
 # 
-# hivol_per_vector_sa <- strat_df %>% filter(Strat %in% "HiVol") %>% pull(Date)
-# lovol_per_vector_sa <- strat_df %>% filter(Strat %in% "LowVol") %>% pull(Date)
+ hivol_per_vector_sa <- strat_df %>% filter(Strat %in% "HiVol") %>% pull(Date)
+ lovol_per_vector_sa <- strat_df %>% filter(Strat %in% "LowVol") %>% pull(Date)
 # 
 # 
 # # get entire returns and apply the vector above 
@@ -196,63 +210,72 @@ After stratification, chain the excess returns for the different periods before 
 # excessreturns_em <- list(B, K, L) %>%
 #   reduce(inner_join, by='date') %>% gather(ticker, excess, -date)
 #  
-# 
+
 # # US stat df
+ 
+ A <- US_df %>% filter(
+   Date %in% hivol_per_vector_us) %>%  MY_excess_return(., "US_HY", "US")
+ B <- US_df %>% filter(
+   Date %in% lovol_per_vector_us) %>%  MY_excess_return(., "US_HY", "US")
+ 
+ US <- left_join(A, B, "date")  %>% filter(date >= fmxdat::safe_month_min(last(date), N = 36)) %>%
+   group_by(ticker) %>% 
+   summarise(Hivol_return = prod(1+excess, na.rm=T) ^ (12/(36)) -1 ) 
 # 
-# hivol <- excessreturns_us %>%
-#   filter(date %in% hivol_per_vector_us) %>% 
-#   filter(date >= fmxdat::safe_month_min(last(date), N = 36)) %>%
-#   group_by(ticker) %>% 
-#   summarise(Hivol_return = prod(1+excess, na.rm=T) ^ (12/(36)) -1 ) 
+ hivol <- US %>%
+   filter(date %in% hivol_per_vector_us) %>% 
+   filter(date >= fmxdat::safe_month_min(last(date), N = 36)) %>%
+   group_by(ticker) %>% 
+   summarise(Hivol_return = prod(1+excess, na.rm=T) ^ (12/(36)) -1 ) 
 # 
-# lovol <-  excessreturns_us %>%
-#   filter(date %in% lovol_per_vector_us) %>% 
-#   filter(date >= fmxdat::safe_month_min(last(date), N = 36)) %>%
-#   group_by(ticker) %>% 
-#   summarise(lovol_return = prod(1+excess, na.rm=T) ^ (12/(36)) -1 ) 
+ lovol <-  excessreturns_us %>%
+   filter(date %in% lovol_per_vector_us) %>% 
+   filter(date >= fmxdat::safe_month_min(last(date), N = 36)) %>%
+   group_by(ticker) %>% 
+   summarise(lovol_return = prod(1+excess, na.rm=T) ^ (12/(36)) -1 ) 
 # 
-# Usvolcom <- left_join(hivol, lovol, by = "ticker")
+ Usvolcom <- left_join(hivol, lovol, by = "ticker")
 # 
-# EU strat df
-# hivol <- excessreturns_eu %>%
-#   filter(date %in% hivol_per_vector_eu) %>%
-#   filter(date >= fmxdat::safe_month_min(last(date), N = 36)) %>%
-#   group_by(ticker) %>%
-#   summarise(Hivol_return = prod(1+excess, na.rm=T) ^ (12/(36)) -1 )
+ # EU strat df
+ hivol <- excessreturns_eu %>%
+   filter(date %in% hivol_per_vector_eu) %>%
+   filter(date >= fmxdat::safe_month_min(last(date), N = 36)) %>%
+   group_by(ticker) %>%
+   summarise(Hivol_return = prod(1+excess, na.rm=T) ^ (12/(36)) -1 )
 # 
-# lovol <-  excessreturns_eu %>%
-#   filter(date %in% lovol_per_vector_eu) %>%
-#   filter(date >= fmxdat::safe_month_min(last(date), N = 36)) %>%
-#   group_by(ticker) %>%
-#   summarise(lovol_return = prod(1+excess, na.rm=T) ^ (12/(36)) -1 )
+ lovol <-  excessreturns_eu %>%
+   filter(date %in% lovol_per_vector_eu) %>%
+   filter(date >= fmxdat::safe_month_min(last(date), N = 36)) %>%
+   group_by(ticker) %>%
+   summarise(lovol_return = prod(1+excess, na.rm=T) ^ (12/(36)) -1 )
 # 
-# euvolcom <- left_join(hivol, lovol, by = "ticker")
+ euvolcom <- left_join(hivol, lovol, by = "ticker")
 # 
 # # EM strat df
-# hivol <- excessreturns_em %>%
-#   filter(date %in% hivol_per_vector_sa) %>%
-#   filter(date >= fmxdat::safe_month_min(last(date), N = 36)) %>%
-#   group_by(ticker) %>%
-#   summarise(Hivol_return = prod(1+excess, na.rm=T) ^ (12/(36)) -1 )
+ hivol <- excessreturns_em %>%
+   filter(date %in% hivol_per_vector_sa) %>%
+   filter(date >= fmxdat::safe_month_min(last(date), N = 36)) %>%
+   group_by(ticker) %>%
+   summarise(Hivol_return = prod(1+excess, na.rm=T) ^ (12/(36)) -1 )
 # 
-# lovol <-  excessreturns_em %>%
-#   filter(date %in% lovol_per_vector_sa) %>%
-#   filter(date >= fmxdat::safe_month_min(last(date), N = 36)) %>%
-#   group_by(ticker) %>%
-#   summarise(lovol_return = prod(1+excess, na.rm=T) ^ (12/(36)) -1 )
+ lovol <-  excessreturns_em %>%
+   filter(date %in% lovol_per_vector_sa) %>%
+   filter(date >= fmxdat::safe_month_min(last(date), N = 36)) %>%
+   group_by(ticker) %>%
+  summarise(lovol_return = prod(1+excess, na.rm=T) ^ (12/(36)) -1 )
 # 
-# emvolcom <- left_join(hivol, lovol, by = "ticker")
+ emvolcom <- left_join(hivol, lovol, by = "ticker")
 # 
-# divi_vol_df <- bind_rows(Usvolcom, euvolcom, emvolcom)
-# 
-# divi_vol_df  <- divi_vol_df %>%
-#   mutate(Volatility_Protection = case_when(
-#     Hivol_return > lovol_return ~ "higher",
-#     TRUE ~ "lower"
-#   ))
-# 
+ divi_vol_df <- bind_rows(Usvolcom, euvolcom, emvolcom)
+ 
+divi_vol_df  <- divi_vol_df %>%
+   mutate(Volatility_Protection = case_when(
+    Hivol_return > lovol_return ~ "higher",
+     TRUE ~ "lower"
+   ))
 
 ```
+
 # Interest rate cycles
 
 Given a series of central bank interest rates. I want to get dates of n consecutive interest rate changes. 
@@ -388,10 +411,21 @@ stratification, all portfolios perform as expected
 
 # Questions and some thoughts 
 
-- There is some story but can be substantiated by looking at the constituents. 
-
-- I fear that this can turn into an opinion piece, so some direction, should i just make conclusions based on the data and the graphs/stats that i provide.
 
 - can i see what you consider to be a good thesis for me to model. 
+
+- mention why it would be better to hold the market portfolios in some instances. there were significant drawdown in certian periods=. this is why the drawdown table would make a lot of sense.
+
+- when it signals negative and positive. 
+
+- there is upside to the high divi-strategies despite thier stringent rules of security inclusion, growth portfolios have significant drawdowns, want to  and dividend growth. is there mean reversion. do they face significant draw-downs, speed of recovery from drawdowns, that may influence changes.  
+
+- inefficeintly high. bsuiness will be high, dont investment in companies with high capex. its gives a signal to the markets tgat management knows its companies are undervalued and that there know something the market doesnt know. 
+
+- it makes sense if comapnies are good actors. 
+
+- expand on the apparent weakness and strengths of divi stratgies. 
+
+- can improve certain financial sratios and those are boosted and do those companies
 
 

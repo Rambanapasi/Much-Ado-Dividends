@@ -131,9 +131,17 @@ df <- readxl::read_xlsx("data/MAD .xlsx")
 <!-- # Start Writing here: -->
 <!-- ############################## -->
 
-# Introduction 
+# Introduction {-}
 
-# Literature Review \label{Literature Review}
+# Problem Statement {-} 
+
+Dividend yield is a poor proxy for stock returns, as it doesn't distinguish itself from price effects of a stock. Unfortunately, practice in industry when constructing dividend portfolios fails to recognize this flaw thus leading to sub optimal allocation within portfolio. 
+
+# Research Aim {-}
+
+We propose to enhance the dividend signalling by considering price changes and dividend payment sustainability offered by stock. Our solution corrects for this oversight by using price momentum filters and adjusting for unsustainable payout ratios in portfolio construction to offer superior risk adjusted return overtime. We will consider multiple back testing samples and highlight periods in which strategies offer diversification benefits to portfolio construction. 
+
+# Literature Review {-}
 
 ## What are dividends
 
@@ -158,13 +166,65 @@ On the other hand, practitioner-oriented literature focuses on the long-term ret
 
 \newpage
 
-# Methodology
+# Methodology {-}
 
 ## Introduction 
 
-Optimizing an asset portfolio involves carefully calibrating the trade-offs between risk and expected returns. Portfolio managers traditionally employ a range of optimization techniques to construct portfolios that not only yield high returns but also minimize risk exposure. We aim to investigate how different risk models can provide significant cues in forming dividend strategies. To this end, we employ Minimum Variance, Equal Risk Contribution, and Minimum Volatility. Additionally, this study incorporates more refinements models like Risk Efficiency and makes use of proprietary software-based approaches, specifically drawing upon the Barras risk model.Unique to the Barras model is the introduction of the Max Utility Operator, which allows for a more sophisticated interpretation of risk by focusing not only on the total risk but also the active risk associated with each asset. This dual perspective enables the construction of a more versatile covariance matrix, thereby enriching the portfolio optimization process.
+We employ dividend signals to rank our assets within our selected universe to construct portfolios that offer higher risk adjusted return than the market index. We consider a dividend yield ranking selecting the top 20 stock, dividend growth per share and selecting the top 20 stock, an extension of the dividend portfolios by adding a price momentum filter and a sustainability portfolio that aims penalizes stock that have unsustainable dividend practices.
 
-The following sections analytically describes the optimization problem  and risk models used in the study.
+Optimizing an asset portfolio involves carefully calibrating the trade-offs between risk and expected returns. In achieving the ultimate goal of the study, we aim to investigate how different risk models can provide significant cues in forming dividend strategies. To this end, we employ Minimum Variance, Equal Risk Contribution, and Minimum Volatility. Additionally, this study incorporates more refinements models like Risk Efficiency and makes use of proprietary software-based approaches, specifically drawing upon the Barras risk model.Unique to the Barras model is the introduction of the Max Utility Operator, which allows for a more sophisticated interpretation of risk by focusing not only on the total risk but also the active risk associated with each asset. This dual perspective enables the construction of a more versatile covariance matrix, thereby enriching the portfolio optimization process. The following sections analytically describes the optimization problem and risk models used in the study.
+
+# Security Selection Methodology
+
+A widely used approach to evaluate dividend signals is to construct subset portfolios and compare in sample performance. This methodology does not provide parametric significance test, however, portfolio risk and return measures are based on systematically constructed portfolios and serve to provide valuable insights. Various such applications exist in the literature. @damodaran2004investment constructs top decile portfolios based on trailing DY at the beginning of each year from 1952 to 2001. For the last sample period (1991 -2001), it is found that the highest dividend yielding portfolio outperformed the lowest by about 3%. @conover2016difference find that portfolios constructed from high-dividend payers return over 1.5% more per year than non-dividend payers, in addition to having lower risk. 
+
+Following a similar approach we will rank stock within our selected universe by dividend signals, namely dividend yield (DY) and dividend growth per share (DGPS). First, we rebalance at the end of March and September and construct fully invested, long only portfolios. On each re balancing date, we take the top 100 stocks by market capitalization (MC), and then select the top quintile (20 stocks) based on the our signal scores. We then apply 25 basis trading costs to both buying and selling of stocks, and we will then use total return values, adjust for stock splits and other distorting effects on prices to calculate portfolio returns. We also carefully apply back-dated adjustments to dividends paid to accurately arrive at on-the-day dividends and actual closing prices when calculating our Dividend Yield and Dividend Per Share Growth measures.
+
+We also apply at each re balancing on the risk models mentioned previously. The optimization are constrained to have minimum and maximum weight exposure of 0.5 and 1.5 times the equal weighted alternative. With our quintile portfolios, this implies weights ranging between 2.5% and 7.5%. For the Barra Max utility model with we use a risk aversion parameter of Common Factor Risk Aversion ratio we'll use will be: 0.0075 & asset specific R.A ratio of 1
+
+Following this we will construct back-tests on the subset of dividend signal portfolios.
+
+The Standard portfolios considered as follows 
+
+The Standard Dividend Yield Portfolio: uses the 12 month mean trailing dividend yield measure in its construction.
+- This avoids biasing to stocks that experienced recent share price declines (negative momentum), as would be
+done when considering on the day DY values;
+- This will be treated as the vanilla DY signal portfolio.
+
+The DPSG signal portfolio is constructed by considering the growth of company dividends mentioned above on a 1,
+3 and 5 year basis.
+
+- For the three and five year measure, we only consider stocks that had positive share payment growth over the
+period considered.
+- E.g., if a stock had a DPS decrease in year 2, even if it has an increased dividend payment over three years
+- we set this value to zero.
+- This has the effect of rewarding consistency, but also reduces the sample set substantially if the period under
+consideration increases
+
+Momentum Adjusted DY and DPSG portfolios extend both our DY and DPSG portfolios by applying a momentum
+adjusted filter for each. We use the following approach to make the adjustments:
+
+- Step 1: Rank our sample (top 100 by MC) by risk-adjusted price momentum and consider the top half.
+- Note that we do not use the “traditional” definition of momentum (12 - 1 month return as introduced by
+Jegadeesh and Titman), but rather use a risk-adjusted measure for momentum. Here we consider the 90
+day moving average return series to the same 90 day standard deviation for each stock.
+- Step 2: Rank our sample by either the DY or DPSG measure, and pick the top 20 stocks.
+
+Sustainability Adjusted DY and DPSG portfolios extend our DY and DPSG signals by considering dividend
+payout ratios (DPR). DPR measures how much of a company’s profit is paid out in dividends. We construct this signal by
+removing from the top 100 companies the 20 with the highest DPR scores. The aim of this filter is simply to avoid the
+most unsustainable stocks from a dividend payment perspective - thus systematically avoiding stocks that are most likely
+to cut dividends in the future, leading to a reactionary capital gain loss (as commonly experienced in practice).
+- Step 1: Rank our sample (top 100 by MC) by the payout ratio using normalized earnings and consider only the
+bottom 80 (lower DPR is more sustainable).
+This measure is calculated by considering the fraction (percentage) of net income a firm pays to its
+shareholders in dividends, calculated as: Total Common Cash Dividends / Normalized Earnings.
+- Step 2: Rank our sample by either the DY or DPSG measures, and pick the top 20 stocks for each.
+
+For completeness we compare the performance of these constructed portfolios to a standard value signal (PE) and a momentum signal, constructed as a composite 60, 120 and 240 day risk-adjusted momentum score for each stock.
+We next compare the absolute returns as well as the risk-adjusted performance and drawdowns of each of these
+portfolios. We then consider turnover and tracking error, before briefly showing the sector exposure of some of the
+different strategies. 
 
 # Portfolio Optimization
 
@@ -249,16 +309,6 @@ t_d= the dividend tax rate and
 t_{cg}= the capital gains tax rate
 
 \newpage
-
-## Portfolio Construction Process
-
-First, we rebalance at the end of March and September and construct fully invested, long only portfolios. On each re balancing date, we take the top 100 stocks by market capitalization (MC), and then select the top quintile (20 stocks) based on the relevant signal scores. We then apply 25 basis trading costs to both buying and selling of stocks, and 
-
-We will then use total return values, adjust for stock splits and other distorting effects on prices to calculate portfolio returns. We also carefully apply back-dated adjustments to dividends paid to accurately arrive at on-the-day dividends and actual closing prices when calculating our Dividend Yield and Dividend Per Share Growth measures.
-
-We also apply at each re balancing on the risk models mentioned previously. The optimization are constrained to have minimum and maximum weight exposure of 0.5 and 1.5 times the equal weighted alternative. With our quintile portfolios, this implies weights ranging between 2.5% and 7.5%.
-
-Following this we will construct back-tests on the subset of dividend signal portfolios.
 
 # Data Source and Stratification
 
