@@ -412,8 +412,6 @@ stratification, all portfolios perform as expected
 # Questions and some thoughts 
 
 
-- can i see what you consider to be a good thesis for me to model. 
-
 - mention why it would be better to hold the market portfolios in some instances. there were significant drawdown in certian periods=. this is why the drawdown table would make a lot of sense.
 
 - when it signals negative and positive. 

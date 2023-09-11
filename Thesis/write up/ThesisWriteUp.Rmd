@@ -289,13 +289,13 @@ From this we conclude that the variance and standard deviation measures are the 
 
 Minimum-variance similar to ERC do not require return forecasts, there can be in some cases they may be more efficient than strategies that trade off expected risk and return.
 
-# Tax considerations
+# Noteworthy tax considerations {-}
 
 Portfolio theory was developed in a perfect world without friction. In practice, frictions need to be considered and in portfolio construction this often entails considering the effect of taxes on income and capital gains as they can erode returns and significantly alter risks and return characteristics of shares. The contribution of dividends and capital gains to total return can lead to varying tax inefficiencies for shares as most  jurisdictions imposed higher taxes than on capital gains. Therefore shares with higher contribution of dividends will be less tax efficient than those with a higher capital gains component and with timing most jurisdictions tax dividends in the year that they are receive^[See Deloitte’s tax guides and country highlights: https://dits.deloitte.com/#TaxGuides].
 
 Jurisdictional laws can also affect the distribution of taxable returns amongst shares depending on their class namely ordinary shares or preferred shares. Preferred shares are viewed as a substitute for bonds and income from preferred shares are often given tax at a lower rate than those from dividends from ordinary shares.
 
-We will not survey global tax regimes or incorporate all potential tax complexities into the portfolio construction but  assume a  high level commonalities exists amongst all jurisdictions this study  uses. This is a resonable assumption considering  the summary of taxes on dividends and capital gains from major economies.  For simplicity, we will assume a basic tax regime  includes the key elements of investment-related taxes that are representative of what a typical taxable asset owner of a global portfolio will contend with. The proposed methodology to employ on the dividend portfolios use the following methodology. 
+We will not survey global tax regimes or incorporate all potential tax complexities into the portfolio construction but  assume a  high level commonalities exists amongst all jurisdictions this study  uses. This is a reasonable assumption considering  the summary of taxes on dividends and capital gains from major economies.  For simplicity, we will assume a basic tax regime  includes the key elements of investment-related taxes that are representative of what a typical taxable asset owner of a global portfolio will contend with. The proposed methodology to employ on the dividend portfolios use the following methodology. 
 
 \begin{align}
 r_{a t}=p_d r_{p t}\left(1-t_d\right)+p_a r_{p t}\left(1-t_{c g}\right)
@@ -333,224 +333,197 @@ Table 1 describes the globally traded dividend portfolios investigated in this s
 Despite the allure of their value proposition, based on cumulative returns there is no unequivocal evidence to suggest that dividend portfolios universally outperform market indices. 
 
 ```{r Figure1,  warning =  FALSE, fig.align = 'center', fig.cap = "Caption Here \\label{Figure1}", fig.ext = 'png', fig.height = 3, fig.width = 6}
+ 
+ # get all permutatation 
+ A <- df %>% MY_excess_return(.,"FUDP", "TUKXG") 
+ B <- df %>% MY_excess_return(., "M2EFDY", "GDUEEGF") 
+ C <- df %>% MY_excess_return(., "M2EUGDY", "GDDUE15X") 
+ D <- df %>% MY_excess_return(., "M2GBDY", "GDDUUK") 
+ E <- df %>% MY_excess_return(., "M2JPDY", "TJDIVD") 
+ F1 <- df %>% MY_excess_return(., "M2USADVD", "GDDUUS") 
+ G <- df %>% MY_excess_return(., "M2WDHDVD", "GDDUWI") 
+ H <- df %>% MY_excess_return(., "SPDAEET", "SPTR350E") 
+ I <- df %>% MY_excess_return(., "SPDAUDT", "SPXT") 
+ J <- df %>% MY_excess_return(., "SPJXDAJT", "TPXDDVD") 
+ K <- df %>% MY_excess_return(., "SPSADAZT", "JALSH") 
+ L <- df %>% MY_excess_return(., "TJDIVD", "JALSH")
+ 
+# #  cumulative excess returns in a single data frame
+ all_excess_returns_df  <- list(A, B, C, D, E, F1, G,H,J, K, L) %>%
+   reduce(inner_join, by='date') %>% gather(Ticker, excess, -date)
 
-# get all permutatation 
-A <- df %>% MY_excess_return(.,"FUDP", "TUKXG") 
-B <- df %>% MY_excess_return(., "M2EFDY", "GDUEEGF") 
-C <- df %>% MY_excess_return(., "M2EUGDY", "GDDUE15X") 
-D <- df %>% MY_excess_return(., "M2GBDY", "GDDUUK") 
-E <- df %>% MY_excess_return(., "M2JPDY", "TJDIVD") 
-F1 <- df %>% MY_excess_return(., "M2USADVD", "GDDUUS") 
-G <- df %>% MY_excess_return(., "M2WDHDVD", "GDDUWI") 
-H <- df %>% MY_excess_return(., "SPDAEET", "SPTR350E") 
-I <- df %>% MY_excess_return(., "SPDAUDT", "SPXT") 
-J <- df %>% MY_excess_return(., "SPJXDAJT", "TPXDDVD") 
-K <- df %>% MY_excess_return(., "SPSADAZT", "JALSH") 
-L <- df %>% MY_excess_return(., "TJDIVD", "JALSH")
-
-#  cumulative excess returns in a single data frame
-all_excess_returns_df  <- list(A, B, C, D, E, F1, G,H,J, K, L) %>%
-  reduce(inner_join, by='date') %>% gather(Ticker, excess, -date)
-
-Table <- all_excess_returns_df %>%  
-  group_by(Ticker) %>% 
-  summarise(Cumulative_mean_return = mean(excess), Median_cumulative_return = median(excess))
-
-data = Table %>% tibble::as_tibble()
-  addtorow          <- list()
-  addtorow$pos      <- list()
-  addtorow$pos[[1]] <- c(0)
-  addtorow$command  <- c(paste("\\hline \n",
-                               "\\endhead \n",
-                               "\\hline \n",
-                               "{\\footnotesize Continued on next page} \n",
-                               "\\endfoot \n",
-                               "\\endlastfoot \n",sep=""))
-  
-table <- xtable(data, caption = "Aggregate Dividend Effects")
-  print.xtable(table,
-             tabular.environment = "longtable",
-             floating = FALSE, # Leave this as is.
-             table.placement = 'H', # Leave this as is.
-             booktabs = T, # Aesthetics
-             include.rownames = FALSE,  # Typically you don't want this in a table.
-             add.to.row = addtorow, # For adding the Continued on next page part...
-             comment = FALSE,
-             caption.placement = 'top',  # Where do you want the caption?
-             size="\\fontsize{12pt}{13pt}\\selectfont"  # Size of text in table..
-             )
 
 ```
 Stratifying the excess return according to different interest rate regimes and market cycles unearths interesting dynamics in the performance of dividend portfolios. The tables below summarize the performance of the different dividend strategies high volatility and low volatility, as well as hiking and cutting interest rates cyles. The results below suggest that dividend strategies outperform during periods of market distress and under perform during periods of market calm. In emerging markets however, we observe that during periods of low volatility these portfolios yield greater than high volatility.
 
 ```{r}
 
-vol_data <- readxl::read_xlsx("data/volatility.xlsx")
-VIX <- vol_data %>% select(Date, VIX)
-V2X <- vol_data %>% select(Date, V2X)
-JSV <- vol_data %>% select(Date, JALSHVOL)
-# get rolling sd for the volatility index 
-
-source("code/rollingstarnddev.R")
-
-# US 
-
-Vixroll <- Rolling_sd(VIX ,"VIX")
-
-# get the top quartile and bottom quartil
-
-strat_df <- Vixroll %>% mutate(topQ = quantile(RollSD, probs = 0.8), 
-              botQ = quantile(RollSD, probs = 0.2),
-              Strat = ifelse(RollSD >= topQ, "HiVol", 
-                          ifelse(RollSD <= botQ, "LowVol", "Normal_Vol")))
-
-# US strat
-
-hivol_per_vector_us <- strat_df %>% filter(Strat %in% "HiVol") %>% pull(Date)
-lovol_per_vector_us <- strat_df %>% filter(Strat %in% "LowVol") %>% pull(Date)
-
-# Europe strat 
-
-Vixroll <- Rolling_sd(V2X ,"V2X")
-
-# get the top quartile and bottom quartil
-
-strat_df <- Vixroll %>% mutate(topQ = quantile(RollSD, probs = 0.8), 
-              botQ = quantile(RollSD, probs = 0.2),
-              Strat = ifelse(RollSD >= topQ, "HiVol", 
-                          ifelse(RollSD <= botQ, "LowVol", "Normal_Vol")))
-
-hivol_per_vector_eu  <- strat_df %>% filter(Strat %in% "HiVol") %>% pull(Date)
-lovol_per_vector_eu  <- strat_df %>% filter(Strat %in% "LowVol") %>% pull(Date)
-
-# SA 
-
-Vixroll <- Rolling_sd(JSV ,"JALSHVOL")
-
-# get the top quartile and bottom quartil
-
-strat_df <- Vixroll %>% mutate(topQ = quantile(RollSD, probs = 0.8), 
-              botQ = quantile(RollSD, probs = 0.2),
-              Strat = ifelse(RollSD >= topQ, "HiVol", 
-                          ifelse(RollSD <= botQ, "LowVol", "Normal_Vol")))
-
-hivol_per_vector_sa <- strat_df %>% filter(Strat %in% "HiVol") %>% pull(Date)
-lovol_per_vector_sa <- strat_df %>% filter(Strat %in% "LowVol") %>% pull(Date)
-
-
-# get all permutatation 
-A <- df %>% simple_excess_return(.,"FUDP", "TUKXG") 
-B <- df %>% simple_excess_return(., "M2EFDY", "GDUEEGF") 
-C <- df %>% simple_excess_return(., "M2EUGDY", "GDDUE15X") 
-D <- df %>% simple_excess_return(., "M2GBDY", "GDDUUK") 
-E <- df %>% simple_excess_return(., "M2JPDY", "TJDIVD") 
-F1 <- df %>% simple_excess_return(., "M2USADVD", "GDDUUS") 
-G <- df %>% simple_excess_return(., "M2WDHDVD", "GDDUWI") 
-H <- df %>% simple_excess_return(., "SPDAEET", "SPTR350E") 
-I <- df %>% simple_excess_return(., "SPDAUDT", "SPXT") 
-J <- df %>% simple_excess_return(., "SPJXDAJT", "TPXDDVD") 
-K <- df %>% simple_excess_return(., "SPSADAZT", "JALSH") 
-L <- df %>% simple_excess_return(., "TJDIVD", "JALSH")
-
-combined_simple<- list(A, B, C, D, E, F1, G,H,J, K, L) %>%
-  reduce(inner_join, by='date') %>% gather(ticker, excess, -date)
-#  US excess return
-excessreturns_us <- list( F1, I ,J) %>%
-  reduce(inner_join, by='date') %>% gather(ticker, excess, -date)
-
-# EU  excess return 
-excessreturns_eu <- list(A, C, D, H) %>%
-  reduce(inner_join, by='date') %>% gather(ticker, excess, -date)
-
-#  SA excess returns in a single data frame
-excessreturns_em <- list(B, K, L) %>%
-  reduce(inner_join, by='date') %>% gather(ticker, excess, -date)
- 
-
-# US stat df
-
-hivol <- excessreturns_us %>%
-  filter(date %in% hivol_per_vector_us) %>% 
-  filter(date >= fmxdat::safe_month_min(last(date), N = 36)) %>%
-  group_by(ticker) %>% 
-  summarise(Hivol_return = prod(1+excess, na.rm=T) ^ (12/(36)) -1 ) 
-
-lovol <-  excessreturns_us %>%
-  filter(date %in% lovol_per_vector_us) %>% 
-  filter(date >= fmxdat::safe_month_min(last(date), N = 36)) %>%
-  group_by(ticker) %>% 
-  summarise(lovol_return = prod(1+excess, na.rm=T) ^ (12/(36)) -1 ) 
-
-Usvolcom <- left_join(hivol, lovol, by = "ticker")
-
-# EU strat df
-hivol <- excessreturns_eu %>%
-  filter(date %in% hivol_per_vector_eu) %>% 
-  filter(date >= fmxdat::safe_month_min(last(date), N = 36)) %>%
-  group_by(ticker) %>% 
-  summarise(Hivol_return = prod(1+excess, na.rm=T) ^ (12/(36)) -1 ) 
-
-lovol <-  excessreturns_eu %>%
-  filter(date %in% lovol_per_vector_eu) %>% 
-  filter(date >= fmxdat::safe_month_min(last(date), N = 36)) %>%
-  group_by(ticker) %>% 
-  summarise(lovol_return = prod(1+excess, na.rm=T) ^ (12/(36)) -1 ) 
-
-euvolcom <- left_join(hivol, lovol, by = "ticker")
-
-# EM strat df
-hivol <- excessreturns_em %>%
-  filter(date %in% hivol_per_vector_sa) %>% 
-  filter(date >= fmxdat::safe_month_min(last(date), N = 36)) %>%
-  group_by(ticker) %>% 
-  summarise(Hivol_return = prod(1+excess, na.rm=T) ^ (12/(36)) -1 ) 
-
-lovol <-  excessreturns_em %>%
-  filter(date %in% lovol_per_vector_sa) %>% 
-  filter(date >= fmxdat::safe_month_min(last(date), N = 36)) %>%
-  group_by(ticker) %>% 
-  summarise(lovol_return = prod(1+excess, na.rm=T) ^ (12/(36)) -1 ) 
-
-emvolcom <- left_join(hivol, lovol, by = "ticker")
-
-divi_vol_df <- bind_rows(Usvolcom, euvolcom, emvolcom)
-
-divi_vol_df  <- divi_vol_df %>% 
-  mutate(Volatility_Protection = case_when(
-    Hivol_return > lovol_return ~ "higher",
-    TRUE ~ "lower"
-  ))
-library(xtable)
-table <- xtable(divi_vol_df, caption = "Short Table Example \\label{tab1}")
-  print.xtable(table,
-             # tabular.environment = "longtable",
-             floating = TRUE,
-             table.placement = 'H',
-             # scalebox = 0.3,
-             comment = FALSE,
-             caption.placement = 'bottom'
-             )
+# vol_data <- readxl::read_xlsx("data/volatility.xlsx")
+# VIX <- vol_data %>% select(Date, VIX)
+# V2X <- vol_data %>% select(Date, V2X)
+# JSV <- vol_data %>% select(Date, JALSHVOL)
+# # get rolling sd for the volatility index 
+# 
+# source("code/rollingstarnddev.R")
+# 
+# # US 
+# 
+# Vixroll <- Rolling_sd(VIX ,"VIX")
+# 
+# # get the top quartile and bottom quartil
+# 
+# strat_df <- Vixroll %>% mutate(topQ = quantile(RollSD, probs = 0.8), 
+#               botQ = quantile(RollSD, probs = 0.2),
+#               Strat = ifelse(RollSD >= topQ, "HiVol", 
+#                           ifelse(RollSD <= botQ, "LowVol", "Normal_Vol")))
+# 
+# # US strat
+# 
+# hivol_per_vector_us <- strat_df %>% filter(Strat %in% "HiVol") %>% pull(Date)
+# lovol_per_vector_us <- strat_df %>% filter(Strat %in% "LowVol") %>% pull(Date)
+# 
+# # Europe strat 
+# 
+# Vixroll <- Rolling_sd(V2X ,"V2X")
+# 
+# # get the top quartile and bottom quartil
+# 
+# strat_df <- Vixroll %>% mutate(topQ = quantile(RollSD, probs = 0.8), 
+#               botQ = quantile(RollSD, probs = 0.2),
+#               Strat = ifelse(RollSD >= topQ, "HiVol", 
+#                           ifelse(RollSD <= botQ, "LowVol", "Normal_Vol")))
+# 
+# hivol_per_vector_eu  <- strat_df %>% filter(Strat %in% "HiVol") %>% pull(Date)
+# lovol_per_vector_eu  <- strat_df %>% filter(Strat %in% "LowVol") %>% pull(Date)
+# 
+# # SA 
+# 
+# Vixroll <- Rolling_sd(JSV ,"JALSHVOL")
+# 
+# # get the top quartile and bottom quartil
+# 
+# strat_df <- Vixroll %>% mutate(topQ = quantile(RollSD, probs = 0.8), 
+#               botQ = quantile(RollSD, probs = 0.2),
+#               Strat = ifelse(RollSD >= topQ, "HiVol", 
+#                           ifelse(RollSD <= botQ, "LowVol", "Normal_Vol")))
+# 
+# hivol_per_vector_sa <- strat_df %>% filter(Strat %in% "HiVol") %>% pull(Date)
+# lovol_per_vector_sa <- strat_df %>% filter(Strat %in% "LowVol") %>% pull(Date)
+# 
+# 
+# # get all permutatation 
+# A <- df %>% simple_excess_return(.,"FUDP", "TUKXG") 
+# B <- df %>% simple_excess_return(., "M2EFDY", "GDUEEGF") 
+# C <- df %>% simple_excess_return(., "M2EUGDY", "GDDUE15X") 
+# D <- df %>% simple_excess_return(., "M2GBDY", "GDDUUK") 
+# E <- df %>% simple_excess_return(., "M2JPDY", "TJDIVD") 
+# F1 <- df %>% simple_excess_return(., "M2USADVD", "GDDUUS") 
+# G <- df %>% simple_excess_return(., "M2WDHDVD", "GDDUWI") 
+# H <- df %>% simple_excess_return(., "SPDAEET", "SPTR350E") 
+# I <- df %>% simple_excess_return(., "SPDAUDT", "SPXT") 
+# J <- df %>% simple_excess_return(., "SPJXDAJT", "TPXDDVD") 
+# K <- df %>% simple_excess_return(., "SPSADAZT", "JALSH") 
+# L <- df %>% simple_excess_return(., "TJDIVD", "JALSH")
+# 
+# combined_simple<- list(A, B, C, D, E, F1, G,H,J, K, L) %>%
+#   reduce(inner_join, by='date') %>% gather(ticker, excess, -date)
+# #  US excess return
+# excessreturns_us <- list( F1, I ,J) %>%
+#   reduce(inner_join, by='date') %>% gather(ticker, excess, -date)
+# 
+# # EU  excess return 
+# excessreturns_eu <- list(A, C, D, H) %>%
+#   reduce(inner_join, by='date') %>% gather(ticker, excess, -date)
+# 
+# #  SA excess returns in a single data frame
+# excessreturns_em <- list(B, K, L) %>%
+#   reduce(inner_join, by='date') %>% gather(ticker, excess, -date)
+#  
+# 
+# # US stat df
+# 
+# hivol <- excessreturns_us %>%
+#   filter(date %in% hivol_per_vector_us) %>% 
+#   filter(date >= fmxdat::safe_month_min(last(date), N = 36)) %>%
+#   group_by(ticker) %>% 
+#   summarise(Hivol_return = prod(1+excess, na.rm=T) ^ (12/(36)) -1 ) 
+# 
+# lovol <-  excessreturns_us %>%
+#   filter(date %in% lovol_per_vector_us) %>% 
+#   filter(date >= fmxdat::safe_month_min(last(date), N = 36)) %>%
+#   group_by(ticker) %>% 
+#   summarise(lovol_return = prod(1+excess, na.rm=T) ^ (12/(36)) -1 ) 
+# 
+# Usvolcom <- left_join(hivol, lovol, by = "ticker")
+# 
+# # EU strat df
+# hivol <- excessreturns_eu %>%
+#   filter(date %in% hivol_per_vector_eu) %>% 
+#   filter(date >= fmxdat::safe_month_min(last(date), N = 36)) %>%
+#   group_by(ticker) %>% 
+#   summarise(Hivol_return = prod(1+excess, na.rm=T) ^ (12/(36)) -1 ) 
+# 
+# lovol <-  excessreturns_eu %>%
+#   filter(date %in% lovol_per_vector_eu) %>% 
+#   filter(date >= fmxdat::safe_month_min(last(date), N = 36)) %>%
+#   group_by(ticker) %>% 
+#   summarise(lovol_return = prod(1+excess, na.rm=T) ^ (12/(36)) -1 ) 
+# 
+# euvolcom <- left_join(hivol, lovol, by = "ticker")
+# 
+# # EM strat df
+# hivol <- excessreturns_em %>%
+#   filter(date %in% hivol_per_vector_sa) %>% 
+#   filter(date >= fmxdat::safe_month_min(last(date), N = 36)) %>%
+#   group_by(ticker) %>% 
+#   summarise(Hivol_return = prod(1+excess, na.rm=T) ^ (12/(36)) -1 ) 
+# 
+# lovol <-  excessreturns_em %>%
+#   filter(date %in% lovol_per_vector_sa) %>% 
+#   filter(date >= fmxdat::safe_month_min(last(date), N = 36)) %>%
+#   group_by(ticker) %>% 
+#   summarise(lovol_return = prod(1+excess, na.rm=T) ^ (12/(36)) -1 ) 
+# 
+# emvolcom <- left_join(hivol, lovol, by = "ticker")
+# 
+# divi_vol_df <- bind_rows(Usvolcom, euvolcom, emvolcom)
+# 
+# divi_vol_df  <- divi_vol_df %>% 
+#   mutate(Volatility_Protection = case_when(
+#     Hivol_return > lovol_return ~ "higher",
+#     TRUE ~ "lower"
+#   ))
+# library(xtable)
+# table <- xtable(divi_vol_df, caption = "Short Table Example \\label{tab1}")
+#   print.xtable(table,
+#              # tabular.environment = "longtable",
+#              floating = TRUE,
+#              table.placement = 'H',
+#              # scalebox = 0.3,
+#              comment = FALSE,
+#              caption.placement = 'bottom'
+#              )
 ```
 \ref{Fig2} shows rolling returns for the dividend portfolios. Dividend portfolios broadly behave similarly. Buttressing results from stratifying according to volatility we notice that dividend portfolio failed to provide meaningful protection during the most recent crises, the COVID- 19 pandemic. Howver we do note out performance (above zero excess return) in FUDP and SPDAEET the over the past three years. Most dividend portfolios however have witnissed negative excess return over the most recent period
 ```{r Figure2,  warning =  FALSE, fig.align = 'left', fig.cap = "Rolling 3 Year Returns \\label{Fig2}", fig.ext = 'png', fig.height = 5, fig.width = 8}
 
-plotdf <- combined_simple %>% 
-  group_by(ticker) %>% 
-  mutate(RollRets = RcppRoll::roll_prod(1 + excess, 36, fill = NA, 
-    align = "right")^(12/36) - 1) %>% 
-  group_by(date) %>% filter(any(!is.na(RollRets))) %>% 
-  ungroup()
-
-g <- ggplot(plotdf, aes(date, RollRets, color = ticker)) +
-  geom_line(alpha = 0.5, size = 0.5) +
-  # crisp colours:
-  fmxdat::fmx_cols() + 
-  
-  labs(x = "", y = "Cumulative  Returns", caption = "Data:\n Bloomberg ",
-       title = "Global Dividend Portfolio Rolling 3 Year Returns", 
-       legend = T) 
-
-g 
+# plotdf <- combined_simple %>% 
+#   group_by(ticker) %>% 
+#   mutate(RollRets = RcppRoll::roll_prod(1 + excess, 36, fill = NA, 
+#     align = "right")^(12/36) - 1) %>% 
+#   group_by(date) %>% filter(any(!is.na(RollRets))) %>% 
+#   ungroup()
+# 
+# g <- ggplot(plotdf, aes(date, RollRets, color = ticker)) +
+#   geom_line(alpha = 0.5, size = 0.5) +
+#   # crisp colours:
+#   fmxdat::fmx_cols() + 
+#   
+#   labs(x = "", y = "Cumulative  Returns", caption = "Data:\n Bloomberg ",
+#        title = "Global Dividend Portfolio Rolling 3 Year Returns", 
+#        legend = T) 
+# 
+# g 
 
 ```
 # Results and Analysis

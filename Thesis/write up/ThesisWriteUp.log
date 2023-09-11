@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.9.4)  4 SEP 2023 14:43
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.9.4)  11 SEP 2023 12:44
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -23,8 +23,8 @@ Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
 \@bls=\dimen140
 (/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2023/05/17 v1.4n Standard LaTeX document class
-(/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/tex/latex/base/size12.clo
-File: size12.clo 2023/05/17 v1.4n Standard LaTeX file (size option)
+(/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/tex/latex/base/size11.clo
+File: size11.clo 2023/05/17 v1.4n Standard LaTeX file (size option)
 )
 \c@part=\count187
 \c@section=\count188
@@ -666,9 +666,9 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 * \topmargin=-38.1381pt
 * \headheight=12.0pt
 * \headsep=25.0pt
-* \topskip=12.0pt
+* \topskip=11.0pt
 * \footskip=30.0pt
-* \marginparwidth=44.0pt
+* \marginparwidth=59.0pt
 * \marginparsep=10.0pt
 * \columnsep=10.0pt
 * \skip\footins=24.0pt
@@ -707,9 +707,9 @@ LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 2
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 218.
+(Font)              <9> on input line 218.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 218.
+(Font)              <6> on input line 218.
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <5> on input line 218.
 LaTeX Font Info:    Trying to load font information for U+msa on input line 218.
@@ -725,82 +725,81 @@ LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 21
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <14> on input line 218.
+(Font)              <10.95> on input line 218.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <8> on input line 218.
+
+Underfull \hbox (badness 2961) in paragraph at lines 278--297
+[]\T1/lmr/m/n/10.95 Dividends con-sti-tute a form of cap-i-tal dis-tri-bu-tion by cor-po-ra-tions to-wards share-hold-ers.
+ []
+
+
+Underfull \hbox (badness 1092) in paragraph at lines 278--297
+\T1/lmr/m/n/10.95 They ex-ist in var-i-ous forms, such as cash, stock, liq-ui-dat-ing, scrip, or prop-erty div-i-dends
+ []
+
 [1
 
 
-{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}] [2] [3] [4] [5] [6] [7] [8{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}]
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 512.
+{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}] [2] [3] [4] [5]
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 545.
 (/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-) [9{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}]
+) [6{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}] [7{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}]
 
-LaTeX Warning: Command \texttimes invalid in math mode on input line 531.
-
-
-LaTeX Warning: Command \texttimes invalid in math mode on input line 531.
+LaTeX Warning: Command \texttimes invalid in math mode on input line 674.
 
 
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 531.
+LaTeX Warning: Command \texttimes invalid in math mode on input line 674.
 
 
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 531.
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 674.
 
 
-LaTeX Warning: Command \texttimes invalid in math mode on input line 531.
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 674.
 
 
-LaTeX Warning: Command \texttimes invalid in math mode on input line 531.
+LaTeX Warning: Command \texttimes invalid in math mode on input line 674.
 
 
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 531.
+LaTeX Warning: Command \texttimes invalid in math mode on input line 674.
 
 
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 531.
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 674.
 
-[10] [11] [12]
-Overfull \hbox (640.00792pt too wide) detected at line 620
-[]
- []
 
-[13] [14]
-Underfull \hbox (badness 10000) in paragraph at lines 677--677
-\T1/lmr/m/n/10 com / url ? sa = i & rct = j & q = &esrc = s & source = web & cd = &cad = rja & uact = 8 & ved = 0CDcQw7AJahcKEwiA _
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 674.
+
+[8] [9] [10]
+Underfull \hbox (badness 10000) in paragraph at lines 794--794
+[][][][]\T1/lmr/m/n/9 as de-fined by FTSE 100 white pa-pers on the FTSE 1000 in-dex con-struc-tion see [][]$https : / / www .
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 677--677
-\T1/lmr/m/n/10 4yu1pCBAxUAAAAAHQAAAAAQAw & url = https % 3A % 2F % 2Fresearch . ftserussell . com % 2FAnalytics %
+Underfull \hbox (badness 10000) in paragraph at lines 794--794
+\T1/lmr/m/n/9 google . com / url ? sa = i & rct = j & q = &esrc = s & source = web & cd = &cad = rja & uact = 8 & ved = 0CDcQw7AJahcKEwiA _
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 677--677
-\T1/lmr/m/n/10 2FFactsheets % 2FHome % 2FDownloadSingleIssue % 3FissueName % 3DWORLDS % 26IsManual % 3Dfalse & psig =
- []
-
-[15]
-
-LaTeX Warning: Reference `tab1' on page 16 undefined on input line 692.
-
-[16] [17] [18]
-<ThesisWriteUp_files/figure-latex/Figure2-1.png, id=253, 578.16pt x 361.35pt>
-File: ThesisWriteUp_files/figure-latex/Figure2-1.png Graphic file (type png)
-<use ThesisWriteUp_files/figure-latex/Figure2-1.png>
-Package pdftex.def Info: ThesisWriteUp_files/figure-latex/Figure2-1.png  used on input line 781.
-(pdftex.def)             Requested size: 578.15858pt x 361.34912pt.
-
-Overfull \hbox (94.74643pt too wide) in paragraph at lines 781--782
-[][]
+Underfull \hbox (badness 10000) in paragraph at lines 794--794
+\T1/lmr/m/n/9 4yu1pCBAxUAAAAAHQAAAAAQAw & url = https % 3A % 2F % 2Fresearch . ftserussell . com % 2FAnalytics %
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 781--782
-
+Underfull \hbox (badness 10000) in paragraph at lines 794--794
+\T1/lmr/m/n/9 2FFactsheets % 2FHome % 2FDownloadSingleIssue % 3FissueName % 3DWORLDS % 26IsManual % 3Dfalse & psig =
  []
 
-[19] [20 <./ThesisWriteUp_files/figure-latex/Figure2-1.png>] [21] [22] [23]
+
+LaTeX Warning: Reference `tab1' on page 11 undefined on input line 809.
+
+[11]
+
+LaTeX Warning: Reference `Fig2' on page 12 undefined on input line 835.
+
+[12] [13] [14]
 No file ThesisWriteUp.bbl.
-[24] (./ThesisWriteUp.aux)
+[15] (./ThesisWriteUp.aux)
  ***********
 LaTeX2e <2023-06-01> patch level 1
 L3 programming layer <2023-08-29>
@@ -809,24 +808,24 @@ L3 programming layer <2023-08-29>
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `ThesisWriteUp.out' has not changed.
-(rerunfilecheck)             Checksum: 92A7296C007DD4EFB482EDC7BF2B6620;2730.
+(rerunfilecheck)             Checksum: 9530142AB17CA0B8EA14B42C74BA600B;2954.
  ) 
 Here is how much of TeX's memory you used:
- 18158 strings out of 476894
- 335350 string characters out of 5807289
- 1927807 words of memory out of 5000000
- 39032 multiletter control sequences out of 15000+600000
- 606534 words of font info for 71 fonts, out of 8000000 for 9000
+ 18146 strings out of 476894
+ 334754 string characters out of 5807289
+ 1931807 words of memory out of 5000000
+ 39022 multiletter control sequences out of 15000+600000
+ 613173 words of font info for 76 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,12n,79p,550b,1047s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,12n,79p,550b,917s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
 pdfTeX warning (dest): name{ref-baker2009understanding} has been referenced but does not exist, replaced by a fixed one
 
-</Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmex10.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi12.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri12.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri7.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy7.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt12.pfb>
-Output written on ThesisWriteUp.pdf (24 pages, 346549 bytes).
+</Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmex10.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi6.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi8.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr6.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr9.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri7.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri9.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy6.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy8.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt9.pfb>
+Output written on ThesisWriteUp.pdf (15 pages, 329609 bytes).
 PDF statistics:
- 411 PDF objects out of 1000 (max. 8388607)
- 346 compressed objects within 4 object streams
- 111 named destinations out of 1000 (max. 500000)
- 150 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 386 PDF objects out of 1000 (max. 8388607)
+ 327 compressed objects within 4 object streams
+ 106 named destinations out of 1000 (max. 500000)
+ 161 words of extra memory for PDF output out of 10000 (max. 10000000)
 
