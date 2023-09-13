@@ -11,24 +11,14 @@ self explanotory, but incase you change the dataset be mindful of the number of 
 pacman::p_load("xts", "tidyverse", "tbl2xts", "PerformanceAnalytics", 
                "lubridate", "glue", "zoo")
 
-original_df <- readxl::read_xlsx("data/MAD .xlsx")
+df <- readxl::read_xlsx("data/MAD .xlsx")
 
 #  change the column names for ease of analysis
 
 geographical_codenames <- c("UK_HY", "EM_HY", "UK", "EM", "UK_HY_B", "UK_B", "JP_HY", "EU", "US_HY", "US", "W_HY", "W", "EU_DG", "EU_2", "JP_DG", "US_DG", "US_2", "JP", "SA_DG", "SA", "SA_HY", "EU_HY")
 
-colnames(original_df)[2:23] <- geographical_codenames
+colnames(df)[2:23] <- geographical_codenames
 
-#  lets get different regional data sets to analysze independently then later join
-
-UK_df <- original_df %>% .[, grepl("UK|Date", colnames(.)) ]
-US_df <- original_df %>% .[, grepl("US|Date", colnames(.)) ]
-EU_df <- original_df %>% .[, grepl("EU|Date", colnames(.)) ]
-EM_df <- original_df %>% .[, grepl("EM|Date", colnames(.)) ]
-JP_df <- original_df %>% .[, grepl("JP|Date", colnames(.)) ]
-SA_df <- original_df %>% .[, grepl("SA|Date", colnames(.)) ]
-
-#  Lets start the analyses
 ```
 
 # Purpose
@@ -67,49 +57,36 @@ With that caveat, lets start the analysis.
 source("code/simpleexcessreturn.R")
 source("code/EXCESSRETURN.R")
 library(glue)
+library(stats)
 
 #   calculate simple returns just simple excess returns
+a <- df %>% MY_excess_return(., "UK_HY", "UK") 
+b <- df %>% MY_excess_return(., "UK_HY_B", "UK_B")
 
-A <- UK_df %>% MY_excess_return(., "UK_HY", "UK") 
-B <- UK_df %>% MY_excess_return(., "UK_HY_B", "UK_B")
+c <- df %>% MY_excess_return(., "US_HY", "US")
+d <- df %>% MY_excess_return(., "US_DG", "US_2")
 
-# get a df 
-UK <- left_join(A, B, "date")
+e <- df %>% MY_excess_return(., "EU_HY", "EU")
+f <- df %>% MY_excess_return(., "EU_DG", "EU_2")
 
+g <- df %>% MY_excess_return(., "JP_HY", "JP")
+h <- df %>% MY_excess_return(., "JP_DG", "JP")
 
-A <- US_df %>% MY_excess_return(., "US_HY", "US")
-B <- US_df %>% MY_excess_return(., "US_DG", "US_2")
+i <- df %>% MY_excess_return(., "EM_HY", "EM")
 
-US <- left_join(A, B, "date")
-
-A <- EU_df %>% MY_excess_return(., "EU_HY", "EU")
-B <- EU_df %>% MY_excess_return(., "EU_DG", "EU_2")
-
-EU <- left_join(A, B, "date")
-
-A <- JP_df %>% MY_excess_return(., "JP_HY", "JP")
-B <- JP_df %>% MY_excess_return(., "JP_DG", "JP")
-
-JP <- left_join(A, B, "date")
-
-EM <- EM_df %>% MY_excess_return(., "EM_HY", "EM")
-
-A <- SA_df %>% MY_excess_return(., "SA_HY", "SA")
-B <- SA_df %>% MY_excess_return(., "SA_DG", "SA")
-
-SA <- left_join(A, B, "date")
+j <- df %>% MY_excess_return(., "SA_HY", "SA")
+k <- df %>% MY_excess_return(., "SA_DG", "SA")
 
 # Table to describe excess returns
 
 
-excess_return_df <- list( UK,US ,UK, JP, SA, EM) %>%
-  reduce(inner_join, by='date') %>% gather(Regions, Cumulative_Excess_Return, -date)
+excess_return_df <- list( a, b, c, d, e,f,g,h,i,j,k) %>%
+  reduce(inner_join, by='date')
 
-cumulative_excess_return_df <- list( UK,US ,UK, JP, SA, EM) %>%
-  reduce(inner_join, by='date') %>% gather(Regions, Cumulative_Excess_Return, -date) %>% 
-  mutate(Year = as.numeric(format(date , "%Y"))) %>% 
-  group_by( Regions) %>% 
-  summarise(Cumulative_Excess_Return = last(Cumulative_Excess_Return), Median = median(Cumulative_Excess_Return) ) %>% distinct()
+table_df <- excess_return_df %>% 
+  gather(Regions, Cumulative_Excess_Return, -date) %>% 
+  group_by(Regions) %>% 
+  summarise("Start Date" = first(date) , "Total Years"  = round( n()/12,0),  Median = median(Cumulative_Excess_Return),  "Cumulative Excess Return" = last(Cumulative_Excess_Return))
 
 #  we notice that growth portfolios dont add signifiant value, SA offers similar to HY and DG. Whats the reason? HY did good in most advanced market economies. Gving more than 1X in excess cumulatively, the best being UK assets high yeild. EM not so well on a cumulative basis
 ```
@@ -179,102 +156,44 @@ After stratification, chain the excess returns for the different periods before 
 # 
  hivol_per_vector_sa <- strat_df %>% filter(Strat %in% "HiVol") %>% pull(Date)
  lovol_per_vector_sa <- strat_df %>% filter(Strat %in% "LowVol") %>% pull(Date)
-# 
-# 
-# # get entire returns and apply the vector above 
-# # ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-# 
-# # get all permutatation 
-# A <- df %>% simple_excess_return(.,"FUDP", "TUKXG") 
-# B <- df %>% simple_excess_return(., "M2EFDY", "GDUEEGF") 
-# C <- df %>% simple_excess_return(., "M2EUGDY", "GDDUE15X") 
-# D <- df %>% simple_excess_return(., "M2GBDY", "GDDUUK") 
-# E <- df %>% simple_excess_return(., "M2JPDY", "TJDIVD") 
-# F1 <- df %>% simple_excess_return(., "M2USADVD", "GDDUUS") 
-# G <- df %>% simple_excess_return(., "M2WDHDVD", "GDDUWI") 
-# H <- df %>% simple_excess_return(., "SPDAEET", "SPTR350E") 
-# I <- df %>% simple_excess_return(., "SPDAUDT", "SPXT") 
-# J <- df %>% simple_excess_return(., "SPJXDAJT", "TPXDDVD") 
-# K <- df %>% simple_excess_return(., "SPSADAZT", "JALSH") 
-# L <- df %>% simple_excess_return(., "TJDIVD", "JALSH")
-# 
-# #  US excess return
-# excessreturns_us <- list( F1, I ,J) %>%
-#   reduce(inner_join, by='date') %>% gather(ticker, excess, -date)
-# 
-# # EU  excess return 
-# excessreturns_eu <- list(A, C, D, H) %>%
-#   reduce(inner_join, by='date') %>% gather(ticker, excess, -date)
-# 
-# #  SA excess returns in a single data frame
-# excessreturns_em <- list(B, K, L) %>%
-#   reduce(inner_join, by='date') %>% gather(ticker, excess, -date)
-#  
 
-# # US stat df
  
- A <- US_df %>% filter(
-   Date %in% hivol_per_vector_us) %>%  MY_excess_return(., "US_HY", "US")
- B <- US_df %>% filter(
-   Date %in% lovol_per_vector_us) %>%  MY_excess_return(., "US_HY", "US")
+ # Getting excess return for the period and indices 
+ #  High Vol df 
  
- US <- left_join(A, B, "date")  %>% filter(date >= fmxdat::safe_month_min(last(date), N = 36)) %>%
-   group_by(ticker) %>% 
-   summarise(Hivol_return = prod(1+excess, na.rm=T) ^ (12/(36)) -1 ) 
-# 
- hivol <- US %>%
-   filter(date %in% hivol_per_vector_us) %>% 
-   filter(date >= fmxdat::safe_month_min(last(date), N = 36)) %>%
-   group_by(ticker) %>% 
-   summarise(Hivol_return = prod(1+excess, na.rm=T) ^ (12/(36)) -1 ) 
-# 
- lovol <-  excessreturns_us %>%
-   filter(date %in% lovol_per_vector_us) %>% 
-   filter(date >= fmxdat::safe_month_min(last(date), N = 36)) %>%
-   group_by(ticker) %>% 
-   summarise(lovol_return = prod(1+excess, na.rm=T) ^ (12/(36)) -1 ) 
-# 
- Usvolcom <- left_join(hivol, lovol, by = "ticker")
-# 
- # EU strat df
- hivol <- excessreturns_eu %>%
-   filter(date %in% hivol_per_vector_eu) %>%
-   filter(date >= fmxdat::safe_month_min(last(date), N = 36)) %>%
-   group_by(ticker) %>%
-   summarise(Hivol_return = prod(1+excess, na.rm=T) ^ (12/(36)) -1 )
-# 
- lovol <-  excessreturns_eu %>%
-   filter(date %in% lovol_per_vector_eu) %>%
-   filter(date >= fmxdat::safe_month_min(last(date), N = 36)) %>%
-   group_by(ticker) %>%
-   summarise(lovol_return = prod(1+excess, na.rm=T) ^ (12/(36)) -1 )
-# 
- euvolcom <- left_join(hivol, lovol, by = "ticker")
-# 
-# # EM strat df
- hivol <- excessreturns_em %>%
-   filter(date %in% hivol_per_vector_sa) %>%
-   filter(date >= fmxdat::safe_month_min(last(date), N = 36)) %>%
-   group_by(ticker) %>%
-   summarise(Hivol_return = prod(1+excess, na.rm=T) ^ (12/(36)) -1 )
-# 
- lovol <-  excessreturns_em %>%
-   filter(date %in% lovol_per_vector_sa) %>%
-   filter(date >= fmxdat::safe_month_min(last(date), N = 36)) %>%
-   group_by(ticker) %>%
-  summarise(lovol_return = prod(1+excess, na.rm=T) ^ (12/(36)) -1 )
-# 
- emvolcom <- left_join(hivol, lovol, by = "ticker")
-# 
- divi_vol_df <- bind_rows(Usvolcom, euvolcom, emvolcom)
- 
-divi_vol_df  <- divi_vol_df %>%
-   mutate(Volatility_Protection = case_when(
-    Hivol_return > lovol_return ~ "higher",
-     TRUE ~ "lower"
-   ))
+source("code/Stratifier.R")
+  
+Hivol_performance <-  bind_rows(
+ stratifier(df, "EU_HY", "EU", hivol_per_vector_eu, "High Vol Period" ),
+ stratifier(df, "EU_DG", "EU_2", hivol_per_vector_eu, "High Vol Period" ),
+ stratifier(df, "UK_HY", "UK", hivol_per_vector_eu, "High Vol Period" ),
+ stratifier(df, "UK_HY_B", "UK", hivol_per_vector_eu, "High Vol Period" ),
+ stratifier(df, "JP_HY", "JP", hivol_per_vector_us, "High Vol Period" ),
+ stratifier(df, "JP_DG", "JP", hivol_per_vector_us, "High Vol Period" ),
+ stratifier(df, "EM_HY", "EM", hivol_per_vector_us, "High Vol Period" ),
+ stratifier(df, "SA_HY", "SA", hivol_per_vector_sa, "High Vol Period" ),
+ stratifier(df, "SA_DG", "SA", hivol_per_vector_sa, "High Vol Period" ),
+ stratifier(df, "US_HY", "US", hivol_per_vector_us, "High Vol Period" ), 
+ stratifier(df, "US_DG", "US", hivol_per_vector_us, "High Vol Period" )
+ )
 
+#  Low Vol df
+Lovol_performance <-  bind_rows(
+ stratifier(df, "EU_HY", "EU", lovol_per_vector_eu, "Low Vol Period" ),
+ stratifier(df, "EU_DG", "EU_2", lovol_per_vector_eu, "Low Vol Period" ),
+ stratifier(df, "UK_HY", "UK", lovol_per_vector_eu, "Low Vol Period" ),
+ stratifier(df, "UK_HY_B", "UK", lovol_per_vector_eu, "Low Vol Period" ),
+ stratifier(df, "JP_HY", "JP", lovol_per_vector_us, "Low Vol Period" ),
+ stratifier(df, "JP_DG", "JP", lovol_per_vector_us, "Low Vol Period" ),
+ stratifier(df, "EM_HY", "EM", lovol_per_vector_us, "Low Vol Period" ),
+ stratifier(df, "SA_HY", "SA", lovol_per_vector_sa, "Low Vol Period" ),
+ stratifier(df, "SA_DG", "SA", lovol_per_vector_sa, "Low Vol Period" ),
+ stratifier(df, "US_HY", "US", lovol_per_vector_us, "Low Vol Period" ), 
+ stratifier(df, "US_DG", "US", lovol_per_vector_us, "Low Vol Period" )
+ )
+ 
 ```
+
 
 # Interest rate cycles
 
@@ -291,69 +210,68 @@ Can I seggregate the hiking and cutting cycles using the one inrest rate data se
 
 
 ```{r}
-# interest <- readxl::read_xlsx("data/Interest Rates.xlsx")
-# 
-# 
-# # lets create a data frame that gives the interest rate cycles 
-# 
-#   interest <- interest %>% 
-#     gather(Bank, Rate, -Date) %>% 
-#     mutate( Month = format(Date, "%b"), YM = format(Date, "%b %y")) %>% 
-#     arrange(Date) %>% 
-#     group_by(Bank) %>% 
-#     ungroup()
-#   
-#   #  subset dates to just consider the quarterly figures
-#   
-#   quarters <- c("Mar", "Jun", "Sep", "Dec")
-#   
-#   #  With that subset of interest rates now use if else and group by date to count times when there was a hiking or cutting 
-#   rateschanges <- tidy_interest %>%
-#     group_by (YM, Bank) %>% 
-#     filter(Date == last(Date)) %>% 
-#     filter(Month %in% quarters) %>% 
-#     arrange(Date) %>% 
-#     group_by(Bank) %>% 
-#     mutate(diff = Rate - lag(Rate)) %>% 
-#     mutate(Year = format(Date, "%Y")) %>% 
-#     group_by(Year) %>% 
-#     mutate(
-#       Changes = case_when(
-#         sum(diff > 0) > 3 ~ "Hiking",
-#         sum(diff < 0) > 3 ~ "Cutting",
-#         TRUE ~ "Hold"
-#       )
-#     ) %>% 
-#     ungroup() 
-# rateschanges
-#   
-#   
-# ```
-# 
-# # rolling returns 
-# 
-# these will measure returns for rolling periods similar to those held by a typical institutional investor.
-# ```{r echo=TRUE, message=FALSE, warning=FALSE}
-# # rolling returns 
-# 
-# plotdf <- combined_simple %>% 
-#   group_by(ticker) %>% 
-#   mutate(RollRets = RcppRoll::roll_prod(1 + excess, 36, fill = NA, 
-#     align = "right")^(12/36) - 1) %>% 
-#   group_by(date) %>% filter(any(!is.na(RollRets))) %>% 
-#   ungroup()
-# 
-# g <- ggplot(plotdf, aes(date, RollRets, color = ticker)) +
-#   geom_line(alpha = 0.5, size = 1) +
-#   labs(
-#     title = "Rolling 3 Year Annualized Returns",
-#     subtitle = "",
-#     x = "",
-#     y = "Rolling 3 year Returns (Ann.)",
-#     caption = "Source: Bloomberg"
-#   )
-# g
+#   get the vol data and get some dates
 
+rate_data <- readxl::read_xlsx("data/Interest Rates.xlsx") 
+
+US <- rate_data %>% select(Date, US) %>% arrange(Date)
+
+# Get Rates for the US
+source("code/Interest_Regime.R")
+ 
+Regime_change_df(US, 3)
+#  filter to get the vectors
+Hiking_date_vector <- Regime_df %>% filter(regime %in% "Hiking") %>% pull(Date)
+Cutting_date_vector <- Regime_df %>% filter(regime %in% "Cutting") %>% pull(Date)
+Neutral_date_vector <- Regime_df %>% filter(regime %in% "Neutral") %>% pull(Date) 
+
+# Hiking Performance
+
+Hiking_performance <-  bind_rows(
+ stratifier(df, "EU_HY", "EU", Hiking_date_vector, "Hiking" ),
+ stratifier(df, "EU_DG", "EU_2", Hiking_date_vector, "Hiking" ),
+ stratifier(df, "UK_HY", "UK", Hiking_date_vector, "Hiking" ),
+ stratifier(df, "UK_HY_B", "UK", Hiking_date_vector, "Hiking" ),
+ stratifier(df, "JP_HY", "JP", Hiking_date_vector, "Hiking" ),
+ stratifier(df, "JP_DG", "JP", Hiking_date_vector, "Hiking" ),
+ stratifier(df, "EM_HY", "EM", Hiking_date_vector, "Hiking"),
+ stratifier(df, "SA_HY", "SA", Hiking_date_vector, "Hiking" ),
+ stratifier(df, "SA_DG", "SA", Hiking_date_vector, "Hiking" ),
+ stratifier(df, "US_HY", "US", Hiking_date_vector, "Hiking" ), 
+ stratifier(df, "US_DG", "US", Hiking_date_vector, "Hiking" )
+ )
+
+#  Cutting Perfromance
+
+Cutting_performance <-  bind_rows(
+ stratifier(df, "EU_HY", "EU", Cutting_date_vector, "Cut" ),
+ stratifier(df, "EU_DG", "EU_2", Cutting_date_vector, "Cut" ),
+ stratifier(df, "UK_HY", "UK", Cutting_date_vector, "Cut" ),
+ stratifier(df, "UK_HY_B", "UK", Cutting_date_vector, "Cut" ),
+ stratifier(df, "JP_HY", "JP", Cutting_date_vector, "Cut" ),
+ stratifier(df, "JP_DG", "JP", Cutting_date_vector, "Cut" ),
+ stratifier(df, "EM_HY", "EM", Cutting_date_vector, "Cut"),
+ stratifier(df, "SA_HY", "SA", Cutting_date_vector, "Cut" ),
+ stratifier(df, "SA_DG", "SA", Cutting_date_vector, "Cut" ),
+ stratifier(df, "US_HY", "US", Cutting_date_vector, "Cut" ), 
+ stratifier(df, "US_DG", "US", Cutting_date_vector, "Cut" )
+ )
+
+# Nuetral 
+
+Nuetral_perfromance <-  bind_rows(
+ stratifier(df, "EU_HY", "EU", Neutral_date_vector, "Neutral" ),
+ stratifier(df, "EU_DG", "EU_2", Neutral_date_vector, "Neutral" ),
+ stratifier(df, "UK_HY", "UK", Neutral_date_vector, "Neutral" ),
+ stratifier(df, "UK_HY_B", "UK", Neutral_date_vector, "Neutral" ),
+ stratifier(df, "JP_HY", "JP", Neutral_date_vector, "Neutral" ),
+ stratifier(df, "JP_DG", "JP", Neutral_date_vector, "Neutral" ),
+ stratifier(df, "EM_HY", "EM", Neutral_date_vector, "Neutral"),
+ stratifier(df, "SA_HY", "SA", Neutral_date_vector, "Neutral" ),
+ stratifier(df, "SA_DG", "SA", Neutral_date_vector, "Neutral" ),
+ stratifier(df, "US_HY", "US", Neutral_date_vector, "Neutral" ), 
+ stratifier(df, "US_DG", "US", Neutral_date_vector, "Neutral" )
+ )
 ```
 
 
