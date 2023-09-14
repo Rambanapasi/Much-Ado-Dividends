@@ -275,7 +275,50 @@ Nuetral_perfromance <-  bind_rows(
 ```
 
 
-# rolling standard deviatio
+# rolling consistency in returns
+
+on a rolling basis i want to find out how much bang for buck is offered by dividend portfolios 
+, and more importantly discover how consistent the returns for a given strategy are
+
+to do this we will first 
+
+- calculate the returns for both benchmark and index and get the tracking error of the each index to its benchmark.
+- combine into one table
+- then smiply on a rolling basis depict the movement of each pair. 
+- we then graph that. 
+
+
+```{r}
+#  source 
+
+source("code/InformationRatioRoll.R")
+
+a <-  df %>% Information_Ratio_Roll(., "EU_HY", "EU", 20100104, 36)
+b <-  df %>% Information_Ratio_Roll(., "EU_DG", "EU_2",20100104, 36)
+ c <- df %>% Information_Ratio_Roll(., "UK_HY", "UK", 20100104, 36)
+ d <- df %>% Information_Ratio_Roll(., "UK_HY_B", "UK", 20100104, 36)
+ e <- df %>% Information_Ratio_Roll(., "JP_HY", "JP", 20100104, 36)
+ f <- df %>% Information_Ratio_Roll(., "JP_DG", "JP", 20100104, 36)
+ g <- df %>% Information_Ratio_Roll(., "EM_HY", "EM", 20100104, 36)
+ h <- df %>% Information_Ratio_Roll(., "SA_HY", "SA", 20100104, 36)
+ i <- df %>% Information_Ratio_Roll(., "SA_DG", "SA", 20100104, 36)
+ j <- df %>% Information_Ratio_Roll(., "US_HY", "US", 20100104, 36)
+ k <- df %>% Information_Ratio_Roll(., "US_DG", "US_2", 20100104, 36)
+
+consistency_df <- list(a, b, c, d, e,f,g,h,i,j,k) %>%
+  reduce(inner_join, by='date') %>% 
+  gather(IR , ret, -date) 
+ 
+plot <- consistency_df %>%   ggplot() + 
+geom_line(aes(date, ret), color = "steelblue", size = 1.1, alpha = 0.8) + 
+fmxdat::theme_fmx() + 
+facet_wrap(~IR) + 
+labs(x = "", y = "return", title = "Performance Consistency", subtitle = "Dividend Portfolios not as good as we thought", caption = "Source:Bloomberg and\n Authors Calculations")
+
+plot
+
+```
+the results here generally show inconsistent performance of dividend strategies. the information ratio measures performance consistency of a portfolio over its benchmark, a ratio of more than 0 is desirable. most strategies typically in insustry struggle to consisitency deliver risk adjusted return of anything beyond 0.5. The figure above however shows that on a rolling 36 month basis, dividend portfolios be it growth or high yield perform worse that their benchmarks. we assess the performance on a 24, 36 month basis and find similar results. Standing out are EM HY and 
 
 # source of volatility
 
