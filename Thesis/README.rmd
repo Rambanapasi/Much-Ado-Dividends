@@ -11,11 +11,11 @@ self explanotory, but incase you change the dataset be mindful of the number of 
 pacman::p_load("xts", "tidyverse", "tbl2xts", "PerformanceAnalytics", 
                "lubridate", "glue", "zoo")
 
-df <- readxl::read_xlsx("data/MAD .xlsx")
+df<- readxl::read_xlsx("data/MAD .xlsx")
 
 #  change the column names for ease of analysis
 
-geographical_codenames <- c("UK_HY", "EM_HY", "UK", "EM", "UK_HY_B", "UK_B", "JP_HY", "EU", "US_HY", "US", "W_HY", "W", "EU_DG", "EU_2", "JP_DG", "US_DG", "US_2", "JP", "SA_DG", "SA", "SA_HY", "EU_HY")
+geographical_codenames <- c("UK_HY", "EM_HY", "UK", "EM", "UK_HY_B", "UK_B", "JP_HY", "EU", "US_HY", "US", "W_HY", "W", "EU_DG", "EU_2", "JP_DG", "US_DG", "US_2", "JP", "SA_DG", "SA", "SA_HY", "EU_HY", "W_HY", "W")
 
 colnames(df)[2:23] <- geographical_codenames
 
@@ -23,13 +23,13 @@ colnames(df)[2:23] <- geographical_codenames
 
 # Purpose
 
-We want to investigate the performance of dividend paying portfolios across different regions. We look at index construction,  dynamic performance measures and risk analysis of these portfolios. in essence, why do these portfolios work or not and when they seem to add value to a portfolio. We also high the distinction in growth versus HY performance. 
+We want to investigate the performance of dividend paying portfolios across different regions. We will look at index construction,  dynamic performance measures and risk analysis of these portfolios. in essence, why do these portfolios work or not and when they seem to add value to a portfolio. We also high the distinction in growth versus HY performance. 
 
-Diversification, Return and Risk (Sd and MaxDrawdowns) and a combination of the two. 
+So, Return, Risk and a combination of the two (IR) will guide the analysis. 
 
 # Objective
 
-Provide an analysis into dividend portfolios. Literature has shown that they provide greater excess return over time versus the s&p because the dividend component over and above the capital gains. We expand this to other indices, FTSE, MSCI. 
+Literature has shown that they provide greater excess return over time versus the s&p because the dividend component over and above the capital gains. We expand this to other indices, FTSE, MSCI and try to pick up 
 
 - So its risk and return that we need to evaluate, so do they provide that excess return over time that is significantly better than its parent index. 
 
@@ -77,10 +77,13 @@ i <- df %>% MY_excess_return(., "EM_HY", "EM")
 j <- df %>% MY_excess_return(., "SA_HY", "SA")
 k <- df %>% MY_excess_return(., "SA_DG", "SA")
 
+l <- df %>% MY_excess_return(., "W_HY", "W")
+
+
 # Table to describe excess returns
 
 
-excess_return_df <- list( a, b, c, d, e,f,g,h,i,j,k) %>%
+excess_return_df <- list( a, b, c, d, e,f,g,h,i,j,k, l) %>%
   reduce(inner_join, by='date')
 
 table_df <- excess_return_df %>% 
@@ -156,6 +159,7 @@ After stratification, chain the excess returns for the different periods before 
 # 
  hivol_per_vector_sa <- strat_df %>% filter(Strat %in% "HiVol") %>% pull(Date)
  lovol_per_vector_sa <- strat_df %>% filter(Strat %in% "LowVol") %>% pull(Date)
+ novol_per_vector_sa <- strat_df %>% filter(Strat %in% "Normal_Vol") %>% pull(Date)
 
  
  # Getting excess return for the period and indices 
@@ -165,6 +169,8 @@ source("code/Stratifier.R")
   
 Hivol_performance <-  bind_rows(
  stratifier(df, "EU_HY", "EU", hivol_per_vector_eu, "High Vol Period" ),
+  stratifier(df, "EU_HY", "EU", lovol_per_vector_eu, "Low Vol Period" ),
+  stratifier(df, "EU_HY", "EU", lovol_per_vector_eu, "Low Vol Period" ),
  stratifier(df, "EU_DG", "EU_2", hivol_per_vector_eu, "High Vol Period" ),
  stratifier(df, "UK_HY", "UK", hivol_per_vector_eu, "High Vol Period" ),
  stratifier(df, "UK_HY_B", "UK", hivol_per_vector_eu, "High Vol Period" ),
@@ -193,16 +199,17 @@ Lovol_performance <-  bind_rows(
  )
  
 ```
-
-
 # Interest rate cycles
 
 Given a series of central bank interest rates. I want to get dates of n consecutive interest rate changes. 
 
--  I will create a column that conditions if there was a rate change or nt.
--  if there has been a change for more than 4 quarters take the date. 
+To do this I will
 
-Can I seggregate the hiking and cutting cycles using the one inrest rate data series from the US. 
+-  create a column that conditions if there was a rate change or nt.
+-  apply a rolling function that counts a desired number of consistent hikes or cuts or neutral/hold period.
+- similar to the vol, aggregate performance in those dates. 
+
+Can I seggregate the hiking and cutting cycles using the one interest rate data series from the US. 
 
 ## notes 
 
@@ -212,69 +219,98 @@ Can I seggregate the hiking and cutting cycles using the one inrest rate data se
 ```{r}
 #   get the vol data and get some dates
 
-rate_data <- readxl::read_xlsx("data/Interest Rates.xlsx") 
+rate_data <- readxl::read_xlsx("data/Policy Rates.xlsx") 
 
-US <- rate_data %>% select(Date, US) %>% arrange(Date)
+names <- c("Date", "US", "UK", "JP", "ECB", "SA")
 
+colnames(rate_data) <- names
+
+US_rates <- rate_data %>% select(Date, US)
+UK_rates <- rate_data %>% select(Date, UK)
+JP_rates <- rate_data %>% select(Date, JP)
+SA_rates <- rate_data %>% select(Date, SA)
+ECB_rates <- rate_data %>% select(Date, ECB)
 # Get Rates for the US
 source("code/Interest_Regime.R")
- 
-Regime_change_df(US, 3)
-#  filter to get the vectors
-Hiking_date_vector <- Regime_df %>% filter(regime %in% "Hiking") %>% pull(Date)
-Cutting_date_vector <- Regime_df %>% filter(regime %in% "Cutting") %>% pull(Date)
-Neutral_date_vector <- Regime_df %>% filter(regime %in% "Neutral") %>% pull(Date) 
+source("code/Stratifier.R")
 
+#  rename the columns for the function to work
+
+Regime_df <- Regime_change_df(US_rates, "US", 3)
+Hiking_date_vector_us <- Regime_df %>% filter(regime %in% "Hiking") %>% pull(Date)
+Cutting_date_vector_us <- Regime_df %>% filter(regime %in% "Cutting") %>% pull(Date)
+Neutral_date_vector_us <- Regime_df %>% filter(regime %in% "Neutral") %>% pull(Date) 
+
+Regime_df <- Regime_change_df(UK_rates, "UK", 3)
+Hiking_date_vector_uk <- Regime_df %>% filter(regime %in% "Hiking") %>% pull(Date)
+Cutting_date_vector_uk <- Regime_df %>% filter(regime %in% "Cutting") %>% pull(Date)
+Neutral_date_vector_uk <- Regime_df %>% filter(regime %in% "Neutral") %>% pull(Date) 
+
+Regime_df <- Regime_change_df(JP_rates, "JP", 3)
+Hiking_date_vector_jp <- Regime_df %>% filter(regime %in% "Hiking") %>% pull(Date)
+Cutting_date_vector_jp <- Regime_df %>% filter(regime %in% "Cutting") %>% pull(Date)
+Neutral_date_vector_jp <- Regime_df %>% filter(regime %in% "Neutral") %>% pull(Date) 
+
+Regime_df <- Regime_change_df(SA_rates, "SA", 3)
+Hiking_date_vector_sa <- Regime_df %>% filter(regime %in% "Hiking") %>% pull(Date)
+Cutting_date_vector_sa <- Regime_df %>% filter(regime %in% "Cutting") %>% pull(Date)
+Neutral_date_vector_sa <- Regime_df %>% filter(regime %in% "Neutral") %>% pull(Date) 
+
+Regime_df <- Regime_change_df(ECB_rates, "ECB", 3)
+Hiking_date_vector_eu <- Regime_df %>% filter(regime %in% "Hiking") %>% pull(Date)
+Cutting_date_vector_eu <- Regime_df %>% filter(regime %in% "Cutting") %>% pull(Date)
+Neutral_date_vector_eu <- Regime_df %>% filter(regime %in% "Neutral") %>% pull(Date) 
 # Hiking Performance
 
 Hiking_performance <-  bind_rows(
- stratifier(df, "EU_HY", "EU", Hiking_date_vector, "Hiking" ),
- stratifier(df, "EU_DG", "EU_2", Hiking_date_vector, "Hiking" ),
- stratifier(df, "UK_HY", "UK", Hiking_date_vector, "Hiking" ),
- stratifier(df, "UK_HY_B", "UK", Hiking_date_vector, "Hiking" ),
- stratifier(df, "JP_HY", "JP", Hiking_date_vector, "Hiking" ),
- stratifier(df, "JP_DG", "JP", Hiking_date_vector, "Hiking" ),
- stratifier(df, "EM_HY", "EM", Hiking_date_vector, "Hiking"),
- stratifier(df, "SA_HY", "SA", Hiking_date_vector, "Hiking" ),
- stratifier(df, "SA_DG", "SA", Hiking_date_vector, "Hiking" ),
- stratifier(df, "US_HY", "US", Hiking_date_vector, "Hiking" ), 
- stratifier(df, "US_DG", "US", Hiking_date_vector, "Hiking" )
+ stratifier(df, "EU_HY", "EU", Hiking_date_vector_eu, "Hiking" ),
+ stratifier(df, "EU_DG", "EU_2", Hiking_date_vector_eu, "Hiking" ),
+ stratifier(df, "UK_HY", "UK", Hiking_date_vector_uk, "Hiking" ),
+ stratifier(df, "UK_HY_B", "UK", Hiking_date_vector_uk, "Hiking" ),
+ stratifier(df, "EM_HY", "EM", Hiking_date_vector_us, "Hiking"),
+ stratifier(df, "SA_HY", "SA", Hiking_date_vector_sa, "Hiking" ),
+ stratifier(df, "SA_DG", "SA", Hiking_date_vector_sa, "Hiking" ),
+ stratifier(df, "US_HY", "US", Hiking_date_vector_us, "Hiking" ), 
+ stratifier(df, "US_DG", "US", Hiking_date_vector_us, "Hiking" )
  )
 
 #  Cutting Perfromance
 
 Cutting_performance <-  bind_rows(
- stratifier(df, "EU_HY", "EU", Cutting_date_vector, "Cut" ),
- stratifier(df, "EU_DG", "EU_2", Cutting_date_vector, "Cut" ),
- stratifier(df, "UK_HY", "UK", Cutting_date_vector, "Cut" ),
- stratifier(df, "UK_HY_B", "UK", Cutting_date_vector, "Cut" ),
- stratifier(df, "JP_HY", "JP", Cutting_date_vector, "Cut" ),
- stratifier(df, "JP_DG", "JP", Cutting_date_vector, "Cut" ),
- stratifier(df, "EM_HY", "EM", Cutting_date_vector, "Cut"),
- stratifier(df, "SA_HY", "SA", Cutting_date_vector, "Cut" ),
- stratifier(df, "SA_DG", "SA", Cutting_date_vector, "Cut" ),
- stratifier(df, "US_HY", "US", Cutting_date_vector, "Cut" ), 
- stratifier(df, "US_DG", "US", Cutting_date_vector, "Cut" )
+ stratifier(df, "EU_HY", "EU", Cutting_date_vector_eu, "Cut" ),
+ stratifier(df, "EU_DG", "EU_2", Cutting_date_vector_eu, "Cut" ),
+ stratifier(df, "UK_HY", "UK", Cutting_date_vector_uk, "Cut" ),
+ stratifier(df, "UK_HY_B", "UK", Cutting_date_vector_uk, "Cut" ),
+ stratifier(df, "EM_HY", "EM", Cutting_date_vector_us, "Cut"),
+ stratifier(df, "SA_HY", "SA", Cutting_date_vector_sa, "Cut" ),
+ stratifier(df, "SA_DG", "SA", Cutting_date_vector_sa, "Cut" ),
+ stratifier(df, "US_HY", "US", Cutting_date_vector_us, "Cut" ), 
+ stratifier(df, "US_DG", "US", Cutting_date_vector_us, "Cut" )
  )
 
 # Nuetral 
 
 Nuetral_perfromance <-  bind_rows(
- stratifier(df, "EU_HY", "EU", Neutral_date_vector, "Neutral" ),
- stratifier(df, "EU_DG", "EU_2", Neutral_date_vector, "Neutral" ),
- stratifier(df, "UK_HY", "UK", Neutral_date_vector, "Neutral" ),
- stratifier(df, "UK_HY_B", "UK", Neutral_date_vector, "Neutral" ),
- stratifier(df, "JP_HY", "JP", Neutral_date_vector, "Neutral" ),
- stratifier(df, "JP_DG", "JP", Neutral_date_vector, "Neutral" ),
- stratifier(df, "EM_HY", "EM", Neutral_date_vector, "Neutral"),
- stratifier(df, "SA_HY", "SA", Neutral_date_vector, "Neutral" ),
- stratifier(df, "SA_DG", "SA", Neutral_date_vector, "Neutral" ),
- stratifier(df, "US_HY", "US", Neutral_date_vector, "Neutral" ), 
- stratifier(df, "US_DG", "US", Neutral_date_vector, "Neutral" )
+ stratifier(df, "EU_HY", "EU", Neutral_date_vector_eu, "Neutral" ),
+ stratifier(df, "EU_DG", "EU_2", Neutral_date_vector_eu, "Neutral" ),
+ stratifier(df, "UK_HY", "UK", Neutral_date_vector_uk, "Neutral" ),
+ stratifier(df, "UK_HY_B", "UK", Neutral_date_vector_uk, "Neutral" ),
+ stratifier(df, "JP_HY", "JP", Neutral_date_vector_jp, "Neutral" ),
+ stratifier(df, "JP_DG", "JP", Neutral_date_vector_jp, "Neutral" ),
+ stratifier(df, "EM_HY", "EM", Neutral_date_vector_us, "Neutral"),
+ stratifier(df, "SA_HY", "SA", Neutral_date_vector_sa, "Neutral" ),
+ stratifier(df, "SA_DG", "SA", Neutral_date_vector_sa, "Neutral" ),
+ stratifier(df, "US_HY", "US", Neutral_date_vector_us, "Neutral" ), 
+ stratifier(df, "US_DG", "US", Neutral_date_vector_us, "Neutral" )
  )
+
+CB_df <- bind_rows(Nuetral_perfromance, 
+ Cutting_performance, Hiking_performance) %>% arrange(Index)
+
+CB_df
+
+#  need to aggregate that into a single number 
 ```
-
-
 # rolling consistency in returns
 
 on a rolling basis i want to find out how much bang for buck is offered by dividend portfolios 
@@ -313,45 +349,52 @@ plot <- consistency_df %>%   ggplot() +
 geom_line(aes(date, ret), color = "steelblue", size = 1.1, alpha = 0.8) + 
 fmxdat::theme_fmx() + 
 facet_wrap(~IR) + 
-labs(x = "", y = "return", title = "Performance Consistency", subtitle = "Dividend Portfolios not as good as we thought", caption = "Source:Bloomberg and\n Authors Calculations")
+labs(x = "", y = "Return (%)", title = "Performance Consistency", subtitle = "Dividend Portfolios not as good as we thought", caption = "Source:Bloomberg and\n Authors Calculations")
 
 plot
 
 ```
-the results here generally show inconsistent performance of dividend strategies. the information ratio measures performance consistency of a portfolio over its benchmark, a ratio of more than 0 is desirable. most strategies typically in insustry struggle to consisitency deliver risk adjusted return of anything beyond 0.5. The figure above however shows that on a rolling 36 month basis, dividend portfolios be it growth or high yield perform worse that their benchmarks. we assess the performance on a 24, 36 month basis and find similar results. Standing out are EM HY and 
+the results here generally show inconsistent performance of dividend strategies. the information ratio measures performance consistency of a portfolio over its benchmark, a ratio of more than 0 is desirable. most strategies typically in industry average information ratios of 0.47 thus deliver risk adjusted return of anything beyond 0.5. The figure above however shows that on a rolling 36 month basis, dividend portfolios be it growth or high yield perform worse that their benchmarks. we assess the performance on a 24, 36 month basis and find similar results. When compared with each other, dividend portfolios have varying correlations, most notable is the relationship between the EM HY IR and UK HY IR. Visually, when we consider the rolling 36 month IR at the lastest date, we notice that EM high yield portfolios provid the most consistent returns, having an information ratio of above 0 SA HY portfolio provides similar consistency. 
 
-# source of volatility
+# Trailing Performance and Drawdowns
 
-# Observations
+A trailing return measures returns between two dates. They are also known as point-to-point returns since you are looking at performance between a starting date and an end date. It shows a snapshot of the mutual fund at a specific point in time. This metric can be used to measure returns year-to-date, one year, three years and so on. Trailing returns can also be calculated from the current date from the fund's inception date. This will be important to evaluate the how different inception dates affects fund performance.
 
-- we have dividend portfolios of HY and DGPS in US, UK, JAPAN, EM and SA. 
+Downwards give a more detailed picture of the risk attributes of the constituents of a data series. Their importance for our study is to uncover latent relationship between performance and drawdown.
 
-## Cumulative returns
-- FUDP-UK (HY) had the most impressive
+```{r}
 
-These next two show marginal improvements over market indices
-- M2EUGDY-EU (HY) 
-- M2GBDY-UK (HY)
-
-Overall a positive excess return does show some gain to harvesting such portfolios. 
-
-## Stratification analysis 
-
-If we just consider the level of volatility in global financial markets. we can see a clear trend. 
-
-- most portfolios give lower returns when in high vol versus low vol 
-- except for SPSADAZT-SA (DGPS), TJDIVD-SA(HY), SPDAEET-EU(DGPS) and M2EFDY (HY)-EM.
+# lets get cumulative returns for our dividend strategies and Max drawdowns
 
 
-## Rolling returns 
+cum_df <- excess_return_df %>%
+  rename_all(~paste0("Excess from ", .)) %>% rename( "date" = "Excess from date") %>% 
+  gather(Funds, ret, -date) %>% mutate(Year = format(date, "%Y")) %>% group_by(Year, Funds) %>% summarize(DD = (max(ret) - min(ret))/max(ret)* 100, Range = range(ret)) %>% arrange(desc(Range)) 
 
-Overall, massive divergence followed by a convergence in rolling excess returns. There is some divergence towards the end of the sample period. 
+ order <- cum_df %>% pull(Funds) %>% unique()
 
-- FUDP-UK (HY), SPSADAZT-SA (DGPS), TJDIVD-SA (HY) visually have massive variance in their rolling excess returns. 
+cum_df$Year <- as.Date(paste0(cum_df$Year, "-01-01"))
 
-- Others don't have erratic movements in rolling returns. 
+source("code/order.R")
 
-# Analysis
+cum_df %>% 
+  plot_order(., Column = "Funds", Order = order) %>% 
+  ggplot() +
+  geom_line(aes(Year, DD), color = "steelblue", size = 1.1, alpha = 0.8) + 
+fmxdat::theme_fmx() + 
+facet_wrap(~Funds) + 
+labs(x = "", y = " Max Drawdowns (%)", title = "Yearly Drawdowns", subtitle = "", caption = "Source:Bloomberg and\n Authors Calculations")
+
+plot
+
+?range
+
+# lets pick those that have had a significant amount of drawdowns over time
+```
+Draw downs in this study are defined as the difference between low and high values of cumulative excess returns within a time period. From our dividend portfolios we notice that drawdowns are similar in regions and across strategies. Both portfolios in SA show significant drawdowns by values followed by  UK HY strategies and with the EU and US strategies having the least amount of drawdowns. However, considering the dispersion of the drawdowns, we note that the UK High Yield and Japan High Yield strategies are suspectible to large changes, with emerging markets and south africa show the least variation.    
+
+
+# Final Thoughts
 
 Dividend portfolios either HY or DGPS have overtime give some level of positive return, as measured by the cumulative return. 
 However, HY indexes give above average excess return for the sample period. Overtime however, most portfolios have choppy excess cumulative returns. There is no super convincing signal that these portfolios give some consistent excess return. 
@@ -368,23 +411,10 @@ To do
 Working on the data section, where i describe the portfolios and their return signalling, 
 
 Looked at cumulative excess return. no clear signal but for two HY portfolios. 
-stratification, all portfolios perform as expected 
+tratification, all portfolios perform as expected 
 
-# Questions and some thoughts 
+#     
 
 
-- mention why it would be better to hold the market portfolios in some instances. there were significant drawdown in certian periods=. this is why the drawdown table would make a lot of sense.
-
-- when it signals negative and positive. 
-
-- there is upside to the high divi-strategies despite thier stringent rules of security inclusion, growth portfolios have significant drawdowns, want to  and dividend growth. is there mean reversion. do they face significant draw-downs, speed of recovery from drawdowns, that may influence changes.  
-
-- inefficeintly high. bsuiness will be high, dont investment in companies with high capex. its gives a signal to the markets tgat management knows its companies are undervalued and that there know something the market doesnt know. 
-
-- it makes sense if comapnies are good actors. 
-
-- expand on the apparent weakness and strengths of divi stratgies. 
-
-- can improve certain financial sratios and those are boosted and do those companies
 
 
