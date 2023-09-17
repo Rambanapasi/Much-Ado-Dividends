@@ -243,12 +243,10 @@ returns from advanced economy portfolios.
 
 
 \hypertarget{introduction}{%
-\section*{Introduction}\label{introduction}}
-\addcontentsline{toc}{section}{Introduction}
+\section{Introduction}\label{introduction}}
 
 \hypertarget{problem-statement}{%
-\section*{Problem Statement}\label{problem-statement}}
-\addcontentsline{toc}{section}{Problem Statement}
+\section{Problem Statement}\label{problem-statement}}
 
 Dividend yield is a poor proxy for stock returns, as it doesn't
 distinguish itself from price effects of a stock. Unfortunately,
@@ -257,8 +255,7 @@ recognize this flaw thus leading to sub optimal allocation within
 portfolio.
 
 \hypertarget{research-aim}{%
-\section*{Research Aim}\label{research-aim}}
-\addcontentsline{toc}{section}{Research Aim}
+\section{Research Aim}\label{research-aim}}
 
 We propose to enhance the dividend signalling by considering price
 changes and dividend payment sustainability offered by stock. Our
@@ -269,12 +266,10 @@ back testing samples and highlight periods in which strategies offer
 diversification benefits to portfolio construction.
 
 \hypertarget{literature-review}{%
-\section*{Literature Review}\label{literature-review}}
-\addcontentsline{toc}{section}{Literature Review}
+\section{Literature Review}\label{literature-review}}
 
 \hypertarget{what-are-dividends}{%
-\subsection*{What are dividends}\label{what-are-dividends}}
-\addcontentsline{toc}{subsection}{What are dividends}
+\subsection{What are dividends}\label{what-are-dividends}}
 
 Dividends constitute a form of capital distribution by corporations
 towards shareholders. They exist in various forms, such as cash, stock,
@@ -370,8 +365,7 @@ Supporters of this theory ascertain that dividends payments by the
 mechanism encourage good business practices.
 
 \hypertarget{empirical-review}{%
-\subsection*{Empirical review}\label{empirical-review}}
-\addcontentsline{toc}{subsection}{Empirical review}
+\subsection{Empirical review}\label{empirical-review}}
 
 The various methods of capital distributions have varying impact on
 financial statements which is summarized in Table of the appendix. From
@@ -456,12 +450,10 @@ for the DOD strategy.
 \newpage
 
 \hypertarget{methodology}{%
-\section*{Methodology}\label{methodology}}
-\addcontentsline{toc}{section}{Methodology}
+\section{Methodology}\label{methodology}}
 
 \hypertarget{introduction-1}{%
-\subsection*{Introduction}\label{introduction-1}}
-\addcontentsline{toc}{subsection}{Introduction}
+\subsection{Introduction}\label{introduction-1}}
 
 We employ dividend signals to rank our assets within our selected
 universe to construct portfolios that offer higher risk adjusted return
@@ -488,9 +480,8 @@ optimization process. The following sections analytically describes the
 optimization problem and risk models used in the study.
 
 \hypertarget{security-selection-methodology}{%
-\section*{Security Selection
+\section{Security Selection
 Methodology}\label{security-selection-methodology}}
-\addcontentsline{toc}{section}{Security Selection Methodology}
 
 A widely used approach to evaluate dividend signals is to construct
 subset portfolios and compare in sample performance. This methodology
@@ -603,8 +594,7 @@ We then consider turnover and tracking error, before briefly showing the
 sector exposure of some of the different strategies.
 
 \hypertarget{portfolio-optimization}{%
-\section*{Portfolio Optimization}\label{portfolio-optimization}}
-\addcontentsline{toc}{section}{Portfolio Optimization}
+\section{Portfolio Optimization}\label{portfolio-optimization}}
 
 Portfolio optimization consists of determining a set of assets, and
 their respective portfolio participation weights, which satisfy the
@@ -619,10 +609,10 @@ variables and to adopt the value of expected return and variance in
 order to quantify the return and investment risk, respectively
 (\protect\hyperlink{ref-zhang2018portfolio}{Zhang, Li \& Guo, 2018}).
 \begin{align}
- \mu \quad = \quad w^TR \\ 
-\sigma^2 \quad  = \quad w^T\sum 
+\mu \quad = \quad w^TR \\ \notag
+\sigma^2 \quad  = \quad w^T\sum \notag
 w\end{align} The resulting objective function is to maximize return
-given a certain level of risk and constraint; \begin{align}
+given a certain level of risk and constraint: \begin{align}
 Maximise \ w^TR \sum w<=\sigma^2\ and\ \sum_{i = 1}^{N}w{_i}=1 \notag
 \end{align}
 
@@ -650,7 +640,7 @@ each common factor within the model. This approach requires periodic
 return calculation to these exposures. The upshot is that the
 methodology provides an forecast of each assets specific risk.
 
-The covariance matrix is defined as
+The covariance matrix is defined as:
 
 \begin{align}
  XFX^T + D \label{eq1} \notag
@@ -675,7 +665,7 @@ given primary consideration in the optimization problem.
 \end{align}
 
 where, = \begin{align}
-\lambda_f \quad \quad  = \quad common \ factor\ risk\ aversion\ parameter,\\ \lambda_d \quad \quad = \quad specific\ \notag risk\ aversion\ parameter,\\\ h \quad \quad = \quad n×1 \ vector\ of\ managed\ portfolio’s\ holdings,\\ and \quad \notag \quad \quad \quad \quad \quad \quad \quad \quad \quad\\h_B \quad \quad =\quad vector \ normal\ (benchmark)\ portfolio’s\ holdings \notag 
+\lambda_f \quad = \quad common \ factor\ risk\ aversion\ parameter,\\ \lambda_d \quad  = \quad specific\ \notag risk\ aversion\ parameter,\\\ h \quad = \quad n×1 \ vector\ of\ managed\ portfolio’s\ holdings,\\ and \quad \notag\\h_B \quad =\quad vector \ normal\ (benchmark)\ portfolio’s\ holdings \notag 
 \end{align}
 
 The introduction of risk aversion parameters into Barra's portfolio
@@ -723,10 +713,8 @@ Minimum-variance similar to ERC do not require return forecasts, there
 can be in some cases they may be more efficient than strategies that
 trade off expected risk and return.
 
-\hypertarget{noteworthy-tax-considerations}{%
-\section*{Noteworthy tax
-considerations}\label{noteworthy-tax-considerations}}
-\addcontentsline{toc}{section}{Noteworthy tax considerations}
+\hypertarget{tax-considerations}{%
+\section{Tax considerations}\label{tax-considerations}}
 
 Portfolio theory was developed in a perfect world without friction. In
 practice, frictions need to be considered and in portfolio construction
@@ -769,73 +757,65 @@ t\_\{cg\}= the capital gains tax rate
 \newpage
 
 \hypertarget{data-source-and-stratification}{%
-\section*{Data Source and
+\section{Data Source and
 Stratification}\label{data-source-and-stratification}}
-\addcontentsline{toc}{section}{Data Source and Stratification}
 
-The data set for this research is sourced from Bloomberg with the sample
-period from January 31, 2003, to January 31, 2023. We collected daily
-price and level data for various indices, benchmarks, and their
-constituent stocks traded on the Johannesburg Stock Exchange. To capture
-the dynamic nature of financial markets, we segmented the data using
-proxies that reflect market cycles and volatility levels. Acknowledging
-the global influence of the United States on financial markets, we
-utilized the Chicago Board of Options Exchange (CBOE) VIX Index and data
-from the Federal Reserve Bank of the United States. These metrics served
-as our stratifying variables, allowing us to categorize our sample
-across different market and interest rate cycles. This stratification
-aims to provide a nuanced understanding of how dividend-paying stocks on
-the JSE respond to shifts in volatility and monetary policy.After
-stratification, we geometrically chain the excess returns for the
-different periods before annualizing. This produces comparable
-cumulative annualized excess return (CAER) results, defined as:
-\begin{align}
+The data used for this research is sourced from Bloomberg with the
+sample period from 04/01/01--06/30/23. We collected daily price levels
+for various indices and benchmarks, share prices for stock listed on the
+Johanesburg Stock Exchange (JSE) to construct our own portfolios. To
+capture the dynamic nature of financial markets in our stratification,
+we segmented the data using proxies that reflect market cycles and
+interest rate regimes. For volatility we used Chicago Board of Options
+Exchange (CBOE) VIX Index for the US indexes and emerging market
+indexes, V2X for Europe, FTSE IVUK for UK and SATITOP40 for SA
+volatility proxies fo and data from the Federal Reserve Bank of the
+United States. These metrics served as our stratifying variables,
+allowing us to categorize our sample across different market and
+interest rate cycles. For interest rate regimes, we use central bank
+interest rate schedules from the geographies we study.
+
+To calculate our excess returns, we geometrically chain the excess
+returns for the different periods before annualizing. This produces
+comparable cumulative annualized excess return (CAER) results, defined
+as: \begin{align}
 C A E R=\left[\prod_{t=1}^n\left(1+E R_t\right)\right]^{\frac{222}{n}}-1 \notag
-\end{align} The amount of daily data for the respective interest rate
-cycles is large enough to annualize, however, when the VIX, V2X or JALSH
-RV breach the top or bottom quintile for less than 50 trading days, the
-period is excluded in order to avoid annualizing small frequencies.
+\end{align}
 
-We also downloaded constituent data for the indices from approximately
-21 super sectors\footnote{as defined by FTSE 100 white papers on the
-  FTSE 1000 index construction see
-  \url{https://www.google.com/url?sa=i\&rct=j\&q=\&esrc=s\&source=web\&cd=\&cad=rja\&uact=8\&ved=0CDcQw7AJahcKEwiA_4yu1pCBAxUAAAAAHQAAAAAQAw\&url=https\%3A\%2F\%2Fresearch.ftserussell.com\%2FAnalytics\%2FFactsheets\%2FHome\%2FDownloadSingleIssue\%3FissueName\%3DWORLDS\%26IsManual\%3Dfalse\&psig=AOvVaw0ScIEuPFn-McGJKBFXvldA\&ust=1693907242710751\&opi=89978449}}.
+Our rule to identifying volatility periods either high volatility
+(Hi-vol) or low volatility (Lo-vol) is achieved by computing the top and
+bottom quantile in standard deviation for our respective proxies. We
+then pull the dates corresponding to the periods, and compute annualized
+returns after geometrically chaining the monthly returns. The amount of
+daily data for the respective interest rate cycles is large enough to
+annualized, however, when the VIX, V2X or JALSH RV breach the top or
+bottom quintile for less than 50 trading days, the period is excluded in
+order to avoid annualizing small samples.
 
-Table 1 describes the globally traded dividend portfolios investigated
-in this study. Subsequently, we delve into the results derived from
-applying various portfolio optimization techniques to dividend-paying
-stocks on the JSE. Through this lens, we assess how each model
-contributes to risk-adjusted returns and portfolio stability. The
-objective is to identify optimization strategies that offer the most
-favorable risk-return profile for portfolios focused on
-dividend-generating stocks.
+\hypertarget{when-do-dividend-strategies-work}{%
+\section{When Do Dividend Strategies
+Work}\label{when-do-dividend-strategies-work}}
 
-\hypertarget{performance-of-globally-traded-dividend-portfolios}{%
-\subsection*{Performance of Globally Traded Dividend
-Portfolios}\label{performance-of-globally-traded-dividend-portfolios}}
-\addcontentsline{toc}{subsection}{Performance of Globally Traded
-Dividend Portfolios}
+The data presented in Table \ref{tab1} delineates the excess cumulative
+returns of our globally traded dividend portfolios. On an aggregate
+level, these portfolios yield a positive premium in comparison to their
+corresponding market indices. Nevertheless, a nuanced examination
+reveals a discernible variance in performance between the high yield
+(HY) and dividend growth (DG) strategies. From the UK-centric proxies
+for dividend strategies, the UK\_HY notably surpasses its counterparts,
+delivering a cumulative return of 3.5 times the initial investment over
+the sample period. In other regions, high yield strategies have
+manifested returns exceeding 1x from the inception of the period. It's
+pertinent to underscore, however, that these represent marginal gains
+when contextualized within a 16-year investment horizon. In stark
+contrast, dividend growth strategies have under performed, yielding
+diminished excess returns since the onset of the period.
 
-\ref{tab1} offers a tabular representation excess cumulative returns for
-dividend portfolios.On average, these portfolios generate a positive
-premium relative to their respective market indices. However, there is
-an apparent lack of uniformity across various investment strategies. The
-FUDP index, a High Dividend Yield (HY) strategy that tracks the highest
-dividend-paying stocks on the London Stock Exchange, outperforms its
-peers but also returns a remarkable 3x on every rand invested over the
-sample period. In stark contrast, other HY strategies, specifically
-those focused on U.S. and South African markets---identified by their
-respective indices M2USADVD and TJDIVD fail to produce similarly
-impressive results.
-
-Despite the allure of their value proposition, based on cumulative
-returns there is no unequivocal evidence to suggest that dividend
-portfolios universally outperform market indices.
-
-We notice that growth portfolios do not add significant value, SA offers
-similar to HY and DG. Whats the reason? HY did good in most advanced
-market economies. Giving more than 1X in excess cumulatively, the best
-being UK assets high yield. EM not so well on a cumulative basis
+Upon assessing the cumulative returns, it becomes evident that there is
+not a consistent indication that dividend strategies, irrespective of
+their specific approach or geographical orientation, can consistently
+procure a premium that, over time, translates into substantive value for
+investors.
 
 \begin{table}[H]
 \centering
@@ -860,13 +840,31 @@ being UK assets high yield. EM not so well on a cumulative basis
 \caption{Cumulative Excess Return \label{tab1}} 
 \end{table}
 
-Next I stratifying the sample period between periods of different market
-cycles and volatility. After stratification, geometrically chain the
-returns following that annualize according to their respective
-componding periodicy. This ensures that we can compare performance
-according to different periods.
-\begingroup\fontsize{12pt}{13pt}\selectfont
+By stratifying these samples according to distinct interest rate regimes
+and equity market stability cycles, a more refined understanding emerges
+regarding the efficacy of dividend signals. Initially, interest rates
+are categorized into two distinct cycles: the ``cutting'' cycle and the
+``hiking'' cycle. These cycles are defined by periods wherein sustained
+rate changes (a minimum of three alterations) manifest at intervals of
+at least every five quarters. Moreover, both implied and realized equity
+market volatilities are leveraged to represent various epochs of market
+stability. Subsequent to this stratification, we engage in the geometric
+chaining of the excess returns across these varied periods, which are
+then annualized. The resultant metric provides a comparative framework
+for cumulative annualized returns.
 
+Table \ref{tab2} delineates performance across diverse market cycles. An
+immediate observation is that, on average, the various geographies
+experience more periods characterized by market volatility than they do
+periods of low volatility. In these heightened volatility epochs, the
+annualized returns for most portfolios, be they HY or DG, tend to
+outstrip those seen during low volatility phases. This observation
+suggests that dividend portfolios might exhibit inherent defensive
+qualities during phases of market instability. It is especially
+noteworthy that the UK\_HY portfolio registers the most substantial
+returns during both high and low volatility phases.
+
+\begingroup\fontsize{12pt}{13pt}\selectfont
 \begin{longtable}{llrr}
   \toprule
 Index & Market Period & Months & annualized\_return \\ 
@@ -877,53 +875,58 @@ Index & Market Period & Months & annualized\_return \\
 \endfoot 
 \endlastfoot 
  \midrule
-EM\_HY & Low Vol Period &  80 & -0.03 \\ 
-  EM\_HY & High Vol Period &  77 & -0.02 \\ 
-  EU\_DG & Low Vol Period &  86 & -0.03 \\ 
-  EU\_DG & High Vol Period &  93 & -0.03 \\ 
-  EU\_HY & Low Vol Period &  86 & 0.01 \\ 
-  EU\_HY & High Vol Period &  93 & 0.02 \\ 
-  EU\_HY & Low Vol Period &  86 & 0.01 \\ 
-  EU\_HY & Low Vol Period &  86 & 0.01 \\ 
-  JP\_DG & Low Vol Period &  80 & -0.07 \\ 
-  JP\_DG & High Vol Period &  77 & -0.05 \\ 
-  JP\_HY & Low Vol Period &  80 & -0.08 \\ 
-  JP\_HY & High Vol Period &  77 & -0.03 \\ 
-  SA\_DG & Low Vol Period &  82 & -0.13 \\ 
-  SA\_DG & High Vol Period &  63 & -0.05 \\ 
+SA\_DG & Low Vol Period &  82 & -0.13 \\ 
   SA\_HY & Low Vol Period &  82 & -0.09 \\ 
   SA\_HY & High Vol Period &  63 & -0.09 \\ 
-  UK\_HY & Low Vol Period &  86 & 0.18 \\ 
-  UK\_HY & High Vol Period &  93 & 0.18 \\ 
-  UK\_HY\_B & Low Vol Period &  86 & 0.14 \\ 
-  UK\_HY\_B & High Vol Period &  93 & 0.11 \\ 
+  JP\_HY & Low Vol Period &  80 & -0.08 \\ 
+  JP\_DG & Low Vol Period &  80 & -0.07 \\ 
   US\_DG & Low Vol Period &  80 & -0.05 \\ 
+  JP\_DG & High Vol Period &  77 & -0.05 \\ 
+  SA\_DG & High Vol Period &  63 & -0.05 \\ 
   US\_DG & High Vol Period &  77 & -0.05 \\ 
+  EU\_DG & Low Vol Period &  86 & -0.03 \\ 
+  EM\_HY & Low Vol Period &  80 & -0.03 \\ 
+  JP\_HY & High Vol Period &  77 & -0.03 \\ 
+  EU\_DG & High Vol Period &  93 & -0.03 \\ 
+  EM\_HY & High Vol Period &  77 & -0.02 \\ 
   US\_HY & Low Vol Period &  80 & -0.01 \\ 
   US\_HY & High Vol Period &  77 & -0.00 \\ 
+  EU\_HY & Low Vol Period &  86 & 0.01 \\ 
+  EU\_HY & Low Vol Period &  86 & 0.01 \\ 
+  EU\_HY & Low Vol Period &  86 & 0.01 \\ 
+  EU\_HY & High Vol Period &  93 & 0.02 \\ 
+  UK\_HY\_B & High Vol Period &  93 & 0.11 \\ 
+  UK\_HY\_B & Low Vol Period &  86 & 0.14 \\ 
+  UK\_HY & High Vol Period &  93 & 0.18 \\ 
+  UK\_HY & Low Vol Period &  86 & 0.18 \\ 
    \bottomrule
-\caption{Market Volatility Impact on Performance} 
+\caption{Performance in Market Cycles\label{tab2}} 
 \end{longtable}
 \endgroup
 
-Stratifying the excess return according to different interest rate
-regimes and market cycles unearths interesting dynamics in the
-performance of dividend portfolios. The tables below summarize the
-performance of the different dividend strategies high volatility and low
-volatility, as well as hiking and cutting interest rates cyles. The
-results below suggest that dividend strategies outperform during periods
-of market distress and under perform during periods of market calm. In
-emerging markets however, we observe that during periods of low
-volatility these portfolios yield greater than high volatility.
+Table \ref{tab3} presents the performance metrics of various dividend
+portfolios across different interest rate regimes, encompassing Hiking,
+Cutting, and Neutral phases. The Federal Reserve Funds Rate serves as a
+representative metric for the interest rate regime in emerging markets,
+given the recognition that interest rate shifts in the US influence risk
+appetites, thus determining capital flows between advanced and emerging
+economies. For other indices, the local central bank interest rate
+cycles are employed to ascertain their corresponding interest rate
+regimes. Japan stands as an anomaly among these economies; absent
+distinct hiking or cutting cycles, its central bank largely maintained
+constant rates. Consequently, we assess its performance exclusively
+within the confines of a neutral interest rate cycle.
 
-\ref{tab2} shows rolling returns for the dividend portfolios. Dividend
-portfolios broadly behave similarly. Buttressing results from
-stratifying according to volatility we notice that dividend portfolio
-failed to provide meaningful protection during the most recent crises,
-the COVID- 19 pandemic. Howver we do note out performance (above zero
-excess return) in FUDP and SPDAEET the over the past three years. Most
-dividend portfolios however have witnissed negative excess return over
-the most recent period
+The high yield portfolios, with the exception of SA, typically register
+superior annualized returns across all interest rate cycles. Several
+portfolios, including EU\_DG, JP\_DG, JP\_HY, SA\_DG, and SA\_HY,
+consistently report negative annualized returns regardless of the
+prevailing interest rate regime. Meanwhile, the UK\_HY\_B index exhibits
+a negative return in neutral phases, and the US\_DG portfolio
+underperforms during both cutting and hiking phases. The index that
+emerges with the highest annualized excess return across these cycles is
+UK\_HY. Notably, the UK\_HY\_B portfolio demonstrates commendable excess
+returns, realizing a 0.54\% gain during cutting cycles.
 
 \begingroup\fontsize{12pt}{13pt}\selectfont
 \begin{longtable}{llrr}
@@ -936,45 +939,57 @@ Index & Market Period & Months & annualized\_return \\
 \endfoot 
 \endlastfoot 
  \midrule
-EM\_HY & Neutral &  28 & 0.02 \\ 
-  EM\_HY & Cut &  12 & 0.04 \\ 
-  EM\_HY & Hiking &  22 & 0.07 \\ 
-  EU\_DG & Neutral &  28 & -0.05 \\ 
-  EU\_DG & Cut &  20 & -0.08 \\ 
-  EU\_DG & Hiking &  14 & -0.19 \\ 
-  EU\_HY & Neutral &  28 & 0.05 \\ 
-  EU\_HY & Cut &  20 & 0.02 \\ 
-  EU\_HY & Hiking &  14 & -0.03 \\ 
-  JP\_DG & Neutral &  58 & -0.06 \\ 
-  JP\_HY & Neutral &  58 & -0.09 \\ 
-  SA\_DG & Neutral &   8 & -0.02 \\ 
-  SA\_DG & Cut &  24 & -0.08 \\ 
+SA\_HY & Hiking &  30 & -0.27 \\ 
   SA\_DG & Hiking &  30 & -0.23 \\ 
-  SA\_HY & Neutral &   8 & -0.05 \\ 
-  SA\_HY & Cut &  24 & -0.11 \\ 
-  SA\_HY & Hiking &  30 & -0.27 \\ 
-  UK\_HY & Neutral &  28 & 0.22 \\ 
-  UK\_HY & Cut &  16 & 0.78 \\ 
-  UK\_HY & Hiking &  18 & 0.44 \\ 
-  UK\_HY\_B & Neutral &  28 & -0.03 \\ 
-  UK\_HY\_B & Cut &  16 & 0.54 \\ 
-  UK\_HY\_B & Hiking &  18 & 0.11 \\ 
-  US\_DG & Neutral &  28 & 0.02 \\ 
+  EU\_DG & Hiking &  14 & -0.19 \\ 
   US\_DG & Cut &  12 & -0.14 \\ 
-  US\_DG & Hiking &  22 & -0.03 \\ 
-  US\_HY & Neutral &  28 & 0.03 \\ 
+  SA\_HY & Cut &  24 & -0.11 \\ 
+  JP\_HY & Neutral &  58 & -0.09 \\ 
+  SA\_DG & Cut &  24 & -0.08 \\ 
+  EU\_DG & Cut &  20 & -0.08 \\ 
+  JP\_DG & Neutral &  58 & -0.06 \\ 
+  EU\_DG & Neutral &  28 & -0.05 \\ 
+  SA\_HY & Neutral &   8 & -0.05 \\ 
   US\_HY & Cut &  12 & -0.03 \\ 
+  UK\_HY\_B & Neutral &  28 & -0.03 \\ 
+  EU\_HY & Hiking &  14 & -0.03 \\ 
+  US\_DG & Hiking &  22 & -0.03 \\ 
+  SA\_DG & Neutral &   8 & -0.02 \\ 
   US\_HY & Hiking &  22 & 0.01 \\ 
+  EM\_HY & Neutral &  28 & 0.02 \\ 
+  EU\_HY & Cut &  20 & 0.02 \\ 
+  US\_DG & Neutral &  28 & 0.02 \\ 
+  US\_HY & Neutral &  28 & 0.03 \\ 
+  EM\_HY & Cut &  12 & 0.04 \\ 
+  EU\_HY & Neutral &  28 & 0.05 \\ 
+  EM\_HY & Hiking &  22 & 0.07 \\ 
+  UK\_HY\_B & Hiking &  18 & 0.11 \\ 
+  UK\_HY & Neutral &  28 & 0.22 \\ 
+  UK\_HY & Hiking &  18 & 0.44 \\ 
+  UK\_HY\_B & Cut &  16 & 0.54 \\ 
+  UK\_HY & Cut &  16 & 0.78 \\ 
    \bottomrule
-\caption{Interest Rate Cycle Performance} 
+\caption{Performance in Interest Rate Regimes\label{tab3}} 
 \end{longtable}
 \endgroup
 
-Extending the analyses to interest rate regimes.
-
 \hypertarget{performance-consistentcy}{%
-\section*{Performance consistentcy}\label{performance-consistentcy}}
-\addcontentsline{toc}{section}{Performance consistentcy}
+\subsection{Performance consistentcy}\label{performance-consistentcy}}
+
+Figure \ref{fig1} illustrates the consistency in the performance of
+dividend portfolios by employing the rolling information ratio. The
+information ratio serves as a measure of a portfolio's performance
+relative to a market benchmark. It is frequently used in the industry to
+gauge a manager's proficiency in generating excess returns and the
+consistency with which these returns are achieved. Thus, our objective
+is to assess the capacity of our dividend portfolios to achieve such
+excess returns.
+
+We have adopted a rolling 60-month information ratio as a metric to
+evaluate long-term performance consistency. This ratio is computed by
+determining the rolling excess return of the index relative to its
+benchmark and then dividing this by the volatility of those excess
+returns.
 
 \begin{figure}[H]
 
@@ -983,37 +998,50 @@ Extending the analyses to interest rate regimes.
 \caption{Rolling 3 Year Returns \label{fig1}}\label{fig:unnamed-chunk-1}
 \end{figure}
 
-the results here generally show inconsistent performance of dividend
-strategies. the information ratio measures performance consistency of a
-portfolio over its benchmark, a ratio of more than 0 is desirable. most
-strategies typically in industry average information ratios of 0.47 thus
-deliver risk adjusted return of anything beyond 0.5. The figure above
-however shows that on a rolling 36 month basis, dividend portfolios be
-it growth or high yield perform worse that their benchmarks. we assess
-the performance on a 24, 36 month basis and find similar results. When
-compared with each other, dividend portfolios have varying correlations,
-most notable is the relationship between the EM HY IR and UK HY IR.
-Visually, when we consider the rolling 36 month IR at the lastest date,
-we notice that EM high yield portfolios provide the most consistent
-returns, having an information ratio of above 0 SA HY portfolio provides
-similar consistency.
+The findings presented here illuminate the sporadic performance of
+dividend strategies, further highlighting the challenges inherent in
+securing high returns in asset markets. In an ideal scenario, an
+information ratio exceeding 0 is preferred, with most industry
+strategies typically averaging around 0.3. However, Figure \ref{fig1}
+demonstrates that, when assessed on a rolling 60-month basis, both
+growth and high-yield dividend portfolios tend to underperform relative
+to their benchmarks.Upon broadening our evaluation to encompass 24 and
+36-month periods, the results appear even more volatile. Notably, SA
+indices consistently demonstrate commendable performance, with the
+SA\_HY standing out particularly. Within the domain of advanced markets,
+the dividend portfolios of both the EU and Japan exhibit a modicum of
+consistency in positive returns initially, only to later deteriorate.
+
+It is imperative to note that despite their capacity to deliver decent
+cumulative returns and exhibit defensive characteristics across
+stratified periods, these indices, when gauged on a relative basis,
+still leave much to be desired in terms of consistent performance.
 
 \hypertarget{drawdowns}{%
-\section*{Drawdowns}\label{drawdowns}}
-\addcontentsline{toc}{section}{Drawdowns}
+\subsection{Drawdowns}\label{drawdowns}}
 
-A trailing return measures returns between two dates. They are also
-known as point-to-point returns since you are looking at performance
-between a starting date and an end date. It shows a snapshot of the
-mutual fund at a specific point in time. This metric can be used to
-measure returns year-to-date, one year, three years and so on. Trailing
-returns can also be calculated from the current date from the fund's
-inception date. This will be important to evaluate the how different
-inception dates affects fund performance.
+A trailing return provides insights into the performance of an
+investment over a specified period, measured between two distinct dates.
+As the name suggests, it essentially ``trails'' the investment from a
+starting point to an end point, effectively capturing the point-to-point
+returns. This tool offers a concise snapshot of, for instance, a mutual
+fund's performance at a specific juncture in its trajectory.
 
-Downwards give a more detailed picture of the risk attributes of the
-constituents of a data series. Their importance for our study is to
-uncover latent relationship between performance and drawdown.
+The utility of the trailing return metric is multi-faceted. For one, it
+can gauge returns over varying durations, such as year-to-date, over one
+year, three years, and so forth. Furthermore, it is feasible to compute
+trailing returns by referencing the current date back to the fund's very
+inception. Such an analysis proves invaluable when attempting to discern
+how varying inception dates might influence the performance of a fund.
+
+Delving deeper into the realm of risk assessment, drawdowns provide a
+comprehensive view of the risk attributes of the data series'
+constituents. In the context of our study, the relevance of drawdowns is
+underscored by their capacity to unveil latent correlations between
+performance and drawdown. Essentially, by analyzing drawdowns, one can
+ascertain the maximum potential loss an investment has experienced,
+thereby providing insights into the inherent risks and vulnerabilities
+associated with said investment.
 
 \begin{figure}[H]
 
@@ -1022,20 +1050,61 @@ uncover latent relationship between performance and drawdown.
 \caption{Rolling 3 Year Returns \label{fig2}}\label{fig:Figure2}
 \end{figure}
 
-Draw downs in this study are defined as the difference between low and
-high values of cumulative excess returns within a time period. From our
-dividend portfolios we notice that drawdowns are similar in regions and
-across strategies. Both portfolios in SA show significant drawdowns by
-values followed by UK HY strategies and with the EU and US strategies
-having the least amount of drawdowns. However, considering the
-dispersion of the drawdowns, we note that the UK High Yield and Japan
-High Yield strategies are suspectible to large changes, with emerging
-markets and south africa show the least variation. \# Results and
-Analysis \{-\} \# Discussion \{-\}
+In this analysis, drawdowns are delineated as the disparity between the
+peak and trough values of cumulative excess returns within a specified
+time frame. When scrutinizing our dividend portfolios, a pattern of
+similarity emerges both geographically and across varied strategies.The
+SA portfolios are markedly conspicuous, displaying the most pronounced
+drawdowns by value. This is closely followed by the UK High Yield (HY)
+strategies. In contrast, portfolios associated with the EU and US
+exhibit relatively milder drawdowns.
+
+Yet, when the focus shifts from mere magnitude to the distribution or
+dispersion of these drawdowns, the narrative undergoes a transformation.
+The UK High Yield and Japan High Yield strategies are revealed to be
+more volatile, being susceptible to significant fluctuations. In
+juxtaposition, emerging markets, with South Africa as a case in point,
+manifest a more stabilized profile, evidenced by diminished variation in
+their drawdowns.
+
+\hypertarget{wrapping-it-up}{%
+\subsection{Wrapping it up}\label{wrapping-it-up}}
+
+\begin{itemize}
+\tightlist
+\item
+  I did a PCA which tries to link all these together. Partcilarly which
+  risk attributes link the performance of dividend portfolios and how
+  these can be accounted for by designing a partcilar portfolio.
+\end{itemize}
+
+In the extensive evaluation of globally dividend portfolios across
+varied market cycles and interest rate regimes, it's evident that while
+dividend strategies offer additional return offered by their income
+componenet, their performance remains notably inconsistent. The
+challenges in obtaining high returns in asset markets come to the fore,
+with dividend strategies across various geographies and timelines
+exhibiting uneven returns. The impact of interest rate cycles, plays a
+decisive role in portfolio performance, a fact made salient by Japan's
+unique neutral rate cycle. Adding another layer of depth to our
+analysis, rolling informatio ratios offer periodic snapshots of
+performance consistency, noting that most strategies fail to give
+performance postive ratios but it's the drawdowns, defined by the
+discrepancies between peak and trough values of cumulative excess
+returns, that reveal the underlying risk attributes. Geographically,
+while South African portfolios record pronounced drawdown values,
+closely trailed by UK High Yield strategies, portfolios in regions like
+the EU and US demonstrate relative stability.
+
+\hypertarget{which-dividend-signals-matter-in-south-africa}{%
+\section{Which Dividend Signals Matter in South
+Africa?}\label{which-dividend-signals-matter-in-south-africa}}
+
+We assessed dividend portfolio performance in different geographies and
+\# Results and Analysis \# Discussion
 
 \hypertarget{limitations-of-the-study}{%
-\subsection*{Limitations of the study}\label{limitations-of-the-study}}
-\addcontentsline{toc}{subsection}{Limitations of the study}
+\subsection{Limitations of the study}\label{limitations-of-the-study}}
 
 Could not get constituent data for the indices that had superior
 performance within the sample period. This would have been help in
@@ -1044,14 +1113,10 @@ dividend yield and or grow signals were more effective in that
 portfolio.
 
 \hypertarget{conclusion}{%
-\section*{Conclusion}\label{conclusion}}
-\addcontentsline{toc}{section}{Conclusion}
-
-\newpage
+\section{Conclusion}\label{conclusion}}
 
 \hypertarget{references}{%
-\section*{References}\label{references}}
-\addcontentsline{toc}{section}{References}
+\section{References}\label{references}}
 
 \hypertarget{refs}{}
 \begin{CSLReferences}{1}{0}
@@ -1215,6 +1280,9 @@ markowitz's mean--variance framework: A review of literature.
 \emph{Fuzzy Optimization and Decision Making}. 17:125--158.
 
 \end{CSLReferences}
+
+\hypertarget{appendix}{%
+\section{Appendix}\label{appendix}}
 
 \bibliography{Tex/ref}
 
