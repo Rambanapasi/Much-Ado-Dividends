@@ -248,22 +248,36 @@ returns from advanced economy portfolios.
 \hypertarget{problem-statement}{%
 \section{Problem Statement}\label{problem-statement}}
 
-Dividend yield is a poor proxy for stock returns, as it doesn't
-distinguish itself from price effects of a stock. Unfortunately,
-practice in industry when constructing dividend portfolios fails to
-recognize this flaw thus leading to sub optimal allocation within
-portfolio.
+As summarized by Vanguard (2017) succinctly, ``the focus of high
+dividend-yielding equities is often their income potential, but higher
+yields do not necessarily translate into higher returns. This is
+because, for all companies, whether or not to pay a dividend is a
+capital budgeting decision. When a stock goes ex-dividend, its price
+falls by the same amount as the dividend payment. Therefore, no wealth
+is created through paying a dividend; rather, the payment reduces
+retained earnings. This means that share price should decrease
+accordingly thus share holders should be worse off.
+
+Thus, brings in the question of why dividend strategies provide for a
+return signalling cue. First, there should exists a rationale beyond
+dividend payment effect on share price, perhaps in line with theories
+regarding dividend relevance. Second, if the signals provide some type
+excess return beyond their market index, does it continuously provide
+the premium to be harvested by a systematic investment strategy.
 
 \hypertarget{research-aim}{%
 \section{Research Aim}\label{research-aim}}
 
-We propose to enhance the dividend signalling by considering price
-changes and dividend payment sustainability offered by stock. Our
-solution corrects for this oversight by using price momentum filters and
-adjusting for unsustainable payout ratios in portfolio construction to
-offer superior risk adjusted return overtime. We will consider multiple
-back testing samples and highlight periods in which strategies offer
-diversification benefits to portfolio construction.
+The aim of this study is to test whether and why dividend payout
+strategies contain a profitable investment signal to potential
+investors. There exists various international studies testing this
+hypothesis across geographies, underscoring that dividend can be used as
+a profitable future return signal. Studies conducted for the South
+African market employ methodologies that do not inform readers on
+mechanisms behind why the dividend signal works or provide an indication
+of returns for a systematic dividend investment strategy. We aim to fill
+this gap by testing various portfolios constructed based on dividend
+information in South Africa.
 
 \hypertarget{literature-review}{%
 \section{Literature Review}\label{literature-review}}
@@ -273,23 +287,23 @@ diversification benefits to portfolio construction.
 
 Dividends constitute a form of capital distribution by corporations
 towards shareholders. They exist in various forms, such as cash, stock,
-liquidating, scrip, or property dividends
-(\protect\hyperlink{ref-baker2009understanding}{\textbf{baker2009understanding?}}),
-of which cash dividends and share repurchases being the most commonly
-used in practice. Within cash dividends, regular dividends are widely
-used by corporations and payment frequency across jurisdictions. The
-decision to issue dividends is typically made by the board of directors,
-and approved by shareholders, however practiced more in Europe and less
-so in the United States. The payout policy policy of a corporation,
-which are guiding principles for management and board of directors
-towards capital distributions considers company investment and is
-closely watched by investors and analysts. As such, management strives
-to grow or maintain a certain level of dividend payouts as this signals
-firm growth and investors share of profitability in the company. Various
-liertature has covered the effect of dividend announcements before and
-after ex -dividend dates. Figure 1 shows a clear and direct relation
-with a decrease in share value to the proportionate to the dividend
-announcement.
+liquidating, scrip, or property dividends Baker \& Powell
+(\protect\hyperlink{ref-baker1999corporate}{1999}), of which cash
+dividends and share repurchases being the most commonly used in
+practice. Within cash dividends, regular dividends are widely used by
+corporations and payment frequency across jurisdictions. The decision to
+issue dividends is typically made by the board of directors, and
+approved by shareholders, however practiced more in Europe and less so
+in the United States. The payout policy policy of a corporation, which
+are guiding principles for management and board of directors towards
+capital distributions considers company investment and is closely
+watched by investors and analysts. As such, management strives to grow
+or maintain a certain level of dividend payouts as this signals firm
+growth and investors share of profitability in the company.
+
+\hypertarget{theorectical-arguments-on-dividend-payments}{%
+\subsection{Theorectical Arguments on Dividend
+Payments}\label{theorectical-arguments-on-dividend-payments}}
 
 Given the apparent decrease in shareholder value, the logical question
 has encouraged a long running debate on dividend relevance and
@@ -317,127 +331,94 @@ a reward to investors who bear the risk associated with their
 investments as it provides an additional source of return on investment
 from a share Black (\protect\hyperlink{ref-black1996dividend}{1996}).
 Various literature has made convincing arguments for corporations to pay
-dividends which include Tax considerations, dividend signalling and
+dividends which include tax considerations, dividend signalling and
 agency costs in issuing dividends .
 
 Taxe considerations argue in favor for dividend relevance. Across
 jurisdiction dividends have different tax treatments to capital gains
 and often tax at a higher income tax rate, thus investors that have
 higher tax rates choose stocks with lower dividend payouts and
-tranversly pushes up the stock price, this is called the clientele
-effect
-(\protect\hyperlink{ref-baker2009understanding}{\textbf{baker2009understanding?}}).
-Proponents of the MM theory suggest that the client effect causes major
-substitution effect, suggesting that if companies change their dividend
-policy, investors with preferential tax treatment will simply allocate
-more capital to that stock and those out of favor will sell their
-shares. Given the large number of investors versus listed companies the
-process is instantaneously causing a net zero effect on
-prices(\protect\hyperlink{ref-baker2009understanding}{\textbf{baker2009understanding?}}).
-Second, flotation costs refer to the opportunity costs incurred by a
-firm when paying dividends. Through distributing dividends, companies
-forego opportunities to expand their operations using retained earnings.
-In a world without flotation costs, as suggested by the MM theorem,
-management would be indifferent between issuing dividends and borrowing
-from the market thus have no effect on shares prices. However, in
-reality, external financing comes at a higher cost, leading to
-trade-offs in dividend policy decisions and ultimately share prices.
+transversly pushes up the stock price, this is called the clientele
+effect Baker \& Powell
+(\protect\hyperlink{ref-baker1999corporate}{1999}). However a major
+pushback emanates from proponents of the MM theory, that suggest the
+client effect causes major substitution effect, meaning that if
+companies change their dividend policy, investors with preferential tax
+treatment will simply allocate more capital to that stock and those out
+of favor will sell their shares. Given the large number of investors
+versus listed companies the process is instantaneously causing a net
+zero effect on prices(\protect\hyperlink{ref-baker1999corporate}{Baker
+\& Powell, 1999}). Second, flotation costs refer to the opportunity
+costs incurred by a firm when paying dividends. Through distributing
+dividends, companies forego opportunities to expand their operations
+using retained earnings. In a world without flotation costs, as
+suggested by the MM theorem, management would be indifferent between
+issuing dividends and borrowing from the market thus have no effect on
+shares prices. However, in reality, external financing comes at a higher
+cost, leading to trade-offs in dividend policy decisions and ultimately
+share prices.
 
 Information asymmetry between shareholders and managers is another
 factor that gives relevance to dividend payments. Managers of businesses
 have greater knowledge of operations thus value of a business at any
 given point more than shareholders. As such, investors rely on dividend
 announcements to assess a company's valuation. Dividend signaling
-conveys information about the company's quality Al-Najjar \&
-Kilincarslan (\protect\hyperlink{ref-al2018revisiting}{2018}) and Baker
-\& Powell (\protect\hyperlink{ref-baker1999corporate}{1999}). Investors
-compare dividend announcements to historical levels while considering
-company fundamentals. However, there is a risk of manipulation by
-management, making the dividend signal imperfect for determining share
-prices. Principal agency issues may give another reason for issuance of
-dividends. The free cash flow hypothesis suggests that dividend payments
-force management to raise capital from external sources, which increases
-borrowing costs and scrutiny from capital markets. This, in turn,
-reduces management's ability to make sub optimal investments and
-aligning management and shareholder objectives
+conveys information about the company's quality Baker \& Powell
+(\protect\hyperlink{ref-baker1999corporate}{1999}). Investors compare
+dividend announcements to historical levels while considering company
+fundamentals. However, a major concern towards its ability to be
+``gamed' by management, making the dividend signal imperfect for
+determining share prices. Principal agency issues may give another
+reason for issuance of dividends. The free cash flow hypothesis suggests
+that dividend payments force management to raise capital from external
+sources, which increases borrowing costs and scrutiny from capital
+markets. This, in turn, reduces management's ability to make sub optimal
+investments and aligning management and shareholder objectives
 (\protect\hyperlink{ref-baker2009understanding}{\textbf{baker2009understanding?}}).
 Supporters of this theory ascertain that dividends payments by the
 mechanism encourage good business practices.
 
-\hypertarget{empirical-review}{%
-\subsection{Empirical review}\label{empirical-review}}
+\hypertarget{investment-strategies-from-dividend-signals}{%
+\subsection{Investment Strategies from Dividend
+signals}\label{investment-strategies-from-dividend-signals}}
 
-The various methods of capital distributions have varying impact on
-financial statements which is summarized in Table of the appendix. From
-the perceptive of an investor or analyst the dividend yield metric helps
-show the additional return dividends paying securities could add to a
-portfolio. Consider that describes the fundamentals that influence the
-dividend yield. Assuming a constant payout ratio, dividend yield is a
-function of earnings yield. shows the correlation between DY and Price
-overtime for various securities. Various studies have identified a
-predictive power of dividend yield thus confirm the existence of a value
-signal. Also, another signal for dividends is dividend growth per share
-for corporations, and unlike the dividend yield, it is not affected by
-price but maintain properties that allow for inference into management
-quality. As managemnet is aware of the signalling effect of dividends,
-this may induce the value trap, that forces management to continually
-increase dividends to maintain a certain valuation. However such
-companies are more vulnerable to facing financial distress.
+The amount of literature regarding dividend relevance leaves readers
+wiser. Thus, it can be reasonably concluded that the past performance of
+dividend-based portfolio strategies could be understood by using proxy
+arguments (as opposed to it being considered an attractive feature in
+itself). For example, high dividend-paying companies could proxy for the
+quality of management structures over time (through their ability to
+consistently afford dividend payments) or similarly point to prudent
+cash-flow management capabilities. Therefore, from the perspective of an
+investor, the dividend yield can be used as a signal in constructing an
+investment strategy. O'higgins \& Downes
+(\protect\hyperlink{ref-o1991beating}{1991}) proposed an investment
+strategy which used companies included in the Dow Jones Industrial
+Average (DJIA) called the ``Dogs of the Dow'' (DOD). By ranking 30
+companies by dividend yield and including only the 10 highest-yielding
+shares in a portfolio, this achieved a return higher than the DJIA
+(16.6\% per annum versus the DJIA's 10.4\%). This had lower risk than
+the DJIA, thus achieving a higher Sharpe Ratio. Testing O'higgins \&
+Downes (\protect\hyperlink{ref-o1991beating}{1991})'s strategy resulted
+in ``Beat the Dow 5,'' which involved annually investing in only the
+five lowest-priced of the HY10 shares each year, in other words, high
+dividend yield. This strategy gave superior returns of 19.4\% versus the
+DJIA. As opined by Gardner, Gardner \& Maranjian
+(\protect\hyperlink{ref-gardner2002motley}{2002}), this strategy
+leverages the fact that low-priced stocks experience the most
+volatility, by courting future volatility in the 10 stocks that have
+some potential upside, expecting their stock prices to rise in return.
 
-Cash dividends, although widely used, are not as tax-efficient as share
-buybacks. In this form of capital redistribution, a firm exchanges
-assets for outstanding shares, which shrinks the company's assets by the
-amount of cash paid out. This action too reduces both its borrowing base
-and the shareholders' aggregate equity
-(\protect\hyperlink{ref-baker2009understanding}{\textbf{baker2009understanding?}}).
-A clear benefit to the company is that it is more flexible when compared
-to the rigid dividend payout structures. To most higher net worth
-investors, tax benefits in the form of lower capital gains taxes result
-in greater preference for share buybacks. Surprisingly, their adoption
-has been relatively slow in some emerging economies. According to a
-study by Wesson, Muller \& Ward
-(\protect\hyperlink{ref-wesson2014market}{2014}), there were only 195
-open market share repurchases announced in South Africa from 1999 to
-2009. In comparison, Manconi, Peyer \& Vermaelen
-(\protect\hyperlink{ref-manconi2014buybacks}{2014}) estimated that share
-repurchases constituted approximately 58\% of total announcements in the
-United States, 15\% in Canada, and 11\% in Japan over the same period,
-indicative of a significant disparity in the adoption of share buybacks
-across the world, despite their popularity in the United States.
-
-Dividend payments and growth in dividends per share provides a return
-cue and over the years studies on dividend signaling studies can be
-categorized into academic and practitioner-oriented studies. Academic
-studies, such as Fama \& French
-(\protect\hyperlink{ref-fama1988permanent}{1988}), found a positive
-correlation between increasing predictive power and longer forecast
-horizons. However, subsequent studies like Ang \& Bekaert
-(\protect\hyperlink{ref-ang2007stock}{2007}) found no evidence of
-long-term predictability in stock returns when considering finite sample
-influence. This suggests that dividend yield may not be a reliable
-predictor of subsequent returns. One possible reason for this declining
-predictive power is the increasing use of share buybacks as an
-alternative means for capital distribution, which reduces the
-contribution of dividend yield to total return
-(\protect\hyperlink{ref-robertson2006}{Robertson \& Wright, 2006}).
-
-On the other hand, practitioner-oriented literature focuses on the
-long-term returns of systematic dividend portfolios. One popular
-strategy is the ``Dogs of the Dow (DOD),'' which involves constructing a
-portfolio of the top 10 highest-paying dividend stocks on the Dow Jones
-Industrial Index at the beginning of the year based on the dividends
-paid in the previous 12 months, therefore this entail deploying a high
-yield strategy (\protect\hyperlink{ref-mcqueen1997does}{McQueen, Shields
-\& Thorley, 1997}). Various studies have examined the DOD strategy or
-similar high-yield dividend strategies in different time periods and
-regions, consistently showing superior risk-adjusted returns compared to
-the market index. Examples of such studies include Lemmon \& Nguyen
-(\protect\hyperlink{ref-lemmon2015dividend}{2015}) in Hong Kong
+Many more studies emerged examining the DOD strategy or similar
+high-yield dividend strategies, in different time periods and regions,
+consistently showing superior risk-adjusted returns compared to the
+market index. Examples of such studies include Lemmon \& Nguyen
+(\protect\hyperlink{ref-lemmon2015dividend}{2015}) in Hong Kong,
 Brzeszczyński \& Gajdka
 (\protect\hyperlink{ref-brzeszczynski2007dividend}{2007}) in Poland,
 Visscher \& Filbeck (\protect\hyperlink{ref-visscher2003dividend}{2003})
 in Canada, Filbeck \& Visscher
-(\protect\hyperlink{ref-filbeck1997}{1997}) in Britian, and Wang,
+(\protect\hyperlink{ref-filbeck1997}{1997}) in Britain, and Wang,
 Larsen, Ainina, Akhbari \& Gressis
 (\protect\hyperlink{ref-wang2011dogs}{2011}) in China. More recently,
 Filbeck, Holzhauer \& Zhao
@@ -445,7 +426,47 @@ Filbeck, Holzhauer \& Zhao
 performance of DOD against a high-yield portfolio of Fortune Most
 Desired Companies (MAC) compared to the Dow Jones Industrial Average and
 the S\&P 500. The study found significantly higher risk-adjusted returns
-for the DOD strategy.
+for the DOD strategy. In South Africa, Fakir \& others
+(\protect\hyperlink{ref-fakir2013dividend}{2013}) employs a parametric
+approach to investigate dividends as an investment strategy. However
+there are issues with such methodology.First, on the JSE the
+signal-to-noise ratio on regressed stock returns is low, implying that
+the modeler's ability to accurately attribute return differences to a
+variable of interest (e.g., DY) is severely undermined. This is often
+rectified by considering returns at a lower frequency (e.g., monthly or
+even annually) to partially control for noise. Also, studies using
+parametric techniques seek to infer statistical significance, often
+leaving the more applied reader with limited knowledge gained as to the
+actual profitability of considering said signal from a portfolio
+context. Secondly, returns tend to be non-normally distributed and have
+large outliers. The combination of these problems can easily lead to a
+small sample size, non-normally distributed, and noisy inference series
+(especially in a local application) with limited practical application.
+In practice, subset portfolios are used, which are compared in-sample
+performances. While not necessarily providing readers with a parametric
+significance test, portfolio risk and return measures based on
+systematically constructed portfolios serve to provide valuable
+insights. Various such applications exist in the literature. Damodaran
+(\protect\hyperlink{ref-damodaran2004investment}{2004}) constructs top
+decile portfolios based on trailing DY at the beginning of each year
+from 1952 to 2001. For the last sample period (1991 - 2001), it is found
+that the highest dividend-yielding portfolio outperformed the lowest by
+about 3\%. Conover, Jensen \& Simpson
+(\protect\hyperlink{ref-conover2016difference}{2016}) find that
+portfolios constructed from high-dividend payers return over 1.5\% more
+per year than non-dividend payers, in addition to having lower risk.
+
+Dividend signaling can be catergorized in two forms, namely high yield
+(HY) or dividend growth per share (DG). Whereas HY confirms is typically
+used as a value proxy, it's a poor proxy given its relation to price if
+we consider a constant payout ratio. For this reason, the use of DGPS
+provides attributes that aim to curtail negative aspects of HY. That is,
+DGPS for corporations, and unlike the dividend yield, it is not affected
+by price but maintains properties that allow for inference into
+management quality. As management is aware of the signaling effect of
+dividends, this may induce the value trap, forcing management to
+continually increase dividends to maintain a certain valuation. However,
+such companies are more vulnerable to facing financial distress.
 
 \newpage
 
@@ -483,34 +504,22 @@ optimization problem and risk models used in the study.
 \section{Security Selection
 Methodology}\label{security-selection-methodology}}
 
-A widely used approach to evaluate dividend signals is to construct
-subset portfolios and compare in sample performance. This methodology
-does not provide parametric significance test, however, portfolio risk
-and return measures are based on systematically constructed portfolios
-and serve to provide valuable insights. Various such applications exist
-in the literature. Damodaran
-(\protect\hyperlink{ref-damodaran2004investment}{2004}) constructs top
-decile portfolios based on trailing DY at the beginning of each year
-from 1952 to 2001. For the last sample period (1991 -2001), it is found
-that the highest dividend yielding portfolio outperformed the lowest by
-about 3\%. Conover, Jensen \& Simpson
-(\protect\hyperlink{ref-conover2016difference}{2016}) find that
-portfolios constructed from high-dividend payers return over 1.5\% more
-per year than non-dividend payers, in addition to having lower risk.
-
-Following a similar approach we will rank stock within our selected
-universe by dividend signals, namely dividend yield (DY) and dividend
-growth per share (DGPS). First, we rebalance at the end of March and
-September and construct fully invested, long only portfolios. On each re
-balancing date, we take the top 100 stocks by market capitalization
-(MC), and then select the top quintile (20 stocks) based on the our
-signal scores. We then apply 25 basis trading costs to both buying and
-selling of stocks, and we will then use total return values, adjust for
-stock splits and other distorting effects on prices to calculate
-portfolio returns. We also carefully apply back-dated adjustments to
-dividends paid to accurately arrive at on-the-day dividends and actual
-closing prices when calculating our Dividend Yield and Dividend Per
-Share Growth measures.
+We will employ a practical approach in evaluating dividend signals that
+involves constructing subset portfolios and compare in sample
+performance as suggested by Damodaran
+(\protect\hyperlink{ref-damodaran2004investment}{2004}) .We will rank
+stock within our selected universe by dividend signals, namely dividend
+yield (DY) and dividend growth per share (DGPS). First, we rebalance at
+the end of March and September and construct fully invested, long only
+portfolios. On each re balancing date, we take the top 100 stocks by
+market capitalization (MC), and then select the top quintile (20 stocks)
+based on the our signal scores. We then apply 25 basis trading costs to
+both buying and selling of stocks, and we will then use total return
+values, adjust for stock splits and other distorting effects on prices
+to calculate portfolio returns. We also carefully apply back-dated
+adjustments to dividends paid to accurately arrive at on-the-day
+dividends and actual closing prices when calculating our Dividend Yield
+and Dividend Per Share Growth measures.
 
 We also apply at each re balancing on the risk models mentioned
 previously. The optimization are constrained to have minimum and maximum
@@ -600,16 +609,16 @@ Portfolio optimization consists of determining a set of assets, and
 their respective portfolio participation weights, which satisfy the
 investor concerning the combination of risk-return trade-off. Markowitz
 (\protect\hyperlink{ref-markowitz1959portfolio}{1959}) proposed the
-Mean-Variance (MV) model in which the expected return 4.1 is given by
-the a measure of the historical data of the stock's return. For our
-study we geometrically chain return to measure true effects on portfolio
-returns overtime. The risk is calculated by the variance of these
-returns 4.2. The MV model treats returns of individual assets as random
-variables and to adopt the value of expected return and variance in
-order to quantify the return and investment risk, respectively
+Mean-Variance (MV) model in which the expected return is given by the a
+measure of the historical data of the stock's return. For our study we
+geometrically chain return to measure true effects on portfolio returns
+overtime. The risk is calculated by the variance of these returns. The
+MV model treats returns of individual assets as random variables and to
+adopt the value of expected return and variance in order to quantify the
+return and investment risk, respectively
 (\protect\hyperlink{ref-zhang2018portfolio}{Zhang, Li \& Guo, 2018}).
 \begin{align}
-\mu \quad = \quad w^TR \\ \notag
+\mu \quad = \quad w^TR \notag \\
 \sigma^2 \quad  = \quad w^T\sum \notag
 w\end{align} The resulting objective function is to maximize return
 given a certain level of risk and constraint: \begin{align}
@@ -660,12 +669,12 @@ difference between the portfolio holdings and those of the benchmark is
 given primary consideration in the optimization problem.
 
 \begin{align}
- Total\ Risk : h^T(\lambda_FXFX^T + \lambda_D)h\\ \quad \quad  \notag 
- Active \ Risk : (h-h_B)^T(\lambda_FXFX^T+\lambda_DD)(h-h_B) \notag
+Total\ Risk : h^T(\lambda_FXFX^T + \lambda_D)h \notag \\ \quad \quad 
+Active \ Risk : (h-h_B)^T(\lambda_FXFX^T+\lambda_DD)(h-h_B) \notag
 \end{align}
 
-where, = \begin{align}
-\lambda_f \quad = \quad common \ factor\ risk\ aversion\ parameter,\\ \lambda_d \quad  = \quad specific\ \notag risk\ aversion\ parameter,\\\ h \quad = \quad n×1 \ vector\ of\ managed\ portfolio’s\ holdings,\\ and \quad \notag\\h_B \quad =\quad vector \ normal\ (benchmark)\ portfolio’s\ holdings \notag 
+where \begin{align}
+\lambda_f  =  common \ factor\ risk\ aversion\ parameter \notag,\\ \lambda_d =  specific\ risk\ aversion\ parameter \notag,\\h  =  n * 1 \ vector\ of\ managed\ portfolio’s\ holdings\notag,\\ and \notag \\h_B = vector \ normal\ (benchmark)\ portfolio’s\ holdings \notag 
 \end{align}
 
 The introduction of risk aversion parameters into Barra's portfolio
@@ -693,7 +702,7 @@ If the portfolio risk is measured as by the variance of its return then
 is;
 
 \begin{align}
-\sigma^2 = x^TQ{x}\\ and \ C_i(x)= x_i(Qx)_i \\ \notag
+\sigma^2 = x^TQ{x}\notag \\ and \ C_i(x)= x_i(Qx)_i \notag \\
 \quad where\ (Qx)_i =\sum_{i = 1}^{N}Q_ijxj \notag
 \end{align}
 
@@ -704,14 +713,6 @@ x^{ERC} \ satisfies \ C_i(x^{ERC}) = (R(x^{ERC})/N) \ for \ i = 1,...., N. \nota
 From this we conclude that the variance and standard deviation measures
 are the same for and when can then only the variance risk measure
 appreciating that all results apply equally to standard deviation.
-
-\hypertarget{minimum-volatility-minvol}{%
-\subsection{Minimum Volatility
-(MinVol)}\label{minimum-volatility-minvol}}
-
-Minimum-variance similar to ERC do not require return forecasts, there
-can be in some cases they may be more efficient than strategies that
-trade off expected risk and return.
 
 \hypertarget{tax-considerations}{%
 \section{Tax considerations}\label{tax-considerations}}
@@ -746,7 +747,7 @@ global portfolio will contend with. The proposed methodology to employ
 on the dividend portfolios use the following methodology.
 
 \begin{align}
-r_{a t}=p_d r_{p t}\left(1-t_d\right)+p_a r_{p t}\left(1-t_{c g}\right)
+r_{a t}=p_d r_{p t}\left(1-t_d\right)+p_a r_{p t}\left(1-t_{c g}\right) \notag
 \end{align}
 
 where r\_\{at\} the after tax return, p\_d= the proportion of r\_\{pt\}
@@ -768,12 +769,12 @@ capture the dynamic nature of financial markets in our stratification,
 we segmented the data using proxies that reflect market cycles and
 interest rate regimes. For volatility we used Chicago Board of Options
 Exchange (CBOE) VIX Index for the US indexes and emerging market
-indexes, V2X for Europe, FTSE IVUK for UK and SATITOP40 for SA
-volatility proxies fo and data from the Federal Reserve Bank of the
-United States. These metrics served as our stratifying variables,
-allowing us to categorize our sample across different market and
-interest rate cycles. For interest rate regimes, we use central bank
-interest rate schedules from the geographies we study.
+indexes, V2X for Europe, FTSE IVUK for UK and JALSH VR for SA volatility
+proxies fo and data from the Federal Reserve Bank of the United States.
+These metrics served as our stratifying variables, allowing us to
+categorize our sample across different market and interest rate cycles.
+For interest rate regimes, we use central bank interest rate schedules
+from the geographies we study.
 
 To calculate our excess returns, we geometrically chain the excess
 returns for the different periods before annualizing. This produces
@@ -796,13 +797,13 @@ order to avoid annualizing small samples.
 \section{When Do Dividend Strategies
 Work}\label{when-do-dividend-strategies-work}}
 
-The data presented in Table \ref{tab1} delineates the excess cumulative
+The data presented in Table \ref{tab1} presents the excess cumulative
 returns of our globally traded dividend portfolios. On an aggregate
 level, these portfolios yield a positive premium in comparison to their
 corresponding market indices. Nevertheless, a nuanced examination
 reveals a discernible variance in performance between the high yield
-(HY) and dividend growth (DG) strategies. From the UK-centric proxies
-for dividend strategies, the UK\_HY notably surpasses its counterparts,
+(HY) and dividend growth (DG) strategies. From the UK proxies for
+dividend strategies, the UK\_HY notably surpasses its counterparts,
 delivering a cumulative return of 3.5 times the initial investment over
 the sample period. In other regions, high yield strategies have
 manifested returns exceeding 1x from the inception of the period. It's
@@ -847,22 +848,22 @@ are categorized into two distinct cycles: the ``cutting'' cycle and the
 ``hiking'' cycle. These cycles are defined by periods wherein sustained
 rate changes (a minimum of three alterations) manifest at intervals of
 at least every five quarters. Moreover, both implied and realized equity
-market volatilities are leveraged to represent various epochs of market
-stability. Subsequent to this stratification, we engage in the geometric
-chaining of the excess returns across these varied periods, which are
-then annualized. The resultant metric provides a comparative framework
-for cumulative annualized returns.
+market volatilities are leveraged to represent various episodes of
+market stability. Subsequent to this stratification, we engage in the
+geometric chaining of the excess returns across these varied periods,
+which are then annualized. The resultant metric provides a comparative
+framework for cumulative annualized returns.
 
-Table \ref{tab2} delineates performance across diverse market cycles. An
-immediate observation is that, on average, the various geographies
-experience more periods characterized by market volatility than they do
-periods of low volatility. In these heightened volatility epochs, the
-annualized returns for most portfolios, be they HY or DG, tend to
-outstrip those seen during low volatility phases. This observation
-suggests that dividend portfolios might exhibit inherent defensive
-qualities during phases of market instability. It is especially
-noteworthy that the UK\_HY portfolio registers the most substantial
-returns during both high and low volatility phases.
+Table \ref{tab2} shows performance across diverse market cycles.
+Immediately we observe that, on average, the various geographies
+experience more periods of high volatility than they do periods of low
+volatility. In these heightened volatility, the annualized returns for
+most portfolios, be they HY or DG, tend to be higher those seen during
+low volatility phases. This observation suggests that dividend
+portfolios might exhibit inherent defensive qualities during phases of
+market instability. It is especially noteworthy that the UK\_HY
+portfolio registers the most substantial returns during both high and
+low volatility phases.
 
 \begingroup\fontsize{12pt}{13pt}\selectfont
 \begin{longtable}{llrr}
@@ -1050,14 +1051,14 @@ associated with said investment.
 \caption{Rolling 3 Year Returns \label{fig2}}\label{fig:Figure2}
 \end{figure}
 
-In this analysis, drawdowns are delineated as the disparity between the
+In this analysis, draw downs are delineated as the disparity between the
 peak and trough values of cumulative excess returns within a specified
 time frame. When scrutinizing our dividend portfolios, a pattern of
 similarity emerges both geographically and across varied strategies.The
 SA portfolios are markedly conspicuous, displaying the most pronounced
-drawdowns by value. This is closely followed by the UK High Yield (HY)
+draw downs by value. This is closely followed by the UK High Yield (HY)
 strategies. In contrast, portfolios associated with the EU and US
-exhibit relatively milder drawdowns.
+exhibit relatively milder draw downs.
 
 Yet, when the focus shifts from mere magnitude to the distribution or
 dispersion of these drawdowns, the narrative undergoes a transformation.
@@ -1075,7 +1076,7 @@ their drawdowns.
 \item
   I did a PCA which tries to link all these together. Partcilarly which
   risk attributes link the performance of dividend portfolios and how
-  these can be accounted for by designing a partcilar portfolio.
+  these risks can minimized and design a portfolio
 \end{itemize}
 
 In the extensive evaluation of globally dividend portfolios across
@@ -1133,6 +1134,10 @@ Ang, A. \& Bekaert, G. 2007. Stock return predictability: Is it there?
 Baker, H.K. \& Powell, G.E. 1999. How corporate managers view dividend
 policy. \emph{Quarterly Journal of Business and Economics}. 17--35.
 
+\leavevmode\vadjust pre{\hypertarget{ref-ux40baker2009understanding}{}}%
+Ben-David, I. 2010. Dividend policy decisions. \emph{Behavioral
+Finance}. 435.
+
 \leavevmode\vadjust pre{\hypertarget{ref-bhattacharyya2007dividend}{}}%
 Bhattacharyya, N. 2007. Dividend policy: A review. \emph{Managerial
 Finance}. 33(1):4--13.
@@ -1163,6 +1168,10 @@ DeAngelo, H. \& DeAngelo, L. 2006. The irrelevance of the MM dividend
 irrelevance theorem. \emph{Journal of financial economics}.
 79(2):293--315.
 
+\leavevmode\vadjust pre{\hypertarget{ref-fakir2013dividend}{}}%
+Fakir, R. et al. 2013. Dividend yield as a superior investment strategy.
+PhD thesis. University of Pretoria.
+
 \leavevmode\vadjust pre{\hypertarget{ref-fama1988permanent}{}}%
 Fama, E.F. \& French, K.R. 1988. Permanent and temporary components of
 stock prices. \emph{Journal of political Economy}. 96(2):246--273.
@@ -1176,6 +1185,11 @@ british stock market. \emph{The European Journal of Finance}.
 Filbeck, G., Holzhauer, H.M. \& Zhao, X. 2017. Dividend-yield
 strategies: A new breed of dogs. \emph{The Journal of Investing}.
 26(2):26--47.
+
+\leavevmode\vadjust pre{\hypertarget{ref-gardner2002motley}{}}%
+Gardner, D., Gardner, T. \& Maranjian, S. 2002. \emph{The motley fool
+investment guide for teens: 8 steps to having more money than your
+parents ever dreamed of}. Vol. 10. Simon; Schuster.
 
 \leavevmode\vadjust pre{\hypertarget{ref-gordon1962}{}}%
 Gordon, M.J. 1962. The savings investment and valuation of a
@@ -1235,6 +1249,9 @@ investment strategy''} beat the dow statistically and economically?
 \leavevmode\vadjust pre{\hypertarget{ref-miller1985dividend}{}}%
 Miller, M.H. \& Rock, K. 1985. Dividend policy under asymmetric
 information. \emph{The Journal of finance}. 40(4):1031--1051.
+
+\leavevmode\vadjust pre{\hypertarget{ref-o1991beating}{}}%
+O'higgins, M. \& Downes, J. 1991. \emph{(No Title)}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-rangvid2014dividend}{}}%
 Rangvid, J., Schmeling, M. \& Schrimpf, A. n.d. Dividend predictability
