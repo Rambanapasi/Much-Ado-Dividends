@@ -43,7 +43,7 @@ colnames(df)[2:23] <- geographical_codenames
 - DG, are companies that have experienced, significant grow its dividend distribution. In other words, have seen their dividend yield ratio go up with time. This could be a function of either, the payout ratio, or earnings yield or both.
 Companies in this category typically have higher-quality, cash-rich operations that perform well in both up and down markets and can provide excess returns throughout a complete market cycle. There are less likely to experience losses when interest rates are rising.
 
-- Finally we consider total return indexes because it measure the true returns to investors. It factors changes in dividend yield and prices in the index. 
+- in a nutshell, companines that display the ability to increase their dividend overtime are considered to be much safer, because there have good cash management practices but lack of investmnet opportunities. whereas, high dividend payers, that are more vumnerable to financial distress can be catergorized as the more risky companies. 
 
 The next table just shows each index and its benchmark, for ease of analysis later.
 
@@ -63,7 +63,7 @@ So, Return, Risk and a combination of the two (IR) will guide the analysis.
 
 # Objective
 
-Literature has shown that they provide greater excess return over time versus the s&p because the dividend component over and above the capital gains. We expand this to other indices, FTSE, MSCI and try to pick up 
+Literature has shown that they provide greater excess return over time versus the s&p because the dividend component over and above the capital gains. We expand this to other indices, FTSE, MSCI and try to pick up overall value proposition of dividend indices. 
 
 - So its risk and return that we need to evaluate, so do they provide that excess return over time that is significantly better than its parent index. 
 
@@ -74,15 +74,11 @@ are they exposed to higher risk assets. lets mention the composition of differen
 
 - finally we consider south African portfolios, are they able to consistently give a return. Lets use the sharpe ratios to determine the consistency of the portfolios. 
 
-- Show the trailing performances in one graph, ie 2, 3, 5, 10 and since inception. 
-# Instruments 
-
-Dividend portfolios are usually constructed using either a high yeild or a growth in dividend signal. 
-
-
 ##  Compounding Returns, Aggregate effects of Portfolios
 
-I calculate excess returns as the monthly difference return for index and benchmark, then geometrically chain the excess return to compute the cumulative excess returns. The indices across regions have different inception dates therefore not purely comparable across regions. To correct for this we start the series will start from the first date for all indices and standardized to 1, ie all indices start from the same point. However these indices are not purely comparable, inceptions date may lead to differing momentum effects.
+- calculate excess returns as the monthly difference return for index and benchmark, then geometrically chain the excess return to compute the cumulative excess returns. 
+
+- correct for differing inception dates. The indices across regions have different inception dates therefore not purely comparable across regions. To correct for this we start the series will start from the first date for all indices and standardized to 1, ie all indices start from the same point. However these indices are not purely comparable, inceptions date may lead to differing momentum effects.
 
 With that caveat, lets start the analysis.
 
@@ -127,14 +123,17 @@ table_df <- excess_return_df %>%
 
 table_df
 
-#  we notice that growth portfolios dont add signifiant value, SA offers similar to HY and DG. Whats the reason? HY did good in most advanced market economies. Gving more than 1X in excess cumulatively, the best being UK assets high yeild. EM not so well on a cumulative basis
 ```
+- notice that growth portfolios dont add value, SA offers similar to HY and DG. Whats the reason?
+
+- HY did good in most advanced market economies. Gving more than 1X in excess cumulatively, the best being UK assets high yeild. EM not so well on a cumulative basis
+
 
 ## Stratification 
 
-- to get a more nuanced picture of the performance over time, we stratify but first. 
+- to get a more nuanced picture of the performance over time, but first 
 
-- lets figure out a systematic way to stratifying? For this I do not have a way but I looked at the rolling standard deviation and by eyeballing it saw that meaningful data points are concentrated in the 95th and 5 percentile. 
+- some settings - top percentile is 95th and bottom is 5 percentile. 
 
 
 
@@ -145,21 +144,11 @@ table_df
   mutate(ret = px/lag(px)-1, RollSD = RcppRoll::roll_sd(1 + ret, 12, fill = NA, align = "right") * 
              sqrt(12)) %>% 
     filter(!is.na(RollSD))
-# plot just to visualize what we are doing
-  
-vol_plot <- vol_data %>% ggplot()+ 
-geom_line(aes(Date, RollSD, color = index))+ 
-  facet_wrap(~index)
-
-vol_plot
 ```
 
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
-# get rolling sd for the volatility index 
-
-# # get the top quartile and bottom quartil
-# 
+# # get the top quartile and bottom quartile
  strat_df <- vol_data %>% filter(index == "VIX") %>%  mutate(topQ = quantile(RollSD, probs = 0.95), 
                botQ = quantile(RollSD, probs = 0.05),
                Strat = ifelse(RollSD >= topQ, "HiVol", 
@@ -173,7 +162,7 @@ vol_plot
  # UK 
 
  strat_df <-vol_data %>% filter(index == "IVIUK") %>% mutate(topQ = quantile(RollSD, probs = 0.95), 
-               botQ = quantile(RollSD, probs = 0.5),
+               botQ = quantile(RollSD, probs = 0.05),
               Strat = ifelse(RollSD >= topQ, "HiVol", 
                           ifelse(RollSD <= botQ, "LowVol", "Normal_Vol")))
 # 
@@ -182,7 +171,7 @@ vol_plot
 #  EU 
  
  strat_df <-vol_data %>% filter(index == "V2X") %>% mutate(topQ = quantile(RollSD, probs = 0.95), 
-               botQ = quantile(RollSD, probs = 0.5),
+               botQ = quantile(RollSD, probs = 0.05),
               Strat = ifelse(RollSD >= topQ, "HiVol", 
                           ifelse(RollSD <= botQ, "LowVol", "Normal_Vol")))
 # 
@@ -191,7 +180,7 @@ vol_plot
 # # SA 
 
  strat_df <-vol_data %>% filter(index == "SAVIT40") %>% mutate(topQ = quantile(RollSD, probs = 0.95), 
-               botQ = quantile(RollSD, probs = 0.5),
+               botQ = quantile(RollSD, probs = 0.05),
                Strat = ifelse(RollSD >= topQ, "HiVol", 
                            ifelse(RollSD <= botQ, "LowVol", "Normal_Vol")))
 # 
@@ -231,12 +220,12 @@ stratifying_df <-  bind_rows(
 
 stratifying_df %>% arrange(Name)
 ```
-- we notice that there have been varying lengths in vol periods between geographies. 
-- may lead suspicious results in the sense that there may not be enough data points to string good representation of returns
-- but general trends for HY indexes.  EM HY > Low Vol. EU_HY> Hi Vol.  JP_HY > Low Vol. SA_HY >High Vol. UK_HY (Both) - Low Vol. US _HY > Low vol and W_HY > Low Vol. 
+- not entirely confident with my methodology  and I need help on this. 
+- after stratification i simple calc returns similar to having the full sample of dates. I knowledge that this may lead suspicious results not be enough data points to string good representation of returns
+- but general trends for HY indexes.  EM HY > Low Vol. EU_HY> Hi Vol.  JP_HY > Low Vol. SA_HY >High Vol. UK_HY (Both) Low Vol. US _HY > Low vol and W_HY > Low Vol. 
 - and DG . EU_DG > Low vol . JP> High Vol. SA > HI Vol, US > Low_Vol
 
-So typically what characterizes a high vol period and how does that influence our value stock. what main economoic indicators give the most impact in affecting returns? 
+ Within regions SA_HY(H), UK_HY_B(L), US_DG(L), EM_HY(L), EU_HY(L), JP_HY(L). So this simply means that for our different portfolios, HY performs well and mostly in low volatile periods. Linking that back to our definition for HY index assets it is rationale that most of the value stock that are vulnerable to financial distress would find favor from investors in a very risky environment (Low volatility). 
 
 # Interest rate cycles
 
@@ -348,10 +337,10 @@ CB_df
 - so HY indexes generally perform well in rising interest rate environments and have the lowest return in Neutral interest rate environments and DG dividend growth strategies follow a similar pattern. 
 - Similar to the market cycle stratification, some regimes have less data points than other which may affect the returns. 
 
-Within geographies then, EM - HY (H), EU - DG (C), JP - HY (N) , SA-DG (H) , UK HY - B  (H), US_DG (H), So mostly perform well in Hiking periods but their strategies are evenly split given our sample. 
+Within geographies then, EM - HY (H), EU - DG (C), JP - HY (N) , SA-DG (H) , UK HY - B  (H), US_DG (H), So mostly perform well in Hiking periods but their strategies are evenly split given our sample. However there is no clear relationship between which strategy works best.  This contradicts what some pundits advocate, they believe that  investors looking for yield in low rate environments would cause the price action to favor such stock (we have only seen this in the EU DG ). 
 
 
-# rolling consistency in returns
+# Rolling consistency
 
 - How much bang for buck do these strategies give and how consistent are there at acheiving said return
 
@@ -393,31 +382,23 @@ labs(x = "", y = "Information Ratio", title = "Performance Consistency", subtitl
 plot
 
 ```
-- the analysis here should take a different form. lets do this by sections. 
-- HY indexes at the start had positive IR. Expect for SA and UK 
-- Barring SA from pre 2010 there have moved into negative. 
-- DG indexes start negative expect for the US. Apart from the slight postive in recent times from the US all are negative. 
-- For regions with DG and HY portfolios, the consistency of returns tends to mirror each other. Given their characterization, their drivers should broadly be similar. 
-- Comparing amongst regions, visually US and SA HY as off late have mirroring effects, and this term is used very loosely.There has been a general co movement  in IR for the different JP EM. 
-- SA DG, SA HY and JP DG have had similar movements pre 2010 and more recently an upward trend. 
+- we notive choppy IR for the different indexes across regions. 
+- difficult for strategies to consistently deliver IR above zero across varying volatiliy and interest rate regimes. 
+- but having said that, lets consider the redline to be a measure of strategy working or not.
+- The UK_HY stands out as one that has struggled to give that bang for buck effect. 
+- EM  and JP HY and JP DG from 2005 to 2015 return positive IR then since then until the start of 2022 its been negative. 
+- SA indexes , a tale of two have shown 2010 to 2020 in positive for DG but the SA HY IR from 2017 to date for HY
+- US indexes have been mirroring each other. However difficult to conclude. 
 
-Possible analysis could be to regress the information ratios on a set of economic variables. Maybe do a rolling R2 of variables that may have an effect on the consistency of returns. 
+We notice that UK HY portfolios have not been working. Whilst SA HY has deliverd some respectable consistency for several years. However EM _HY  like the UK since 2015 has delivered negative information ratio. Are there common risk factors that give opposite effects?
+#  Drawdowns
 
-
-
-# Trailing Performance and Drawdowns
-
-A trailing return measures returns between two dates. They are also known as point-to-point returns since you are looking at performance between a starting date and an end date. It shows a snapshot of the mutual fund at a specific point in time. This metric can be used to measure returns year-to-date, one year, three years and so on. Trailing returns can also be calculated from the current date from the fund's inception date. This will be important to evaluate the how different inception dates affects fund performance.
-
-Downwards give a more detailed picture of the risk attributes of the constituents of a data series. Their importance for our study is to uncover latent relationship between performance and drawdown.
+Drawdowns give a more detailed picture of the risk attributes of the constituents of a data series. Their importance for our study is to uncover latent relationship between performance and drawdown.
 
 ```{r}
-
 # lets get cumulative returns for our dividend strategies and Max drawdowns
 
-
-cum_df <- excess_return_df %>%
-  rename_all(~paste0("Excess from ", .)) %>% rename( "date" = "Excess from date") %>% 
+cum_df <- excess_return_df %>% 
   gather(Funds, ret, -date) %>% mutate(Year = format(date, "%Y")) %>% group_by(Year, Funds) %>% summarize(DD = (max(ret) - min(ret))/max(ret)* 100, Range = range(ret)) %>% arrange(desc(Range)) 
 
  order <- cum_df %>% pull(Funds) %>% unique()
@@ -426,7 +407,7 @@ cum_df$Year <- as.Date(paste0(cum_df$Year, "-01-01"))
 
 source("code/order.R")
 
-cum_df %>% 
+plot <- cum_df %>% 
   plot_order(., Column = "Funds", Order = order) %>% 
   ggplot() +
   geom_line(aes(Year, DD), color = "steelblue", size = 1.1, alpha = 0.8) + 
@@ -435,34 +416,22 @@ facet_wrap(~Funds) +
 labs(x = "", y = " Max Drawdowns (%)", title = "Yearly Drawdowns", subtitle = "", caption = "Source:Bloomberg and\n Authors Calculations")
 
 plot
-
-?range
-
-# lets pick those that have had a significant amount of drawdowns over time
 ```
-Draw downs in this study are defined as the difference between low and high values of cumulative excess returns within a time period. From our dividend portfolios we notice that drawdowns are similar in regions and across strategies. Both portfolios in SA show significant drawdowns by values followed by  UK HY strategies and with the EU and US strategies having the least amount of drawdowns. However, considering the dispersion of the drawdowns, we note that the UK High Yield and Japan High Yield strategies are suspectible to large changes, with emerging markets and south africa show the least variation.    
+Draw downs in this study are defined as the difference between low and high values of cumulative excess returns within a time period. From our dividend portfolios we notice that drawdowns are similar in regions and across strategies. 
+
+- Both indexes in SA have shown decreasing levels in drawdowns.  
+- US, Japan, EM have shown some level of increasing drawdowns. 
+- EU most stable. Low levels
 
 
-# Final Thoughts
+# Putting it together
 
-Dividend portfolios either HY or DGPS have overtime give some level of positive return, as measured by the cumulative return. 
-However, HY indexes give above average excess return for the sample period. Overtime however, most portfolios have choppy excess cumulative returns. There is no super convincing signal that these portfolios give some consistent excess return. 
+Dividend portfolios either HY or DGPS have overtime give some level of positive return, as measured by the cumulative return. However, HY indexes give above average excess return for the sample period and most portfolios have show no ability to harverst premium to a noticable effect on portfolio value overtime. From this metric, there is no super convincing signal that these portfolios give some consistent excess return. 
 
-The moment we stratifying according to different periods of volatility we notice that during periods of high volatility, its less the type of signal and more of the region that plays a big part in explaining the performance. in that case emerging market assets perform better than in low volatility environments. Unusual given in this time there is a flight to safety and EM will be risky at this time. During periods of low vol, advanced market portfolios generally give higher returns that in high vol conditions. 
+The moment we stratifying according to different periods of volatility we notice that during periods of high volatility, its less about the region and more of the investment strategy that plays a big part in explaining the performance. SA performs well during these high vol periods. Unusual given in this time there is a flight to safety and EM and SA by association will be risky at this time. During periods of low vol, advanced market portfolios generally give higher returns that in high vol conditions. 
 
-When we consider rolling returns, excess returns for most portfolios move in a similar direction, generally there are part of the same asset class, exposed to the same risk factors and should behave the same way.  with the exception the SA portfolios. we notice that over three years, it has great variance in excess returns. This too can be said about the UK high yield portfolio. 
+When we consider rolling returns, excess returns for most portfolios move in a similar direction, generally there are part of the same asset class, exposed to the same risk factors and should behave the same way.  with the exception the SA portfolios. we notice that over three years, it has great variance in excess returns. . 
 
-So what I can pick out is that dividend portfolios in EM behave different from advanced economies. 
-
-To do 
-- Will stratifying further, look at mid vol, inflation and interest rates? 
-
-Working on the data section, where i describe the portfolios and their return signalling, 
-
-Looked at cumulative excess return. no clear signal but for two HY portfolios. 
-tratification, all portfolios perform as expected 
-
-#     
 
 
 
