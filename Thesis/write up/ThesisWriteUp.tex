@@ -1,9 +1,9 @@
-\documentclass[11pt,preprint, authoryear]{elsarticle}
+\documentclass[12pt,preprint, authoryear]{elsarticle}
 
 \usepackage{lmodern}
 %%%% My spacing
 \usepackage{setspace}
-\setstretch{1}
+\setstretch{2}
 \DeclareMathSizes{12}{14}{10}{10}
 
 % Wrap around which gives all figures included the [H] command, or places it "here". This can be tedious to code in Rmarkdown.
@@ -178,7 +178,7 @@
 
 \begin{frontmatter}  %
 
-\title{A Dive into Dividend Portfolios, When and How to They Work}
+\title{Much Ado About Dividends}
 
 % Set to FALSE if wanting to remove title (for submission)
 
@@ -198,12 +198,17 @@
 
 \begin{abstract}
 \small{
-Dividend paying stock offer an additional componenet to otherwise non
-dividend paying stock. This paper studies the return signalling cue from
-dividend portfolio. We find that dividend portfolios around the around
-offer downside protection. However emerging market portfolios have
-positive return during market turmoil which is considerably above
-returns from advanced economy portfolios.
+Investors deploy capital in equity markets to search for return that
+beats a market index. To acheive this, its important for practioners to
+identifyinvestement strategies and rules that can best deliever
+consistent outperformance. In this study, we assess globally dividend
+portfolios and determine that despite their value proposition, there
+exists great inconsistency in acheiving positive excess returns. We
+construct dividend investment strategies by considering high yield and
+dividend growth as signals and backtest performance of constituents
+throughout differing interest rate regimes against the JSE Top 40 Index.
+Such trading stratgeies have been successfully internationally, we test
+this for South Africa.
 }
 \end{abstract}
 
@@ -226,7 +231,8 @@ returns from advanced economy portfolios.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \pagestyle{fancy}
 \chead{}
-\rhead{}
+\rhead{A Practical Investiagtion of the Mechanics Behind Dividend Return
+Signalling}
 \lfoot{}
 \rfoot{\footnotesize Page \thepage}
 \lhead{}
@@ -244,6 +250,42 @@ returns from advanced economy portfolios.
 
 \hypertarget{introduction}{%
 \section{Introduction}\label{introduction}}
+
+This study provides an extensive investigation into the return signaling
+of dividend portfolios. Firstly, we address the question of when
+dividend portfolios work. The analysis delves into the performance and
+risk attributes of globally traded dividend portfolios across different
+geographical regions, market cycles, and interest rate regimes. We find
+that return characteristics of dividend portfolios vary greatly, with
+advanced economy high-yield portfolios returning multiples during the
+sample period, whilst emerging market and South African dividend
+portfolios fail to deliver stratifying excess return over the same
+period. More broadly, dividend portfolios, whether high yield (HY) or
+dividend growth (DG), all offer downside protection during periods of
+high market volatility.
+
+Taking the analysis a step further, we observe that dividend portfolios
+provide the best returns during periods of interest rate hiking cycles.
+We note that because dividend yield is categorized as a proxy for value,
+such assets are primed to outperform growth stocks as investors move
+away from risky assets within asset classes.
+
+Next, the study also evaluates the consistency of performance among
+dividend portfolios using a rolling information ratio. From this dynamic
+measure, we note the inherent lack of consistency in all dividend
+portfolios. However, coupled with drawdowns experienced in different
+jurisdictions, we acknowledge that advanced market dividend portfolios
+experience the least variation in drawdowns compared to emerging
+markets. The results indicate that both growth and high-yield dividend
+portfolios tend to under perform relative to their benchmarks, raising
+questions about their consistency in delivering positive returns.
+
+We then move on to how dividend portfolios work, with the goal of
+constructing a portfolio that can best harness the existing premium. We
+use share data from the Johannesburg Stock Exchange (JSE), with our
+benchmark being the JSE Top 40 index. We construct four portfolios
+varying in complexity, with the most advanced accounting for price
+momentum and dividend payout sustainability.
 
 \hypertarget{problem-statement}{%
 \section{Problem Statement}\label{problem-statement}}
@@ -798,19 +840,18 @@ order to avoid annualizing small samples.
 Work}\label{when-do-dividend-strategies-work}}
 
 The data presented in Table \ref{tab1} presents the excess cumulative
-returns of our globally traded dividend portfolios. On an aggregate
-level, these portfolios yield a positive premium in comparison to their
-corresponding market indices. Nevertheless, a nuanced examination
-reveals a discernible variance in performance between the high yield
-(HY) and dividend growth (DG) strategies. From the UK proxies for
-dividend strategies, the UK\_HY notably surpasses its counterparts,
-delivering a cumulative return of 3.5 times the initial investment over
-the sample period. In other regions, high yield strategies have
-manifested returns exceeding 1x from the inception of the period. It's
-pertinent to underscore, however, that these represent marginal gains
-when contextualized within a 16-year investment horizon. In stark
-contrast, dividend growth strategies have under performed, yielding
-diminished excess returns since the onset of the period.
+returns of our globally traded dividend portfolios of which cumulative
+returns are indexed and start from value 1. On an aggregate level, most
+portfolios yield a positive premium but below their starting point in
+comparison to their corresponding market indices. Nevertheless, a
+nuanced examination reveals a discernible variance in performance
+between the high yield (HY) and dividend growth (DG) strategies. From
+the EM proxy for dividend strategies, the EM\_HY surpasses its
+comparables, delivering a cumulative return of 1.2 times the initial
+investment over the sample period. In other regions, most high yield and
+growth strategies fail give consistent cumulative returns from the
+inception. It's pertinent to underscore, however, that these represent
+marginal gains when contextualized within a 20-year investment horizon.
 
 Upon assessing the cumulative returns, it becomes evident that there is
 not a consistent indication that dividend strategies, irrespective of
@@ -824,18 +865,18 @@ investors.
   \hline
  & Regions & Start Date & Total Years & Median & Cumulative Excess Return \\ 
   \hline
-1 & EM\_HY & 1199232000.00 & 16.00 & 0.83 & 0.85 \\ 
-  2 & EU\_DG & 1199232000.00 & 16.00 & 0.76 & 0.82 \\ 
-  3 & EU\_HY & 1199232000.00 & 16.00 & 1.08 & 1.13 \\ 
-  4 & JP\_DG & 1199232000.00 & 16.00 & 0.70 & 0.70 \\ 
-  5 & JP\_HY & 1199232000.00 & 16.00 & 0.99 & 1.26 \\ 
-  6 & SA\_DG & 1199232000.00 & 16.00 & 0.46 & 0.40 \\ 
-  7 & SA\_HY & 1199232000.00 & 16.00 & 0.56 & 0.40 \\ 
-  8 & UK\_HY & 1199232000.00 & 16.00 & 1.71 & 3.52 \\ 
-  9 & UK\_HY\_B & 1199232000.00 & 16.00 & 1.37 & 1.47 \\ 
-  10 & US\_DG & 1199232000.00 & 16.00 & 0.76 & 0.74 \\ 
-  11 & US\_HY & 1199232000.00 & 16.00 & 0.90 & 1.04 \\ 
-  12 & W\_HY & 1199232000.00 & 16.00 & 1.07 & 1.20 \\ 
+1 & EM\_HY & 1062115200.00 & 20.00 & 1.27 & 1.21 \\ 
+  2 & EU\_DG & 1062115200.00 & 20.00 & 1.10 & 1.03 \\ 
+  3 & EU\_HY & 1062115200.00 & 20.00 & 1.07 & 1.03 \\ 
+  4 & JP\_DG & 1062115200.00 & 20.00 & 0.88 & 0.86 \\ 
+  5 & JP\_HY & 1062115200.00 & 20.00 & 1.22 & 0.92 \\ 
+  6 & SA\_DG & 1062115200.00 & 20.00 & 0.43 & 0.41 \\ 
+  7 & SA\_HY & 1062115200.00 & 20.00 & 0.41 & 0.49 \\ 
+  8 & UK\_HY & 1062115200.00 & 20.00 & 0.38 & 0.19 \\ 
+  9 & UK\_HY\_B & 1062115200.00 & 20.00 & 0.71 & 0.68 \\ 
+  10 & US\_DG & 1062115200.00 & 20.00 & 1.21 & 1.15 \\ 
+  11 & US\_HY & 1062115200.00 & 20.00 & 1.04 & 0.82 \\ 
+  12 & W\_HY & 1062115200.00 & 20.00 & 1.05 & 0.84 \\ 
    \hline
 \end{tabular}
 \caption{Cumulative Excess Return \label{tab1}} 
@@ -863,7 +904,14 @@ low volatility phases. This observation suggests that dividend
 portfolios might exhibit inherent defensive qualities during phases of
 market instability. It is especially noteworthy that the UK\_HY
 portfolio registers the most substantial returns during both high and
-low volatility phases.
+low volatility phases. Dividend growth portfolios offer higher excess
+returns in both high volatility and low volatility periods. SA, JP,
+US-DG, EM. UK\_HY and US\_HY portfolio had positive annualized excess
+return. The high yield portfolios, with the exception of SA, typically
+register superior annualized returns across all interest rate cycles.
+Several portfolios, including UK portfolios, EU\_HY, US\_HY and EM\_HY
+exhibited negative annualized returns regardless of the prevailing
+interest rate regime
 
 \begingroup\fontsize{12pt}{13pt}\selectfont
 \begin{longtable}{llrr}
@@ -876,30 +924,30 @@ Index & Market Period & Months & annualized\_return \\
 \endfoot 
 \endlastfoot 
  \midrule
-SA\_DG & Low Vol Period &  82 & -0.13 \\ 
-  SA\_HY & Low Vol Period &  82 & -0.09 \\ 
-  SA\_HY & High Vol Period &  63 & -0.09 \\ 
-  JP\_HY & Low Vol Period &  80 & -0.08 \\ 
-  JP\_DG & Low Vol Period &  80 & -0.07 \\ 
-  US\_DG & Low Vol Period &  80 & -0.05 \\ 
-  JP\_DG & High Vol Period &  77 & -0.05 \\ 
-  SA\_DG & High Vol Period &  63 & -0.05 \\ 
-  US\_DG & High Vol Period &  77 & -0.05 \\ 
-  EU\_DG & Low Vol Period &  86 & -0.03 \\ 
-  EM\_HY & Low Vol Period &  80 & -0.03 \\ 
-  JP\_HY & High Vol Period &  77 & -0.03 \\ 
-  EU\_DG & High Vol Period &  93 & -0.03 \\ 
-  EM\_HY & High Vol Period &  77 & -0.02 \\ 
-  US\_HY & Low Vol Period &  80 & -0.01 \\ 
-  US\_HY & High Vol Period &  77 & -0.00 \\ 
-  EU\_HY & Low Vol Period &  86 & 0.01 \\ 
-  EU\_HY & Low Vol Period &  86 & 0.01 \\ 
-  EU\_HY & Low Vol Period &  86 & 0.01 \\ 
-  EU\_HY & High Vol Period &  93 & 0.02 \\ 
-  UK\_HY\_B & High Vol Period &  93 & 0.11 \\ 
-  UK\_HY\_B & Low Vol Period &  86 & 0.14 \\ 
-  UK\_HY & High Vol Period &  93 & 0.18 \\ 
-  UK\_HY & Low Vol Period &  86 & 0.18 \\ 
+UK\_HY & High Vol Period &  32 & -0.54 \\ 
+  UK\_HY & Low Vol Period &  53 & -0.24 \\ 
+  UK\_HY\_B & High Vol Period &  32 & -0.11 \\ 
+  UK\_HY\_B & Low Vol Period &  53 & -0.09 \\ 
+  US\_HY & High Vol Period &  29 & -0.05 \\ 
+  US\_HY & Low Vol Period &  43 & -0.03 \\ 
+  EU\_DG & High Vol Period &  32 & -0.02 \\ 
+  EM\_HY & High Vol Period &  29 & -0.02 \\ 
+  JP\_DG & Low Vol Period &  43 & -0.00 \\ 
+  EU\_HY & Low Vol Period &  53 & 0.01 \\ 
+  EU\_HY & Low Vol Period &  53 & 0.01 \\ 
+  EU\_HY & Low Vol Period &  53 & 0.01 \\ 
+  EU\_DG & Low Vol Period &  53 & 0.01 \\ 
+  EU\_HY & High Vol Period &  32 & 0.03 \\ 
+  EM\_HY & Low Vol Period &  43 & 0.05 \\ 
+  JP\_HY & High Vol Period &  29 & 0.05 \\ 
+  US\_DG & Low Vol Period &  43 & 0.07 \\ 
+  US\_DG & High Vol Period &  29 & 0.07 \\ 
+  SA\_HY & Low Vol Period &  23 & 0.11 \\ 
+  JP\_HY & Low Vol Period &  43 & 0.11 \\ 
+  JP\_DG & High Vol Period &  29 & 0.13 \\ 
+  SA\_DG & High Vol Period &  22 & 0.21 \\ 
+  SA\_DG & Low Vol Period &  23 & 0.24 \\ 
+  SA\_HY & High Vol Period &  22 & 0.36 \\ 
    \bottomrule
 \caption{Performance in Market Cycles\label{tab2}} 
 \end{longtable}
@@ -918,16 +966,12 @@ distinct hiking or cutting cycles, its central bank largely maintained
 constant rates. Consequently, we assess its performance exclusively
 within the confines of a neutral interest rate cycle.
 
-The high yield portfolios, with the exception of SA, typically register
-superior annualized returns across all interest rate cycles. Several
-portfolios, including EU\_DG, JP\_DG, JP\_HY, SA\_DG, and SA\_HY,
-consistently report negative annualized returns regardless of the
-prevailing interest rate regime. Meanwhile, the UK\_HY\_B index exhibits
-a negative return in neutral phases, and the US\_DG portfolio
-underperforms during both cutting and hiking phases. The index that
-emerges with the highest annualized excess return across these cycles is
-UK\_HY. Notably, the UK\_HY\_B portfolio demonstrates commendable excess
-returns, realizing a 0.54\% gain during cutting cycles.
+Assessing dividend portfolio performance in the three interest rate
+regimes largely leads to expected outcomes. That is, growth portfolios
+perform better during periods of cutting interest cycles and high yield
+portfolio perform better during periods of interest rate hiking periods.
+However, this pattern is not preserved when we consider the UK\_HY and
+EU\_HY portfolios.
 
 \begingroup\fontsize{12pt}{13pt}\selectfont
 \begin{longtable}{llrr}
@@ -940,35 +984,35 @@ Index & Market Period & Months & annualized\_return \\
 \endfoot 
 \endlastfoot 
  \midrule
-SA\_HY & Hiking &  30 & -0.27 \\ 
-  SA\_DG & Hiking &  30 & -0.23 \\ 
-  EU\_DG & Hiking &  14 & -0.19 \\ 
-  US\_DG & Cut &  12 & -0.14 \\ 
-  SA\_HY & Cut &  24 & -0.11 \\ 
-  JP\_HY & Neutral &  58 & -0.09 \\ 
-  SA\_DG & Cut &  24 & -0.08 \\ 
-  EU\_DG & Cut &  20 & -0.08 \\ 
-  JP\_DG & Neutral &  58 & -0.06 \\ 
-  EU\_DG & Neutral &  28 & -0.05 \\ 
-  SA\_HY & Neutral &   8 & -0.05 \\ 
-  US\_HY & Cut &  12 & -0.03 \\ 
-  UK\_HY\_B & Neutral &  28 & -0.03 \\ 
-  EU\_HY & Hiking &  14 & -0.03 \\ 
-  US\_DG & Hiking &  22 & -0.03 \\ 
-  SA\_DG & Neutral &   8 & -0.02 \\ 
-  US\_HY & Hiking &  22 & 0.01 \\ 
-  EM\_HY & Neutral &  28 & 0.02 \\ 
-  EU\_HY & Cut &  20 & 0.02 \\ 
-  US\_DG & Neutral &  28 & 0.02 \\ 
-  US\_HY & Neutral &  28 & 0.03 \\ 
-  EM\_HY & Cut &  12 & 0.04 \\ 
-  EU\_HY & Neutral &  28 & 0.05 \\ 
-  EM\_HY & Hiking &  22 & 0.07 \\ 
-  UK\_HY\_B & Hiking &  18 & 0.11 \\ 
-  UK\_HY & Neutral &  28 & 0.22 \\ 
-  UK\_HY & Hiking &  18 & 0.44 \\ 
-  UK\_HY\_B & Cut &  16 & 0.54 \\ 
-  UK\_HY & Cut &  16 & 0.78 \\ 
+EM\_HY & Neutral &  30 & 0.05 \\ 
+  EM\_HY & Cut &  16 & -0.10 \\ 
+  EM\_HY & Hiking &  34 & 0.10 \\ 
+  EU\_DG & Neutral &  34 & 0.07 \\ 
+  EU\_DG & Cut &  20 & 0.11 \\ 
+  EU\_DG & Hiking &  26 & 0.02 \\ 
+  EU\_HY & Neutral &  34 & -0.01 \\ 
+  EU\_HY & Cut &  20 & 0.06 \\ 
+  EU\_HY & Hiking &  26 & -0.13 \\ 
+  JP\_DG & Neutral &  76 & -0.02 \\ 
+  JP\_HY & Neutral &  76 & 0.07 \\ 
+  SA\_DG & Neutral &  10 &  \\ 
+  SA\_DG & Cut &  32 & -0.14 \\ 
+  SA\_DG & Hiking &  38 & 0.10 \\ 
+  SA\_HY & Neutral &  10 &  \\ 
+  SA\_HY & Cut &  32 & -0.15 \\ 
+  SA\_HY & Hiking &  38 & 0.05 \\ 
+  UK\_HY & Neutral &  30 & -0.50 \\ 
+  UK\_HY & Cut &  20 & -0.53 \\ 
+  UK\_HY & Hiking &  30 & -0.64 \\ 
+  UK\_HY\_B & Neutral &  30 & -0.42 \\ 
+  UK\_HY\_B & Cut &  20 & -0.33 \\ 
+  UK\_HY\_B & Hiking &  30 & -0.55 \\ 
+  US\_DG & Neutral &  30 & -0.06 \\ 
+  US\_DG & Cut &  16 & 0.32 \\ 
+  US\_DG & Hiking &  34 & 0.07 \\ 
+  US\_HY & Neutral &  30 & -0.17 \\ 
+  US\_HY & Cut &  16 & -0.15 \\ 
+  US\_HY & Hiking &  34 & -0.14 \\ 
    \bottomrule
 \caption{Performance in Interest Rate Regimes\label{tab3}} 
 \end{longtable}
@@ -984,13 +1028,11 @@ relative to a market benchmark. It is frequently used in the industry to
 gauge a manager's proficiency in generating excess returns and the
 consistency with which these returns are achieved. Thus, our objective
 is to assess the capacity of our dividend portfolios to achieve such
+excess returns. We have adopted a rolling 60-month information ratio as
+a metric to evaluate long-term performance consistency. This ratio is
+computed by determining the rolling excess return of the index relative
+to its benchmark and then dividing this by the volatility of those
 excess returns.
-
-We have adopted a rolling 60-month information ratio as a metric to
-evaluate long-term performance consistency. This ratio is computed by
-determining the rolling excess return of the index relative to its
-benchmark and then dividing this by the volatility of those excess
-returns.
 
 \begin{figure}[H]
 
@@ -1004,45 +1046,50 @@ dividend strategies, further highlighting the challenges inherent in
 securing high returns in asset markets. In an ideal scenario, an
 information ratio exceeding 0 is preferred, with most industry
 strategies typically averaging around 0.3. However, Figure \ref{fig1}
-demonstrates that, when assessed on a rolling 60-month basis, both
-growth and high-yield dividend portfolios tend to underperform relative
+demonstrates that, when assessed on a rolling 36-month basis, both
+growth and high-yield dividend portfolios tend to under perform relative
 to their benchmarks.Upon broadening our evaluation to encompass 24 and
-36-month periods, the results appear even more volatile. Notably, SA
-indices consistently demonstrate commendable performance, with the
-SA\_HY standing out particularly. Within the domain of advanced markets,
-the dividend portfolios of both the EU and Japan exhibit a modicum of
-consistency in positive returns initially, only to later deteriorate.
+60 month rolling periods, the results appear even more volatile.
+Notably, SA indexes consistently demonstrate commendable performance,
+with the SA\_HY standing out particularly. Within the domain of advanced
+markets, the dividend portfolios of both the EU and Japan exhibit a
+modicum of consistency in positive returns initially, only to later
+deteriorate.
 
-It is imperative to note that despite their capacity to deliver decent
-cumulative returns and exhibit defensive characteristics across
-stratified periods, these indices, when gauged on a relative basis,
-still leave much to be desired in terms of consistent performance.
+In line with the results from our stratification based on market cycles
+and interest rate regimes, we observed that the majority of High-Yield
+(HY) portfolios experienced declines in rolling information ratios,
+while Dividend Growth (DG) portfolios incurred losses. This trend was
+particularly evident during the period following the global financial
+crisis in late 2008 to late 2009. This period was characterized by high
+volatility and falling interest rates. Conversely, the subsequent
+crisis, which occurred after the COVID-19 pandemic and was marked by
+rising interest rates, favored High-Yield portfolios. However, it's
+worth noting that except for the portfolios of Japan (JP), Emerging
+Markets (EM), and South Africa (SA), which exhibited similar rebounds
+after the crises, growth strategies were more prominent following the
+2008 crisis, but less so after the pandemic. These observations align
+with the major findings on the influence of interest rates from the
+previous section.It is imperative to note the EM\_HY portfolio
+consisistent with high cumulative return in the first section, has seen
+an upward trajectory in information ratio. This may be an indication
+towards strong defensive characteristics of this particular HY portfolio
 
-\hypertarget{drawdowns}{%
-\subsection{Drawdowns}\label{drawdowns}}
+\hypertarget{risk-attributes-of-consistituents}{%
+\subsection{Risk attributes of
+consistituents}\label{risk-attributes-of-consistituents}}
 
-A trailing return provides insights into the performance of an
-investment over a specified period, measured between two distinct dates.
-As the name suggests, it essentially ``trails'' the investment from a
-starting point to an end point, effectively capturing the point-to-point
-returns. This tool offers a concise snapshot of, for instance, a mutual
-fund's performance at a specific juncture in its trajectory.
-
-The utility of the trailing return metric is multi-faceted. For one, it
-can gauge returns over varying durations, such as year-to-date, over one
-year, three years, and so forth. Furthermore, it is feasible to compute
-trailing returns by referencing the current date back to the fund's very
-inception. Such an analysis proves invaluable when attempting to discern
-how varying inception dates might influence the performance of a fund.
-
-Delving deeper into the realm of risk assessment, drawdowns provide a
-comprehensive view of the risk attributes of the data series'
-constituents. In the context of our study, the relevance of drawdowns is
-underscored by their capacity to unveil latent correlations between
-performance and drawdown. Essentially, by analyzing drawdowns, one can
-ascertain the maximum potential loss an investment has experienced,
-thereby providing insights into the inherent risks and vulnerabilities
-associated with said investment.
+So far we have used static and trailing return measures to provide
+insights into the performance of an investment over a specified period,
+measured between two distinct dates. Looking at aggregate risk
+characteristics, drawdowns provide a comprehensive view of the risk
+attributes of the data series' constituents. In the context of our
+study, the relevance of drawdowns is underscored by their capacity to
+unveil latent correlations between performance and drawdown.
+Essentially, by analyzing drawdowns, one can ascertain the maximum
+potential loss an investment has experienced, thereby providing insights
+into the inherent risks and vulnerabilities associated with said
+investment.
 
 \begin{figure}[H]
 
@@ -1051,46 +1098,37 @@ associated with said investment.
 \caption{Rolling 3 Year Returns \label{fig2}}\label{fig:Figure2}
 \end{figure}
 
-In this analysis, draw downs are delineated as the disparity between the
-peak and trough values of cumulative excess returns within a specified
-time frame. When scrutinizing our dividend portfolios, a pattern of
+Our analysis in \ref[fig2] defines as the disparity between the peak and
+trough values of cumulative excess returns within a specified time
+frame. When scrutinizing our dividend portfolios, a pattern of
 similarity emerges both geographically and across varied strategies.The
-SA portfolios are markedly conspicuous, displaying the most pronounced
-draw downs by value. This is closely followed by the UK High Yield (HY)
+SA portfolios are markedly volatile, displaying the most pronounced draw
+downs visually and more concretely by value from the beginning of the
+sample period. This is closely followed by the UK High Yield (HY)
 strategies. In contrast, portfolios associated with the EU and US
-exhibit relatively milder draw downs.
+exhibit relatively milder draw downs. Yet, when the focus shifts from
+mere magnitude to the distribution or dispersion of these drawdowns, the
+narrative undergoes a transformation. The UK High Yield and Japan High
+Yield strategies are revealed to be more volatile, being susceptible to
+significant fluctuations. In juxtaposition, emerging markets, with South
+Africa as a case in point, manifest a more stabilized profile, evidenced
+by diminished variation in their drawdowns.
 
-Yet, when the focus shifts from mere magnitude to the distribution or
-dispersion of these drawdowns, the narrative undergoes a transformation.
-The UK High Yield and Japan High Yield strategies are revealed to be
-more volatile, being susceptible to significant fluctuations. In
-juxtaposition, emerging markets, with South Africa as a case in point,
-manifest a more stabilized profile, evidenced by diminished variation in
-their drawdowns.
+\hypertarget{conclusion}{%
+\subsection{Conclusion}\label{conclusion}}
 
-\hypertarget{wrapping-it-up}{%
-\subsection{Wrapping it up}\label{wrapping-it-up}}
-
-\begin{itemize}
-\tightlist
-\item
-  I did a PCA which tries to link all these together. Partcilarly which
-  risk attributes link the performance of dividend portfolios and how
-  these risks can minimized and design a portfolio
-\end{itemize}
-
-In the extensive evaluation of globally dividend portfolios across
-varied market cycles and interest rate regimes, it's evident that while
-dividend strategies offer additional return offered by their income
-componenet, their performance remains notably inconsistent. The
-challenges in obtaining high returns in asset markets come to the fore,
-with dividend strategies across various geographies and timelines
-exhibiting uneven returns. The impact of interest rate cycles, plays a
-decisive role in portfolio performance, a fact made salient by Japan's
-unique neutral rate cycle. Adding another layer of depth to our
-analysis, rolling informatio ratios offer periodic snapshots of
+Extensively evaluating the globally traded dividend portfolios looking
+at risk and return we can conclude that across varied market cycles and
+interest rate regimes, it's evident that while dividend strategies offer
+additional return offered by their income component, their performance
+remains notably inconsistent. The challenges in obtaining high returns
+in asset markets come to the fore, with dividend strategies across
+various geographies and timelines exhibiting uneven excess returns. The
+impact of interest rate cycles and market volatility shows that
+dividends portfolios can offer some defensive characteristics. However
+our dynamic measure of the information ratio depicts inconsistency in
 performance consistency, noting that most strategies fail to give
-performance postive ratios but it's the drawdowns, defined by the
+performance positive ratios but it's the draw downs, defined by the
 discrepancies between peak and trough values of cumulative excess
 returns, that reveal the underlying risk attributes. Geographically,
 while South African portfolios record pronounced drawdown values,
@@ -1101,20 +1139,19 @@ the EU and US demonstrate relative stability.
 \section{Which Dividend Signals Matter in South
 Africa?}\label{which-dividend-signals-matter-in-south-africa}}
 
-We assessed dividend portfolio performance in different geographies and
-\# Results and Analysis \# Discussion
+\hypertarget{results-and-analysis}{%
+\section{Results and Analysis}\label{results-and-analysis}}
+
+\hypertarget{discussion}{%
+\section{Discussion}\label{discussion}}
 
 \hypertarget{limitations-of-the-study}{%
 \subsection{Limitations of the study}\label{limitations-of-the-study}}
 
-Could not get constituent data for the indices that had superior
-performance within the sample period. This would have been help in
-constrcuting more representative indices and unpacking why it was that
-dividend yield and or grow signals were more effective in that
-portfolio.
+\hypertarget{conclusion-1}{%
+\section{Conclusion}\label{conclusion-1}}
 
-\hypertarget{conclusion}{%
-\section{Conclusion}\label{conclusion}}
+\newpage
 
 \hypertarget{references}{%
 \section{References}\label{references}}

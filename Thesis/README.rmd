@@ -3,9 +3,13 @@ output:
   md_document:
     variant: markdown_github
 ---
-# Cleaning 
+# Goal 
 
-self explanotory, but incase you change the dataset be mindful of the number of columns and change in the names accordingly. 
+- what is the performance of dividend portfolios. 
+
+- interested in regional performance of indexes that are constrcuted either through HY or DG growth as signals
+
+- the next chunk achieves and now dividend portfolios are proxies for their jurisdiction. 
 ```{r}
 # loadings
 pacman::p_load("xts", "tidyverse", "tbl2xts", "PerformanceAnalytics", 
@@ -21,9 +25,39 @@ colnames(df)[2:23] <- geographical_codenames
 
 ```
 
-# Purpose
+# Goal and Steps to Acheive them
 
-We want to investigate the performance of dividend paying portfolios across different regions. We will look at index construction,  dynamic performance measures and risk analysis of these portfolios. in essence, why do these portfolios work or not and when they seem to add value to a portfolio. We also high the distinction in growth versus HY performance. 
+- Look at aggregate return effects across regions. 
+- Stratify by interest rate and market volatility.
+- Assess return consistency. 
+- and get an idea of risk attributes of constituents - maybe drawdowns could be a tool that we could employ. 
+
+# But first, lets describe what constitutes these indexes
+
+- we need to classify by style what the index offers. There are value, these are stock that trade below their perceived intrinsic value. 
+
+- Next, we consider high yield and growth in dividends per share as our value signals. Why? The indexes we investigate are return oriented factor based strategies, that dividend yield can be either absolute value or growth. 
+
+- HY, are companies that have a history of paying high dividends per share or have dividend yield . if we hold the payout ratio constant, that yield is a function of earnings yield. To achieve that HY status, its either earnings are high or price is low. They are typically in industries such as telecoms and utilities, and REITS (real estate assets) have cash flows that are more steady and predictable, which enables them to distribute a larger dividend. These businesses typically have better-developed business models and depend less on expansion to produce returns. These companies carry high risk of financial distress, because of being part of a value trap. 
+
+- DG, are companies that have experienced, significant grow its dividend distribution. In other words, have seen their dividend yield ratio go up with time. This could be a function of either, the payout ratio, or earnings yield or both.
+Companies in this category typically have higher-quality, cash-rich operations that perform well in both up and down markets and can provide excess returns throughout a complete market cycle. There are less likely to experience losses when interest rates are rising.
+
+- Finally we consider total return indexes because it measure the true returns to investors. It factors changes in dividend yield and prices in the index. 
+
+The next table just shows each index and its benchmark, for ease of analysis later.
+
+- The data used is from 20-09-03 to 20-09-23, 20 years because that is the maximum we could retrive for all indexes on Bloomberg. 
+
+```{r}
+library(kableExtra)
+indexes <- readxl::read_xlsx("data/Index Description.xlsx")
+
+kable(indexes)
+```
+
+
+We want to investigate the performance of dividend paying portfolios across different regions. Firstly we will asess the performance of dividend portfolios over market cycles and interest rate regimes.   dynamic performance measures and risk analysis of these portfolios. in essence, why do these portfolios work or not and when they seem to add value to a portfolio. We also high the distinction in growth versus HY performance. 
 
 So, Return, Risk and a combination of the two (IR) will guide the analysis. 
 
@@ -60,24 +94,24 @@ library(glue)
 library(stats)
 
 #   calculate simple returns just simple excess returns
-a <- df %>% MY_excess_return(., "UK_HY", "UK") 
-b <- df %>% MY_excess_return(., "UK_HY_B", "UK_B")
+a <- df %>% My_excess_return(., "UK_HY", "UK") 
+b <- df %>% My_excess_return(., "UK_HY_B", "UK_B")
 
-c <- df %>% MY_excess_return(., "US_HY", "US")
-d <- df %>% MY_excess_return(., "US_DG", "US_2")
+c <- df %>% My_excess_return(., "US_HY", "US")
+d <- df %>% My_excess_return(., "US_DG", "US_2")
 
-e <- df %>% MY_excess_return(., "EU_HY", "EU")
-f <- df %>% MY_excess_return(., "EU_DG", "EU_2")
+e <- df %>% My_excess_return(., "EU_HY", "EU")
+f <- df %>% My_excess_return(., "EU_DG", "EU_2")
 
-g <- df %>% MY_excess_return(., "JP_HY", "JP")
-h <- df %>% MY_excess_return(., "JP_DG", "JP")
+g <- df %>% My_excess_return(., "JP_HY", "JP")
+h <- df %>% My_excess_return(., "JP_DG", "JP")
 
-i <- df %>% MY_excess_return(., "EM_HY", "EM")
+i <- df %>% My_excess_return(., "EM_HY", "EM")
 
-j <- df %>% MY_excess_return(., "SA_HY", "SA")
-k <- df %>% MY_excess_return(., "SA_DG", "SA")
+j <- df %>% My_excess_return(., "SA_HY", "SA")
+k <- df %>% My_excess_return(., "SA_DG", "SA")
 
-l <- df %>% MY_excess_return(., "W_HY", "W")
+l <- df %>% My_excess_return(., "W_HY", "W")
 
 
 # Table to describe excess returns
@@ -91,40 +125,43 @@ table_df <- excess_return_df %>%
   group_by(Regions) %>% 
   summarise("Start Date" = first(date) , "Total Years"  = round( n()/12,0),  Median = median(Cumulative_Excess_Return),  "Cumulative Excess Return" = last(Cumulative_Excess_Return))
 
+table_df
+
 #  we notice that growth portfolios dont add signifiant value, SA offers similar to HY and DG. Whats the reason? HY did good in most advanced market economies. Gving more than 1X in excess cumulatively, the best being UK assets high yeild. EM not so well on a cumulative basis
 ```
 
 ## Stratification 
 
-Next I stratifying the sample period between periods of different market cycles and volatility. 
+- to get a more nuanced picture of the performance over time, we stratify but first. 
 
-For volatility I will use the historical series for the CBOE VIX index in the US, V2 X in the euro, and JALSH VR for SA. EM market volatility will be proxies by the VIX index. I will get the rolling standard deviation bucket the data two in either low, mid or high vol. 
+- lets figure out a systematic way to stratifying? For this I do not have a way but I looked at the rolling standard deviation and by eyeballing it saw that meaningful data points are concentrated in the 95th and 5 percentile. 
 
-After stratification, chain the excess returns for the different periods before annualizing. This ensures that we can compare performance according to different periods. 
 
-- Make sure to separate according to region tables accroding to region. 
-- State the geometic mean and median for the return and include the compounding periods
 
-- for somereason dates are not at monthend 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
 #   get the vol data and get some dates
 
- vol_data <- readxl::read_xlsx("data/volatility.xlsx")
- VIX <- vol_data %>% select(Date, VIX)
- V2X <- vol_data %>% select(Date, V2X)
- JSV <- vol_data %>% select(Date, JALSHVOL)
+ vol_data <- readxl::read_xlsx("data/volatility for indexes.xlsx") %>% gather(index, px , -Date) %>% 
+  mutate(ret = px/lag(px)-1, RollSD = RcppRoll::roll_sd(1 + ret, 12, fill = NA, align = "right") * 
+             sqrt(12)) %>% 
+    filter(!is.na(RollSD))
+# plot just to visualize what we are doing
+  
+vol_plot <- vol_data %>% ggplot()+ 
+geom_line(aes(Date, RollSD, color = index))+ 
+  facet_wrap(~index)
+
+vol_plot
+```
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
 # get rolling sd for the volatility index 
 
- source("code/rollingstarnddev.R")
-
-# US 
-
- Vixroll <- Rolling_sd(VIX ,"VIX")
-# 
 # # get the top quartile and bottom quartil
 # 
- strat_df <- Vixroll %>% mutate(topQ = quantile(RollSD, probs = 0.8), 
-               botQ = quantile(RollSD, probs = 0.2),
+ strat_df <- vol_data %>% filter(index == "VIX") %>%  mutate(topQ = quantile(RollSD, probs = 0.95), 
+               botQ = quantile(RollSD, probs = 0.05),
                Strat = ifelse(RollSD >= topQ, "HiVol", 
                            ifelse(RollSD <= botQ, "LowVol", "Normal_Vol")))
  
@@ -132,59 +169,52 @@ After stratification, chain the excess returns for the different periods before 
  
  hivol_per_vector_us <- strat_df %>% filter(Strat %in% "HiVol") %>% pull(Date)
  lovol_per_vector_us <- strat_df %>% filter(Strat %in% "LowVol") %>% pull(Date)
-# 
-# # Europe strat 
-# 
- Vixroll <- Rolling_sd(V2X ,"V2X")
-# get the top quartile and bottom quartil
 
- strat_df <- Vixroll %>% mutate(topQ = quantile(RollSD, probs = 0.8), 
-               botQ = quantile(RollSD, probs = 0.2),
+ # UK 
+
+ strat_df <-vol_data %>% filter(index == "IVIUK") %>% mutate(topQ = quantile(RollSD, probs = 0.95), 
+               botQ = quantile(RollSD, probs = 0.5),
+              Strat = ifelse(RollSD >= topQ, "HiVol", 
+                          ifelse(RollSD <= botQ, "LowVol", "Normal_Vol")))
+# 
+ hivol_per_vector_uk  <- strat_df %>% filter(Strat %in% "HiVol") %>% pull(Date)
+ lovol_per_vector_uk  <- strat_df %>% filter(Strat %in% "LowVol") %>% pull(Date)
+#  EU 
+ 
+ strat_df <-vol_data %>% filter(index == "V2X") %>% mutate(topQ = quantile(RollSD, probs = 0.95), 
+               botQ = quantile(RollSD, probs = 0.5),
               Strat = ifelse(RollSD >= topQ, "HiVol", 
                           ifelse(RollSD <= botQ, "LowVol", "Normal_Vol")))
 # 
  hivol_per_vector_eu  <- strat_df %>% filter(Strat %in% "HiVol") %>% pull(Date)
- lovol_per_vector_eu  <- strat_df %>% filter(Strat %in% "LowVol") %>% pull(Date)
-# 
+ lovol_per_vector_eu  <- strat_df %>% filter(Strat %in% "LowVol") %>% pull(Date) 
 # # SA 
-# 
- Vixroll <- Rolling_sd(JSV ,"JALSHVOL")
-# 
-# # get the top quartile and bottom quartil
-# 
- strat_df <- Vixroll %>% mutate(topQ = quantile(RollSD, probs = 0.8), 
-               botQ = quantile(RollSD, probs = 0.2),
+
+ strat_df <-vol_data %>% filter(index == "SAVIT40") %>% mutate(topQ = quantile(RollSD, probs = 0.95), 
+               botQ = quantile(RollSD, probs = 0.5),
                Strat = ifelse(RollSD >= topQ, "HiVol", 
                            ifelse(RollSD <= botQ, "LowVol", "Normal_Vol")))
 # 
  hivol_per_vector_sa <- strat_df %>% filter(Strat %in% "HiVol") %>% pull(Date)
  lovol_per_vector_sa <- strat_df %>% filter(Strat %in% "LowVol") %>% pull(Date)
- novol_per_vector_sa <- strat_df %>% filter(Strat %in% "Normal_Vol") %>% pull(Date)
 
- 
- # Getting excess return for the period and indices 
- #  High Vol df 
+#  High Vol df 
  
 source("code/Stratifier.R")
   
-Hivol_performance <-  bind_rows(
- stratifier(df, "EU_HY", "EU", hivol_per_vector_eu, "High Vol Period" ),
-  stratifier(df, "EU_HY", "EU", lovol_per_vector_eu, "Low Vol Period" ),
-  stratifier(df, "EU_HY", "EU", lovol_per_vector_eu, "Low Vol Period" ),
- stratifier(df, "EU_DG", "EU_2", hivol_per_vector_eu, "High Vol Period" ),
- stratifier(df, "UK_HY", "UK", hivol_per_vector_eu, "High Vol Period" ),
- stratifier(df, "UK_HY_B", "UK", hivol_per_vector_eu, "High Vol Period" ),
- stratifier(df, "JP_HY", "JP", hivol_per_vector_us, "High Vol Period" ),
- stratifier(df, "JP_DG", "JP", hivol_per_vector_us, "High Vol Period" ),
- stratifier(df, "EM_HY", "EM", hivol_per_vector_us, "High Vol Period" ),
- stratifier(df, "SA_HY", "SA", hivol_per_vector_sa, "High Vol Period" ),
- stratifier(df, "SA_DG", "SA", hivol_per_vector_sa, "High Vol Period" ),
- stratifier(df, "US_HY", "US", hivol_per_vector_us, "High Vol Period" ), 
- stratifier(df, "US_DG", "US", hivol_per_vector_us, "High Vol Period" )
- )
-
-#  Low Vol df
-Lovol_performance <-  bind_rows(
+stratifying_df <-  bind_rows(
+ stratifier(df, "EU_HY", "EU", hivol_per_vector_eu, "High Vol" ),
+ stratifier(df, "EU_DG", "EU_2", hivol_per_vector_eu, "High Vol" ),
+ stratifier(df, "UK_HY", "UK", hivol_per_vector_eu, "High Vol" ),
+ stratifier(df, "UK_HY_B", "UK", hivol_per_vector_eu, "High Vol"),
+ stratifier(df, "JP_HY", "JP", hivol_per_vector_us, "High Vol"),
+ stratifier(df, "JP_DG", "JP", hivol_per_vector_us, "High Vol"),
+ stratifier(df, "EM_HY", "EM", hivol_per_vector_us, "High Vol"),
+ stratifier(df, "SA_HY", "SA", hivol_per_vector_sa, "High Vol"),
+ stratifier(df, "SA_DG", "SA", hivol_per_vector_sa, "High Vol"),
+ stratifier(df, "US_HY", "US", hivol_per_vector_us, "High Vol"), 
+ stratifier(df, "US_DG", "US", hivol_per_vector_us, "High Vol"), 
+ stratifier(df , "W_HY", "W", hivol_per_vector_us, "High Vol"), 
  stratifier(df, "EU_HY", "EU", lovol_per_vector_eu, "Low Vol Period" ),
  stratifier(df, "EU_DG", "EU_2", lovol_per_vector_eu, "Low Vol Period" ),
  stratifier(df, "UK_HY", "UK", lovol_per_vector_eu, "Low Vol Period" ),
@@ -195,30 +225,30 @@ Lovol_performance <-  bind_rows(
  stratifier(df, "SA_HY", "SA", lovol_per_vector_sa, "Low Vol Period" ),
  stratifier(df, "SA_DG", "SA", lovol_per_vector_sa, "Low Vol Period" ),
  stratifier(df, "US_HY", "US", lovol_per_vector_us, "Low Vol Period" ), 
- stratifier(df, "US_DG", "US", lovol_per_vector_us, "Low Vol Period" )
+ stratifier(df, "US_DG", "US", lovol_per_vector_us, "Low Vol Period" ), 
+ stratifier(df, "W_HY", "W", lovol_per_vector_us, "Low Vol Period")
  )
- 
+
+stratifying_df %>% arrange(Name)
 ```
+- we notice that there have been varying lengths in vol periods between geographies. 
+- may lead suspicious results in the sense that there may not be enough data points to string good representation of returns
+- but general trends for HY indexes.  EM HY > Low Vol. EU_HY> Hi Vol.  JP_HY > Low Vol. SA_HY >High Vol. UK_HY (Both) - Low Vol. US _HY > Low vol and W_HY > Low Vol. 
+- and DG . EU_DG > Low vol . JP> High Vol. SA > HI Vol, US > Low_Vol
+
+So typically what characterizes a high vol period and how does that influence our value stock. what main economoic indicators give the most impact in affecting returns? 
+
 # Interest rate cycles
 
 Given a series of central bank interest rates. I want to get dates of n consecutive interest rate changes. 
 
 To do this I will
 
--  create a column that conditions if there was a rate change or nt.
--  apply a rolling function that counts a desired number of consistent hikes or cuts or neutral/hold period.
+- create a column that conditions if there was a rate change or nt.
+- apply a rolling function that counts a desired number of consistent hikes or cuts or neutral/hold period.
 - similar to the vol, aggregate performance in those dates. 
 
-Can I seggregate the hiking and cutting cycles using the one interest rate data series from the US. 
-
-## notes 
-
-- SA doesn't enough "periods" for cutting 
-
-
 ```{r}
-#   get the vol data and get some dates
-
 rate_data <- readxl::read_xlsx("data/Policy Rates.xlsx") 
 
 names <- c("Date", "US", "UK", "JP", "ECB", "SA")
@@ -232,31 +262,31 @@ SA_rates <- rate_data %>% select(Date, SA)
 ECB_rates <- rate_data %>% select(Date, ECB)
 # Get Rates for the US
 source("code/Interest_Regime.R")
-source("code/Stratifier.R")
+
 
 #  rename the columns for the function to work
 
-Regime_df <- Regime_change_df(US_rates, "US", 3)
+Regime_df <- Regime_change_df(US_rates, "US", 5)
 Hiking_date_vector_us <- Regime_df %>% filter(regime %in% "Hiking") %>% pull(Date)
 Cutting_date_vector_us <- Regime_df %>% filter(regime %in% "Cutting") %>% pull(Date)
 Neutral_date_vector_us <- Regime_df %>% filter(regime %in% "Neutral") %>% pull(Date) 
 
-Regime_df <- Regime_change_df(UK_rates, "UK", 3)
+Regime_df <- Regime_change_df(UK_rates, "UK", 5)
 Hiking_date_vector_uk <- Regime_df %>% filter(regime %in% "Hiking") %>% pull(Date)
 Cutting_date_vector_uk <- Regime_df %>% filter(regime %in% "Cutting") %>% pull(Date)
 Neutral_date_vector_uk <- Regime_df %>% filter(regime %in% "Neutral") %>% pull(Date) 
 
-Regime_df <- Regime_change_df(JP_rates, "JP", 3)
+Regime_df <- Regime_change_df(JP_rates, "JP", 5)
 Hiking_date_vector_jp <- Regime_df %>% filter(regime %in% "Hiking") %>% pull(Date)
 Cutting_date_vector_jp <- Regime_df %>% filter(regime %in% "Cutting") %>% pull(Date)
 Neutral_date_vector_jp <- Regime_df %>% filter(regime %in% "Neutral") %>% pull(Date) 
 
-Regime_df <- Regime_change_df(SA_rates, "SA", 3)
+Regime_df <- Regime_change_df(SA_rates, "SA", 5)
 Hiking_date_vector_sa <- Regime_df %>% filter(regime %in% "Hiking") %>% pull(Date)
 Cutting_date_vector_sa <- Regime_df %>% filter(regime %in% "Cutting") %>% pull(Date)
 Neutral_date_vector_sa <- Regime_df %>% filter(regime %in% "Neutral") %>% pull(Date) 
 
-Regime_df <- Regime_change_df(ECB_rates, "ECB", 3)
+Regime_df <- Regime_change_df(ECB_rates, "ECB", 5)
 Hiking_date_vector_eu <- Regime_df %>% filter(regime %in% "Hiking") %>% pull(Date)
 Cutting_date_vector_eu <- Regime_df %>% filter(regime %in% "Cutting") %>% pull(Date)
 Neutral_date_vector_eu <- Regime_df %>% filter(regime %in% "Neutral") %>% pull(Date) 
@@ -305,22 +335,30 @@ Nuetral_perfromance <-  bind_rows(
  )
 
 CB_df <- bind_rows(Nuetral_perfromance, 
- Cutting_performance, Hiking_performance) %>% arrange(Index)
+ Cutting_performance, Hiking_performance) %>% arrange(Name)
 
 CB_df
 
 #  need to aggregate that into a single number 
 ```
+- confident with this stratification
+- huge idiosyncratic factors that have influenced the results thus performance of equity within each region. We will not get into that for now. 
+- for HY returns, EM  H>C>N. EU N>C>H, SA H>C>N, UK H>C>N , US C>H>N
+- for DG returns, US H>C>N, SA H>C>N,  EU N>C>H
+- so HY indexes generally perform well in rising interest rate environments and have the lowest return in Neutral interest rate environments and DG dividend growth strategies follow a similar pattern. 
+- Similar to the market cycle stratification, some regimes have less data points than other which may affect the returns. 
+
+Within geographies then, EM - HY (H), EU - DG (C), JP - HY (N) , SA-DG (H) , UK HY - B  (H), US_DG (H), So mostly perform well in Hiking periods but their strategies are evenly split given our sample. 
+
+
 # rolling consistency in returns
 
-on a rolling basis i want to find out how much bang for buck is offered by dividend portfolios 
-, and more importantly discover how consistent the returns for a given strategy are
+- How much bang for buck do these strategies give and how consistent are there at acheiving said return
 
-to do this we will first 
+To do this we will first 
 
 - calculate the returns for both benchmark and index and get the tracking error of the each index to its benchmark.
-- combine into one table
-- then smiply on a rolling basis depict the movement of each pair. 
+- then simply on a rolling basis depict the movement of each pair. 
 - we then graph that. 
 
 
@@ -329,32 +367,43 @@ to do this we will first
 
 source("code/InformationRatioRoll.R")
 
-a <-  df %>% Information_Ratio_Roll(., "EU_HY", "EU", 20100104, 36)
-b <-  df %>% Information_Ratio_Roll(., "EU_DG", "EU_2",20100104, 36)
- c <- df %>% Information_Ratio_Roll(., "UK_HY", "UK", 20100104, 36)
- d <- df %>% Information_Ratio_Roll(., "UK_HY_B", "UK", 20100104, 36)
- e <- df %>% Information_Ratio_Roll(., "JP_HY", "JP", 20100104, 36)
- f <- df %>% Information_Ratio_Roll(., "JP_DG", "JP", 20100104, 36)
- g <- df %>% Information_Ratio_Roll(., "EM_HY", "EM", 20100104, 36)
- h <- df %>% Information_Ratio_Roll(., "SA_HY", "SA", 20100104, 36)
- i <- df %>% Information_Ratio_Roll(., "SA_DG", "SA", 20100104, 36)
- j <- df %>% Information_Ratio_Roll(., "US_HY", "US", 20100104, 36)
- k <- df %>% Information_Ratio_Roll(., "US_DG", "US_2", 20100104, 36)
+a <-  df %>% Information_Ratio_Roll(., "EU_HY", "EU", 20030808, 36)
+b <-  df %>% Information_Ratio_Roll(., "EU_DG", "EU_2",20030808, 36)
+ c <- df %>% Information_Ratio_Roll(., "UK_HY", "UK", 20030808, 36)
+ d <- df %>% Information_Ratio_Roll(., "UK_HY_B", "UK", 20030808, 36)
+ e <- df %>% Information_Ratio_Roll(., "JP_HY", "JP", 20030808, 36)
+ f <- df %>% Information_Ratio_Roll(., "JP_DG", "JP", 20030808, 36)
+ g <- df %>% Information_Ratio_Roll(., "EM_HY", "EM", 20030808, 36)
+ h <- df %>% Information_Ratio_Roll(., "SA_HY", "SA", 20030808, 36)
+ i <- df %>% Information_Ratio_Roll(., "SA_DG", "SA", 20030808, 36)
+ j <- df %>% Information_Ratio_Roll(., "US_HY", "US", 20030808, 36)
+ k <- df %>% Information_Ratio_Roll(., "US_DG", "US_2", 20030808, 36)
 
 consistency_df <- list(a, b, c, d, e,f,g,h,i,j,k) %>%
   reduce(inner_join, by='date') %>% 
   gather(IR , ret, -date) 
  
 plot <- consistency_df %>%   ggplot() + 
-geom_line(aes(date, ret), color = "steelblue", size = 1.1, alpha = 0.8) + 
+geom_line(aes(date, ret), color = "steelblue", size = 1.1, alpha = 0.8) +
+geom_hline(yintercept = 0, color = "red", size = 0.3, alpha = 0.5)+
 fmxdat::theme_fmx() + 
 facet_wrap(~IR) + 
-labs(x = "", y = "Return (%)", title = "Performance Consistency", subtitle = "Dividend Portfolios not as good as we thought", caption = "Source:Bloomberg and\n Authors Calculations")
+labs(x = "", y = "Information Ratio", title = "Performance Consistency", subtitle = "Deeply Inconcsistent", caption = "Source:Bloomberg and\n Authors Calculations")
 
 plot
 
 ```
-the results here generally show inconsistent performance of dividend strategies. the information ratio measures performance consistency of a portfolio over its benchmark, a ratio of more than 0 is desirable. most strategies typically in industry average information ratios of 0.47 thus deliver risk adjusted return of anything beyond 0.5. The figure above however shows that on a rolling 36 month basis, dividend portfolios be it growth or high yield perform worse that their benchmarks. we assess the performance on a 24, 36 month basis and find similar results. When compared with each other, dividend portfolios have varying correlations, most notable is the relationship between the EM HY IR and UK HY IR. Visually, when we consider the rolling 36 month IR at the lastest date, we notice that EM high yield portfolios provid the most consistent returns, having an information ratio of above 0 SA HY portfolio provides similar consistency. 
+- the analysis here should take a different form. lets do this by sections. 
+- HY indexes at the start had positive IR. Expect for SA and UK 
+- Barring SA from pre 2010 there have moved into negative. 
+- DG indexes start negative expect for the US. Apart from the slight postive in recent times from the US all are negative. 
+- For regions with DG and HY portfolios, the consistency of returns tends to mirror each other. Given their characterization, their drivers should broadly be similar. 
+- Comparing amongst regions, visually US and SA HY as off late have mirroring effects, and this term is used very loosely.There has been a general co movement  in IR for the different JP EM. 
+- SA DG, SA HY and JP DG have had similar movements pre 2010 and more recently an upward trend. 
+
+Possible analysis could be to regress the information ratios on a set of economic variables. Maybe do a rolling R2 of variables that may have an effect on the consistency of returns. 
+
+
 
 # Trailing Performance and Drawdowns
 

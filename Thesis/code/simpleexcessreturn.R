@@ -16,7 +16,5 @@ simple_excess_return <- function(df, index_name, benchmark_name) {
     ungroup()
   
 df$date <- as.Date(df$date)
-  
-  colnames(df)[2] = index_name
   df
 }

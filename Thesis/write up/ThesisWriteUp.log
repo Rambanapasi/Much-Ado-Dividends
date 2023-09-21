@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.9.18)  18 SEP 2023 14:37
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.9.18)  18 SEP 2023 23:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -23,8 +23,8 @@ Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
 \@bls=\dimen140
 (/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2023/05/17 v1.4n Standard LaTeX document class
-(/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/tex/latex/base/size11.clo
-File: size11.clo 2023/05/17 v1.4n Standard LaTeX file (size option)
+(/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/tex/latex/base/size12.clo
+File: size12.clo 2023/05/17 v1.4n Standard LaTeX file (size option)
 )
 \c@part=\count187
 \c@section=\count188
@@ -666,9 +666,9 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 * \topmargin=-38.1381pt
 * \headheight=12.0pt
 * \headsep=25.0pt
-* \topskip=11.0pt
+* \topskip=12.0pt
 * \footskip=30.0pt
-* \marginparwidth=59.0pt
+* \marginparwidth=44.0pt
 * \marginparsep=10.0pt
 * \columnsep=10.0pt
 * \skip\footins=24.0pt
@@ -690,102 +690,418 @@ Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: threeparttable package is loaded.
 Package caption Info: wrapfig package is loaded.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 218.
+LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 223.
 (/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OML+lmm on input line 218.
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 223.
 (/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 218.
+LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 223.
 (/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 218.
+LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 223.
 (/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <9> on input line 218.
+(Font)              <10> on input line 223.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 218.
+(Font)              <7> on input line 223.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 218.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 218.
+(Font)              <5> on input line 223.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 223.
 (/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 218.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 223.
 (/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 218.
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 223.
 (/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10.95> on input line 218.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 218.
+(Font)              <14> on input line 223.
 [1
 
 
-{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}] [2] [3] [4] [5]
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 549.
+{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[2]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[3]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[4]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[5]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[6]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[7]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[8]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[9]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[10]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[11]
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 591.
 (/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-) [6{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}] [7{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}]
+)
 
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 678.
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[12{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[13]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[14{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[15]
+
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 720.
 
 
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 678.
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 720.
 
 
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 678.
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 720.
 
 
-LaTeX Warning: Command \textquoteright invalid in math mode on input line 678.
+LaTeX Warning: Command \textquoteright invalid in math mode on input line 720.
 
-[8] [9] [10] [11] [12] [13]
-<ThesisWriteUp_files/figure-latex/unnamed-chunk-1-1.png, id=245, 433.62pt x 433.62pt>
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[16]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[17]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[18]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[19]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[20]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[21]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[22]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[23]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[24]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[25]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[26]
+<ThesisWriteUp_files/figure-latex/unnamed-chunk-1-1.png, id=303, 505.89pt x 433.62pt>
 File: ThesisWriteUp_files/figure-latex/unnamed-chunk-1-1.png Graphic file (type png)
 <use ThesisWriteUp_files/figure-latex/unnamed-chunk-1-1.png>
-Package pdftex.def Info: ThesisWriteUp_files/figure-latex/unnamed-chunk-1-1.png  used on input line 997.
-(pdftex.def)             Requested size: 433.61894pt x 433.61894pt.
-[14] [15 <./ThesisWriteUp_files/figure-latex/unnamed-chunk-1-1.png>]
-<ThesisWriteUp_files/figure-latex/Figure2-1.png, id=266, 433.62pt x 433.62pt>
+Package pdftex.def Info: ThesisWriteUp_files/figure-latex/unnamed-chunk-1-1.png  used on input line 1039.
+(pdftex.def)             Requested size: 505.88875pt x 433.61894pt.
+
+Overfull \hbox (22.4766pt too wide) in paragraph at lines 1039--1040
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1039--1040
+
+ []
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[27]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[28 <./ThesisWriteUp_files/figure-latex/unnamed-chunk-1-1.png>]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[29]
+<ThesisWriteUp_files/figure-latex/Figure2-1.png, id=329, 505.89pt x 433.62pt>
 File: ThesisWriteUp_files/figure-latex/Figure2-1.png Graphic file (type png)
 <use ThesisWriteUp_files/figure-latex/Figure2-1.png>
-Package pdftex.def Info: ThesisWriteUp_files/figure-latex/Figure2-1.png  used on input line 1049.
-(pdftex.def)             Requested size: 433.61894pt x 433.61894pt.
-[16] [17 <./ThesisWriteUp_files/figure-latex/Figure2-1.png>] [18] [19] [20]
+Package pdftex.def Info: ThesisWriteUp_files/figure-latex/Figure2-1.png  used on input line 1096.
+(pdftex.def)             Requested size: 505.88875pt x 433.61894pt.
+
+Overfull \hbox (22.4766pt too wide) in paragraph at lines 1096--1097
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1096--1097
+
+ []
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[30]
+
+LaTeX Warning: Reference `[' on page 31 undefined on input line 1101.
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[31 <./ThesisWriteUp_files/figure-latex/Figure2-1.png>]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[32]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[33]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[34]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[35]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[36]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[37]
 No file ThesisWriteUp.bbl.
-[21] (./ThesisWriteUp.aux)
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 14.49998pt, for example:
+(fancyhdr)                \setlength{\headheight}{14.49998pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
+
+[38] (./ThesisWriteUp.aux)
  ***********
 LaTeX2e <2023-06-01> patch level 1
 L3 programming layer <2023-08-29>
  ***********
+
+LaTeX Warning: There were undefined references.
+
 Package rerunfilecheck Info: File `ThesisWriteUp.out' has not changed.
-(rerunfilecheck)             Checksum: CAC7C5489541671DA7F1AE1A3F07C431;3720.
+(rerunfilecheck)             Checksum: 5CBF71D1CE9FCB95162E99DCFC1EE2B5;4069.
  ) 
 Here is how much of TeX's memory you used:
- 18212 strings out of 476894
- 336876 string characters out of 5807288
- 1941807 words of memory out of 5000000
- 39076 multiletter control sequences out of 15000+600000
- 616172 words of font info for 77 fonts, out of 8000000 for 9000
+ 18225 strings out of 476894
+ 337004 string characters out of 5807288
+ 1932807 words of memory out of 5000000
+ 39072 multiletter control sequences out of 15000+600000
+ 606216 words of font info for 70 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,12n,79p,550b,1047s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,12n,79p,550b,1042s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
 pdfTeX warning (dest): name{ref-baker2009understanding} has been referenced but does not exist, replaced by a fixed one
 
-</Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmex10.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi6.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi8.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr6.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr9.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri7.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri9.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy6.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy8.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt9.pfb>
-Output written on ThesisWriteUp.pdf (21 pages, 362456 bytes).
+</Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmex10.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi12.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr17.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri12.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri7.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy7.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb>
+Output written on ThesisWriteUp.pdf (38 pages, 348049 bytes).
 PDF statistics:
- 445 PDF objects out of 1000 (max. 8388607)
- 376 compressed objects within 4 object streams
- 118 named destinations out of 1000 (max. 500000)
- 195 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 514 PDF objects out of 1000 (max. 8388607)
+ 434 compressed objects within 5 object streams
+ 139 named destinations out of 1000 (max. 500000)
+ 211 words of extra memory for PDF output out of 10000 (max. 10000000)
 
