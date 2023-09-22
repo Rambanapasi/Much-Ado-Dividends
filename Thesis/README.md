@@ -710,7 +710,8 @@ but their strategies are evenly split given our sample. However there is
 no clear relationship between which strategy works best. This
 contradicts what some pundits advocate, they believe that investors
 looking for yield in low rate environments would cause the price action
-to favor such stock (we have only seen this in the EU DG ).
+to favor such stock (we have only seen this in the EU DG ), thus give
+higher returns.
 
 # Rolling consistency
 
@@ -817,7 +818,7 @@ plot <- cum_df %>%
   ggplot() +
   geom_line(aes(Year, DD), color = "steelblue", size = 1.1, alpha = 0.8) + 
 fmxdat::theme_fmx() + 
-facet_wrap(~Funds) + 
+facet_wrap(~Funds) +
 labs(x = "", y = " Max Drawdowns (%)", title = "Yearly Drawdowns", subtitle = "", caption = "Source:Bloomberg and\n Authors Calculations")
 ```
 
@@ -840,25 +841,52 @@ across strategies.
 
 # Putting it together
 
-Dividend portfolios either HY or DGPS have overtime give some level of
-positive return, as measured by the cumulative return. However, HY
-indexes give above average excess return for the sample period and most
-portfolios have show no ability to harverst premium to a noticable
-effect on portfolio value overtime. From this metric, there is no super
-convincing signal that these portfolios give some consistent excess
-return.
+Over time, dividend portfolios, whether HY or DGPS, have exhibited
+positive excess returns as indicated by cumulative returns. While the
+UK_HY index has shown the highest cumulative return, this trend is not
+consistently observed across other regional indexes. Consequently, when
+assessing the aggregate perspective on investor portfolio value,
+dividend portfolios may not offer a reliable means to capture the value
+premium consistently. However, upon stratifying these portfolios
+according to different periods of market volatility, it becomes evident
+that during high volatility periods, the primary determinant of
+performance is not the geographical region but rather the specific
+investment strategy employed. Surprisingly, portfolios based in South
+Africa (SA) tend to perform well during these high volatility periods,
+which is somewhat unconventional as such times are typically associated
+with a flight to safety, and Emerging Markets (EM) and, by extension,
+South Africa, are considered riskier.
 
-The moment we stratifying according to different periods of volatility
-we notice that during periods of high volatility, its less about the
-region and more of the investment strategy that plays a big part in
-explaining the performance. SA performs well during these high vol
-periods. Unusual given in this time there is a flight to safety and EM
-and SA by association will be risky at this time. During periods of low
-vol, advanced market portfolios generally give higher returns that in
-high vol conditions.
+When extending our analysis to encompass interest rate cycles, we
+observe a contrasting effect compared to the volatility-based
+stratification. Specifically, during periods of low volatility, High
+Yield (HY) indexes yield the highest returns. Conversely, high
+volatility periods yield mixed performances for both High Yield (HY) and
+Dividend Growth (DG) portfolios.In assessing consistency, we employ the
+information ratio. Initially, we discern that, at a broad level,
+dividend portfolios do not consistently maintain a positive ratio over
+an extended investment horizon. However, disparities in performance
+emerge. Notably, South African (SA) and dividend indexes have
+consistently delivered positive ratios over the past decade. In
+contrast, Emerging Markets (EM) and Japanese (JP) indexes have
+experienced substantial declines in their information ratios, despite
+seemingly consistent performance prior to 2015. Meanwhile, the United
+States (US), European Union (EU), and United Kingdom (UK) indexes have
+exhibited unpredictable performance over the sampled period.
 
-When we consider rolling returns, excess returns for most portfolios
-move in a similar direction, generally there are part of the same asset
-class, exposed to the same risk factors and should behave the same way.
-with the exception the SA portfolios. we notice that over three years,
-it has great variance in excess returns. .
+When we integrate our information ratio findings with drawdown analysis,
+we observe that advanced economies have experienced the fewest drawdowns
+over the sample period, with the exception of the UK. This could suggest
+a relatively lower level of systematic risk in these economies.
+Conversely, South African (SA) and Emerging Market (EM) drawdowns have
+exhibited a declining trend, possibly indicating a reduced perception of
+risk in emerging markets over time.
+
+# In a nutshell,
+
+-   HY divi strategies work in low volatility.
+-   All seem to perform well in hiking cycles, but mostly HY portfolios.
+-   SA and EM indexes at different periods gave the highest informatio
+    ratio. We know from our cumulative returns that this could be only
+    due to lower risk. Once we look at drawdowns, they reduced overtime.
+    A more direct measure can help explain this point better.
