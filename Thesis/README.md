@@ -841,6 +841,9 @@ across strategies.
 
 # Putting it together
 
+-   please note that I use dividend portfolios and dividend indexes
+    interchangeably
+
 Over time, dividend portfolios, whether HY or DGPS, have exhibited
 positive excess returns as indicated by cumulative returns. While the
 UK_HY index has shown the highest cumulative return, this trend is not
@@ -849,30 +852,30 @@ assessing the aggregate perspective on investor portfolio value,
 dividend portfolios may not offer a reliable means to capture the value
 premium consistently. However, upon stratifying these portfolios
 according to different periods of market volatility, it becomes evident
-that during high volatility periods, the primary determinant of
+that during low volatility periods, the primary determinant of
 performance is not the geographical region but rather the specific
-investment strategy employed. Surprisingly, portfolios based in South
-Africa (SA) tend to perform well during these high volatility periods,
-which is somewhat unconventional as such times are typically associated
-with a flight to safety, and Emerging Markets (EM) and, by extension,
-South Africa, are considered riskier.
+investment strategy employed. In this case, HY strategies. Surprisingly,
+portfolios based in South Africa (SA) tend to perform well during these
+high volatility periods, which is somewhat unconventional as such times
+are typically associated with a flight to safety, and Emerging Markets
+(EM) and, by extension, South Africa, are considered riskier.
 
 When extending our analysis to encompass interest rate cycles, we
 observe a contrasting effect compared to the volatility-based
-stratification. Specifically, during periods of low volatility, High
-Yield (HY) indexes yield the highest returns. Conversely, high
-volatility periods yield mixed performances for both High Yield (HY) and
-Dividend Growth (DG) portfolios.In assessing consistency, we employ the
-information ratio. Initially, we discern that, at a broad level,
-dividend portfolios do not consistently maintain a positive ratio over
-an extended investment horizon. However, disparities in performance
-emerge. Notably, South African (SA) and dividend indexes have
-consistently delivered positive ratios over the past decade. In
-contrast, Emerging Markets (EM) and Japanese (JP) indexes have
-experienced substantial declines in their information ratios, despite
-seemingly consistent performance prior to 2015. Meanwhile, the United
-States (US), European Union (EU), and United Kingdom (UK) indexes have
-exhibited unpredictable performance over the sampled period.
+stratification. We find that all strategies appear to give the highest
+return in hiking cycles.
+
+In assessing consistency, we employ the information ratio. Initially, we
+discern that, at a broad level, dividend portfolios do not consistently
+maintain a positive ratio over an extended investment horizon. However,
+disparities in performance emerge. Notably, South African (SA) and
+dividend indexes have consistently delivered positive ratios over the
+past decade. In contrast, Emerging Markets (EM) and Japanese (JP)
+indexes have experienced substantial declines in their information
+ratios, despite seemingly consistent performance prior to 2015.
+Meanwhile, the United States (US), European Union (EU), and United
+Kingdom (UK) indexes have exhibited unpredictable performance over the
+sampled period.
 
 When we integrate our information ratio findings with drawdown analysis,
 we observe that advanced economies have experienced the fewest drawdowns
