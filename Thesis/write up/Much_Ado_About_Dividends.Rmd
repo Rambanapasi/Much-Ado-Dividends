@@ -114,11 +114,7 @@ library(xtable)
 library(fmxdat)
 pacman::p_load("TTR")
 pacman::p_load("tidyr", "tbl2xts","devtools","lubridate", "readr", "PerformanceAnalytics", "ggplot2", "dplyr")
-
-source("code/uncompoundedexcess.R")
-source("code/simpleexcessreturn.R")
 source("code/EXCESSRETURN.R")
-source("code/monthlyreturns.R")
 
 
 # loadings
@@ -326,9 +322,9 @@ t_{cg}= the capital gains tax rate
 
 \newpage
 
-# Data Source and Stratification
+# Data 
 
-The data used for this research is sourced from Bloomberg with the sample period from  04/01/01–06/30/23. We collected daily price levels for various indices and benchmarks, share prices for stock listed on the Johanesburg Stock Exchange (JSE) to construct our own portfolios. To capture the dynamic nature of financial markets in our stratification, we segmented the data using proxies that reflect market cycles and interest rate regimes. For volatility we used Chicago Board of Options Exchange (CBOE) VIX Index for the US indexes and emerging market indexes, V2X for Europe, FTSE IVUK for UK and JALSH VR for SA volatility proxies fo and data from the Federal Reserve Bank of the United States. These metrics served as our stratifying variables, allowing us to categorize our sample across different market and interest rate cycles. For interest rate regimes, we use central bank interest rate schedules from the geographies we study. 
+The data used for this research is sourced from Bloomberg with the sample period from  04/01/01–06/30/23. We collected daily price levels for various indices and benchmarks^[see \ref{reftab} for a detailed guide to indices used and codenames used later in the results and analysis], share prices for stock listed on the Johanesburg Stock Exchange (JSE) to construct our own portfolios. We also retrieved data on indices on volaitility and interest rates to segment some of our analysis to reflect market cycles and interest rate regimes performane. That is, Chicago Board of Options Exchange (CBOE) VIX Index for the US and EM, V2X for Europe, IVUK for UK and JALSH VR for SA volatility proxies. For interest rate data we considered policy rates for central banks for instruments geography within our study, thse are the Federal Fund rate for the US and EM, Minimum Deopsit Financing Rate for the EU, Bank of England Bank Rate and the South African Reserve Bank Repo rate.  
 
 To calculate our excess returns, we geometrically chain the excess returns for the different periods before annualizing. This produces comparable cumulative annualized excess return (CAER) results, defined as:
 \begin{align}
@@ -338,33 +334,34 @@ C A E R=\left[\prod_{t=1}^n\left(1+E R_t\right)\right]^{\frac{222}{n}}-1 \notag
 Our rule to identifying volatility periods either high volatility (Hi-vol) or low volatility (Lo-vol) is achieved by computing the top and bottom quantile in standard deviation for our respective proxies. We then pull the dates corresponding to the periods, and compute annualized returns after geometrically chaining the monthly returns.
 The amount of daily data for the respective interest rate cycles is large enough to annualized, however, when the VIX,
 V2X or JALSH RV breach the top or bottom quintile for less than 50 trading days, the period is excluded in order to
-avoid annualizing small samples.
+avoid annualizing small samples. To stratifying between Hiking, Cutting and Neutral interest rate cycles we define these periods as either 5 quarters of changes (upwards for Hiking and downwards for Cutting) or otherwise if central bank held interest rates constant. 
 
-# When Do Dividend Strategies Work 
+
+## When Do Dividend Strategies Work 
 
 The data presented in Table \ref{tab1} presents the excess cumulative returns of our globally traded dividend portfolios of which cumulative returns are indexed and start from value 1.  On an aggregate level, most portfolios yield a positive premium but below their starting point in comparison to their corresponding market indices. Nevertheless, a nuanced examination reveals a discernible variance in performance between the high yield (HY) and dividend growth (DG) strategies. From the EM proxy for dividend strategies, the EM_HY surpasses its comparables, delivering a cumulative return of 1.2 times the initial investment over the sample period. In other regions, most high yield  and growth strategies fail give consistent cumulative returns from the inception. It's pertinent to underscore, however, that these represent marginal gains when contextualized within a 20-year investment horizon. 
 
 Upon assessing the cumulative returns, it becomes evident that there is not a consistent indication that dividend strategies, irrespective of their specific approach or geographical orientation, can consistently procure a premium that, over time, translates into substantive value for investors.
 
 ```{r Table1, results='asis'}
-a <- df %>% MY_excess_return(., "UK_HY", "UK") 
-b <- df %>% MY_excess_return(., "UK_HY_B", "UK_B")
+a <- df %>% My_excess_return(., "UK_HY", "UK") 
+b <- df %>% My_excess_return(., "UK_HY_B", "UK_B")
 
-c <- df %>% MY_excess_return(., "US_HY", "US")
-d <- df %>% MY_excess_return(., "US_DG", "US_2")
+c <- df %>% My_excess_return(., "US_HY", "US")
+d <- df %>% My_excess_return(., "US_DG", "US_2")
 
-e <- df %>% MY_excess_return(., "EU_HY", "EU")
-f <- df %>% MY_excess_return(., "EU_DG", "EU_2")
+e <- df %>% My_excess_return(., "EU_HY", "EU")
+f <- df %>% My_excess_return(., "EU_DG", "EU_2")
 
-g <- df %>% MY_excess_return(., "JP_HY", "JP")
-h <- df %>% MY_excess_return(., "JP_DG", "JP")
+g <- df %>% My_excess_return(., "JP_HY", "JP")
+h <- df %>% My_excess_return(., "JP_DG", "JP")
 
-i <- df %>% MY_excess_return(., "EM_HY", "EM")
+i <- df %>% My_excess_return(., "EM_HY", "EM")
 
-j <- df %>% MY_excess_return(., "SA_HY", "SA")
-k <- df %>% MY_excess_return(., "SA_DG", "SA")
+j <- df %>% My_excess_return(., "SA_HY", "SA")
+k <- df %>% My_excess_return(., "SA_DG", "SA")
 
-l <- df %>% MY_excess_return(., "W_HY", "W")
+l <- df %>% My_excess_return(., "W_HY", "W")
 
 
 # Table to describe excess returns
@@ -390,25 +387,17 @@ table <- xtable(data, caption = "Cumulative Excess Return \\label{tab1}")
 ```
 By stratifying these samples according to distinct interest rate regimes and equity market stability cycles, a more refined understanding emerges regarding the efficacy of dividend signals. Initially, interest rates are categorized into two distinct cycles: the "cutting" cycle and the "hiking" cycle. These cycles are defined by periods wherein sustained rate changes (a minimum of three alterations) manifest at intervals of at least every five quarters. Moreover, both implied and realized equity market volatilities are leveraged to represent various episodes of market stability. Subsequent to this stratification, we engage in the geometric chaining of the excess returns across these varied periods, which are then annualized. The resultant metric provides a comparative framework for cumulative annualized returns.
 
-Table \ref{tab2} shows performance across diverse market cycles. Immediately we observe that, on average, the various geographies experience more periods of high volatility than they do periods of low volatility. In these heightened volatility, the annualized returns for most portfolios, be they HY or DG, tend to be higher those seen during low volatility phases. This observation suggests that dividend portfolios might exhibit inherent defensive qualities during phases of market instability. It is especially noteworthy that the UK_HY portfolio registers the most substantial returns during both high and low volatility phases. Dividend growth portfolios offer higher excess returns in both high volatility and low volatility periods. SA, JP, US-DG, EM. UK_HY and US_HY portfolio had positive annualized excess return. The high yield portfolios, with the exception of SA, typically register superior annualized returns across all interest rate cycles. Several portfolios, including UK portfolios, EU_HY, US_HY and EM_HY exhibited negative annualized returns regardless of the prevailing interest rate regime
+Table \ref{tab2} shows performance in periods of heightened volatility (Hi Vol) or subdued (Lo vol) market cycles. We immediately notice higher annualized excess returns in Lo vol over Hi vol periods. Specifically,  within regions,  SA_HY in Hi Vol , UK_HY_B in Lo Vol , US_DG in Lo Vol , EM_HY in Lo Vol , EU_HY in Lo Vol , JP_HY in Lo Vol give the highest annualized excess returns. That is, HY strategies in advanced economies give higher annualized excess returns in low volatile markets over SA. We note that SA and Japan make up the highest returns over the period in either HY or DG.  
 
 ```{r Table2, results='asis'}
-vol_data <- readxl::read_xlsx("data/volatility for indexes.xlsx")
- VIX <- vol_data %>% select(Date, VIX)
- V2X <- vol_data %>% select(Date, V2X)
- JSV <- vol_data %>% select(Date, SAVIT40)
-# get rolling sd for the volatility index 
 
- source("code/rollingstarnddev.R")
+ vol_data <- readxl::read_xlsx("data/volatility for indexes.xlsx") %>% gather(index, px , -Date) %>% 
+  mutate(ret = px/lag(px)-1, RollSD = RcppRoll::roll_sd(1 + ret, 12, fill = NA, align = "right") * 
+             sqrt(12)) %>% 
+    filter(!is.na(RollSD))
 
- ?quantile
-# US 
-
- Vixroll <- Rolling_sd(VIX ,"VIX")
-# 
-# # get the top quartile and bottom quartil
-# 
- strat_df <- Vixroll %>% mutate(topQ = quantile(RollSD, probs = 0.95), 
+# # get the top quartile and bottom quartile
+ strat_df <- vol_data %>% filter(index == "VIX") %>%  mutate(topQ = quantile(RollSD, probs = 0.95), 
                botQ = quantile(RollSD, probs = 0.05),
                Strat = ifelse(RollSD >= topQ, "HiVol", 
                            ifelse(RollSD <= botQ, "LowVol", "Normal_Vol")))
@@ -417,59 +406,52 @@ vol_data <- readxl::read_xlsx("data/volatility for indexes.xlsx")
  
  hivol_per_vector_us <- strat_df %>% filter(Strat %in% "HiVol") %>% pull(Date)
  lovol_per_vector_us <- strat_df %>% filter(Strat %in% "LowVol") %>% pull(Date)
-# 
-# # Europe strat 
-# 
- Vixroll <- Rolling_sd(V2X ,"V2X")
-# get the top quartile and bottom quartil
 
- strat_df <- Vixroll %>% mutate(topQ = quantile(RollSD, probs = 0.95), 
+ # UK 
+
+ strat_df <-vol_data %>% filter(index == "IVIUK") %>% mutate(topQ = quantile(RollSD, probs = 0.95), 
+               botQ = quantile(RollSD, probs = 0.05),
+              Strat = ifelse(RollSD >= topQ, "HiVol", 
+                          ifelse(RollSD <= botQ, "LowVol", "Normal_Vol")))
+# 
+ hivol_per_vector_uk  <- strat_df %>% filter(Strat %in% "HiVol") %>% pull(Date)
+ lovol_per_vector_uk  <- strat_df %>% filter(Strat %in% "LowVol") %>% pull(Date)
+#  EU 
+ 
+ strat_df <-vol_data %>% filter(index == "V2X") %>% mutate(topQ = quantile(RollSD, probs = 0.95), 
                botQ = quantile(RollSD, probs = 0.05),
               Strat = ifelse(RollSD >= topQ, "HiVol", 
                           ifelse(RollSD <= botQ, "LowVol", "Normal_Vol")))
 # 
  hivol_per_vector_eu  <- strat_df %>% filter(Strat %in% "HiVol") %>% pull(Date)
- lovol_per_vector_eu  <- strat_df %>% filter(Strat %in% "LowVol") %>% pull(Date)
-# 
+ lovol_per_vector_eu  <- strat_df %>% filter(Strat %in% "LowVol") %>% pull(Date) 
 # # SA 
-# 
- Vixroll <- Rolling_sd(JSV ,"SAVIT40")
-# 
-# # get the top quartile and bottom quartil
-# 
- strat_df <- Vixroll %>% mutate(topQ = quantile(RollSD, probs = 0.95), 
+
+ strat_df <-vol_data %>% filter(index == "SAVIT40") %>% mutate(topQ = quantile(RollSD, probs = 0.95), 
                botQ = quantile(RollSD, probs = 0.05),
                Strat = ifelse(RollSD >= topQ, "HiVol", 
                            ifelse(RollSD <= botQ, "LowVol", "Normal_Vol")))
 # 
  hivol_per_vector_sa <- strat_df %>% filter(Strat %in% "HiVol") %>% pull(Date)
  lovol_per_vector_sa <- strat_df %>% filter(Strat %in% "LowVol") %>% pull(Date)
- novol_per_vector_sa <- strat_df %>% filter(Strat %in% "Normal_Vol") %>% pull(Date)
 
- 
- # Getting excess return for the period and indices 
- #  High Vol df 
+#  High Vol df 
  
 source("code/Stratifier.R")
   
-Hivol_performance <-  bind_rows(
- stratifier(df, "EU_HY", "EU", hivol_per_vector_eu, "High Vol Period" ),
-  stratifier(df, "EU_HY", "EU", lovol_per_vector_eu, "Low Vol Period" ),
-  stratifier(df, "EU_HY", "EU", lovol_per_vector_eu, "Low Vol Period" ),
- stratifier(df, "EU_DG", "EU_2", hivol_per_vector_eu, "High Vol Period" ),
- stratifier(df, "UK_HY", "UK", hivol_per_vector_eu, "High Vol Period" ),
- stratifier(df, "UK_HY_B", "UK", hivol_per_vector_eu, "High Vol Period" ),
- stratifier(df, "JP_HY", "JP", hivol_per_vector_us, "High Vol Period" ),
- stratifier(df, "JP_DG", "JP", hivol_per_vector_us, "High Vol Period" ),
- stratifier(df, "EM_HY", "EM", hivol_per_vector_us, "High Vol Period" ),
- stratifier(df, "SA_HY", "SA", hivol_per_vector_sa, "High Vol Period" ),
- stratifier(df, "SA_DG", "SA", hivol_per_vector_sa, "High Vol Period" ),
- stratifier(df, "US_HY", "US", hivol_per_vector_us, "High Vol Period" ), 
- stratifier(df, "US_DG", "US", hivol_per_vector_us, "High Vol Period" )
- )
-
-#  Low Vol df
-Lovol_performance <-  bind_rows(
+stratifying_df <-  bind_rows(
+ stratifier(df, "EU_HY", "EU", hivol_per_vector_eu, "High Vol" ),
+ stratifier(df, "EU_DG", "EU_2", hivol_per_vector_eu, "High Vol" ),
+ stratifier(df, "UK_HY", "UK", hivol_per_vector_eu, "High Vol" ),
+ stratifier(df, "UK_HY_B", "UK", hivol_per_vector_eu, "High Vol"),
+ stratifier(df, "JP_HY", "JP", hivol_per_vector_us, "High Vol"),
+ stratifier(df, "JP_DG", "JP", hivol_per_vector_us, "High Vol"),
+ stratifier(df, "EM_HY", "EM", hivol_per_vector_us, "High Vol"),
+ stratifier(df, "SA_HY", "SA", hivol_per_vector_sa, "High Vol"),
+ stratifier(df, "SA_DG", "SA", hivol_per_vector_sa, "High Vol"),
+ stratifier(df, "US_HY", "US", hivol_per_vector_us, "High Vol"), 
+ stratifier(df, "US_DG", "US", hivol_per_vector_us, "High Vol"), 
+ stratifier(df , "W_HY", "W", hivol_per_vector_us, "High Vol"), 
  stratifier(df, "EU_HY", "EU", lovol_per_vector_eu, "Low Vol Period" ),
  stratifier(df, "EU_DG", "EU_2", lovol_per_vector_eu, "Low Vol Period" ),
  stratifier(df, "UK_HY", "UK", lovol_per_vector_eu, "Low Vol Period" ),
@@ -480,12 +462,14 @@ Lovol_performance <-  bind_rows(
  stratifier(df, "SA_HY", "SA", lovol_per_vector_sa, "Low Vol Period" ),
  stratifier(df, "SA_DG", "SA", lovol_per_vector_sa, "Low Vol Period" ),
  stratifier(df, "US_HY", "US", lovol_per_vector_us, "Low Vol Period" ), 
- stratifier(df, "US_DG", "US", lovol_per_vector_us, "Low Vol Period" )
+ stratifier(df, "US_DG", "US", lovol_per_vector_us, "Low Vol Period" ), 
+ stratifier(df, "W_HY", "W", lovol_per_vector_us, "Low Vol Period")
  )
 
-Volatility_df <- bind_rows(Lovol_performance, Hivol_performance) %>% arrange(annualized_return)
+stratifying_df <- stratifying_df %>% arrange(desc(`Annualized Return (%)`)) 
+# %>% filter(`Annualized Return (%)`>0)
 
-data = Volatility_df %>% tibble::as_tibble()
+data = stratifying_df %>% tibble::as_tibble()
   addtorow          <- list()
   addtorow$pos      <- list()
   addtorow$pos[[1]] <- c(0)
@@ -495,7 +479,7 @@ data = Volatility_df %>% tibble::as_tibble()
                                "{\\footnotesize Continued on next page} \n",
                                "\\endfoot \n",
                                "\\endlastfoot \n",sep=""))
-table <- xtable(data, caption = "Performance in Market Cycles\\label{tab2}")
+table <- xtable(data, caption = "Volatility Stratification\\label{tab2}")
   print.xtable(table,
              tabular.environment = "longtable",
              floating = FALSE, # Leave this as is.
@@ -509,9 +493,7 @@ table <- xtable(data, caption = "Performance in Market Cycles\\label{tab2}")
              )
 
 ```
-Table \ref{tab3} presents the performance metrics of various dividend portfolios across different interest rate regimes, encompassing Hiking, Cutting, and Neutral phases. The Federal Reserve Funds Rate serves as a representative metric for the interest rate regime in emerging markets, given the recognition that interest rate shifts in the US influence risk appetites, thus determining capital flows between advanced and emerging economies. For other indices, the local central bank interest rate cycles are employed to ascertain their corresponding interest rate regimes. Japan stands as an anomaly among these economies; absent distinct hiking or cutting cycles, its central bank largely maintained constant rates. Consequently, we assess its performance exclusively within the confines of a neutral interest rate cycle.
-
-Assessing dividend portfolio performance in the three interest rate regimes largely leads to expected outcomes. That is, growth portfolios perform better during periods of cutting interest cycles and high yield portfolio perform better during periods of interest rate hiking periods. However, this pattern is not preserved when we consider the UK_HY and EU_HY portfolios. 
+Table \ref{tab3} presents the performance metrics of various dividend portfolios across different interest rate regimes, encompassing Hiking, Cutting, and Neutral phases. The Federal Reserve Funds Rate serves as a representative metric for the interest rate regime in emerging markets, given the recognition that interest rate shifts in the US influence risk appetites, thus determining capital flows between advanced and emerging economies. For other indices, the local central bank interest rate cycles are employed to ascertain their corresponding interest rate regimes. Japan stands as an anomaly among these economies; absent distinct hiking or cutting cycles, its central bank largely maintained constant rates. Consequently, we assess its performance exclusively within the confides of a neutral interest rate cycle.
 
 ```{r Table3, results='asis'}
 rate_data <- readxl::read_xlsx("data/Policy Rates.xlsx") 
@@ -527,31 +509,31 @@ SA_rates <- rate_data %>% select(Date, SA)
 ECB_rates <- rate_data %>% select(Date, ECB)
 # Get Rates for the US
 source("code/Interest_Regime.R")
-source("code/Stratifier.R")
+
 
 #  rename the columns for the function to work
 
-Regime_df <- Regime_change_df(US_rates, "US", 3)
+Regime_df <- Regime_change_df(US_rates, "US", 5)
 Hiking_date_vector_us <- Regime_df %>% filter(regime %in% "Hiking") %>% pull(Date)
 Cutting_date_vector_us <- Regime_df %>% filter(regime %in% "Cutting") %>% pull(Date)
 Neutral_date_vector_us <- Regime_df %>% filter(regime %in% "Neutral") %>% pull(Date) 
 
-Regime_df <- Regime_change_df(UK_rates, "UK", 3)
+Regime_df <- Regime_change_df(UK_rates, "UK", 5)
 Hiking_date_vector_uk <- Regime_df %>% filter(regime %in% "Hiking") %>% pull(Date)
 Cutting_date_vector_uk <- Regime_df %>% filter(regime %in% "Cutting") %>% pull(Date)
 Neutral_date_vector_uk <- Regime_df %>% filter(regime %in% "Neutral") %>% pull(Date) 
 
-Regime_df <- Regime_change_df(JP_rates, "JP", 3)
+Regime_df <- Regime_change_df(JP_rates, "JP", 5)
 Hiking_date_vector_jp <- Regime_df %>% filter(regime %in% "Hiking") %>% pull(Date)
 Cutting_date_vector_jp <- Regime_df %>% filter(regime %in% "Cutting") %>% pull(Date)
 Neutral_date_vector_jp <- Regime_df %>% filter(regime %in% "Neutral") %>% pull(Date) 
 
-Regime_df <- Regime_change_df(SA_rates, "SA", 3)
+Regime_df <- Regime_change_df(SA_rates, "SA", 5)
 Hiking_date_vector_sa <- Regime_df %>% filter(regime %in% "Hiking") %>% pull(Date)
 Cutting_date_vector_sa <- Regime_df %>% filter(regime %in% "Cutting") %>% pull(Date)
 Neutral_date_vector_sa <- Regime_df %>% filter(regime %in% "Neutral") %>% pull(Date) 
 
-Regime_df <- Regime_change_df(ECB_rates, "ECB", 3)
+Regime_df <- Regime_change_df(ECB_rates, "ECB", 5)
 Hiking_date_vector_eu <- Regime_df %>% filter(regime %in% "Hiking") %>% pull(Date)
 Cutting_date_vector_eu <- Regime_df %>% filter(regime %in% "Cutting") %>% pull(Date)
 Neutral_date_vector_eu <- Regime_df %>% filter(regime %in% "Neutral") %>% pull(Date) 
@@ -568,6 +550,7 @@ Hiking_performance <-  bind_rows(
  stratifier(df, "US_HY", "US", Hiking_date_vector_us, "Hiking" ), 
  stratifier(df, "US_DG", "US", Hiking_date_vector_us, "Hiking" )
  )
+
 #  Cutting Perfromance
 
 Cutting_performance <-  bind_rows(
@@ -581,6 +564,7 @@ Cutting_performance <-  bind_rows(
  stratifier(df, "US_HY", "US", Cutting_date_vector_us, "Cut" ), 
  stratifier(df, "US_DG", "US", Cutting_date_vector_us, "Cut" )
  )
+
 # Nuetral 
 
 Nuetral_perfromance <-  bind_rows(
@@ -598,7 +582,7 @@ Nuetral_perfromance <-  bind_rows(
  )
 
 CB_df <- bind_rows(Nuetral_perfromance, 
- Cutting_performance, Hiking_performance) %>% arrange(Index)
+ Cutting_performance, Hiking_performance) %>% arrange(Name)
 
 data = CB_df %>% tibble::as_tibble()
   addtorow          <- list()
@@ -625,7 +609,7 @@ table <- xtable(data, caption = "Performance in Interest Rate Regimes\\label{tab
 
 ```
 
-## Performance consistentcy
+Within geographies then, EM_HY (Hiking), EU_DG (Cutting), JP_HY (Neutral),SA_DG (Hiking), UK_HY_B(Hiking), US_DG(Hiking), perform well in Hiking periods but their strategies are evenly split given our sample. Therefore, there is no clear indication of which strategy works best given the interest rate regime. 
 
 Figure \ref{fig1} illustrates the consistency in the performance of dividend portfolios by employing the rolling information ratio. The information ratio serves as a measure of a portfolio's performance relative to a market benchmark. It is frequently used in the industry to gauge a manager's proficiency in generating excess returns and the consistency with which these returns are achieved. Thus, our objective is to assess the capacity of our dividend portfolios to achieve such excess returns. We have adopted a rolling 60-month information ratio as a metric to evaluate long-term performance consistency. This ratio is computed by determining the rolling excess return of the index relative to its benchmark and then dividing this by the volatility of those excess returns.
 
@@ -633,17 +617,17 @@ Figure \ref{fig1} illustrates the consistency in the performance of dividend por
 
 source("code/InformationRatioRoll.R")
 
-a <-  df %>% Information_Ratio_Roll(., "EU_HY", "EU", 20030104, 36)
-b <-  df %>% Information_Ratio_Roll(., "EU_DG", "EU_2",20030104, 36)
- c <- df %>% Information_Ratio_Roll(., "UK_HY", "UK", 20030104, 36)
- d <- df %>% Information_Ratio_Roll(., "UK_HY_B", "UK", 20030104, 36)
- e <- df %>% Information_Ratio_Roll(., "JP_HY", "JP", 20030104,36)
- f <- df %>% Information_Ratio_Roll(., "JP_DG", "JP", 20030104, 36)
- g <- df %>% Information_Ratio_Roll(., "EM_HY", "EM", 20030104, 36)
- h <- df %>% Information_Ratio_Roll(., "SA_HY", "SA", 20030104, 36)
- i <- df %>% Information_Ratio_Roll(., "SA_DG", "SA", 20030104, 36)
- j <- df %>% Information_Ratio_Roll(., "US_HY", "US", 20030104, 36)
- k <- df %>% Information_Ratio_Roll(., "US_DG", "US_2", 20030104, 36)
+a <-  df %>% Information_Ratio_Roll(., "EU_HY", "EU", 20030104, 60)
+b <-  df %>% Information_Ratio_Roll(., "EU_DG", "EU_2",20030104, 60)
+ c <- df %>% Information_Ratio_Roll(., "UK_HY", "UK", 20030104, 60)
+ d <- df %>% Information_Ratio_Roll(., "UK_HY_B", "UK", 20030104, 60)
+ e <- df %>% Information_Ratio_Roll(., "JP_HY", "JP", 20030104,60)
+ f <- df %>% Information_Ratio_Roll(., "JP_DG", "JP", 20030104, 60)
+ g <- df %>% Information_Ratio_Roll(., "EM_HY", "EM", 20030104, 60)
+ h <- df %>% Information_Ratio_Roll(., "SA_HY", "SA", 20030104, 60)
+ i <- df %>% Information_Ratio_Roll(., "SA_DG", "SA", 20030104, 60)
+ j <- df %>% Information_Ratio_Roll(., "US_HY", "US", 20030104, 60)
+ k <- df %>% Information_Ratio_Roll(., "US_DG", "US_2", 20030104, 60)
 
 consistency_df <- list(a, b, c, d, e,f,g,h,i,j,k) %>%
   reduce(inner_join, by='date') %>% 
@@ -664,13 +648,22 @@ consistency_df <- list(a, b, c, d, e,f,g,h,i,j,k) %>%
 
 plot 
 ```
-The findings presented here illuminate the sporadic performance of dividend strategies, further highlighting the challenges inherent in securing high returns in asset markets. In an ideal scenario, an information ratio exceeding 0 is preferred, with most industry strategies typically averaging around 0.3. However, Figure \ref{fig1} demonstrates that, when assessed on a rolling 36-month basis, both growth and high-yield dividend portfolios tend to under perform relative to their benchmarks.Upon broadening our evaluation to encompass 24 and 60 month rolling periods, the results appear even more volatile. Notably, SA indexes consistently demonstrate commendable performance, with the SA_HY standing out particularly. Within the domain of advanced markets, the dividend portfolios of both the EU and Japan exhibit a modicum of consistency in positive returns initially, only to later deteriorate.
+- but having said that, lets consider the redline to be a measure of strategy working or not.
+- The UK_HY stands out as one that has struggled to give that bang for buck effect. 
+- EM  and JP HY and JP DG from 2005 to 2015 return positive IR then since then until the start of 2022 its been negative. 
+- SA indexes , a tale of two have shown 2010 to 2020 in positive for DG but the SA HY IR from 2017 to date for HY
+- US indexes have been mirroring each other. However difficult to conclude. 
 
-In line with the results from our stratification based on market cycles and interest rate regimes, we observed that the majority of High-Yield (HY) portfolios experienced declines in rolling information ratios, while Dividend Growth (DG) portfolios incurred losses. This trend was particularly evident during the period following the global financial crisis in late 2008 to late 2009. This period was characterized by high volatility and falling interest rates. Conversely, the subsequent crisis, which occurred after the COVID-19 pandemic and was marked by rising interest rates, favored High-Yield portfolios. However, it's worth noting that except for the portfolios of Japan (JP), Emerging Markets (EM), and South Africa (SA), which exhibited similar rebounds after the crises, growth strategies were more prominent following the 2008 crisis, but less so after the pandemic. These observations align with the major findings on the influence of interest rates from the previous section.It is imperative to note the EM_HY portfolio consisistent with high cumulative return in the first section, has seen an upward trajectory in information ratio. This may be an indication towards strong defensive characteristics of this particular HY portfolio 
+We notice that UK HY portfolios have not been working. Whilst SA HY has deliverd some respectable consistency for several years. However EM _HY  like the UK since 2015 has delivered negative information ratio.
 
-##  Risk attributes of consistituents
+Figure \ref{fig1} demonstrates that, when assessed on a rolling 60-month basis, both growth and high-yield dividend indexes display varying levels of consistency in delivering returns, i.e, difficult for strategies to consistently deliever IR above zero across markets present in our sample period. When we broaden our analysis to encompass 24 and 36 month rolling periods, the results appear even more volatile. However, if we consider the horizontal red line at zero as a mark that defines a startegy working or not we uncover interesting results. One, SA indexes have shown since 2010 to 2020 a positive turn in information ratios for SA_DG but the SA HY IR from 2017 to date for HY. Two, EM and JP HY and JP_DG from 2005 to 2015 return positive IR then since then until the start of 2022 its been negative. Three, The UK_HY stands out as one that has struggled to give that bang for buck effect. Finally, US and EU exhibit similar trends, most notable that is that over the past few years have given negative information ratios.
 
-So far we have used static and trailing return measures to provide insights into the performance of an investment over a specified period, measured between two distinct dates. Looking at aggregate risk characteristics, drawdowns provide a comprehensive view of the risk attributes of the data series' constituents. In the context of our study, the relevance of drawdowns is underscored by their capacity to unveil latent correlations between performance and drawdown. Essentially, by analyzing drawdowns, one can ascertain the maximum potential loss an investment has experienced, thereby providing insights into the inherent risks and vulnerabilities associated with said investment.
+In line with the results from our stratification based on market cycles and interest rate regimes, we observed that the majority of HY experienced declines in rolling information ratios, while DG portfolios incurred losses. This trend was particularly evident during the period following the global financial crisis in late 2008 to late 2009. This period was characterized by high volatility and falling interest rates. Conversely, the subsequent crisis, which occurred after the COVID-19 pandemic and was marked by rising interest rates, favored SA , JP and EM, a (SA). These observations align with the major findings on the influence of interest rates from the previous section.
+
+##  Index Drawdowns 
+
+Drawdowns give a more detailed picture of the risk attributes of the constituents of a data series. Their importance for our study is to uncover latent relationship between performance and drawdown.
+
 ```{r  Figure2,  warning =  FALSE, fig.align = 'left', fig.cap = "Rolling 3 Year Returns \\label{fig2}", fig.ext = 'png', fig.height = 6, fig.width =7 }
 
 cum_df <- excess_return_df %>%
@@ -696,13 +689,18 @@ labs(x = "", y = " Max Drawdowns (%)", title = "Yearly Drawdowns", subtitle = ""
 plot
 
 ```
-Our analysis in \ref[fig2] defines as the disparity between the peak and trough values of cumulative excess returns within a specified time frame. When scrutinizing our dividend portfolios, a pattern of similarity emerges both geographically and across varied strategies.The SA portfolios are markedly volatile, displaying the most pronounced draw downs visually and more concretely by value from the beginning of the sample period. This is closely followed by the UK High Yield (HY) strategies. In contrast, portfolios associated with the EU and US exhibit relatively milder draw downs. Yet, when the focus shifts from mere magnitude to the distribution or dispersion of these drawdowns, the narrative undergoes a transformation. The UK High Yield and Japan High Yield strategies are revealed to be more volatile, being susceptible to significant fluctuations. In juxtaposition, emerging markets, with South Africa as a case in point, manifest a more stabilized profile, evidenced by diminished variation in their drawdowns.
+
+Our analysis in \ref[fig2] defines as the disparity between the peak and trough values of cumulative excess returns within a specified time frame. When scrutinizing our dividend portfolios, a pattern of similarity emerges both geographically and across varied strategies.The SA portfolios were markedly volatile, displaying the most pronounced draw downs visually and more concretely by value from the beginning of the sample period. This is closely followed by the UK High Yield (HY) strategies. In contrast, portfolios associated with the EU and US exhibit relatively milder draw downs. Yet, when the focus shifts from mere magnitude to the distribution or dispersion of these drawdowns, the narrative undergoes a transformation. The UK High Yield and Japan High Yield strategies are revealed to be more volatile, being susceptible to significant fluctuations. In juxtaposition, emerging markets, with South Africa as a case in point, manifest a more stabilized profile, evidenced by diminished variation in their drawdowns.
 
 ## Conclusion
 
-Extensively evaluating the globally traded dividend portfolios looking at risk and return we can conclude that across varied market cycles and interest rate regimes, it's evident that while dividend strategies offer additional return offered by their income component, their performance remains notably inconsistent. The challenges in obtaining high returns in asset markets come to the fore, with dividend strategies across various geographies and timelines exhibiting uneven excess returns. The impact of interest rate cycles and market volatility shows that dividends portfolios can offer some defensive characteristics. However our dynamic measure of the information ratio depicts inconsistency in performance consistency, noting that most strategies fail to give performance positive ratios but it's the draw downs, defined by the discrepancies between peak and trough values of cumulative excess returns, that reveal the underlying risk attributes. Geographically, while South African portfolios record pronounced drawdown values, closely trailed by UK High Yield strategies, portfolios in regions like the EU and US demonstrate relative stability.
+Over time, dividend portfolios, whether HY or DGPS, have exhibited positive excess returns as indicated by cumulative returns. While the UK_HY index has shown the highest cumulative return, this trend is not consistently observed across other regional indexes. Consequently, when assessing the aggregate perspective on investor portfolio value, dividend portfolios may not offer a reliable means to capture the value premium consistently. However, upon stratifying these portfolios according to different periods of market volatility, it becomes evident that during low volatility periods, the primary determinant of performance is not the geographical region but rather the specific investment strategy employed. In this case, HY strategies.  Surprisingly, portfolios based in South Africa (SA) tend to perform well during these high volatility periods, which is somewhat unconventional as such times are typically associated with a flight to safety, and Emerging Markets (EM) and, by extension, South Africa, are considered riskier. When extending our analysis to encompass interest rate cycles, we observe a contrasting effect compared to the volatility-based stratification. We find that all strategies appear to give the highest return in hiking cycles. 
 
-# Which Dividend Signals Matter in South Africa?
+In assessing consistency, we employ the information ratio. Initially, we discern that, at a broad level, dividend portfolios do not consistently maintain a positive ratio over an extended investment horizon. However, disparities in performance emerge. Notably, South African (SA) and dividend indexes have consistently delivered positive ratios over the past decade. In contrast, Emerging Markets (EM) and Japanese (JP) indexes have experienced substantial declines in their information ratios, despite seemingly consistent performance prior to 2015. Meanwhile, the United States (US), European Union (EU), and United Kingdom (UK) indexes have exhibited unpredictable performance over the sampled period.
+
+When we integrate our information ratio findings with drawdown analysis, we observe that advanced economies have experienced the fewest drawdowns over the sample period, with the exception of the UK. This could suggest a relatively lower level of systematic risk in these economies. Conversely, South African (SA) and Emerging Market (EM) drawdowns have exhibited a declining trend, possibly indicating a reduced perception of risk in emerging markets over time.
+
+# 
 
 
 # Results and Analysis 
@@ -718,6 +716,34 @@ Extensively evaluating the globally traded dividend portfolios looking at risk a
 <div id="refs"></div>
 
 # Appendix
+
+```{r, results='asis'}
+data <- readxl::read_xlsx("data/Index Description.xlsx")
+
+data = data %>% tibble::as_tibble()
+  addtorow          <- list()
+  addtorow$pos      <- list()
+  addtorow$pos[[1]] <- c(0)
+  addtorow$command  <- c(paste("\\hline \n",
+                               "\\endhead \n",
+                               "\\hline \n",
+                               "{\\footnotesize Continued on next page} \n",
+                               "\\endfoot \n",
+                               "\\endlastfoot \n",sep=""))
+table <- xtable(data, caption = "Index Description \\label{indexdes}")
+  print.xtable(table,
+             tabular.environment = "longtable",
+             floating = FALSE, # Leave this as is.
+             table.placement = 'H', # Leave this as is.
+             booktabs = T, # Aesthetics
+             include.rownames = FALSE,  # Typically you don't want this in a table.
+             add.to.row = addtorow, # For adding the Continued on next page part...
+             comment = FALSE,
+             caption.placement = 'bottom',  # Where do you want the caption?
+             size="\\fontsize{8pt}{9pt}\\selectfont"  # Size of text in table..
+             )
+
+```
 
 
 

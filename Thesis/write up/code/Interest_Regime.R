@@ -15,15 +15,10 @@ Regime_change_df <-function(df, Bank, Rolling_frequency){
     group_by(YM) %>% 
     filter(Date == last(Date)) %>% 
     ungroup() %>% 
-    mutate(chg = !!sym(Bank) - lag(!!sym(Bank)))%>% 
-    mutate(Year = format(Date, "%Y")) %>% 
-    group_by(Year) %>%
+    mutate(chg = !!sym(Bank) - lag(!!sym(Bank)))%>%
     mutate(pos = rollapply(chg, width = Rolling_frequency, FUN = function(x) any(x > 0), fill = NA),
            neg = rollapply(chg, width = Rolling_frequency, FUN = function(x) any(x < 0), fill = NA)) %>%
-    mutate(regime = case_when(
-      any(pos, na.rm = TRUE) ~ "Hiking",
-      any(neg, na.rm = TRUE) ~ "Cutting",
-      TRUE ~ "Neutral"))
+    mutate(regime = ifelse(pos == T, "Hiking", ifelse(neg == T, "Cutting", "Neutral")))
   
   extract_df
 }
