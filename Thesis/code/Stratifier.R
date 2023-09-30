@@ -14,7 +14,7 @@ stratifier <- function(raw_df, index_name, benchmark_name, Date_vector, Descript
     mutate(ex.ret = Index - Benchmark)  %>% 
     select(date, ex.ret)  %>% 
     mutate(Return = cumprod(1 + ex.ret)) %>% 
-    summarize(Name = !!glue("{index_name}"), "Market Period" = Description, Days = n(), "Annualized Return (%)" = mean(last(Return) ^ (255 / Days) - 1)*100)
+    summarize(Name = !!glue("{index_name}"), "Market Period" = Description, Days = n(), "Annualized Return (%)" = mean(last(Return) ^ (Days/ 255) - 1)*100)
   
   Mk_df
 }

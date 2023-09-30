@@ -10,6 +10,9 @@ output:
 - interested in regional performance of indexes that are constrcuted either through HY or DG growth as signals
 
 - the next chunk achieves and now dividend portfolios are proxies for their jurisdiction. 
+
+- include how divident portfolios have diffrent constituents. 
+- how those operate in diffrent market cycles. 
 ```{r}
 # loadings
 pacman::p_load("xts", "tidyverse", "tbl2xts", "PerformanceAnalytics", 
@@ -84,7 +87,6 @@ With that caveat, lets start the analysis.
 
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
-source("code/simpleexcessreturn.R")
 source("code/EXCESSRETURN.R")
 library(glue)
 library(stats)
@@ -326,7 +328,7 @@ Nuetral_perfromance <-  bind_rows(
 CB_df <- bind_rows(Nuetral_perfromance, 
  Cutting_performance, Hiking_performance) %>% arrange(Name)
 
-CB_df
+CB_df %>% rename(Quarters = "Days") %>% arrange(desc("Annualized Return"))
 
 #  need to aggregate that into a single number 
 ```
@@ -426,7 +428,6 @@ Draw downs in this study are defined as the difference between low and high valu
 
 # Putting it together
 
-- please note that I use dividend portfolios and dividend indexes interchangeably 
 
 Over time, dividend portfolios, whether HY or DGPS, have exhibited positive excess returns as indicated by cumulative returns. While the UK_HY index has shown the highest cumulative return, this trend is not consistently observed across other regional indexes. Consequently, when assessing the aggregate perspective on investor portfolio value, dividend portfolios may not offer a reliable means to capture the value premium consistently. However, upon stratifying these portfolios according to different periods of market volatility, it becomes evident that during low volatility periods, the primary determinant of performance is not the geographical region but rather the specific investment strategy employed. In this case, HY strategies.  Surprisingly, portfolios based in South Africa (SA) tend to perform well during these high volatility periods, which is somewhat unconventional as such times are typically associated with a flight to safety, and Emerging Markets (EM) and, by extension, South Africa, are considered riskier.
 
@@ -443,4 +444,139 @@ When we integrate our information ratio findings with drawdown analysis, we obse
 - SA and EM indexes at different periods gave the highest informatio ratio. We know from our cumulative returns that this could be only due to lower risk. Once we look at drawdowns, they reduced overtime. A more direct measure can help explain this point better. 
 
 
+# Any similarities in this portfolios 
 
+- for this we use our excess returns. 
+- do a PCA. 
+- and analyze
+```{r}
+# lets put some more meat on this bone, lets see if by total variation there is a research why portfolios perfrom the way in which they do. 
+
+excess_return <- function(df, index, benchmark) {
+  df <- df %>%
+    arrange(Date) %>%
+    rename(I = {{index}}, B = {{benchmark}}) %>%
+    select(Date, I, B) %>%
+    mutate(excess = I - B) %>%
+    mutate(YM = format(Date, "%y %m")) %>%
+    group_by(YM) %>%
+    mutate(ret = excess/lag(excess)-1) %>% 
+    filter(Date == last(Date)) %>%
+    rename(Excess = ret) %>% 
+    ungroup %>% 
+    select(Date, Excess )
+  
+ df <- df %>%  rename(!!sym(glue::glue("{index}")) := Excess)
+ 
+ df
+}
+
+excess_return(df , "SA_DG", "SA") 
+
+#   calculate simple returns just simple excess returns
+a <- df %>% excess_return(., "UK_HY", "UK") 
+b <- df %>% excess_return(., "UK_HY_B", "UK_B")
+
+c <- df %>% excess_return(., "US_HY", "US")
+d <- df %>% excess_return(., "US_DG", "US_2")
+
+e <- df %>% excess_return(., "EU_HY", "EU")
+f <- df %>% excess_return(., "EU_DG", "EU_2")
+
+g <- df %>% excess_return(., "JP_HY", "JP")
+h <- df %>% excess_return(., "JP_DG", "JP")
+
+i <- df %>% excess_return(., "EM_HY", "EM")
+
+j <- df %>% excess_return(., "SA_HY", "SA")
+k <- df %>% excess_return(., "SA_DG", "SA")
+
+l <- df %>% excess_return(., "W_HY", "W")
+
+
+# Table to describe excess returns
+
+
+excess_return_df <- list( a, b, c, d, e,f,g,h,i,j,k, l) %>%
+  reduce(inner_join, by='Date') %>% gather(Regions, Return, -Date)
+
+excess_return_df <- excess_return_df %>% mutate(Return = ifelse(Return > 0.30, 0.30, 
+    ifelse(Return < -0.30, -0.30,Return)))
+
+excess_return_df %>% ggplot()+ 
+  geom_line(aes(Date, Return))
+
+# PCA time 
+
+source("code/impute.R")
+data_wide <-  excess_return_df %>%rename(date = Date) %>%  spread(., Regions, Return) %>% impute_missing_returns(.,"Drawn_Distribution_Collective") %>% select(-date)
+
+pca <- prcomp(data_wide)
+# We have already cebtered our data, but we could also use
+# these built in measures: prcomp(data_wide, center = TRUE,
+# scale. = TRUE)
+
+#  get the standard deviations 
+pca$sdev
+# now the eigen values 
+
+eigenvalues <- pca$sdev^2
+
+#  now for the rotation 
+
+pca$rotation
+
+#  you can use things such as summary just to get more out of the results
+summary(pca)
+
+#  installation
+if (!require(FactoMineR)) install.packages("FactoMineR")
+if (!require(factoextra)) install.packages("factoextra")
+
+# this needs a tibble that has row names 
+
+data <- excess_return_df %>% tibble::rownames_to_column() %>% 
+    tibble::as_tibble() %>% column_to_rownames("rowname") %>% select(-Date)
+
+#  lets use our data 
+index.pca <- FactoMineR::PCA(data_wide)
+
+factoextra::fviz_pca_var(index.pca, col.var = c("cos2", "contrib", "coord", 
+    "x", "y")[1]) + scale_color_gradient2(low = "white", mid = "blue", 
+    high = "red", midpoint = 0.5) + theme_minimal()
+
+#  with similar analyses to 
+
+index.pca$var$contrib
+
+# how much of the variationin the PCA is due to the variable
+
+factoextra::fviz_pca_var(index.pca, col.var = "contrib") + scale_color_gradient2(low = "green", 
+    mid = "yellow", high = "red", midpoint = 9) + theme_minimal()
+
+#  this should add some text to the graph but scrutenize it later
+
+# factoextra::fviz_pca_biplot(index.pca, geom = "text")
+
+# lets get a new data frame just to get more information out if this 
+
+
+```
+
+- the second dimension is where the laodings are different, JP_HY is the odd beast, in the first dimnesion. 
+- first dimnesion loadings are quiet strong for advanced economies and positive for all indicies expect for JP_HY. 
+- second dimension there is disparity emerges, advanced economies have a negative laoding to the second PC. 
+- the question now becomes, whats the composition of US companies in the World MSCI index. 
+- in reducing the dimensions of our data, we notice that most economies are affected relative to each other in similar capacity to PCA. 
+- excess returns of divi strategies, after reducing dimensions we notice that US strategies have a negative loading to the second PCA. 
+- 
+
+
+# The next queston 
+
+now that we have estbalished why they do work, is it factual.
+
+- lets apply a PCA to determine this.
+- get soe regressions and commnet. 
+- do some clustering. 
+- 
