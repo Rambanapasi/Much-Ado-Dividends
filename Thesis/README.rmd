@@ -563,13 +563,17 @@ factoextra::fviz_pca_var(index.pca, col.var = "contrib") + scale_color_gradient2
 
 ```
 
-- the second dimension is where the laodings are different, JP_HY is the odd beast, in the first dimnesion. 
-- first dimnesion loadings are quiet strong for advanced economies and positive for all indicies expect for JP_HY. 
-- second dimension there is disparity emerges, advanced economies have a negative laoding to the second PC. 
+- the second dimension is where the laodings are different, JP_HY is the odd beast, in the first dimension. 
+- first dimension loadings are quiet strong for advanced economies and positive for all indicies expect for JP_HY. 
+- second dimension there is disparity emerges, advanced economies have a negative loading to the second PC. 
 - the question now becomes, whats the composition of US companies in the World MSCI index. 
 - in reducing the dimensions of our data, we notice that most economies are affected relative to each other in similar capacity to PCA. 
 - excess returns of divi strategies, after reducing dimensions we notice that US strategies have a negative loading to the second PCA. 
-- 
+
+# So how has that loading changed overtime and is it significant
+
+- we can then use fundamental analysis to reach that conclusion. 
+
 
 
 # The next queston 
