@@ -8,6 +8,10 @@
 -   the next chunk achieves and now dividend portfolios are proxies for
     their jurisdiction.
 
+-   include how divident portfolios have diffrent constituents.
+
+-   how those operate in diffrent market cycles.
+
 ``` r
 # loadings
 pacman::p_load("xts", "tidyverse", "tbl2xts", "PerformanceAnalytics", 
@@ -380,7 +384,6 @@ overall value proposition of dividend indices.
 With that caveat, lets start the analysis.
 
 ``` r
-source("code/simpleexcessreturn.R")
 source("code/EXCESSRETURN.R")
 library(glue)
 library(stats)
@@ -537,16 +540,16 @@ stratifying_df %>% arrange(Name)
     ## # A tibble: 24 × 4
     ##    Name   `Market Period`  Days `Annualized Return (%)`
     ##    <glue> <chr>           <int>                   <dbl>
-    ##  1 EM_HY  High Vol          179                  -17.7 
-    ##  2 EM_HY  Low Vol Period    179                   21.0 
-    ##  3 EU_DG  High Vol          224                   -2.49
-    ##  4 EU_DG  Low Vol Period    221                    6.76
-    ##  5 EU_HY  High Vol          224                    7.22
-    ##  6 EU_HY  Low Vol Period    221                   12.9 
-    ##  7 JP_DG  High Vol          179                   45.5 
-    ##  8 JP_DG  Low Vol Period    179                  -10.7 
-    ##  9 JP_HY  High Vol          179                   -3.35
-    ## 10 JP_HY  Low Vol Period    179                  198.  
+    ##  1 EM_HY  High Vol          179                   -9.13
+    ##  2 EM_HY  Low Vol Period    179                    9.85
+    ##  3 EU_DG  High Vol          224                   -1.92
+    ##  4 EU_DG  Low Vol Period    221                    5.04
+    ##  5 EU_HY  High Vol          224                    5.52
+    ##  6 EU_HY  Low Vol Period    221                    9.57
+    ##  7 JP_DG  High Vol          179                   20.3 
+    ##  8 JP_DG  Low Vol Period    179                   -5.44
+    ##  9 JP_HY  High Vol          179                   -1.67
+    ## 10 JP_HY  Low Vol Period    179                   71.3 
     ## # ℹ 14 more rows
 
 -   not entirely confident with my methodology and I need help on this.
@@ -593,6 +596,7 @@ SA_rates <- rate_data %>% select(Date, SA)
 ECB_rates <- rate_data %>% select(Date, ECB)
 # Get Rates for the US
 source("code/Interest_Regime.R")
+source("code/Stratifier_rates.R")
 
 
 #  rename the columns for the function to work
@@ -624,66 +628,66 @@ Neutral_date_vector_eu <- Regime_df %>% filter(regime %in% "Neutral") %>% pull(D
 # Hiking Performance
 
 Hiking_performance <-  bind_rows(
- stratifier(df, "EU_HY", "EU", Hiking_date_vector_eu, "Hiking" ),
- stratifier(df, "EU_DG", "EU_2", Hiking_date_vector_eu, "Hiking" ),
- stratifier(df, "UK_HY", "UK", Hiking_date_vector_uk, "Hiking" ),
- stratifier(df, "UK_HY_B", "UK", Hiking_date_vector_uk, "Hiking" ),
- stratifier(df, "EM_HY", "EM", Hiking_date_vector_us, "Hiking"),
- stratifier(df, "SA_HY", "SA", Hiking_date_vector_sa, "Hiking" ),
- stratifier(df, "SA_DG", "SA", Hiking_date_vector_sa, "Hiking" ),
- stratifier(df, "US_HY", "US", Hiking_date_vector_us, "Hiking" ), 
- stratifier(df, "US_DG", "US", Hiking_date_vector_us, "Hiking" )
+ stratifier_rates(df, "EU_HY", "EU", Hiking_date_vector_eu, "Hiking" ),
+ stratifier_rates(df, "EU_DG", "EU_2", Hiking_date_vector_eu, "Hiking" ),
+ stratifier_rates(df, "UK_HY", "UK", Hiking_date_vector_uk, "Hiking" ),
+ stratifier_rates(df, "UK_HY_B", "UK", Hiking_date_vector_uk, "Hiking" ),
+ stratifier_rates(df, "EM_HY", "EM", Hiking_date_vector_us, "Hiking"),
+ stratifier_rates(df, "SA_HY", "SA", Hiking_date_vector_sa, "Hiking" ),
+ stratifier_rates(df, "SA_DG", "SA", Hiking_date_vector_sa, "Hiking" ),
+ stratifier_rates(df, "US_HY", "US", Hiking_date_vector_us, "Hiking" ), 
+ stratifier_rates(df, "US_DG", "US", Hiking_date_vector_us, "Hiking" )
  )
 
 #  Cutting Perfromance
 
 Cutting_performance <-  bind_rows(
- stratifier(df, "EU_HY", "EU", Cutting_date_vector_eu, "Cut" ),
- stratifier(df, "EU_DG", "EU_2", Cutting_date_vector_eu, "Cut" ),
- stratifier(df, "UK_HY", "UK", Cutting_date_vector_uk, "Cut" ),
- stratifier(df, "UK_HY_B", "UK", Cutting_date_vector_uk, "Cut" ),
- stratifier(df, "EM_HY", "EM", Cutting_date_vector_us, "Cut"),
- stratifier(df, "SA_HY", "SA", Cutting_date_vector_sa, "Cut" ),
- stratifier(df, "SA_DG", "SA", Cutting_date_vector_sa, "Cut" ),
- stratifier(df, "US_HY", "US", Cutting_date_vector_us, "Cut" ), 
- stratifier(df, "US_DG", "US", Cutting_date_vector_us, "Cut" )
+ stratifier_rates(df, "EU_HY", "EU", Cutting_date_vector_eu, "Cut" ),
+ stratifier_rates(df, "EU_DG", "EU_2", Cutting_date_vector_eu, "Cut" ),
+ stratifier_rates(df, "UK_HY", "UK", Cutting_date_vector_uk, "Cut" ),
+ stratifier_rates(df, "UK_HY_B", "UK", Cutting_date_vector_uk, "Cut" ),
+ stratifier_rates(df, "EM_HY", "EM", Cutting_date_vector_us, "Cut"),
+ stratifier_rates(df, "SA_HY", "SA", Cutting_date_vector_sa, "Cut" ),
+ stratifier_rates(df, "SA_DG", "SA", Cutting_date_vector_sa, "Cut" ),
+ stratifier_rates(df, "US_HY", "US", Cutting_date_vector_us, "Cut" ), 
+ stratifier_rates(df, "US_DG", "US", Cutting_date_vector_us, "Cut" )
  )
 
 # Nuetral 
 
 Nuetral_perfromance <-  bind_rows(
- stratifier(df, "EU_HY", "EU", Neutral_date_vector_eu, "Neutral" ),
- stratifier(df, "EU_DG", "EU_2", Neutral_date_vector_eu, "Neutral" ),
- stratifier(df, "UK_HY", "UK", Neutral_date_vector_uk, "Neutral" ),
- stratifier(df, "UK_HY_B", "UK", Neutral_date_vector_uk, "Neutral" ),
- stratifier(df, "JP_HY", "JP", Neutral_date_vector_jp, "Neutral" ),
- stratifier(df, "JP_DG", "JP", Neutral_date_vector_jp, "Neutral" ),
- stratifier(df, "EM_HY", "EM", Neutral_date_vector_us, "Neutral"),
- stratifier(df, "SA_HY", "SA", Neutral_date_vector_sa, "Neutral" ),
- stratifier(df, "SA_DG", "SA", Neutral_date_vector_sa, "Neutral" ),
- stratifier(df, "US_HY", "US", Neutral_date_vector_us, "Neutral" ), 
- stratifier(df, "US_DG", "US", Neutral_date_vector_us, "Neutral" )
+ stratifier_rates(df, "EU_HY", "EU", Neutral_date_vector_eu, "Neutral" ),
+ stratifier_rates(df, "EU_DG", "EU_2", Neutral_date_vector_eu, "Neutral" ),
+ stratifier_rates(df, "UK_HY", "UK", Neutral_date_vector_uk, "Neutral" ),
+ stratifier_rates(df, "UK_HY_B", "UK", Neutral_date_vector_uk, "Neutral" ),
+ stratifier_rates(df, "JP_HY", "JP", Neutral_date_vector_jp, "Neutral" ),
+ stratifier_rates(df, "JP_DG", "JP", Neutral_date_vector_jp, "Neutral" ),
+ stratifier_rates(df, "EM_HY", "EM", Neutral_date_vector_us, "Neutral"),
+ stratifier_rates(df, "SA_HY", "SA", Neutral_date_vector_sa, "Neutral" ),
+ stratifier_rates(df, "SA_DG", "SA", Neutral_date_vector_sa, "Neutral" ),
+ stratifier_rates(df, "US_HY", "US", Neutral_date_vector_us, "Neutral" ), 
+ stratifier_rates(df, "US_DG", "US", Neutral_date_vector_us, "Neutral" )
  )
 
 CB_df <- bind_rows(Nuetral_perfromance, 
  Cutting_performance, Hiking_performance) %>% arrange(Name)
 
-CB_df
+CB_df %>% rename(Quarters = "Months") %>% arrange(desc("Annualized Return"))
 ```
 
     ## # A tibble: 29 × 4
-    ##    Name   `Market Period`  Days `Annualized Return (%)`
-    ##    <glue> <chr>           <int>                   <dbl>
-    ##  1 EM_HY  Neutral            20                   -99.5
-    ##  2 EM_HY  Cut                15                   -82.9
-    ##  3 EM_HY  Hiking             36                   485. 
-    ##  4 EU_DG  Neutral            29                   730. 
-    ##  5 EU_DG  Cut                14                  4394. 
-    ##  6 EU_DG  Hiking             27                   104. 
-    ##  7 EU_HY  Neutral            29                   -49.5
-    ##  8 EU_HY  Cut                14                   -42.6
-    ##  9 EU_HY  Hiking             27                   -72.6
-    ## 10 JP_DG  Neutral            49                   126. 
+    ##    Name   `Market Period` Quarters `Annualized Return (%)`
+    ##    <glue> <chr>              <int>                   <dbl>
+    ##  1 EM_HY  Neutral               20                  -7.88 
+    ##  2 EM_HY  Cut                   15                  -2.73 
+    ##  3 EM_HY  Hiking                36                   2.81 
+    ##  4 EU_DG  Neutral               29                   3.37 
+    ##  5 EU_DG  Cut                   14                   6.15 
+    ##  6 EU_DG  Hiking                27                   1.12 
+    ##  7 EU_HY  Neutral               29                  -1.07 
+    ##  8 EU_HY  Cut                   14                  -0.866
+    ##  9 EU_HY  Hiking                27                  -2.01 
+    ## 10 JP_DG  Neutral               49                   1.29 
     ## # ℹ 19 more rows
 
 ``` r
@@ -841,9 +845,6 @@ across strategies.
 
 # Putting it together
 
--   please note that I use dividend portfolios and dividend indexes
-    interchangeably
-
 Over time, dividend portfolios, whether HY or DGPS, have exhibited
 positive excess returns as indicated by cumulative returns. While the
 UK_HY index has shown the highest cumulative return, this trend is not
@@ -893,3 +894,270 @@ risk in emerging markets over time.
     ratio. We know from our cumulative returns that this could be only
     due to lower risk. Once we look at drawdowns, they reduced overtime.
     A more direct measure can help explain this point better.
+
+# Any similarities in this portfolios
+
+-   for this we use our excess returns.
+-   do a PCA.
+-   and analyze
+
+``` r
+# lets put some more meat on this bone, lets see if by total variation there is a research why portfolios perfrom the way in which they do. 
+
+excess_return <- function(df, index, benchmark) {
+  df <- df %>%
+    arrange(Date) %>%
+    rename(I = {{index}}, B = {{benchmark}}) %>%
+    select(Date, I, B) %>%
+    mutate(excess = I - B) %>%
+    mutate(YM = format(Date, "%y %m")) %>%
+    group_by(YM) %>%
+    mutate(ret = excess/lag(excess)-1) %>% 
+    filter(Date == last(Date)) %>%
+    rename(Excess = ret) %>% 
+    ungroup %>% 
+    select(Date, Excess )
+  
+ df <- df %>%  rename(!!sym(glue::glue("{index}")) := Excess)
+ 
+ df
+}
+
+excess_return(df , "SA_DG", "SA") 
+```
+
+    ## # A tibble: 241 × 2
+    ##    Date                SA_DG
+    ##    <dttm>              <dbl>
+    ##  1 2003-08-29 00:00:00    NA
+    ##  2 2003-09-30 00:00:00    NA
+    ##  3 2003-10-31 00:00:00    NA
+    ##  4 2003-11-28 00:00:00    NA
+    ##  5 2003-12-31 00:00:00    NA
+    ##  6 2004-01-30 00:00:00    NA
+    ##  7 2004-02-27 00:00:00    NA
+    ##  8 2004-03-31 00:00:00    NA
+    ##  9 2004-04-30 00:00:00    NA
+    ## 10 2004-05-31 00:00:00    NA
+    ## # ℹ 231 more rows
+
+``` r
+#   calculate simple returns just simple excess returns
+a <- df %>% excess_return(., "UK_HY", "UK") 
+b <- df %>% excess_return(., "UK_HY_B", "UK_B")
+
+c <- df %>% excess_return(., "US_HY", "US")
+d <- df %>% excess_return(., "US_DG", "US_2")
+
+e <- df %>% excess_return(., "EU_HY", "EU")
+f <- df %>% excess_return(., "EU_DG", "EU_2")
+
+g <- df %>% excess_return(., "JP_HY", "JP")
+h <- df %>% excess_return(., "JP_DG", "JP")
+
+i <- df %>% excess_return(., "EM_HY", "EM")
+
+j <- df %>% excess_return(., "SA_HY", "SA")
+k <- df %>% excess_return(., "SA_DG", "SA")
+
+l <- df %>% excess_return(., "W_HY", "W")
+
+
+# Table to describe excess returns
+
+
+excess_return_df <- list( a, b, c, d, e,f,g,h,i,j,k, l) %>%
+  reduce(inner_join, by='Date') %>% gather(Regions, Return, -Date)
+
+excess_return_df <- excess_return_df %>% mutate(Return = ifelse(Return > 0.30, 0.30, 
+    ifelse(Return < -0.30, -0.30,Return)))
+
+excess_return_df %>% ggplot()+ 
+  geom_line(aes(Date, Return))
+```
+
+    ## Warning: Removed 12 rows containing missing values (`geom_line()`).
+
+![](README_files/figure-markdown_github/unnamed-chunk-9-1.png)
+
+``` r
+# PCA time 
+
+source("code/impute.R")
+data_wide <-  excess_return_df %>%rename(date = Date) %>%  spread(., Regions, Return) %>% impute_missing_returns(.,"Drawn_Distribution_Collective") %>% select(-date)
+
+pca <- prcomp(data_wide)
+# We have already cebtered our data, but we could also use
+# these built in measures: prcomp(data_wide, center = TRUE,
+# scale. = TRUE)
+
+#  get the standard deviations 
+pca$sdev
+```
+
+    ##  [1] 0.072121321 0.036719785 0.026959278 0.021533275 0.015715088 0.012885727
+    ##  [7] 0.012372687 0.007422327 0.005814593 0.005228147 0.003956128 0.001637486
+
+``` r
+# now the eigen values 
+
+eigenvalues <- pca$sdev^2
+
+#  now for the rotation 
+
+pca$rotation
+```
+
+    ##                   PC1         PC2         PC3         PC4         PC5
+    ## EM_HY   -0.0062085990  0.12387082  0.13811938  0.19665892  0.04496338
+    ## EU_DG   -0.0023056736  0.14474534  0.08096267  0.24457847  0.14536089
+    ## EU_HY   -0.0004529235  0.13506862  0.14406447  0.31526602  0.18973632
+    ## JP_DG    0.0012210818  0.07083201  0.92040657 -0.37127901 -0.05470743
+    ## JP_HY    0.9977108223 -0.03272491  0.01294502  0.02798377  0.02268246
+    ## SA_DG   -0.0269199987  0.14927960  0.06671583  0.30443736 -0.50539962
+    ## SA_HY    0.0378267734  0.22920058  0.06643866  0.31170205 -0.66955646
+    ## UK_HY    0.0399673768  0.88734456 -0.22316527 -0.39251003  0.06232439
+    ## UK_HY_B -0.0021468416  0.15626362  0.11678261  0.28813883  0.13250329
+    ## US_DG   -0.0177835699  0.14225376  0.09564184  0.33478119  0.31470997
+    ## US_HY   -0.0202573440  0.13508431  0.09652233  0.26279112  0.26661478
+    ## W_HY    -0.0065870741  0.11947089  0.12461041  0.23540770  0.20503498
+    ##                 PC6          PC7          PC8           PC9         PC10
+    ## EM_HY   -0.20591253  0.096505321 -0.925068078  0.0965903740 -0.056151614
+    ## EU_DG   -0.29891369  0.100427467  0.174840134 -0.3756506710 -0.519728973
+    ## EU_HY   -0.37428682  0.141234608  0.240529676  0.4082205335  0.584220659
+    ## JP_DG    0.04730470 -0.009155497  0.051334719 -0.0388636797  0.002198769
+    ## JP_HY    0.02777321  0.034270255 -0.003986289  0.0005755949 -0.006640861
+    ## SA_DG    0.36593479  0.697345962  0.061824699  0.0077683753 -0.010018294
+    ## SA_HY   -0.12000670 -0.615638157  0.039846610  0.0216673856  0.006672785
+    ## UK_HY    0.01853735  0.039634735  0.003924994  0.0136839962  0.033720106
+    ## UK_HY_B -0.38613549  0.116751734  0.143752216 -0.4034344858  0.001572589
+    ## US_DG    0.56275478 -0.234121075 -0.099145956 -0.4584582445  0.385241735
+    ## US_HY    0.32170861 -0.140058122  0.118105369  0.4113752686 -0.452670379
+    ## W_HY     0.08489655 -0.066805640  0.057492254  0.3721721634 -0.175385291
+    ##                  PC11         PC12
+    ## EM_HY    0.0310949574  0.062691901
+    ## EU_DG    0.5876215804 -0.070747453
+    ## EU_HY    0.2782943193  0.149369625
+    ## JP_DG    0.0134779941  0.018395565
+    ## JP_HY   -0.0025181353  0.004956975
+    ## SA_DG   -0.0048803391 -0.014917968
+    ## SA_HY    0.0236180309  0.009305585
+    ## UK_HY   -0.0001506766 -0.004097023
+    ## UK_HY_B -0.7127769189  0.084550053
+    ## US_DG    0.1333287027 -0.038369235
+    ## US_HY   -0.1408940713  0.548479613
+    ## W_HY    -0.1727367538 -0.811550090
+
+``` r
+#  you can use things such as summary just to get more out of the results
+summary(pca)
+```
+
+    ## Importance of components:
+    ##                            PC1     PC2     PC3     PC4     PC5     PC6     PC7
+    ## Standard deviation     0.07212 0.03672 0.02696 0.02153 0.01572 0.01289 0.01237
+    ## Proportion of Variance 0.61622 0.15974 0.08610 0.05493 0.02926 0.01967 0.01814
+    ## Cumulative Proportion  0.61622 0.77596 0.86206 0.91699 0.94625 0.96592 0.98406
+    ##                             PC8      PC9     PC10     PC11     PC12
+    ## Standard deviation     0.007422 0.005815 0.005228 0.003956 0.001637
+    ## Proportion of Variance 0.006530 0.004010 0.003240 0.001850 0.000320
+    ## Cumulative Proportion  0.990580 0.994590 0.997830 0.999680 1.000000
+
+``` r
+#  installation
+if (!require(FactoMineR)) install.packages("FactoMineR")
+```
+
+    ## Loading required package: FactoMineR
+
+``` r
+if (!require(factoextra)) install.packages("factoextra")
+```
+
+    ## Loading required package: factoextra
+
+    ## Welcome! Want to learn more? See two factoextra-related books at https://goo.gl/ve3WBa
+
+``` r
+# this needs a tibble that has row names 
+
+data <- excess_return_df %>% tibble::rownames_to_column() %>% 
+    tibble::as_tibble() %>% column_to_rownames("rowname") %>% select(-Date)
+
+#  lets use our data 
+index.pca <- FactoMineR::PCA(data_wide)
+```
+
+![](README_files/figure-markdown_github/unnamed-chunk-9-2.png)
+
+``` r
+factoextra::fviz_pca_var(index.pca, col.var = c("cos2", "contrib", "coord", 
+    "x", "y")[1]) + scale_color_gradient2(low = "white", mid = "blue", 
+    high = "red", midpoint = 0.5) + theme_minimal()
+```
+
+![](README_files/figure-markdown_github/unnamed-chunk-9-3.png)
+
+``` r
+#  with similar analyses to 
+
+index.pca$var$contrib
+```
+
+    ##               Dim.1       Dim.2       Dim.3      Dim.4       Dim.5
+    ## EM_HY    9.95184579  2.22409919  4.41312381  2.3441226  1.18622189
+    ## EU_DG   13.38561007  2.72725898  3.00454988  0.3837551  8.25843652
+    ## EU_HY   13.19171239  1.25213760  8.78447932  0.1270642  4.59463082
+    ## JP_DG    0.84856034  0.02603533 23.39247726  0.5020761 64.07022925
+    ## JP_HY    0.06657404 20.30654831  0.03495049 55.1661266  0.19451406
+    ## SA_DG    3.78240200  1.62648825 13.29426345 26.5342465  8.44787896
+    ## SA_HY    4.43235777 16.83187246 14.65527823  0.0161162  6.82434227
+    ## UK_HY    3.42949881  8.39887862 15.92855052  0.8752090  0.05305326
+    ## UK_HY_B 13.87259421  4.04687581  5.40023695  0.8555514  5.62831021
+    ## US_DG    9.02246003 18.74291735  7.40476889  5.3671426  0.44713666
+    ## US_HY   12.00456957 17.70125305  3.67388466  4.3311805  0.16427022
+    ## W_HY    16.01181497  6.11563503  0.01343653  3.4974093  0.13097586
+
+``` r
+# how much of the variationin the PCA is due to the variable
+
+factoextra::fviz_pca_var(index.pca, col.var = "contrib") + scale_color_gradient2(low = "green", 
+    mid = "yellow", high = "red", midpoint = 9) + theme_minimal()
+```
+
+![](README_files/figure-markdown_github/unnamed-chunk-9-4.png)
+
+``` r
+#  this should add some text to the graph but scrutenize it later
+
+# factoextra::fviz_pca_biplot(index.pca, geom = "text")
+
+# lets get a new data frame just to get more information out if this 
+```
+
+-   the second dimension is where the laodings are different, JP_HY is
+    the odd beast, in the first dimension.
+-   first dimension loadings are quiet strong for advanced economies and
+    positive for all indicies expect for JP_HY.
+-   second dimension there is disparity emerges, advanced economies have
+    a negative loading to the second PC.
+-   the question now becomes, whats the composition of US companies in
+    the World MSCI index.
+-   in reducing the dimensions of our data, we notice that most
+    economies are affected relative to each other in similar capacity to
+    PCA.
+-   excess returns of divi strategies, after reducing dimensions we
+    notice that US strategies have a negative loading to the second PCA.
+
+# So how has that loading changed overtime and is it significant
+
+-   we can then use fundamental analysis to reach that conclusion.
+
+# The next queston
+
+now that we have estbalished why they do work, is it factual.
+
+-   lets apply a PCA to determine this.
+-   get soe regressions and commnet.
+-   do some clustering.
+-   

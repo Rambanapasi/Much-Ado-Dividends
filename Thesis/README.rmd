@@ -253,6 +253,7 @@ SA_rates <- rate_data %>% select(Date, SA)
 ECB_rates <- rate_data %>% select(Date, ECB)
 # Get Rates for the US
 source("code/Interest_Regime.R")
+source("code/Stratifier_rates.R")
 
 
 #  rename the columns for the function to work
@@ -284,51 +285,51 @@ Neutral_date_vector_eu <- Regime_df %>% filter(regime %in% "Neutral") %>% pull(D
 # Hiking Performance
 
 Hiking_performance <-  bind_rows(
- stratifier(df, "EU_HY", "EU", Hiking_date_vector_eu, "Hiking" ),
- stratifier(df, "EU_DG", "EU_2", Hiking_date_vector_eu, "Hiking" ),
- stratifier(df, "UK_HY", "UK", Hiking_date_vector_uk, "Hiking" ),
- stratifier(df, "UK_HY_B", "UK", Hiking_date_vector_uk, "Hiking" ),
- stratifier(df, "EM_HY", "EM", Hiking_date_vector_us, "Hiking"),
- stratifier(df, "SA_HY", "SA", Hiking_date_vector_sa, "Hiking" ),
- stratifier(df, "SA_DG", "SA", Hiking_date_vector_sa, "Hiking" ),
- stratifier(df, "US_HY", "US", Hiking_date_vector_us, "Hiking" ), 
- stratifier(df, "US_DG", "US", Hiking_date_vector_us, "Hiking" )
+ stratifier_rates(df, "EU_HY", "EU", Hiking_date_vector_eu, "Hiking" ),
+ stratifier_rates(df, "EU_DG", "EU_2", Hiking_date_vector_eu, "Hiking" ),
+ stratifier_rates(df, "UK_HY", "UK", Hiking_date_vector_uk, "Hiking" ),
+ stratifier_rates(df, "UK_HY_B", "UK", Hiking_date_vector_uk, "Hiking" ),
+ stratifier_rates(df, "EM_HY", "EM", Hiking_date_vector_us, "Hiking"),
+ stratifier_rates(df, "SA_HY", "SA", Hiking_date_vector_sa, "Hiking" ),
+ stratifier_rates(df, "SA_DG", "SA", Hiking_date_vector_sa, "Hiking" ),
+ stratifier_rates(df, "US_HY", "US", Hiking_date_vector_us, "Hiking" ), 
+ stratifier_rates(df, "US_DG", "US", Hiking_date_vector_us, "Hiking" )
  )
 
 #  Cutting Perfromance
 
 Cutting_performance <-  bind_rows(
- stratifier(df, "EU_HY", "EU", Cutting_date_vector_eu, "Cut" ),
- stratifier(df, "EU_DG", "EU_2", Cutting_date_vector_eu, "Cut" ),
- stratifier(df, "UK_HY", "UK", Cutting_date_vector_uk, "Cut" ),
- stratifier(df, "UK_HY_B", "UK", Cutting_date_vector_uk, "Cut" ),
- stratifier(df, "EM_HY", "EM", Cutting_date_vector_us, "Cut"),
- stratifier(df, "SA_HY", "SA", Cutting_date_vector_sa, "Cut" ),
- stratifier(df, "SA_DG", "SA", Cutting_date_vector_sa, "Cut" ),
- stratifier(df, "US_HY", "US", Cutting_date_vector_us, "Cut" ), 
- stratifier(df, "US_DG", "US", Cutting_date_vector_us, "Cut" )
+ stratifier_rates(df, "EU_HY", "EU", Cutting_date_vector_eu, "Cut" ),
+ stratifier_rates(df, "EU_DG", "EU_2", Cutting_date_vector_eu, "Cut" ),
+ stratifier_rates(df, "UK_HY", "UK", Cutting_date_vector_uk, "Cut" ),
+ stratifier_rates(df, "UK_HY_B", "UK", Cutting_date_vector_uk, "Cut" ),
+ stratifier_rates(df, "EM_HY", "EM", Cutting_date_vector_us, "Cut"),
+ stratifier_rates(df, "SA_HY", "SA", Cutting_date_vector_sa, "Cut" ),
+ stratifier_rates(df, "SA_DG", "SA", Cutting_date_vector_sa, "Cut" ),
+ stratifier_rates(df, "US_HY", "US", Cutting_date_vector_us, "Cut" ), 
+ stratifier_rates(df, "US_DG", "US", Cutting_date_vector_us, "Cut" )
  )
 
 # Nuetral 
 
 Nuetral_perfromance <-  bind_rows(
- stratifier(df, "EU_HY", "EU", Neutral_date_vector_eu, "Neutral" ),
- stratifier(df, "EU_DG", "EU_2", Neutral_date_vector_eu, "Neutral" ),
- stratifier(df, "UK_HY", "UK", Neutral_date_vector_uk, "Neutral" ),
- stratifier(df, "UK_HY_B", "UK", Neutral_date_vector_uk, "Neutral" ),
- stratifier(df, "JP_HY", "JP", Neutral_date_vector_jp, "Neutral" ),
- stratifier(df, "JP_DG", "JP", Neutral_date_vector_jp, "Neutral" ),
- stratifier(df, "EM_HY", "EM", Neutral_date_vector_us, "Neutral"),
- stratifier(df, "SA_HY", "SA", Neutral_date_vector_sa, "Neutral" ),
- stratifier(df, "SA_DG", "SA", Neutral_date_vector_sa, "Neutral" ),
- stratifier(df, "US_HY", "US", Neutral_date_vector_us, "Neutral" ), 
- stratifier(df, "US_DG", "US", Neutral_date_vector_us, "Neutral" )
+ stratifier_rates(df, "EU_HY", "EU", Neutral_date_vector_eu, "Neutral" ),
+ stratifier_rates(df, "EU_DG", "EU_2", Neutral_date_vector_eu, "Neutral" ),
+ stratifier_rates(df, "UK_HY", "UK", Neutral_date_vector_uk, "Neutral" ),
+ stratifier_rates(df, "UK_HY_B", "UK", Neutral_date_vector_uk, "Neutral" ),
+ stratifier_rates(df, "JP_HY", "JP", Neutral_date_vector_jp, "Neutral" ),
+ stratifier_rates(df, "JP_DG", "JP", Neutral_date_vector_jp, "Neutral" ),
+ stratifier_rates(df, "EM_HY", "EM", Neutral_date_vector_us, "Neutral"),
+ stratifier_rates(df, "SA_HY", "SA", Neutral_date_vector_sa, "Neutral" ),
+ stratifier_rates(df, "SA_DG", "SA", Neutral_date_vector_sa, "Neutral" ),
+ stratifier_rates(df, "US_HY", "US", Neutral_date_vector_us, "Neutral" ), 
+ stratifier_rates(df, "US_DG", "US", Neutral_date_vector_us, "Neutral" )
  )
 
 CB_df <- bind_rows(Nuetral_perfromance, 
  Cutting_performance, Hiking_performance) %>% arrange(Name)
 
-CB_df %>% rename(Quarters = "Days") %>% arrange(desc("Annualized Return"))
+CB_df %>% rename(Quarters = "Months") %>% arrange(desc("Annualized Return"))
 
 #  need to aggregate that into a single number 
 ```

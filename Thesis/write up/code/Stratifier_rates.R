@@ -1,4 +1,4 @@
-stratifier <- function(raw_df, index_name, benchmark_name, Date_vector, Description) {
+stratifier_rates <- function(raw_df, index_name, benchmark_name, Date_vector, Description) {
   
   Mk_df <- raw_df %>%
     dplyr::rename(Index = index_name, Benchmark = benchmark_name) %>% 
@@ -17,8 +17,7 @@ stratifier <- function(raw_df, index_name, benchmark_name, Date_vector, Descript
     mutate(ex.ret = Index - Benchmark)  %>% 
     select(date, ex.ret)  %>% 
     mutate(Return = cumprod(1 + ex.ret)) %>% 
-    summarize(Name = !!glue("{index_name}"), "Market Period" = Description, Months = n(), "Annualized Return (%)" = mean(last(Return) ^ (12/Months) - 1)*100)
+    summarize(Name = !!glue("{index_name}"), "Market Period" = Description, Months = n(), "Annualized Return (%)" = mean(last(Return) ^ (4/Months) - 1)*100)
   
   Mk_df
 }
-

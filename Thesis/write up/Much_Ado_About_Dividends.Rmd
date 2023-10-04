@@ -77,8 +77,8 @@ RemovePreprintSubmittedTo: TRUE  # Removes the 'preprint submitted to...' at bot
 Journal: "Journal of Finance"   # Journal that the paper will be submitting to, if RemovePreprintSubmittedTo is set to TRUE.
 toc: FALSE                       # Add a table of contents
 numbersections: TRUE             # Should sections (and thus figures and tables) be numbered?
-fontsize: 12pt                  # Set fontsize
-linestretch: 2.0                # Set distance between lines.
+fontsize: 11pt                  # Set fontsize
+linestretch: 1.0                # Set distance between lines.
 link-citations: TRUE            # This creates dynamic links to the papers in reference list.
 
 ### Adding additional latex packages:
@@ -368,7 +368,8 @@ excess_return_df <- list( a, b, c, d, e,f,g,h,i,j,k, l) %>%
 table_df <- excess_return_df %>% 
   gather(Regions, Cumulative_Excess_Return, -date) %>% 
   group_by(Regions) %>% 
-  summarise("Start Date" = first(date) , "Total Years"  = round( n()/12,0),  Median = median(Cumulative_Excess_Return),  "Cumulative Excess Return" = last(Cumulative_Excess_Return))
+  summarise("Years"  = round( n()/12,0),  Median = median(Cumulative_Excess_Return),  "Cumulative Excess Return" = last(Cumulative_Excess_Return), "Stan dev" = sd(Cumulative_Excess_Return))
+
 library(xtable)
 data <- table_df %>% tibble::as_tibble()
 
@@ -504,6 +505,7 @@ SA_rates <- rate_data %>% select(Date, SA)
 ECB_rates <- rate_data %>% select(Date, ECB)
 # Get Rates for the US
 source("code/Interest_Regime.R")
+source("code/Stratifier_rates.R")
 
 
 #  rename the columns for the function to work
@@ -535,49 +537,51 @@ Neutral_date_vector_eu <- Regime_df %>% filter(regime %in% "Neutral") %>% pull(D
 # Hiking Performance
 
 Hiking_performance <-  bind_rows(
- stratifier(df, "EU_HY", "EU", Hiking_date_vector_eu, "Hiking" ),
- stratifier(df, "EU_DG", "EU_2", Hiking_date_vector_eu, "Hiking" ),
- stratifier(df, "UK_HY", "UK", Hiking_date_vector_uk, "Hiking" ),
- stratifier(df, "UK_HY_B", "UK", Hiking_date_vector_uk, "Hiking" ),
- stratifier(df, "EM_HY", "EM", Hiking_date_vector_us, "Hiking"),
- stratifier(df, "SA_HY", "SA", Hiking_date_vector_sa, "Hiking" ),
- stratifier(df, "SA_DG", "SA", Hiking_date_vector_sa, "Hiking" ),
- stratifier(df, "US_HY", "US", Hiking_date_vector_us, "Hiking" ), 
- stratifier(df, "US_DG", "US", Hiking_date_vector_us, "Hiking" )
+ stratifier_rates(df, "EU_HY", "EU", Hiking_date_vector_eu, "Hiking" ),
+ stratifier_rates(df, "EU_DG", "EU_2", Hiking_date_vector_eu, "Hiking" ),
+ stratifier_rates(df, "UK_HY", "UK", Hiking_date_vector_uk, "Hiking" ),
+ stratifier_rates(df, "UK_HY_B", "UK", Hiking_date_vector_uk, "Hiking" ),
+ stratifier_rates(df, "EM_HY", "EM", Hiking_date_vector_us, "Hiking"),
+ stratifier_rates(df, "SA_HY", "SA", Hiking_date_vector_sa, "Hiking" ),
+ stratifier_rates(df, "SA_DG", "SA", Hiking_date_vector_sa, "Hiking" ),
+ stratifier_rates(df, "US_HY", "US", Hiking_date_vector_us, "Hiking" ), 
+ stratifier_rates(df, "US_DG", "US", Hiking_date_vector_us, "Hiking" )
  )
 
 #  Cutting Perfromance
 
 Cutting_performance <-  bind_rows(
- stratifier(df, "EU_HY", "EU", Cutting_date_vector_eu, "Cut" ),
- stratifier(df, "EU_DG", "EU_2", Cutting_date_vector_eu, "Cut" ),
- stratifier(df, "UK_HY", "UK", Cutting_date_vector_uk, "Cut" ),
- stratifier(df, "UK_HY_B", "UK", Cutting_date_vector_uk, "Cut" ),
- stratifier(df, "EM_HY", "EM", Cutting_date_vector_us, "Cut"),
- stratifier(df, "SA_HY", "SA", Cutting_date_vector_sa, "Cut" ),
- stratifier(df, "SA_DG", "SA", Cutting_date_vector_sa, "Cut" ),
- stratifier(df, "US_HY", "US", Cutting_date_vector_us, "Cut" ), 
- stratifier(df, "US_DG", "US", Cutting_date_vector_us, "Cut" )
+ stratifier_rates(df, "EU_HY", "EU", Cutting_date_vector_eu, "Cut" ),
+ stratifier_rates(df, "EU_DG", "EU_2", Cutting_date_vector_eu, "Cut" ),
+ stratifier_rates(df, "UK_HY", "UK", Cutting_date_vector_uk, "Cut" ),
+ stratifier_rates(df, "UK_HY_B", "UK", Cutting_date_vector_uk, "Cut" ),
+ stratifier_rates(df, "EM_HY", "EM", Cutting_date_vector_us, "Cut"),
+ stratifier_rates(df, "SA_HY", "SA", Cutting_date_vector_sa, "Cut" ),
+ stratifier_rates(df, "SA_DG", "SA", Cutting_date_vector_sa, "Cut" ),
+ stratifier_rates(df, "US_HY", "US", Cutting_date_vector_us, "Cut" ), 
+ stratifier_rates(df, "US_DG", "US", Cutting_date_vector_us, "Cut" )
  )
 
 # Nuetral 
 
 Nuetral_perfromance <-  bind_rows(
- stratifier(df, "EU_HY", "EU", Neutral_date_vector_eu, "Neutral" ),
- stratifier(df, "EU_DG", "EU_2", Neutral_date_vector_eu, "Neutral" ),
- stratifier(df, "UK_HY", "UK", Neutral_date_vector_uk, "Neutral" ),
- stratifier(df, "UK_HY_B", "UK", Neutral_date_vector_uk, "Neutral" ),
- stratifier(df, "JP_HY", "JP", Neutral_date_vector_jp, "Neutral" ),
- stratifier(df, "JP_DG", "JP", Neutral_date_vector_jp, "Neutral" ),
- stratifier(df, "EM_HY", "EM", Neutral_date_vector_us, "Neutral"),
- stratifier(df, "SA_HY", "SA", Neutral_date_vector_sa, "Neutral" ),
- stratifier(df, "SA_DG", "SA", Neutral_date_vector_sa, "Neutral" ),
- stratifier(df, "US_HY", "US", Neutral_date_vector_us, "Neutral" ), 
- stratifier(df, "US_DG", "US", Neutral_date_vector_us, "Neutral" )
+ stratifier_rates(df, "EU_HY", "EU", Neutral_date_vector_eu, "Neutral" ),
+ stratifier_rates(df, "EU_DG", "EU_2", Neutral_date_vector_eu, "Neutral" ),
+ stratifier_rates(df, "UK_HY", "UK", Neutral_date_vector_uk, "Neutral" ),
+ stratifier_rates(df, "UK_HY_B", "UK", Neutral_date_vector_uk, "Neutral" ),
+ stratifier_rates(df, "JP_HY", "JP", Neutral_date_vector_jp, "Neutral" ),
+ stratifier_rates(df, "JP_DG", "JP", Neutral_date_vector_jp, "Neutral" ),
+ stratifier_rates(df, "EM_HY", "EM", Neutral_date_vector_us, "Neutral"),
+ stratifier_rates(df, "SA_HY", "SA", Neutral_date_vector_sa, "Neutral" ),
+ stratifier_rates(df, "SA_DG", "SA", Neutral_date_vector_sa, "Neutral" ),
+ stratifier_rates(df, "US_HY", "US", Neutral_date_vector_us, "Neutral" ), 
+ stratifier_rates(df, "US_DG", "US", Neutral_date_vector_us, "Neutral" )
  )
 
 CB_df <- bind_rows(Nuetral_perfromance, 
  Cutting_performance, Hiking_performance) %>% arrange(Name)
+
+CB_df <- CB_df %>% rename(Quarters = "Months") %>% arrange(desc("Annualized Return"))
 
 data = CB_df %>% tibble::as_tibble()
   addtorow          <- list()
@@ -693,11 +697,9 @@ When we integrate our information ratio findings with drawdown analysis, we obse
 
 # Conclusion
 \newpage
-# References
-
-<div id="refs"></div>
-\newpage
 # Appendix
+
+## Globally Traded Dividend Portfolios Considered
 
 ```{r, results='asis'}
 data <- readxl::read_xlsx("data/Index Description.xlsx")
@@ -727,7 +729,97 @@ table <- xtable(data, caption = "Index Description \\label{indexdes}")
 
 ```
 
+## Stratified Periods Considered
 
+```{r}
+US_rates <- rate_data %>% select(Date, US) %>% filter(!is.na(US))
+```
+
+
+```{r}
+
+library(scales)
+
+hivol_per_vector_uk %>% 
+  data.frame() %>%
+  setNames(c("Date")) %>% arrange(Date) %>% mutate(Year = format(Date , "%Y")) %>% 
+  group_by(Year) %>% filter(Date == first(Date)| Date == last(Date))
+
+data <- UK_rates %>% filter(!is.na(UK))
+
+shade <- data.frame(
+  x1 = as.POSIXct("2010-05-04"),
+  x2 = as.POSIXct("2013-05-05"),
+  y1 = -Inf, 
+  y2 = Inf   
+)
+
+data %>% ggplot() +
+  geom_line(aes(Date, UK)) + 
+  labs(x = "", y = "", title = "", subtitle = "", caption = "Source: Bloomberg and authors' own calculations") +
+  geom_rect(data = shade, 
+            mapping = aes(
+              xmin = x1,
+              xmax = x2,
+              ymin = y1,
+              ymax = y2), alpha = 0.2)
+
+
+
+```
+
+
+```{r}
+JP_rates <- rate_data %>% select(Date, JP) %>%  filter(!is.na(JP))
+```
+
+
+```{r}
+SA_rates <- rate_data %>% select(Date, SA) %>%  filter(!is.na(SA))
+```
+
+
+```{r}
+ECB_rates <- rate_data %>% select(Date, ECB) %>%  filter(!is.na(US))
+
+
+```
+
+\newpage
+## Dividend Defintions 
+
+Bloomberg has two main categories for distributions: Cash Dividends and Stock Dividends. Various kinds of distributions appear under these definitions that do not necessarily only apply to ordinary issued shares (the only security type that we consider in our study). In the next two subsections we define the types of distributions that fall under these categories and in some cases provide additional information. Our sample only comprises of final, interim and regular cash dividends. These dividends are categorized by Bloomberg as Normal Cash. 
+
+### Cash Dividends
+- Final: dividend declared for the financial year-end
+- Interim (includes 2nd interim, 3rd interim and 4th interim): dividend paid after a reporting period (eg. quarterly or semi-annually)
+Special Cash: dividend declared for the financial year-end or interim period over and above the normal dividend
+- Regular Cash: a dividend distribution made in cash
+- Omitted: A company has elected to skip a scheduled payment
+- Discontinued: The discontinuance of dividend payments on an ongoing basis
+- Interest on Capital: interest paid on fixed income instruments
+- Income: mutual fund dividends, in most cases
+- Liquidation: a distribution of a companies assets to shareholders during (interim) or after delisting (final)
+- Return of Capital: a non-taxable cash payment to investors from the company that represents a return on invested capital as opposed to a
+dividend
+- Memorial: a special dividend. For example a company celebrating an anniversary might pay a memorial dividend
+- Proceeds from sale of shares: a distribution of cash to shareholders after selling shares. For example this may occur when the company sells
+the shares of a shareholder who was not eligible to receive shares in an offering and then distributes the proceeds to shareholders
+- Cancelled: the cancellation of a previously declared dividend
+- Return Premium: special cash dividend paid from a special reserve
+- Preferred Rights Redemption: a company pays a dividend in exchange for previously issued preferred rights
+
+## Stock Dividends
+
+Bonus: also known as a scrip or capitalization issue. Shareholders are given additional stock in proportion to their holdings
+- Scrip: a free issue or bonus of shares
+- Stock Dividend: portion of a company’s retained earnings that are distributed to shareholders in stock. The JSE treats stock dividends as a
+capitalization issue
+\newpage
+
+# References
+
+<div id="refs"></div>
 
 
 

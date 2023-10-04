@@ -17,7 +17,7 @@ My_excess_return <- function(df, index_name, benchmark_name) {
     select(date, ret) %>% 
     ungroup()
   
-  df <- df %>%  rename(!!sym(glue::glue("Cumulative_Excess_of_{index_name}")) := ret)
+  df <- df %>%  rename(!!sym(glue::glue("{index_name}")) := ret)
   
   df
 }
