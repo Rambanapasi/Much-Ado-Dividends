@@ -16,9 +16,9 @@ Thesis_FP: FALSE
 # Entry3: "A thesis submitted toward the degree of Doctor of Philosophy"
 Uni_Logo: Tex/Logo.png # Place a logo in the indicated location (from your root, e.g. defaults to ~/Tex/Logo.png) and uncomment this line. Leave uncommented for no image
 # Logo_width: 0.3 # If using a logo - use this to set width (size) of image
-# Entry4: "Under the supervision of: \\vfill Prof. Joe Smith and Dr. Frank Smith"
-# Entry5: "Stellenbosch University"
-# Entry6: April 2020
+Entry4: "Under the supervision of: \\vfill Nico Katzke"
+Entry5: "Stellenbosch University"
+Entry6: April 2020
 # Entry7:
 # Entry8:
 
@@ -67,7 +67,7 @@ linenumbers: FALSE # Used when submitting to journal
 bibliography: Tex/ref.bib       # Do not edit: Keep this naming convention and location.
 csl: Tex/harvard-stellenbosch-university.csl # referencing format used.
 # By default, the bibliography only displays the cited references. If you want to change this, you can comment out one of the following:
-nocite: '@*' # Add all items in bibliography, whether cited or not
+# nocite: '@*' # Add all items in bibliography, whether cited or not
  # nocite: |  # add specific references that aren't cited
 # @grinold2000
 #  @Someoneelse2010
@@ -77,8 +77,8 @@ RemovePreprintSubmittedTo: TRUE  # Removes the 'preprint submitted to...' at bot
 Journal: "Journal of Finance"   # Journal that the paper will be submitting to, if RemovePreprintSubmittedTo is set to TRUE.
 toc: FALSE                       # Add a table of contents
 numbersections: TRUE             # Should sections (and thus figures and tables) be numbered?
-fontsize: 11pt                  # Set fontsize
-linestretch: 1.0                # Set distance between lines.
+fontsize: 12pt                  # Set fontsize
+linestretch: 2.0                # Set distance between lines.
 link-citations: TRUE            # This creates dynamic links to the papers in reference list.
 
 ### Adding additional latex packages:
@@ -181,127 +181,48 @@ However there are issues with such methodology.First, on the JSE the signal-to-n
 Dividend signaling can be catergorized in two forms, namely high yield (HY) or dividend growth per share (DG). Whereas HY confirms is typically used as a value proxy, it's a poor proxy given its relation to price if we consider a constant payout ratio. For this reason, the use of DGPS provides attributes that aim to curtail negative aspects of HY. That is, DGPS for corporations, and unlike the dividend yield, it is not affected by price but maintains properties that allow for inference into management quality. As management is aware of the signaling effect of dividends, this may induce the value trap, forcing management to continually increase dividends to maintain a certain valuation. However, such companies are more vulnerable to facing financial distress.
 
 \newpage
-
 # Methodology 
+To evaluate the return predictive signal of dividends, we employ an applied approach that constitutes constructing subset portfolios and compare in sample performances. Our approach aims to give valuable insights based on risk and return for systematically constructed dividend portfolios.  
 
-## Introduction 
+## Portfolio optimzation
 
-We employ dividend signals to rank our assets within our selected universe to construct portfolios that offer higher risk adjusted return than the market index. We consider a dividend yield ranking selecting the top 20 stock, dividend growth per share and selecting the top 20 stock, an extension of the dividend portfolios by adding a price momentum filter and a sustainability portfolio that aims penalizes stock that have unsustainable dividend practices.
+The Modern Portfolio Theory defines risk of a portfolio of ($n$) assets as the variance ($\sigma^2$) of its returns ($r_{t}$). We add a refinement to this, and our definition returns is achieved by decomposing it into common factor ($Xf$) and specific return ($u$) as ($r = Xf+ u$). From these returns we create a factor covariance matrix, defined as ($X F X^T+D$) in which we derive our multiple factor universe consists of ($k$) common factors.
 
-Optimizing an asset portfolio involves carefully calibrating the trade-offs between risk and expected returns. In achieving the ultimate goal of the study, we aim to investigate how different risk models can provide significant cues in forming dividend strategies. To this end, we employ Minimum Variance, Equal Risk Contribution, and Minimum Volatility. Additionally, this study incorporates more refinements models like Risk Efficiency and makes use of proprietary software-based approaches, specifically drawing upon the Barras risk model.Unique to the Barras model is the introduction of the Max Utility Operator, which allows for a more sophisticated interpretation of risk by focusing not only on the total risk but also the active risk associated with each asset. This dual perspective enables the construction of a more versatile covariance matrix, thereby enriching the portfolio optimization process. The following sections analytically describes the optimization problem and risk models used in the study.
+$\begin{array} {ll}X & =n \times k \text { matrix of asset exposures to the factors, } \\ F \quad &= k \times k \text { positive semi-definite factor covariance matrix, and } \\ D \quad &=n \times n \text { positive semi-definite covariance matrix representing a } \\ & \text { forecast of asset specific risk. }\end{array}$
 
-# Security Selection Methodology
+We periodically calculate each asset exposure to the common factors calculated in the factor covariance matrix. This then assists us in computing forecasts of the level of each asset specific risk. The short term risk forecasts will then be used to gauge contribution of each asset to a portfolio over risk which contributes to the portfolio construction process. For our optimization,  risk takes on two forms being total risk (only portfolio holdings are considered and benchmark holdings are irrelevant for the optimization process) and active risk (difference between portfolio holdings and benchmark holdings are given consideration in the optimization problem). 
 
-We will employ a practical approach in evaluating dividend signals that involves constructing subset portfolios and compare in sample performance as suggested by @damodaran2004investment .We will rank stock within our selected universe by dividend signals, namely dividend yield (DY) and dividend growth per share (DGPS). First, we rebalance at the end of March and September and construct fully invested, long only portfolios. On each re balancing date, we take the top 100 stocks by market capitalization (MC), and then select the top quintile (20 stocks) based on the our signal scores. We then apply 25 basis trading costs to both buying and selling of stocks, and we will then use total return values, adjust for stock splits and other distorting effects on prices to calculate portfolio returns. We also carefully apply back-dated adjustments to dividends paid to accurately arrive at on-the-day dividends and actual closing prices when calculating our Dividend Yield and Dividend Per Share Growth measures.
+Definded as;
+*Total Risk*: $\quad h^T\left(\lambda_F X F X^T+\lambda_D D\right) h$
 
-We also apply at each re balancing on the risk models mentioned previously. The optimization are constrained to have minimum and maximum weight exposure of 0.5 and 1.5 times the equal weighted alternative. With our quintile portfolios, this implies weights ranging between 2.5% and 7.5%. For the Barra Max utility model with we use a risk aversion parameter of Common Factor Risk Aversion ratio we'll use will be: 0.0075 & asset specific R.A ratio of 1
+*Active Risk*: $\left(h-h_B\right)^T\left(\lambda_F X F X^T+\lambda_D D\right)\left(h-h_B\right)$
 
-Following this we will construct back-tests on the subset of dividend signal portfolios.
+where,
+$$
+\begin{aligned}
+\lambda_F & =\text { common factor risk aversion parameter, } \\
+\lambda_D & =\text { specific risk aversion parameter, } \\
+h & =n \times 1 \text { vector of managed portfolio's holdings, and } \\
+h_B & =n \times 1 \text { vector of normal (benchmark) portfolio's holdings }
+\end{aligned}
+$$
 
-The Standard portfolios considered as follows 
+## Constraints
 
-The Standard Dividend Yield Portfolio: uses the 12 month mean trailing dividend yield measure in its construction.
-- This avoids biasing to stocks that experienced recent share price declines (negative momentum), as would be
-done when considering on the day DY values;
-- This will be treated as the vanilla DY signal portfolio.
+Optimization involves using set of constraints that helps in attaining convergence, i.e giving a set of weights that determine our optimum portfolio. In practice, this is unique to portfolio managers given their risk objectives and goals^[see https://www.sciencedirect.com/science/article/pii/S1057521921002556 for a detailed explanation on advantages of using maximum utility operators to efficiently factor investor risk preferences]. 
+We use: 
 
-The DPSG signal portfolio is constructed by considering the growth of company dividends mentioned above on a 1,
-3 and 5 year basis.
+- Common factor and specific risk aversion parameters of 0.0075 and 1, respectively. 
+- Our investment universe is the Top 50 stock listed on the JSE,therefore our selection criteria depends on market capitalization and liquidity. We use the Capped SWIX as the benchmark. 
+- Portfolios  are re-balanced quarterly. 
+- Active risk constraints to parent benchmark 5%
+- Our sector exposure has a +/-10% limit; holds no property stocks in the portfolio
+- Individual stock have a 15% max exposure limit
+- Quarterly turnover is limited to 10%. \
 
-- For the three and five year measure, we only consider stocks that had positive share payment growth over the
-period considered.
-- E.g., if a stock had a DPS decrease in year 2, even if it has an increased dividend payment over three years
-- we set this value to zero.
-- This has the effect of rewarding consistency, but also reduces the sample set substantially if the period under
-consideration increases
-
-Momentum Adjusted DY and DPSG portfolios extend both our DY and DPSG portfolios by applying a momentum
-adjusted filter for each. We use the following approach to make the adjustments:
-
-- Step 1: Rank our sample (top 100 by MC) by risk-adjusted price momentum and consider the top half.
-- Note that we do not use the “traditional” definition of momentum (12 - 1 month return as introduced by
-Jegadeesh and Titman), but rather use a risk-adjusted measure for momentum. Here we consider the 90
-day moving average return series to the same 90 day standard deviation for each stock.
-- Step 2: Rank our sample by either the DY or DPSG measure, and pick the top 20 stocks.
-
-Sustainability Adjusted DY and DPSG portfolios extend our DY and DPSG signals by considering dividend
-payout ratios (DPR). DPR measures how much of a company’s profit is paid out in dividends. We construct this signal by
-removing from the top 100 companies the 20 with the highest DPR scores. The aim of this filter is simply to avoid the
-most unsustainable stocks from a dividend payment perspective - thus systematically avoiding stocks that are most likely
-to cut dividends in the future, leading to a reactionary capital gain loss (as commonly experienced in practice).
-- Step 1: Rank our sample (top 100 by MC) by the payout ratio using normalized earnings and consider only the
-bottom 80 (lower DPR is more sustainable).
-This measure is calculated by considering the fraction (percentage) of net income a firm pays to its
-shareholders in dividends, calculated as: Total Common Cash Dividends / Normalized Earnings.
-- Step 2: Rank our sample by either the DY or DPSG measures, and pick the top 20 stocks for each.
-
-For completeness we compare the performance of these constructed portfolios to a standard value signal (PE) and a momentum signal, constructed as a composite 60, 120 and 240 day risk-adjusted momentum score for each stock.
-We next compare the absolute returns as well as the risk-adjusted performance and drawdowns of each of these
-portfolios. We then consider turnover and tracking error, before briefly showing the sector exposure of some of the
-different strategies. 
 \newpage
 
-# Portfolio Optimization 
-
-Portfolio optimization consists of determining a set of assets, and their respective portfolio participation weights, which satisfy the investor concerning the combination of risk-return trade-off. @markowitz1959portfolio proposed the Mean-Variance (MV) model in which the expected return  is given by the a measure of the historical data of the stock’s return. For our study we geometrically chain return to measure true effects on portfolio returns overtime. The risk is calculated by the variance of these returns. The MV model treats returns of individual assets as random variables and to adopt the value of expected return and variance in order to quantify the return and investment risk, respectively [@zhang2018portfolio]. 
-\begin{align}
-\mu \quad = \quad w^TR \notag \\
-\sigma^2 \quad  = \quad w^T\sum \notag
-w\end{align}
-The resulting objective function is to maximize return given a certain level of risk and constraint: 
-\begin{align}
-Maximise \ w^TR \sum w<=\sigma^2\ and\ \sum_{i = 1}^{N}w{_i}=1 \notag
-\end{align}
-
-Linear constraints are generally included in MV portfolio optimization. Optimization typically assume that portfolio weights sum to 1 and are non negative. This defines a linear equality constraint on the optimization. Another constraint typically used is no-short-selling condition is a set of sign constraints or linear inequalities. This reflects avoidance of unlimited liability investment often required in institutional contexts.
-
-This study will use a an extension of the MV that uses risk preferences to determine optimum allocation of assets within a portfolio. Barra definition of portfolio risk extends that from the Modern Portfolio theory. It defines risk as the decomposition of the variance of returns. Using Barra multifactor model, the return (r) of a portfolio can be decomposed into both a common factor return (Xf) and asset specific return (u) components as:
-\begin{align} 
-r= X_{F} + u \notag
-\end{align}
-
-The multi-factor approach entails the creation of a factor covariance matrix. This is a short term risk forecast that describes trade off of each common factor within the model. This approach requires periodic return calculation to these exposures. The upshot is that the methodology provides an forecast of each assets specific risk. 
-
-The covariance matrix is defined as:
-
-\begin{align}
- XFX^T + D \label{eq1} \notag
-\end{align}
-
-where X = n x k matrix of asset exposures to the factors. F =  k x k positive semi-definite factor covariance matrix, and D = n × n positive semi-definite covariance matrix representing a forecast of asset specific risk.
-
-Expressing portfolio risk in decomposition allows for portfolio manager to optimize portfolio from either a total risk perspective or an active risk perspective. In total risk, portfolio holdings are only considered, and the benchmark
-holdings are treated as irrelevant for optimization purposes. Whereas in active risk, the tracking error in which the difference between the portfolio holdings and those of the benchmark is given primary consideration in the optimization problem. 
-
-\begin{align}
-Total\ Risk : h^T(\lambda_FXFX^T + \lambda_D)h \notag \\ \quad \quad 
-Active \ Risk : (h-h_B)^T(\lambda_FXFX^T+\lambda_DD)(h-h_B) \notag
-\end{align}
-
-where 
-\begin{align}
-\lambda_f  =  common \ factor\ risk\ aversion\ parameter \notag,\\ \lambda_d =  specific\ risk\ aversion\ parameter \notag,\\h  =  n * 1 \ vector\ of\ managed\ portfolio’s\ holdings\notag,\\ and \notag \\h_B = vector \ normal\ (benchmark)\ portfolio’s\ holdings \notag 
-\end{align} 
-
-The introduction of risk aversion parameters into Barra’s portfolio optimization is a form of a max utility operator that allows the portfolio managers to incorporate a numeric representation of personal risk preferences into the portfolio optimization process^[see https://www.sciencedirect.com/science/article/pii/S1057521921002556 for a detailed explanation on advantages of using maximum utility operators to efficiently factor investor risk preferences]. It also provides the opportunity to quantify relative aversion to common factor risk vis-à-vis specific risk. Consequently, these risk aversion parameters are important tools that are available to assist the portfolio manager in the construction of an optimal portfolio that is consistent with their goals. 
-
-## Equal Risk Contribution (ERC) 
-
-Equal risk contribution is a return free approach that seeks to equalize risk contributions from the universe of selected assets thus ensuring it is fully diversified from a risk perspective. Let sigma measure portfolio risk and C(x) defined to be the risk contribution of asset i. If the portfolio risk is measured as by the variance of its return then is;
-
-\begin{align}
-\sigma^2 = x^TQ{x}\notag \\ and \ C_i(x)= x_i(Qx)_i \notag \\
-\quad where\ (Qx)_i =\sum_{i = 1}^{N}Q_ijxj \notag
-\end{align}
-
-\begin{align}
-x^{ERC} \ satisfies \ C_i(x^{ERC}) = (R(x^{ERC})/N) \ for \ i = 1,...., N. \notag
-\end{align}
-
-From this we conclude that the variance and standard deviation measures are the same for and when can then only the variance risk measure appreciating that all results apply equally to standard deviation. 
-
-
-# Tax considerations
+### Tax considerations
 
 Portfolio theory was developed in a perfect world without friction. In practice, frictions need to be considered and in portfolio construction this often entails considering the effect of taxes on income and capital gains as they can erode returns and significantly alter risks and return characteristics of shares. The contribution of dividends and capital gains to total return can lead to varying tax inefficiencies for shares as most  jurisdictions imposed higher taxes than on capital gains. Therefore shares with higher contribution of dividends will be less tax efficient than those with a higher capital gains component and with timing most jurisdictions tax dividends in the year that they are receive^[See Deloitte’s tax guides and country highlights: https://dits.deloitte.com/#TaxGuides].
 
@@ -321,8 +242,45 @@ t_d= the dividend tax rate and
 t_{cg}= the capital gains tax rate
 
 \newpage
+## Dividend Signals
 
-# Data 
+We will rank stock within our selected universe by dividend signals, specifically using a proxy for dividend yield (DY) and dividend growth per share (DG). The procedure and characteristics of each portfolio are given as; 
+
+*Price Momnetum Sustainability Adjusted Portfolio*:
+
+Rank score (i.e. between 0 and 100) calculated using:
+
+We use a combination of 2/3 DY (3m fwd) and 1/3 DY (9m fwd), Dividend Coverage Ratio and Price Momentum. The signal uses conditions:
+- if dvd_cover score is in bottom quintile, then add it at 15% (15% dvd cover, 66.667% * 0.85 DY3m, 33.333% * 0.85)
+if Price momentum score is in bottom quintile, then add it at 35% (35% PX momentum score = 66.667% * 0.65 DY3m, 33.333% * 0.65)
+- if both dvdcover and momentum in bottom quintile, then: ( 15% dvd cover score=  35% PX momentum score, 66.667% * 0.5 DY3-month, 33.333% * 0.5)
+
+This portfolio uses price momentum and dividend cover ratio as filters to the dividend yield. This rewards sustainability in dividend paymensts and avoids comapnies that  companies that can not afford to pay shareholders dividends thus avoid reactionary capital gain losses. 
+
+*High Yield (HY) Portfolio*:
+Rank score (i.e. between 0 and 100):
+
+We use the dividend as the only signal. Similar to Divi1 its a blend of forwarding looking metrics. That is,  2/3 DY (3m fwd) and 1/3 DY (9m fwd). 
+
+This is our vanilla dividend yield portfolio i.e. just ranks according to the highest dividend payers. 
+
+*Value Portfolio*:
+
+Rank score (i.e. between 0 and 100):
+
+We use the P/E ratio as the alternative proxy to value. 
+
+*Dividend Growth Portolio (DG)*:
+Rank score (i.e. between 0 and 100) calculated using:
+
+Using:
+DPS_Growth_1Y = 40%, DPS_Growth_3Y = 30%, Fwd_3 = 20%, Fwd_9 = 10%
+
+Our dividend growth portfolio using trailing dividend growth rates coupled with 3 and 9 month forward measures. 
+
+\newpage
+
+## Data 
 
 Our metric of interest in this study is the excess return of dividend portfolios over the period 04/01/01–06/30/23, with the start date and the end date purely driven by data availability on the selected dividend indices at the time of writing. We obtained historical daily price data of the dividend portfolios from Bloomberg^[see \ref{reftab} for a detailed guide to indices used and codenames used later in the results and analysis]. We also retrieved geographic specific data on index on volatility and interest rates to segment some of our analysis to reflect market cycles and interest rate regimes performane. That is, Chicago Board of Options Exchange (CBOE) VIX Index for the US and EM, V2X for Europe, IVUK for UK and JALSH VR for SA volatility proxies. For interest rate data we considered policy rates for central banks for instruments geography within our study, thse are the Federal Fund rate for the US and EM, Minimum Deposit Financing Rate for the EU, Bank of England Bank Rate and the South African Reserve Bank Repo rate.  To this end, we calculate our excess returns, we geometrically chain the excess returns for the different periods before annualizing. This produces comparable  cumulative annualized excess return (CAER) results, defined as:
 \begin{align}
@@ -393,8 +351,8 @@ We then stratify the excess returns from the dividend portfolios according to di
     filter(!is.na(RollSD))
 
 # # get the top quartile and bottom quartile
- strat_df <- vol_data %>% filter(index == "VIX") %>%  mutate(topQ = quantile(RollSD, probs = 0.95), 
-               botQ = quantile(RollSD, probs = 0.05),
+ strat_df <- vol_data %>% filter(index == "VIX") %>%  mutate(topQ = quantile(RollSD, probs = 0.90), 
+               botQ = quantile(RollSD, probs = 0.1),
                Strat = ifelse(RollSD >= topQ, "HiVol", 
                            ifelse(RollSD <= botQ, "LowVol", "Normal_Vol")))
  
@@ -405,8 +363,8 @@ We then stratify the excess returns from the dividend portfolios according to di
 
  # UK 
 
- strat_df <-vol_data %>% filter(index == "IVIUK") %>% mutate(topQ = quantile(RollSD, probs = 0.95), 
-               botQ = quantile(RollSD, probs = 0.05),
+ strat_df <-vol_data %>% filter(index == "IVIUK") %>% mutate(topQ = quantile(RollSD, probs = 0.90), 
+               botQ = quantile(RollSD, probs = 0.1),
               Strat = ifelse(RollSD >= topQ, "HiVol", 
                           ifelse(RollSD <= botQ, "LowVol", "Normal_Vol")))
 # 
@@ -423,8 +381,8 @@ We then stratify the excess returns from the dividend portfolios according to di
  lovol_per_vector_eu  <- strat_df %>% filter(Strat %in% "LowVol") %>% pull(Date) 
 # # SA 
 
- strat_df <-vol_data %>% filter(index == "SAVIT40") %>% mutate(topQ = quantile(RollSD, probs = 0.95), 
-               botQ = quantile(RollSD, probs = 0.05),
+ strat_df <-vol_data %>% filter(index == "SAVIT40") %>% mutate(topQ = quantile(RollSD, probs = 0.9), 
+               botQ = quantile(RollSD, probs = 0.1),
                Strat = ifelse(RollSD >= topQ, "HiVol", 
                            ifelse(RollSD <= botQ, "LowVol", "Normal_Vol")))
 # 
@@ -489,7 +447,7 @@ table <- xtable(data, caption = "Volatility Stratification\\label{tab2}")
              )
 
 ```
-Table \ref{tab3} presents the performance metrics of various dividend portfolios across different interest rate regimes, encompassing Hiking, Cutting, and Neutral phases. The Federal Reserve Funds Rate serves as a representative metric for the interest rate regime in emerging markets, given the recognition that interest rate shifts in the US influence risk appetites, thus determining capital flows between advanced and emerging economies. For other indices, the local central bank interest rate cycles are employed to ascertain their corresponding interest rate regimes. Japan stands as an anomaly among these economies; absent distinct hiking or cutting cycles, its central bank largely maintained constant rates. Consequently, we assess its performance exclusively within the confides of a neutral interest rate cycle.
+Table \ref{tab3} presents the performance metrics of various dividend portfolios across different interest rate regimes, encompassing Hiking, Cutting, and Neutral phases. The Federal Reserve Funds Rate serves as a representative metric for the interest rate regime in emerging markets, given the recognition that interest rate shifts in the US influence risk appetites, thus determining capital flows between advanced and emerging economies. For other indices, the local central bank interest rate cycles are employed to ascertain their corresponding interest rate regimes. Japan stands as an anomaly among these economies; absent distinct hiking or cutting cycles, its central bank largely maintained constant rates. Consequently, we assess its performance exclusively within the confides of a neutral interest rate cycle^[we exclude results that have cycles less than 5].
 
 ```{r Table3, results='asis'}
 rate_data <- readxl::read_xlsx("data/Policy Rates.xlsx") 
@@ -581,7 +539,7 @@ Nuetral_perfromance <-  bind_rows(
 CB_df <- bind_rows(Nuetral_perfromance, 
  Cutting_performance, Hiking_performance) %>% arrange(Name)
 
-CB_df <- CB_df %>% rename(Quarters = "Months") %>% arrange(desc("Annualized Return"))
+CB_df <- CB_df %>% rename(Quarters = "Months") %>% filter(Quarters > 5) %>% group_by()
 
 data = CB_df %>% tibble::as_tibble()
   addtorow          <- list()
@@ -637,17 +595,11 @@ consistency_df <- list(a, b, c, d, e,f,g,h,i,j,k) %>%
   geom_line(aes(date, ret), color = "steelblue", size = 1.1, alpha = 0.8) +
   geom_hline(yintercept = 0, color = "red", size = 0.3, alpha = 0.5) +
   facet_wrap(~IR) +
-  labs(x = "", y = "Information Ratio", title = "Performance Consistency", subtitle = "", caption = "Source: Bloomberg and authors own calculations ") +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))+ theme(
-  panel.background = element_rect(fill = "white", color = "black", size = 0.5),
-  plot.background = element_rect(fill = "white", color = "black", size = 0.5),
-  panel.grid.major = element_line(color = "gray", size = 0.2),
-  panel.grid.minor = element_line(color = "gray", size = 0.0)
-)
+  labs(x = "", y = "Information Ratio", title = "Performance Consistency", subtitle = "", caption = "Source: Bloomberg and authors own calculations ")
 
 plot 
 ```
-Suppose we consider the red line to be a measure of a startegy delivering acceptable returns over time. From this metric we notice that the UK_HY has delivered undesirable consistency in returns over the sample period, thus had struggled to give the bang for buck effect and harvest premiums for value equity overtime. The emerging market and Japan portfolios had a polarizing performances throught the sample period. For one, from 2005 to 2015, returns for the portfolio were consistently positive. Since then, over the last 8 years rolling returns for these portfolis have been negative. This constrasts South african portfolios, of which dividend growth portfolios have since 2010 to 2020 have shown psotive information ratios. The SA_HY only turned positive since 2017. US and EU indexes have mirror intra geography performance. In line with the results from our stratification based on market cycles and interest rate regimes, we observed that the majority of HY experienced declines in rolling information ratios, while DG portfolios incurred losses. This trend was particularly evident during the period following the global financial crisis in late 2008 to late 2009. This period was characterized by high volatility and falling interest rates. Conversely, the subsequent crisis, which occurred after the COVID-19 pandemic and was marked by rising interest rates, favored SA , JP and EM, a (SA). These observations align with the major findings on the influence of interest rates from the previous section.
+Suppose we consider the red line to be a measure of a startegy delivering acceptable returns over time. From this metric we notice that the UK_HY has delivered undesirable consistency in returns over the sample period, thus had struggled to give the bang for buck effect and harvest premiums for value equity overtime. The emerging market and Japan portfolios had a polarizing performances throught the sample period. For one, from 2005 to 2015, returns for the portfolio were consistently positive. Since then, over the last 8 years rolling returns for these portfolis have been negative. This contrasts South African portfolios, of which dividend growth portfolios have since 2010 to 2020 have shown psotive information ratios. The SA_HY only turned positive since 2017. US and EU indexes have mirror intra geography performance. In line with the results from our stratification based on market cycles and interest rate regimes, we observed that the majority of HY experienced declines in rolling information ratios, while DG portfolios incurred losses. This trend was particularly evident during the period following the global financial crisis in late 2008 to late 2009. This period was characterized by high volatility and falling interest rates. Conversely, the subsequent crisis, which occurred after the COVID-19 pandemic and was marked by rising interest rates, favored SA , JP and EM, a (SA). These observations align with the major findings on the influence of interest rates from the previous section.
 
 Drawdowns give a more detailed picture of the risk attributes of the constituents of a data series. Their importance for our study is to uncover latent relationship between performance and drawdown.
 
@@ -667,19 +619,87 @@ plot <- cum_df %>%
   plot_order(., Column = "Funds", Order = order) %>% 
   ggplot() +
   geom_line(aes(Year, DD), color = "steelblue", size = 1.1, alpha = 0.8) + facet_wrap(~Funds) + 
-labs(x = "", y = " Max Drawdowns (%)", title = "Yearly Drawdowns", subtitle = "", caption = "Source:Bloomberg and\n Authors Calculations")+theme(
-  panel.background = element_rect(fill = "white", color = "black", size = 0.5),
-  plot.background = element_rect(fill = "white", color = "black", size = 0.5),
-  panel.grid.major = element_line(color = "gray", size = 0.2),
-  panel.grid.minor = element_line(color = "gray", size = 0.1))
+labs(x = "", y = " Max Drawdowns (%)", title = "Yearly Drawdowns", subtitle = "", caption = "Source:Bloomberg and\n Authors Calculations")
 
 plot
 
 ```
 
 Our analysis in \ref[fig2] defines as the disparity between the peak and trough values of cumulative excess returns within a specified time frame. When scrutinizing our dividend portfolios, a pattern of similarity emerges both geographically and across varied strategies.The SA portfolios were markedly volatile, displaying the most pronounced draw downs visually and more concretely by value from the beginning of the sample period. This is closely followed by the UK High Yield (HY) strategies. In contrast, portfolios associated with the EU and US exhibit relatively milder draw downs. Yet, when the focus shifts from mere magnitude to the distribution or dispersion of these drawdowns, the narrative undergoes a transformation. The UK High Yield and Japan High Yield strategies are revealed to be more volatile, being susceptible to significant fluctuations. In juxtaposition, emerging markets, with South Africa as a case in point, manifest a more stabilized profile, evidenced by diminished variation in their drawdowns.
+\newpage
 
-## Conclusion
+# Application to South Africa
+
+## Backtest Results from Dividend Portfolio Signals
+
+
+Figure \ref{fig3} illustrates the cumulative returns of our dividend portfolios, each accompanied by a display of the total capital invested during the sample period. The portfolio categories consist of those structured around Dividend Yield (DY), Dividend Growth (DG), Price Momentum, and Sustainability, all of which are juxtaposed with the performance benchmark represented by the SWIX Top 40 index.In line with our earlier analysis of the SA_HY and SA_DG portfolios, a discernible pattern emerges where the returns over the sample period fall short of the benchmark set by the market index. Furthermore, our vanilla portfolio, the Dividend High Yield (HY), exhibits the lowest cumulative returns. Likewise, the Price Momentum and Sustainability portfolios demonstrate diminished performance compared to both the Value and DG portfolios. This observation underscores a trend of under performance in our portfolios when evaluated against the broader market index. This result warrants further examination and investigation to discern the underlying factors and potential implications within the context of dividend-oriented investment strategies.
+```{r Figure3,  warning =  FALSE, fig.align = 'left', fig.cap = "Rolling 3 Year Returns \\label{fig3}", fig.ext = 'png', fig.height = 4, fig.width =7}
+# Visuals on total ROI 
+
+Loc <- "J433_J406/Divi/"
+Loc_2 <- "J433_J406/Divi/Capped_SWIX/"
+source("/Users/gabrielrambanapasi/Desktop/Much Ado Dividends/Much-Ado-Dividends/Thesis/write up/code/Get_dat_1.R")
+source("/Users/gabrielrambanapasi/Desktop/Much Ado Dividends/Much-Ado-Dividends/Thesis/write up/code/EOM.R")
+
+
+df1 <- Get_dat(Loc, Loc_2,Port = "Divi1","Returns")
+df2 <- Get_dat(Loc, Loc_2,Port = "Divi2","Returns")
+df3 <- Get_dat(Loc, Loc_2,Port = "Divi3","Returns")
+df4 <- Get_dat(Loc, Loc_2,Port = "Divi4","Returns")
+dfbm <- Get_dat(Loc, Loc_2,Port = "Divi1","Returns_BM")
+df <- bind_rows(df1, df2, df3, df4, dfbm %>% rename(Returns = BM_Returns) %>% mutate(Portfolio = "BM")) %>% select(date, Portfolio, Returns) %>% ungroup() %>% select(-YM)
+
+# get the cumulative returns 
+
+df %>% group_by(Portfolio) %>%  mutate(ROI = cumprod(1+Returns), ROI = ROI/first(ROI)) %>% ggplot + geom_line(aes(date, ROI, color = Portfolio))
+```
+
+Tables \ref{tab3} and \ref{tab4} provide a comprehensive breakdown of total investments during periods characterized by high interest rate volatility and distinct interest rate regimes. These periods are categorized as either high or low volatility, and they pertain to hiking or cutting cycles in response to the realized volatility and the interest rate regime of the market proxies. Specifically, we designate a period as "high volatility" when these measures fall below (above) the lowest (highest) quintile for at least 50 trading days and 5 quarters.However, mirroring our findings from internationally traded portfolios, we once again observe the advantageous qualities of dividend portfolios when stratified according to interest rate regimes and volatility levels. Notably, the dividend portfolios exhibit notable defensive attributes, with the price momentum-adjusted and sustainability portfolios yielding the highest returns during hiking periods and times of high volatility. Moreover, it is worth highlighting that our portfolios consistently outperform the market index during these periods.
+
+Nevertheless, during cutting cycles or in times of low volatility, we note a departure from this trend. In these scenarios, much like the overall return on investment, the market index appears to offer higher returns. Intriguingly, among our portfolios, it is the dividend yield (HY) portfolio that fails to deliver substantial returns compared to our other dividend-oriented strategies.This multifaceted analysis underscores the nuanced relationship between interest rate dynamics, market volatility, and the performance of different investment strategies, shedding light on the defensive characteristics of dividend portfolios in select economic environments while highlighting the contextual significance of interest rate fluctuations.
+
+```{r, results='asis'}
+df_volatility <- bind_rows (df %>%  filter(date %in% hivol_per_vector_sa) %>% mutate(roi = cumprod(1+Returns)) %>% group_by(Portfolio) %>%  summarise(Months = n(),"Total ROI %" = last(roi),  "Annualized ROI%" = last(roi)^12/Months -1, SD = sd(roi)) %>% mutate(MarketCycle = "High Volatility ") %>% select(-Months),
+
+df %>%  filter(date %in% lovol_per_vector_sa) %>% mutate(roi = cumprod(1+Returns)) %>% group_by(Portfolio) %>%  summarise(Months = n(), "Total ROI" = last(roi),  "Annualized ROI%" = last(roi)^12/Months -1, SD = sd(roi)) %>% mutate(MarketCycle = "Low Volatility ") %>% select(-Months))
+
+library(xtable)
+data <- df_volatility %>% tibble::as_tibble()
+
+table <- xtable(data, caption = "Market Cycle Perforomance \\label{tab3}")
+  print.xtable(table,
+             # tabular.environment = "longtable",
+             floating = TRUE,
+             table.placement = 'H',
+             # scalebox = 0.3,
+             comment = FALSE,
+             caption.placement = 'bottom'
+             )
+```
+
+```{r, results= "asis"}
+df_interest <- bind_rows(df %>%  filter(date %in% Hiking_date_vector_sa) %>% mutate(roi = cumprod(1+Returns)) %>% group_by(Portfolio) %>%  summarise(Months = n(), "Total ROI"  = last(roi),  Ann.roi = last(roi)^4/Months -1, SD = sd(roi)) %>% mutate(MarketCycle = "Hiking "),
+
+df %>%  filter(date %in% Neutral_date_vector_sa) %>% mutate(roi = cumprod(1+Returns)) %>% group_by(Portfolio) %>%  summarise(Months = n(), "Total ROI"  = last(roi),  "Annualized ROI%"= last(roi)^4/Months -1, SD = sd(roi)) %>% mutate(MarketCycle = "Nuetral"),  
+
+df %>%  filter(date %in% Cutting_date_vector_sa) %>% mutate(roi = cumprod(1+Returns)) %>% group_by(Portfolio) %>%  summarise(Months = n(), "Total ROI" = last(roi), "Annualized ROI%"= last(roi)^4/Months -1,SD = sd(roi)) %>% mutate(MarketCycle = "Cutting") ) %>% filter(Months >1) %>% arrange(desc("Total ROI")) %>% select(-Months)
+
+library(xtable)
+data <- df_interest %>% tibble::as_tibble()
+
+table <- xtable(data, caption = "Interest Rate Regime Performance \\label{tab4}")
+  print.xtable(table,
+             # tabular.environment = "longtable",
+             floating = TRUE,
+             table.placement = 'H',
+             # scalebox = 0.3,
+             comment = FALSE,
+             caption.placement = 'bottom'
+             )
+```
+\newpage
+# Conclusion
 
 Over time, dividend portfolios, whether HY or DGPS, have exhibited positive excess returns as indicated by cumulative returns. While the UK_HY index has shown the highest cumulative return, this trend is not consistently observed across other regional indexes. Consequently, when assessing the aggregate perspective on investor portfolio value, dividend portfolios may not offer a reliable means to capture the value premium consistently. However, upon stratifying these portfolios according to different periods of market volatility, it becomes evident that during low volatility periods, the primary determinant of performance is not the geographical region but rather the specific investment strategy employed. In this case, HY strategies.  Surprisingly, portfolios based in South Africa (SA) tend to perform well during these high volatility periods, which is somewhat unconventional as such times are typically associated with a flight to safety, and Emerging Markets (EM) and, by extension, South Africa, are considered riskier. When extending our analysis to encompass interest rate cycles, we observe a contrasting effect compared to the volatility-based stratification. We find that all strategies appear to give the highest return in hiking cycles. 
 
@@ -687,15 +707,6 @@ In assessing consistency, we employ the information ratio. Initially, we discern
 
 When we integrate our information ratio findings with drawdown analysis, we observe that advanced economies have experienced the fewest drawdowns over the sample period, with the exception of the UK. This could suggest a relatively lower level of systematic risk in these economies. Conversely, South African (SA) and Emerging Market (EM) drawdowns have exhibited a declining trend, possibly indicating a reduced perception of risk in emerging markets over time.
 
-# 
-
-# Results and Analysis 
-
-# Discussion 
-
-## Limitations of the study
-
-# Conclusion
 \newpage
 # Appendix
 
@@ -731,59 +742,6 @@ table <- xtable(data, caption = "Index Description \\label{indexdes}")
 
 ## Stratified Periods Considered
 
-```{r}
-US_rates <- rate_data %>% select(Date, US) %>% filter(!is.na(US))
-```
-
-
-```{r}
-
-library(scales)
-
-hivol_per_vector_uk %>% 
-  data.frame() %>%
-  setNames(c("Date")) %>% arrange(Date) %>% mutate(Year = format(Date , "%Y")) %>% 
-  group_by(Year) %>% filter(Date == first(Date)| Date == last(Date))
-
-data <- UK_rates %>% filter(!is.na(UK))
-
-shade <- data.frame(
-  x1 = as.POSIXct("2010-05-04"),
-  x2 = as.POSIXct("2013-05-05"),
-  y1 = -Inf, 
-  y2 = Inf   
-)
-
-data %>% ggplot() +
-  geom_line(aes(Date, UK)) + 
-  labs(x = "", y = "", title = "", subtitle = "", caption = "Source: Bloomberg and authors' own calculations") +
-  geom_rect(data = shade, 
-            mapping = aes(
-              xmin = x1,
-              xmax = x2,
-              ymin = y1,
-              ymax = y2), alpha = 0.2)
-
-
-
-```
-
-
-```{r}
-JP_rates <- rate_data %>% select(Date, JP) %>%  filter(!is.na(JP))
-```
-
-
-```{r}
-SA_rates <- rate_data %>% select(Date, SA) %>%  filter(!is.na(SA))
-```
-
-
-```{r}
-ECB_rates <- rate_data %>% select(Date, ECB) %>%  filter(!is.na(US))
-
-
-```
 
 \newpage
 ## Dividend Defintions 

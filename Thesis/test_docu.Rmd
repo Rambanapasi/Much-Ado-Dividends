@@ -1,0 +1,71 @@
+---
+title: "Untitled"
+author: "Gabriel Rambanapasi"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# Methodology 
+To evaluate the return predictive signal of dividends, we employ an applied approach that constitutes constructing subset portfolios and compare in sample performances. Our approach aims to give valuable insights based on risk and return for systematically constructed dividend portfolios.  
+
+## Portfolio construction
+
+The Modern Portfolio Theory defines risk of a portfolio of $n$ assets as the variance $\sigma^2$ of its returns $r_{t}$. We add a refinement to this, and our definition returns is achieved by decomposing it into common factor $Xf$ and specific return $u$ as $ r = Xf+ u $. From these returns we create a factor covariance matrix, defined as $X F X^T+D$ in which we derive our multiple factor universe consists of $k$ common factors.
+
+$\begin{array} {ll}X & =n \times k \text { matrix of asset exposures to the factors, } \\ F \quad &= k \times k \text { positive semi-definite factor covariance matrix, and } \\ D \quad &=n \times n \text { positive semi-definite covariance matrix representing a } \\ & \text { forecast of asset specific risk. }\end{array}$
+
+We periodically calculate each asset exposure to the common factors calculated in the factor covariance matrix. This then assists us in computing forecasts of the level of each asset specific risk. The short term risk forecasts will then be used to gauge contribution of each asset to a portfolio over risk which contributes to the portfolio construction process. For our optimization,  risk takes on two forms being total risk (only portfolio holdings are considered and benchmark holdings are irrelevant for the optimization process) and active risk (difference between portfolio holdings and benchmark holdings are given consideration in the optimization problem). Definded as; 
+
+Total Risk: $\quad h^T\left(\lambda_F X F X^T+\lambda_D D\right) h$
+
+Active Risk: $\left(h-h_B\right)^T\left(\lambda_F X F X^T+\lambda_D D\right)\left(h-h_B\right)$
+
+where,
+$$
+\begin{aligned}
+\lambda_F & =\text { common factor risk aversion parameter, } \\
+\lambda_D & =\text { specific risk aversion parameter, } \\
+h & =n \times 1 \text { vector of managed portfolio's holdings, and } \\
+h_B & =n \times 1 \text { vector of normal (benchmark) portfolio's holdings }
+\end{aligned}
+$$
+## Constraints
+
+Optimization involves using set of constraints that helps in attaining convergence, i.e giving a set of weights that determine our optimum portfolio. In practice, this is unique to portfolio managers given their risk objectives^[see https://www.sciencedirect.com/science/article/pii/S1057521921002556 for a detailed explanation on advantages of using maximum utility operators to efficiently factor investor risk preferences]. 
+We use: 
+
+- Common factor and specific risk aversion parameters of 0.0075 and 1, respectively. 
+- Our investment universe is the Top 50 stock listed on the JSE,therefore our selection criteria depends on market capitalization and liquidity. We use the Capped SWIX as the benchmark. 
+- Portfolios  are re-balanced quarterly. 
+- Active risk constraints to parent benchmark 5%
+- Our sector exposure has a +/-10% limit; holds no property stocks in the portfolio
+- Individual stock have a 15% max exposure limit
+- Quarterly turnover is limited to 10%. 
+
+## Dividend Signals
+
+We construct our dividend portfolios using the following signals: 
+
+Divi1:
+Rank score (i.e. between 0 and 100) calculated using:
+Conditional signal: 
+2/3 DY (3-month forward); 1/3 DY (9-month forward)
+if dvd_cover score is in bottom quintile, then add it at 15% (15% dvd cover, 66.667% * 0.85 DY3m, 33.333% * 0.85)
+if Price momentum score is in bottom quintile, then add it at 35% (35% PX momentum score = 66.667% * 0.65 DY3m, 33.333% * 0.65)
+if both dvdcover and momentum in bottom quintile, then: ( 15% dvd cover score=  35% PX momentum score, 66.667% * 0.5 DY3-month, 33.333% * 0.5)
+
+Divi2:
+Using just:
+2/3 DY (3moonth forward); 1/3 DY (9month forward)
+
+Divi3:
+Using just P/E as the signal
+
+Divi4:
+Using:
+DPS_Growth_1Y = 40%, DPS_Growth_3Y = 30%, Fwd_3 = 20%, Fwd_9 = 10%
+
+DPS_Growth_1Y definition

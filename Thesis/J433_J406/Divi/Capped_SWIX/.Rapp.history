@@ -1,0 +1,2 @@
+load("/Users/gabrielrambanapasi/Desktop/Much Ado Dividends/Much-Ado-Dividends/Thesis/J433_J406/Divi/Capped_SWIX/Returns_BM.rds")
+load("/Users/gabrielrambanapasi/Desktop/Much Ado Dividends/Much-Ado-Dividends/Thesis/J433_J406/Divi/Capped_SWIX/Factor_Exposure.rds")

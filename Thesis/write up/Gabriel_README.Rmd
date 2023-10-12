@@ -1,0 +1,131 @@
+---
+output:
+  md_document:
+    variant: markdown_github
+---
+
+# Purpose
+
+Purpose of this work folder.
+
+Ideally store a minimum working example data set in data folder.
+
+Add binary files in bin, and closed R functions in code. Human Readable settings files (e.g. csv) should be placed in settings/
+
+
+```{r}
+
+rm(list = ls()) # Clean your environment:
+gc() # garbage collection - It can be useful to call gc after a large object has been removed, as this may prompt R to return memory to the operating system.
+library(tidyverse)
+library(glue)
+source("code/Get_dat_1.R")
+
+```
+
+
+Portfolio considered:
+
+
+```{r}
+
+Loc <- "data/SatrixVol/"
+Loc_2 <- "data/Capped_SWIX/"
+
+# Holdings comparison:    
+dfh <- Get_dat(Loc,BM = BM,Unisel = Unisel,Nam = Nam,Port = Port,Which = c("Holds"))
+dfh_bm <- Get_dat(Loc,BM = BM,Unisel = Unisel,Nam = Nam,Port = Port,Which = c("Holds_BM"))
+Factors_BM <- Get_dat(Loc,BM = BM,Unisel = Unisel,Nam = Nam,Port = Port,Which = c("Factors_BM"))
+
+ARC_P <- Get_dat(Loc,BM = BM,Unisel = Unisel,Nam = Nam,Port = Port,Which = c("ARC"))
+
+dfcomp <- 
+    full_join(dfh, dfh_bm, by = join_by(date, Tickers, Name)) %>% tidyr::fill(Sector, .direction = "downup")
+
+# Check TO calc:
+TO <- Get_dat(Loc,BM = BM,Unisel = Unisel,Nam = Nam,Port = Port,Which = c("TO"))
+
+
+# Factor Comparison:
+
+left_join(dfh, Factors_BM, by = join_by(date, Tickers, Name))
+left_join(dfh_bm, Factors_BM, by = join_by(date, Tickers, Name))
+
+# Style contribution comparison:
+Factors_BM %>% names
+# Residual Volatility – Captures volatility in stock returns that is not explained by the beta factor. It is
+# orthogonalized to the Beta and Size factors
+# See: ZAE4 Descriptor Details.pdf
+factosel <- "Residual Volatility Exp"
+factosel <- "Volatility Sensitivity Exp"
+
+
+left_join(
+left_join(dfh, Factors_BM, by = join_by(date, Tickers, Name)) %>% rename(facto := !!factosel) %>% filter(!is.na(facto)) %>% group_by(date) %>% mutate(Weight = Weight / sum(Weight, na.rm=T)) %>% summarise(exp = sum(Weight * facto, na.rm=T)),
+
+# Style exposure relative to benchmark (holdings attribution):
+left_join(dfh_bm, Factors_BM, by = join_by(date, Tickers, Name)) %>% rename(facto := !!factosel) %>% filter(!is.na(facto)) %>% group_by(date) %>% mutate(BM_Weight = BM_Weight / sum(BM_Weight, na.rm=T)) %>% summarise(bmexp = sum(BM_Weight * facto, na.rm=T))
+) %>% mutate(XS = exp - bmexp) %>% ggplot() + geom_line(aes(date, XS))
+
+
+```
+
+# Returns Comparison:
+
+```{r}
+
+Nam <- "Divi"
+df1 <- Get_dat(Loc,BM = BM,Unisel = Unisel,Nam = Nam,Port = "Divi1",Which = c("Ret"))
+df2 <- Get_dat(Loc,BM = BM,Unisel = Unisel,Nam = Nam,Port = "Divi2",Which = c("Ret"))
+df3 <- Get_dat(Loc,BM = BM,Unisel = Unisel,Nam = Nam,Port = "Divi3",Which = c("Ret"))
+df4 <- Get_dat(Loc,BM = BM,Unisel = Unisel,Nam = Nam,Port = "Divi4",Which = c("Ret"))
+dfbm <- Get_dat(Loc,BM = BM,Unisel = Unisel,Nam = Nam,Port = "Divi1",Which = c("Ret_BM"))
+df <- bind_rows(df1, df2, df3, df4, dfbm %>% rename(Returns = BM_Returns) %>% mutate(Portfolio = "BM")) %>% select(date, Portfolio, Returns)
+df %>%
+    group_by(Portfolio) %>% mutate(cp = cumprod(1+Returns)) %>%
+    ggplot() + geom_line(aes(date, cp, color = Portfolio))
+
+
+left_join(df1 %>% select(date, Returns), dfbm %>% select(date, BM_Returns)) %>% 
+    gather(typ, val, -date) %>% group_by(typ) %>% mutate(cp = cumprod(1+val)) %>% 
+    ggplot() + geom_line(aes(date, cp, color = typ))
+
+
+# Rolling 12m returns
+
+left_join(df1 %>% select(date, Returns), dfbm %>% select(date, BM_Returns)) %>% 
+    gather(typ, val, -date) %>% group_by(typ) %>%
+    mutate(rollsd = RcppRoll::roll_prod(1+val, n = 12, fill = NA, align = "right") -1 ) %>% 
+    filter(!is.na(rollsd)) %>% select(date, typ, rollsd) %>% spread(typ, rollsd) %>% 
+    mutate(across(c(-"date", -"BM_Returns"), ~.-`BM_Returns`)) %>% 
+    select(-BM_Returns) %>% gather(typ, rollsd, -date) %>% 
+    ggplot() + geom_line(aes(date, rollsd, color = typ))
+
+
+# Rolling 12m vol
+
+left_join(df1 %>% select(date, Returns), dfbm %>% select(date, BM_Returns)) %>% 
+    gather(typ, val, -date) %>% group_by(typ) %>%
+    mutate(rollsd = RcppRoll::roll_sd(val, n = 12, fill = NA, align = "right") * sqrt(12)) %>% 
+    filter(!is.na(rollsd)) %>% select(date, typ, rollsd) %>% spread(typ, rollsd) %>% 
+    mutate(across(c(-"date", -"BM_Returns"), ~.-`BM_Returns`)) %>% 
+    select(-BM_Returns) %>% gather(typ, rollsd, -date) %>% 
+    ggplot() + geom_line(aes(date, rollsd, color = typ))
+
+# left_join(df1 %>% select(date, Returns), df2 %>% select(date, Ret_LV = Returns)) %>% 
+#     left_join(., bm %>% select(date, BM_Returns)) %>% 
+#     gather(typ, val, -date) %>% group_by(typ) %>% mutate(cp = cumprod(1+val)) %>% 
+#     ggplot() + geom_line(aes(date, cp, color = typ))
+# 
+# left_join(df1 %>% select(date, Returns), df2 %>% select(date, Ret_LV = Returns)) %>% 
+#     left_join(., bm %>% select(date, BM_Returns)) %>% 
+#     gather(typ, val, -date) %>% group_by(typ) %>%
+#     mutate(rollsd = RcppRoll::roll_sd(val, n = 12, fill = NA, align = "right") * sqrt(12)) %>% 
+#     filter(!is.na(rollsd)) %>% select(date, typ, rollsd) %>% spread(typ, rollsd) %>% 
+#     mutate(across(c(-"date", -"BM_Returns"), ~.-`BM_Returns`)) %>% 
+#     select(-BM_Returns) %>% gather(typ, rollsd, -date) %>% 
+#     ggplot() + geom_line(aes(date, rollsd, color = typ))
+
+```
+
+

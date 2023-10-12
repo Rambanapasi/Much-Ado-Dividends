@@ -1,9 +1,9 @@
-\documentclass[11pt,preprint, authoryear]{elsarticle}
+\documentclass[12pt,preprint, authoryear]{elsarticle}
 
 \usepackage{lmodern}
 %%%% My spacing
 \usepackage{setspace}
-\setstretch{1}
+\setstretch{2}
 \DeclareMathSizes{12}{14}{10}{10}
 
 % Wrap around which gives all figures included the [H] command, or places it "here". This can be tedious to code in Rmarkdown.
@@ -558,249 +558,88 @@ such companies are more vulnerable to facing financial distress.
 \hypertarget{methodology}{%
 \section{Methodology}\label{methodology}}
 
-\hypertarget{introduction-1}{%
-\subsection{Introduction}\label{introduction-1}}
+To evaluate the return predictive signal of dividends, we employ an
+applied approach that constitutes constructing subset portfolios and
+compare in sample performances. Our approach aims to give valuable
+insights based on risk and return for systematically constructed
+dividend portfolios.
 
-We employ dividend signals to rank our assets within our selected
-universe to construct portfolios that offer higher risk adjusted return
-than the market index. We consider a dividend yield ranking selecting
-the top 20 stock, dividend growth per share and selecting the top 20
-stock, an extension of the dividend portfolios by adding a price
-momentum filter and a sustainability portfolio that aims penalizes stock
-that have unsustainable dividend practices.
+\hypertarget{portfolio-optimzation}{%
+\subsection{Portfolio optimzation}\label{portfolio-optimzation}}
 
-Optimizing an asset portfolio involves carefully calibrating the
-trade-offs between risk and expected returns. In achieving the ultimate
-goal of the study, we aim to investigate how different risk models can
-provide significant cues in forming dividend strategies. To this end, we
-employ Minimum Variance, Equal Risk Contribution, and Minimum
-Volatility. Additionally, this study incorporates more refinements
-models like Risk Efficiency and makes use of proprietary software-based
-approaches, specifically drawing upon the Barras risk model.Unique to
-the Barras model is the introduction of the Max Utility Operator, which
-allows for a more sophisticated interpretation of risk by focusing not
-only on the total risk but also the active risk associated with each
-asset. This dual perspective enables the construction of a more
-versatile covariance matrix, thereby enriching the portfolio
-optimization process. The following sections analytically describes the
-optimization problem and risk models used in the study.
+The Modern Portfolio Theory defines risk of a portfolio of (\(n\))
+assets as the variance (\(\sigma^2\)) of its returns (\(r_{t}\)). We add
+a refinement to this, and our definition returns is achieved by
+decomposing it into common factor (\(Xf\)) and specific return (\(u\))
+as (\(r = Xf+ u\)). From these returns we create a factor covariance
+matrix, defined as (\(X F X^T+D\)) in which we derive our multiple
+factor universe consists of (\(k\)) common factors.
 
-\hypertarget{security-selection-methodology}{%
-\section{Security Selection
-Methodology}\label{security-selection-methodology}}
+\(\begin{array} {ll}X & =n \times k \text { matrix of asset exposures to the factors, } \\ F \quad &= k \times k \text { positive semi-definite factor covariance matrix, and } \\ D \quad &=n \times n \text { positive semi-definite covariance matrix representing a } \\ & \text { forecast of asset specific risk. }\end{array}\)
 
-We will employ a practical approach in evaluating dividend signals that
-involves constructing subset portfolios and compare in sample
-performance as suggested by Damodaran
-(\protect\hyperlink{ref-damodaran2004investment}{2004}) .We will rank
-stock within our selected universe by dividend signals, namely dividend
-yield (DY) and dividend growth per share (DGPS). First, we rebalance at
-the end of March and September and construct fully invested, long only
-portfolios. On each re balancing date, we take the top 100 stocks by
-market capitalization (MC), and then select the top quintile (20 stocks)
-based on the our signal scores. We then apply 25 basis trading costs to
-both buying and selling of stocks, and we will then use total return
-values, adjust for stock splits and other distorting effects on prices
-to calculate portfolio returns. We also carefully apply back-dated
-adjustments to dividends paid to accurately arrive at on-the-day
-dividends and actual closing prices when calculating our Dividend Yield
-and Dividend Per Share Growth measures.
+We periodically calculate each asset exposure to the common factors
+calculated in the factor covariance matrix. This then assists us in
+computing forecasts of the level of each asset specific risk. The short
+term risk forecasts will then be used to gauge contribution of each
+asset to a portfolio over risk which contributes to the portfolio
+construction process. For our optimization, risk takes on two forms
+being total risk (only portfolio holdings are considered and benchmark
+holdings are irrelevant for the optimization process) and active risk
+(difference between portfolio holdings and benchmark holdings are given
+consideration in the optimization problem).
 
-We also apply at each re balancing on the risk models mentioned
-previously. The optimization are constrained to have minimum and maximum
-weight exposure of 0.5 and 1.5 times the equal weighted alternative.
-With our quintile portfolios, this implies weights ranging between 2.5\%
-and 7.5\%. For the Barra Max utility model with we use a risk aversion
-parameter of Common Factor Risk Aversion ratio we'll use will be: 0.0075
-\& asset specific R.A ratio of 1
+Definded as; \emph{Total Risk}:
+\(\quad h^T\left(\lambda_F X F X^T+\lambda_D D\right) h\)
 
-Following this we will construct back-tests on the subset of dividend
-signal portfolios.
+\emph{Active Risk}:
+\(\left(h-h_B\right)^T\left(\lambda_F X F X^T+\lambda_D D\right)\left(h-h_B\right)\)
 
-The Standard portfolios considered as follows
+where, \[
+\begin{aligned}
+\lambda_F & =\text { common factor risk aversion parameter, } \\
+\lambda_D & =\text { specific risk aversion parameter, } \\
+h & =n \times 1 \text { vector of managed portfolio's holdings, and } \\
+h_B & =n \times 1 \text { vector of normal (benchmark) portfolio's holdings }
+\end{aligned}
+\]
 
-The Standard Dividend Yield Portfolio: uses the 12 month mean trailing
-dividend yield measure in its construction. - This avoids biasing to
-stocks that experienced recent share price declines (negative momentum),
-as would be done when considering on the day DY values; - This will be
-treated as the vanilla DY signal portfolio.
+\hypertarget{constraints}{%
+\subsection{Constraints}\label{constraints}}
 
-The DPSG signal portfolio is constructed by considering the growth of
-company dividends mentioned above on a 1, 3 and 5 year basis.
-
-\begin{itemize}
-\tightlist
-\item
-  For the three and five year measure, we only consider stocks that had
-  positive share payment growth over the period considered.
-\item
-  E.g., if a stock had a DPS decrease in year 2, even if it has an
-  increased dividend payment over three years
-\item
-  we set this value to zero.
-\item
-  This has the effect of rewarding consistency, but also reduces the
-  sample set substantially if the period under consideration increases
-\end{itemize}
-
-Momentum Adjusted DY and DPSG portfolios extend both our DY and DPSG
-portfolios by applying a momentum adjusted filter for each. We use the
-following approach to make the adjustments:
-
-\begin{itemize}
-\tightlist
-\item
-  Step 1: Rank our sample (top 100 by MC) by risk-adjusted price
-  momentum and consider the top half.
-\item
-  Note that we do not use the ``traditional'' definition of momentum (12
-  - 1 month return as introduced by Jegadeesh and Titman), but rather
-  use a risk-adjusted measure for momentum. Here we consider the 90 day
-  moving average return series to the same 90 day standard deviation for
-  each stock.
-\item
-  Step 2: Rank our sample by either the DY or DPSG measure, and pick the
-  top 20 stocks.
-\end{itemize}
-
-Sustainability Adjusted DY and DPSG portfolios extend our DY and DPSG
-signals by considering dividend payout ratios (DPR). DPR measures how
-much of a company's profit is paid out in dividends. We construct this
-signal by removing from the top 100 companies the 20 with the highest
-DPR scores. The aim of this filter is simply to avoid the most
-unsustainable stocks from a dividend payment perspective - thus
-systematically avoiding stocks that are most likely to cut dividends in
-the future, leading to a reactionary capital gain loss (as commonly
-experienced in practice). - Step 1: Rank our sample (top 100 by MC) by
-the payout ratio using normalized earnings and consider only the bottom
-80 (lower DPR is more sustainable). This measure is calculated by
-considering the fraction (percentage) of net income a firm pays to its
-shareholders in dividends, calculated as: Total Common Cash Dividends /
-Normalized Earnings. - Step 2: Rank our sample by either the DY or DPSG
-measures, and pick the top 20 stocks for each.
-
-For completeness we compare the performance of these constructed
-portfolios to a standard value signal (PE) and a momentum signal,
-constructed as a composite 60, 120 and 240 day risk-adjusted momentum
-score for each stock. We next compare the absolute returns as well as
-the risk-adjusted performance and drawdowns of each of these portfolios.
-We then consider turnover and tracking error, before briefly showing the
-sector exposure of some of the different strategies. \newpage
-
-\hypertarget{portfolio-optimization}{%
-\section{Portfolio Optimization}\label{portfolio-optimization}}
-
-Portfolio optimization consists of determining a set of assets, and
-their respective portfolio participation weights, which satisfy the
-investor concerning the combination of risk-return trade-off. Markowitz
-(\protect\hyperlink{ref-markowitz1959portfolio}{1959}) proposed the
-Mean-Variance (MV) model in which the expected return is given by the a
-measure of the historical data of the stock's return. For our study we
-geometrically chain return to measure true effects on portfolio returns
-overtime. The risk is calculated by the variance of these returns. The
-MV model treats returns of individual assets as random variables and to
-adopt the value of expected return and variance in order to quantify the
-return and investment risk, respectively
-(\protect\hyperlink{ref-zhang2018portfolio}{Zhang, Li \& Guo, 2018}).
-\begin{align}
-\mu \quad = \quad w^TR \notag \\
-\sigma^2 \quad  = \quad w^T\sum \notag
-w\end{align} The resulting objective function is to maximize return
-given a certain level of risk and constraint: \begin{align}
-Maximise \ w^TR \sum w<=\sigma^2\ and\ \sum_{i = 1}^{N}w{_i}=1 \notag
-\end{align}
-
-Linear constraints are generally included in MV portfolio optimization.
-Optimization typically assume that portfolio weights sum to 1 and are
-non negative. This defines a linear equality constraint on the
-optimization. Another constraint typically used is no-short-selling
-condition is a set of sign constraints or linear inequalities. This
-reflects avoidance of unlimited liability investment often required in
-institutional contexts.
-
-This study will use a an extension of the MV that uses risk preferences
-to determine optimum allocation of assets within a portfolio. Barra
-definition of portfolio risk extends that from the Modern Portfolio
-theory. It defines risk as the decomposition of the variance of returns.
-Using Barra multifactor model, the return (r) of a portfolio can be
-decomposed into both a common factor return (Xf) and asset specific
-return (u) components as: \begin{align} 
-r= X_{F} + u \notag
-\end{align}
-
-The multi-factor approach entails the creation of a factor covariance
-matrix. This is a short term risk forecast that describes trade off of
-each common factor within the model. This approach requires periodic
-return calculation to these exposures. The upshot is that the
-methodology provides an forecast of each assets specific risk.
-
-The covariance matrix is defined as:
-
-\begin{align}
- XFX^T + D \label{eq1} \notag
-\end{align}
-
-where X = n x k matrix of asset exposures to the factors. F = k x k
-positive semi-definite factor covariance matrix, and D = n × n positive
-semi-definite covariance matrix representing a forecast of asset
-specific risk.
-
-Expressing portfolio risk in decomposition allows for portfolio manager
-to optimize portfolio from either a total risk perspective or an active
-risk perspective. In total risk, portfolio holdings are only considered,
-and the benchmark holdings are treated as irrelevant for optimization
-purposes. Whereas in active risk, the tracking error in which the
-difference between the portfolio holdings and those of the benchmark is
-given primary consideration in the optimization problem.
-
-\begin{align}
-Total\ Risk : h^T(\lambda_FXFX^T + \lambda_D)h \notag \\ \quad \quad 
-Active \ Risk : (h-h_B)^T(\lambda_FXFX^T+\lambda_DD)(h-h_B) \notag
-\end{align}
-
-where \begin{align}
-\lambda_f  =  common \ factor\ risk\ aversion\ parameter \notag,\\ \lambda_d =  specific\ risk\ aversion\ parameter \notag,\\h  =  n * 1 \ vector\ of\ managed\ portfolio’s\ holdings\notag,\\ and \notag \\h_B = vector \ normal\ (benchmark)\ portfolio’s\ holdings \notag 
-\end{align}
-
-The introduction of risk aversion parameters into Barra's portfolio
-optimization is a form of a max utility operator that allows the
-portfolio managers to incorporate a numeric representation of personal
-risk preferences into the portfolio optimization process\footnote{see
+Optimization involves using set of constraints that helps in attaining
+convergence, i.e giving a set of weights that determine our optimum
+portfolio. In practice, this is unique to portfolio managers given their
+risk objectives and goals\footnote{see
   \url{https://www.sciencedirect.com/science/article/pii/S1057521921002556}
   for a detailed explanation on advantages of using maximum utility
-  operators to efficiently factor investor risk preferences}. It also
-provides the opportunity to quantify relative aversion to common factor
-risk vis-à-vis specific risk. Consequently, these risk aversion
-parameters are important tools that are available to assist the
-portfolio manager in the construction of an optimal portfolio that is
-consistent with their goals.
+  operators to efficiently factor investor risk preferences}. We use:
 
-\hypertarget{equal-risk-contribution-erc}{%
-\subsection{Equal Risk Contribution
-(ERC)}\label{equal-risk-contribution-erc}}
+\begin{itemize}
+\tightlist
+\item
+  Common factor and specific risk aversion parameters of 0.0075 and 1,
+  respectively.
+\item
+  Our investment universe is the Top 50 stock listed on the
+  JSE,therefore our selection criteria depends on market capitalization
+  and liquidity. We use the Capped SWIX as the benchmark.
+\item
+  Portfolios are re-balanced quarterly.
+\item
+  Active risk constraints to parent benchmark 5\%
+\item
+  Our sector exposure has a +/-10\% limit; holds no property stocks in
+  the portfolio
+\item
+  Individual stock have a 15\% max exposure limit
+\item
+  Quarterly turnover is limited to 10\%.\\
+\end{itemize}
 
-Equal risk contribution is a return free approach that seeks to equalize
-risk contributions from the universe of selected assets thus ensuring it
-is fully diversified from a risk perspective. Let sigma measure
-portfolio risk and C(x) defined to be the risk contribution of asset i.
-If the portfolio risk is measured as by the variance of its return then
-is;
-
-\begin{align}
-\sigma^2 = x^TQ{x}\notag \\ and \ C_i(x)= x_i(Qx)_i \notag \\
-\quad where\ (Qx)_i =\sum_{i = 1}^{N}Q_ijxj \notag
-\end{align}
-
-\begin{align}
-x^{ERC} \ satisfies \ C_i(x^{ERC}) = (R(x^{ERC})/N) \ for \ i = 1,...., N. \notag
-\end{align}
-
-From this we conclude that the variance and standard deviation measures
-are the same for and when can then only the variance risk measure
-appreciating that all results apply equally to standard deviation.
+\newpage
 
 \hypertarget{tax-considerations}{%
-\section{Tax considerations}\label{tax-considerations}}
+\subsubsection{Tax considerations}\label{tax-considerations}}
 
 Portfolio theory was developed in a perfect world without friction. In
 practice, frictions need to be considered and in portfolio construction
@@ -842,8 +681,60 @@ t\_\{cg\}= the capital gains tax rate
 
 \newpage
 
+\hypertarget{dividend-signals}{%
+\subsection{Dividend Signals}\label{dividend-signals}}
+
+We will rank stock within our selected universe by dividend signals,
+specifically using a proxy for dividend yield (DY) and dividend growth
+per share (DG). The procedure and characteristics of each portfolio are
+given as;
+
+\emph{Price Momnetum Sustainability Adjusted Portfolio}:
+
+Rank score (i.e.~between 0 and 100) calculated using:
+
+We use a combination of 2/3 DY (3m fwd) and 1/3 DY (9m fwd), Dividend
+Coverage Ratio and Price Momentum. The signal uses conditions: - if
+dvd\_cover score is in bottom quintile, then add it at 15\% (15\% dvd
+cover, 66.667\% * 0.85 DY3m, 33.333\% * 0.85) if Price momentum score is
+in bottom quintile, then add it at 35\% (35\% PX momentum score =
+66.667\% * 0.65 DY3m, 33.333\% * 0.65) - if both dvdcover and momentum
+in bottom quintile, then: ( 15\% dvd cover score= 35\% PX momentum
+score, 66.667\% * 0.5 DY3-month, 33.333\% * 0.5)
+
+This portfolio uses price momentum and dividend cover ratio as filters
+to the dividend yield. This rewards sustainability in dividend paymensts
+and avoids comapnies that companies that can not afford to pay
+shareholders dividends thus avoid reactionary capital gain losses.
+
+\emph{High Yield (HY) Portfolio}: Rank score (i.e.~between 0 and 100):
+
+We use the dividend as the only signal. Similar to Divi1 its a blend of
+forwarding looking metrics. That is, 2/3 DY (3m fwd) and 1/3 DY (9m
+fwd).
+
+This is our vanilla dividend yield portfolio i.e.~just ranks according
+to the highest dividend payers.
+
+\emph{Value Portfolio}:
+
+Rank score (i.e.~between 0 and 100):
+
+We use the P/E ratio as the alternative proxy to value.
+
+\emph{Dividend Growth Portolio (DG)}: Rank score (i.e.~between 0 and
+100) calculated using:
+
+Using: DPS\_Growth\_1Y = 40\%, DPS\_Growth\_3Y = 30\%, Fwd\_3 = 20\%,
+Fwd\_9 = 10\%
+
+Our dividend growth portfolio using trailing dividend growth rates
+coupled with 3 and 9 month forward measures.
+
+\newpage
+
 \hypertarget{data}{%
-\section{Data}\label{data}}
+\subsection{Data}\label{data}}
 
 Our metric of interest in this study is the excess return of dividend
 portfolios over the period 04/01/01--06/30/23, with the start date and
@@ -965,29 +856,29 @@ Name & Market Period & Months & Annualized Return (\%) \\
 \endfoot 
 \endlastfoot 
  \midrule
-JP\_HY & Low Vol Period &  40 & 15.62 \\ 
-  SA\_DG & Low Vol Period &  21 & 12.63 \\ 
-  UK\_HY\_B & High Vol &  36 & 8.70 \\ 
+UK\_HY\_B & High Vol &  36 & 8.70 \\ 
   EU\_HY & High Vol &  36 & 5.40 \\ 
-  JP\_DG & Low Vol Period &  40 & 3.83 \\ 
   EU\_DG & Low Vol Period &  55 & 3.53 \\ 
-  SA\_HY & High Vol &  25 & 2.71 \\ 
-  JP\_HY & High Vol &  33 & 1.51 \\ 
-  US\_HY & High Vol &  33 & 1.44 \\ 
-  JP\_DG & High Vol &  33 & 0.72 \\ 
-  EM\_HY & High Vol &  33 & 0.44 \\ 
-  US\_DG & Low Vol Period &  40 & 0.39 \\ 
-  W\_HY & High Vol &  33 & 0.02 \\ 
+  EM\_HY & Low Vol Period &  69 & 3.33 \\ 
+  SA\_DG & Low Vol Period &  44 & 3.24 \\ 
+  SA\_HY & High Vol &  39 & 2.74 \\ 
+  JP\_DG & High Vol &  58 & 2.52 \\ 
+  JP\_HY & High Vol &  58 & 0.37 \\ 
+  EM\_HY & High Vol &  58 & 0.08 \\ 
   EU\_HY & Low Vol Period &  55 & -0.11 \\ 
-  SA\_HY & Low Vol Period &  21 & -0.14 \\ 
-  US\_DG & High Vol &  33 & -0.50 \\ 
-  EM\_HY & Low Vol Period &  40 & -1.42 \\ 
-  W\_HY & Low Vol Period &  40 & -1.88 \\ 
+  JP\_HY & Low Vol Period &  69 & -0.28 \\ 
+  US\_HY & High Vol &  58 & -0.35 \\ 
+  US\_DG & High Vol &  58 & -0.68 \\ 
+  W\_HY & High Vol &  58 & -0.69 \\ 
+  US\_DG & Low Vol Period &  69 & -0.76 \\ 
+  W\_HY & Low Vol Period &  69 & -1.22 \\ 
+  SA\_HY & Low Vol Period &  44 & -1.99 \\ 
+  US\_HY & Low Vol Period &  69 & -2.42 \\ 
   UK\_HY\_B & Low Vol Period &  55 & -3.63 \\ 
-  US\_HY & Low Vol Period &  40 & -4.06 \\ 
+  SA\_DG & High Vol &  39 & -4.07 \\ 
   EU\_DG & High Vol &  36 & -4.84 \\ 
+  JP\_DG & Low Vol Period &  69 & -6.46 \\ 
   UK\_HY & Low Vol Period &  55 & -7.20 \\ 
-  SA\_DG & High Vol &  25 & -9.43 \\ 
   UK\_HY & High Vol &  36 & -24.01 \\ 
    \bottomrule
 \caption{Volatility Stratification\label{tab2}} 
@@ -1005,7 +896,8 @@ cycles are employed to ascertain their corresponding interest rate
 regimes. Japan stands as an anomaly among these economies; absent
 distinct hiking or cutting cycles, its central bank largely maintained
 constant rates. Consequently, we assess its performance exclusively
-within the confides of a neutral interest rate cycle.
+within the confides of a neutral interest rate cycle\footnote{we exclude
+  results that have cycles less than 5}.
 
 \begingroup\fontsize{12pt}{13pt}\selectfont
 \begin{longtable}{llrr}
@@ -1029,10 +921,8 @@ EM\_HY & Neutral &  20 & -7.88 \\
   EU\_HY & Hiking &  27 & -2.01 \\ 
   JP\_DG & Neutral &  49 & 1.29 \\ 
   JP\_HY & Neutral &  49 & 1.88 \\ 
-  SA\_DG & Neutral &   3 & 100.62 \\ 
   SA\_DG & Cut &  27 & -6.77 \\ 
   SA\_DG & Hiking &  39 & 1.10 \\ 
-  SA\_HY & Neutral &   3 & -9.70 \\ 
   SA\_HY & Cut &  27 & -7.48 \\ 
   SA\_HY & Hiking &  39 & 1.74 \\ 
   UK\_HY & Neutral &  22 & -14.72 \\ 
@@ -1088,7 +978,7 @@ harvest premiums for value equity overtime. The emerging market and
 Japan portfolios had a polarizing performances throught the sample
 period. For one, from 2005 to 2015, returns for the portfolio were
 consistently positive. Since then, over the last 8 years rolling returns
-for these portfolis have been negative. This constrasts South african
+for these portfolis have been negative. This contrasts South African
 portfolios, of which dividend growth portfolios have since 2010 to 2020
 have shown psotive information ratios. The SA\_HY only turned positive
 since 2017. US and EU indexes have mirror intra geography performance.
@@ -1130,8 +1020,114 @@ significant fluctuations. In juxtaposition, emerging markets, with South
 Africa as a case in point, manifest a more stabilized profile, evidenced
 by diminished variation in their drawdowns.
 
+\hypertarget{application-to-south-africa}{%
+\section{Application to South
+Africa}\label{application-to-south-africa}}
+
+\hypertarget{backtest-results-from-dividend-portfolio-signals}{%
+\subsection{Backtest Results from Dividend Portfolio
+Signals}\label{backtest-results-from-dividend-portfolio-signals}}
+
+Figure \ref{fig3} illustrates the cumulative returns of our dividend
+portfolios, each accompanied by a display of the total capital invested
+during the sample period. The portfolio categories consist of those
+structured around Dividend Yield (DY), Dividend Growth (DG), Price
+Momentum, and Sustainability, all of which are juxtaposed with the
+performance benchmark represented by the SWIX Top 40 index.In line with
+our earlier analysis of the SA\_HY and SA\_DG portfolios, a discernible
+pattern emerges where the returns over the sample period fall short of
+the benchmark set by the market index. Furthermore, our vanilla
+portfolio, the Dividend High Yield (HY), exhibits the lowest cumulative
+returns. Likewise, the Price Momentum and Sustainability portfolios
+demonstrate diminished performance compared to both the Value and DG
+portfolios. This observation underscores a trend of under performance in
+our portfolios when evaluated against the broader market index. This
+result warrants further examination and investigation to discern the
+underlying factors and potential implications within the context of
+dividend-oriented investment strategies.
+
+\begin{figure}[H]
+
+\includegraphics{Much_Ado_About_Dividends_files/figure-latex/Figure3-1} \hfill{}
+
+\caption{Rolling 3 Year Returns \label{fig3}}\label{fig:Figure3}
+\end{figure}
+
+Tables \ref{tab3} and \ref{tab4} provide a comprehensive breakdown of
+total investments during periods characterized by high interest rate
+volatility and distinct interest rate regimes. These periods are
+categorized as either high or low volatility, and they pertain to hiking
+or cutting cycles in response to the realized volatility and the
+interest rate regime of the market proxies. Specifically, we designate a
+period as ``high volatility'' when these measures fall below (above) the
+lowest (highest) quintile for at least 50 trading days and 5
+quarters.However, mirroring our findings from internationally traded
+portfolios, we once again observe the advantageous qualities of dividend
+portfolios when stratified according to interest rate regimes and
+volatility levels. Notably, the dividend portfolios exhibit notable
+defensive attributes, with the price momentum-adjusted and
+sustainability portfolios yielding the highest returns during hiking
+periods and times of high volatility. Moreover, it is worth highlighting
+that our portfolios consistently outperform the market index during
+these periods.
+
+Nevertheless, during cutting cycles or in times of low volatility, we
+note a departure from this trend. In these scenarios, much like the
+overall return on investment, the market index appears to offer higher
+returns. Intriguingly, among our portfolios, it is the dividend yield
+(HY) portfolio that fails to deliver substantial returns compared to our
+other dividend-oriented strategies.This multifaceted analysis
+underscores the nuanced relationship between interest rate dynamics,
+market volatility, and the performance of different investment
+strategies, shedding light on the defensive characteristics of dividend
+portfolios in select economic environments while highlighting the
+contextual significance of interest rate fluctuations.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{rlrrrlr}
+  \hline
+ & Portfolio & Total ROI \% & Annualized ROI\% & SD & MarketCycle & Total ROI \\ 
+  \hline
+1 & BM & 1.06 & -0.70 & 0.02 & High Volatility  &  \\ 
+  2 & Divi1 & 1.02 & -0.82 & 0.03 & High Volatility  &  \\ 
+  3 & Divi2 & 1.04 & -0.78 & 0.03 & High Volatility  &  \\ 
+  4 & Divi3 & 1.00 & -0.86 & 0.01 & High Volatility  &  \\ 
+  5 & Divi4 & 1.06 & -0.72 & 0.04 & High Volatility  &  \\ 
+  6 & BM &  & 227.80 & 0.08 & Low Volatility  & 1.83 \\ 
+  7 & Divi1 &  & -0.25 & 0.06 & Low Volatility  & 1.13 \\ 
+  8 & Divi2 &  & 1.74 & 0.05 & Low Volatility  & 1.26 \\ 
+  9 & Divi3 &  & 13.27 & 0.08 & Low Volatility  & 1.45 \\ 
+  10 & Divi4 &  & 70.51 & 0.09 & Low Volatility  & 1.66 \\ 
+   \hline
+\end{tabular}
+\caption{Market Cycle Perforomance \label{tab3}} 
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{rlrrrlr}
+  \hline
+ & Portfolio & Total ROI & Ann.roi & SD & MarketCycle & Annualized ROI\% \\ 
+  \hline
+1 & BM & 0.16 & -1.00 & 0.01 & Hiking  &  \\ 
+  2 & Divi1 & 0.67 & -0.99 & 0.07 & Hiking  &  \\ 
+  3 & Divi2 & 0.41 & -1.00 & 0.06 & Hiking  &  \\ 
+  4 & Divi3 & 0.32 & -1.00 & 0.02 & Hiking  &  \\ 
+  5 & Divi4 & 0.20 & -1.00 & 0.03 & Hiking  &  \\ 
+  6 & BM & 3.41 &  & 0.26 & Cutting & 6.15 \\ 
+  7 & Divi1 & 1.22 &  & 0.12 & Cutting & -0.88 \\ 
+  8 & Divi2 & 1.48 &  & 0.15 & Cutting & -0.74 \\ 
+  9 & Divi3 & 1.95 &  & 0.14 & Cutting & -0.24 \\ 
+  10 & Divi4 & 2.51 &  & 0.23 & Cutting & 1.07 \\ 
+   \hline
+\end{tabular}
+\caption{Interest Rate Regime Performance \label{tab4}} 
+\end{table}
+\newpage
+
 \hypertarget{conclusion}{%
-\subsection{Conclusion}\label{conclusion}}
+\section{Conclusion}\label{conclusion}}
 
 Over time, dividend portfolios, whether HY or DGPS, have exhibited
 positive excess returns as indicated by cumulative returns. While the
@@ -1172,21 +1168,6 @@ a relatively lower level of systematic risk in these economies.
 Conversely, South African (SA) and Emerging Market (EM) drawdowns have
 exhibited a declining trend, possibly indicating a reduced perception of
 risk in emerging markets over time.
-
-\hypertarget{section}{%
-\section{}\label{section}}
-
-\hypertarget{results-and-analysis}{%
-\section{Results and Analysis}\label{results-and-analysis}}
-
-\hypertarget{discussion}{%
-\section{Discussion}\label{discussion}}
-
-\hypertarget{limitations-of-the-study}{%
-\subsection{Limitations of the study}\label{limitations-of-the-study}}
-
-\hypertarget{conclusion-1}{%
-\section{Conclusion}\label{conclusion-1}}
 
 \newpage
 
@@ -1322,21 +1303,9 @@ Al-Najjar, B. \& Kilincarslan, E. 2018. Revisiting firm-specific
 determinants of dividend policy: Evidence from turkey. \emph{Economic
 issues}. 23(1):3--34.
 
-\leavevmode\vadjust pre{\hypertarget{ref-ang2007stock}{}}%
-Ang, A. \& Bekaert, G. 2007. Stock return predictability: Is it there?
-\emph{The Review of Financial Studies}. 20(3):651--707.
-
 \leavevmode\vadjust pre{\hypertarget{ref-baker1999corporate}{}}%
 Baker, H.K. \& Powell, G.E. 1999. How corporate managers view dividend
 policy. \emph{Quarterly Journal of Business and Economics}. 17--35.
-
-\leavevmode\vadjust pre{\hypertarget{ref-ux40baker2009understanding}{}}%
-Ben-David, I. 2010. Dividend policy decisions. \emph{Behavioral
-Finance}. 435.
-
-\leavevmode\vadjust pre{\hypertarget{ref-bhattacharyya2007dividend}{}}%
-Bhattacharyya, N. 2007. Dividend policy: A review. \emph{Managerial
-Finance}. 33(1):4--13.
 
 \leavevmode\vadjust pre{\hypertarget{ref-black1996dividend}{}}%
 Black, F. 1996. The dividend puzzle. \emph{Journal of Portfolio
@@ -1355,26 +1324,13 @@ asset pricing}. Princeton University Press.
 Conover, C.M., Jensen, G.R. \& Simpson, M.W. 2016. What difference do
 dividends make? \emph{Financial Analysts Journal}. 72(6):28--40.
 
-\leavevmode\vadjust pre{\hypertarget{ref-cornell2014dividend}{}}%
-Cornell, B. 2014. Dividend-price ratios and stock returns: International
-evidence. \emph{Journal of Portfolio management}. 40(2):122.
-
 \leavevmode\vadjust pre{\hypertarget{ref-damodaran2004investment}{}}%
 Damodaran, A. 2004. \emph{Investment fables: Exposing the myths of"
 can't miss" investment strategies}. FT Press.
 
-\leavevmode\vadjust pre{\hypertarget{ref-deangelo2006irrelevance}{}}%
-DeAngelo, H. \& DeAngelo, L. 2006. The irrelevance of the MM dividend
-irrelevance theorem. \emph{Journal of financial economics}.
-79(2):293--315.
-
 \leavevmode\vadjust pre{\hypertarget{ref-fakir2013dividend}{}}%
 Fakir, R. et al. 2013. Dividend yield as a superior investment strategy.
 PhD thesis. University of Pretoria.
-
-\leavevmode\vadjust pre{\hypertarget{ref-fama1988permanent}{}}%
-Fama, E.F. \& French, K.R. 1988. Permanent and temporary components of
-stock prices. \emph{Journal of political Economy}. 96(2):246--273.
 
 \leavevmode\vadjust pre{\hypertarget{ref-filbeck1997}{}}%
 Filbeck, G. \& Visscher, S. 1997. Dividend yield strategies in the
@@ -1395,62 +1351,13 @@ parents ever dreamed of}. Vol. 10. Simon; Schuster.
 Gordon, M.J. 1962. The savings investment and valuation of a
 corporation. \emph{The Review of Economics and Statistics}. 37--51.
 
-\leavevmode\vadjust pre{\hypertarget{ref-gordon1963optimal}{}}%
-Gordon, M.J. 1963. Optimal investment and financing policy. \emph{The
-Journal of finance}. 18(2):264--272.
-
-\leavevmode\vadjust pre{\hypertarget{ref-hussainey2011dividend}{}}%
-Hussainey, K., Mgbame, C.O. \& Chijoke-Mgbame, A.M. 2011. Dividend
-policy and share price volatility: UK evidence. \emph{The Journal of
-risk finance}. 12(1):57--68.
-
-\leavevmode\vadjust pre{\hypertarget{ref-jensen1976theory}{}}%
-Jensen, M.C. \& Meckling, W.H. 1976. Theory of the firm: Managerial
-behavior, agency costs and ownership structure. \emph{Journal of
-financial economics}. 3(4):305--360.
-
-\leavevmode\vadjust pre{\hypertarget{ref-10.2307ux2f3694818}{}}%
-Koch, A.S. \& Sun, A.X. 2004. Dividend changes and the persistence of
-past earnings changes. \emph{The Journal of Finance}. 59(5):2093--2116.
-
 \leavevmode\vadjust pre{\hypertarget{ref-lemmon2015dividend}{}}%
 Lemmon, M.L. \& Nguyen, T. 2015. Dividend yields and stock returns in
 hong kong. \emph{Managerial Finance}. 41(2):164--181.
 
-\leavevmode\vadjust pre{\hypertarget{ref-lintner1956distribution}{}}%
-Lintner, J. 1956. Distribution of incomes of corporations among
-dividends, retained earnings, and taxes. \emph{The American economic
-review}. 46(2):97--113.
-
-\leavevmode\vadjust pre{\hypertarget{ref-maio2015dividend}{}}%
-Maio, P. \& Santa-Clara, P. 2015. Dividend yields, dividend growth, and
-return predictability in the cross section of stocks. \emph{Journal of
-Financial and Quantitative Analysis}. 50(1-2):33--60.
-
-\leavevmode\vadjust pre{\hypertarget{ref-manconi2014buybacks}{}}%
-Manconi, A., Peyer, U. \& Vermaelen, T. 2014. Buybacks around the world.
-\emph{European Corporate Governance Institute (ECGI)-Finance Working
-Paper}. 436.
-
-\leavevmode\vadjust pre{\hypertarget{ref-markowitz1959portfolio}{}}%
-Markowitz, H.M. 1959. Portfolio selection, 1952{]}: Portfolio selection.
-\emph{Journal of Finance}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-masum2014dividend}{}}%
-Masum, A. 2014. Dividend policy and its impact on stock price--a study
-on commercial banks listed in dhaka stock exchange. \emph{Global
-disclosure of Economics and Business}. 3(1).
-
-\leavevmode\vadjust pre{\hypertarget{ref-mcqueen1997does}{}}%
-McQueen, G., Shields, K. \& Thorley, S.R. 1997. Does the {``dow-10
-investment strategy''} beat the dow statistically and economically?
-\emph{Financial Analysts Journal}. 53(4):66--72.
-
 \leavevmode\vadjust pre{\hypertarget{ref-miller}{}}%
 Miller, M.H. \& Modigliani, F. 1961. Dividend policy, growth, and the
 valuation of shares. \emph{The Journal of Business}. 34(4):411--433.
-{[}Online{]}, Available: \url{http://www.jstor.org/stable/2351143}
-{[}2023, October 04{]}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-miller1985dividend}{}}%
 Miller, M.H. \& Rock, K. 1985. Dividend policy under asymmetric
@@ -1458,16 +1365,6 @@ information. \emph{The Journal of finance}. 40(4):1031--1051.
 
 \leavevmode\vadjust pre{\hypertarget{ref-o1991beating}{}}%
 O'higgins, M. \& Downes, J. 1991. \emph{(No Title)}.
-
-\leavevmode\vadjust pre{\hypertarget{ref-rangvid2014dividend}{}}%
-Rangvid, J., Schmeling, M. \& Schrimpf, A. n.d. Dividend predictability
-around the world. \emph{Journal of Financial and Quantitative Analysis}.
-49(5-6):1255--1277.
-
-\leavevmode\vadjust pre{\hypertarget{ref-robertson2006}{}}%
-Robertson, D. \& Wright, S. 2006. Dividends, total cash flow to
-shareholders, and predictive return regressions. \emph{Review of
-Economics and Statistics}. 88(1):91--99.
 
 \leavevmode\vadjust pre{\hypertarget{ref-suwanna2012impacts}{}}%
 Suwanna, T. 2012. Impacts of dividend announcement on stock return.
@@ -1478,11 +1375,6 @@ Van Deventer, D.R., Imai, K. \& Mesler, M. 2013. \emph{Advanced
 financial risk management: Tools and techniques for integrated credit
 risk and interest rate risk management}. John Wiley \& Sons.
 
-\leavevmode\vadjust pre{\hypertarget{ref-vijayakumar2010effect}{}}%
-Vijayakumar, A. 2010. Effect of financial performance on share prices in
-the indian corporate sector: An empirical study. \emph{Management and
-Labour Studies}. 35(3):369--381.
-
 \leavevmode\vadjust pre{\hypertarget{ref-visscher2003dividend}{}}%
 Visscher, S. \& Filbeck, G. 2003. Dividend-yield strategies in the
 canadian stock market. \emph{Financial Analysts Journal}. 59(1):99--106.
@@ -1491,16 +1383,6 @@ canadian stock market. \emph{Financial Analysts Journal}. 59(1):99--106.
 Wang, C., Larsen, J.E., Ainina, M.F., Akhbari, M.L. \& Gressis, N. 2011.
 The dogs of the dow in china. \emph{International Journal of Business
 and Social Science}. 2(18).
-
-\leavevmode\vadjust pre{\hypertarget{ref-wesson2014market}{}}%
-Wesson, N., Muller, C. \& Ward, M. 2014. Market underreaction to open
-market share repurchases on the JSE. \emph{South African Journal of
-Business Management}. 45(4):59--69.
-
-\leavevmode\vadjust pre{\hypertarget{ref-zhang2018portfolio}{}}%
-Zhang, Y., Li, X. \& Guo, S. 2018. Portfolio selection problems with
-markowitz's mean--variance framework: A review of literature.
-\emph{Fuzzy Optimization and Decision Making}. 17:125--158.
 
 \end{CSLReferences}
 
