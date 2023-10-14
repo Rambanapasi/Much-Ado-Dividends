@@ -4,7 +4,7 @@
 # The descriptions below should be self-explanatory
 
 title: " Much Ado About Dividends"
-subtitle: "A Practical Investiagtion of the Mechanics Behind Dividend Return Signalling"
+subtitle: ""
 
 documentclass: "elsarticle"
 
@@ -115,7 +115,7 @@ library(fmxdat)
 pacman::p_load("TTR")
 pacman::p_load("tidyr", "tbl2xts","devtools","lubridate", "readr", "PerformanceAnalytics", "ggplot2", "dplyr")
 source("code/EXCESSRETURN.R")
-
+source("code/Theme.R")
 
 # loadings
 pacman::p_load("xts", "tidyverse", "tbl2xts", "PerformanceAnalytics", 
@@ -139,9 +139,7 @@ colnames(df)[2:23] <- geographical_codenames
 
 # Problem Statement  
 
-As summarized by Vanguard (2017) succinctly,  “the focus of high dividend-yielding equities is often their income potential, but higher yields do not necessarily translate into higher returns. This is because, for all companies, whether or not to pay a dividend is a capital budgeting decision. When a stock goes ex-dividend, its price falls by the same amount as the dividend payment. Therefore, no wealth is created through paying a dividend; rather, the payment reduces retained earnings. This means that share price should decrease accordingly thus share holders should be worse off. 
-
-Thus, brings in the question of why dividend strategies provide for a return signalling cue. First, there should exists a rationale beyond dividend payment effect on share price, perhaps in line with theories regarding dividend relevance. Second, if the signals provide some type excess return beyond their market index, does it continuously provide the premium to be harvested by a systematic investment strategy.
+As summarized by Vanguard (2017) succinctly,  “the focus of high dividend-yielding equities is often their income potential, but higher yields do not necessarily translate into higher returns. This is because, for all companies, whether or not to pay a dividend is a capital budgeting decision. When a stock goes ex-dividend, its price falls by the same amount as the dividend payment. Therefore, no wealth is created through paying a dividend; rather, the payment reduces retained earnings. This means that share price should decrease accordingly thus share holders should be worse off. Thus, brings in the question of why dividend strategies provide for a return signalling cue. First, there should exists a rationale beyond dividend payment effect on share price, perhaps in line with theories regarding dividend relevance. Second, if the signals provide some type excess return beyond their market index, does it continuously provide the premium to be harvested by a systematic investment strategy.
 
 # Research Aim 
 
@@ -246,7 +244,7 @@ t_{cg}= the capital gains tax rate
 
 We will rank stock within our selected universe by dividend signals, specifically using a proxy for dividend yield (DY) and dividend growth per share (DG). The procedure and characteristics of each portfolio are given as; 
 
-*Price Momnetum Sustainability Adjusted Portfolio*:
+### DIVI1
 
 Rank score (i.e. between 0 and 100) calculated using:
 
@@ -257,20 +255,20 @@ if Price momentum score is in bottom quintile, then add it at 35% (35% PX moment
 
 This portfolio uses price momentum and dividend cover ratio as filters to the dividend yield. This rewards sustainability in dividend paymensts and avoids comapnies that  companies that can not afford to pay shareholders dividends thus avoid reactionary capital gain losses. 
 
-*High Yield (HY) Portfolio*:
+### DIVI2
 Rank score (i.e. between 0 and 100):
 
 We use the dividend as the only signal. Similar to Divi1 its a blend of forwarding looking metrics. That is,  2/3 DY (3m fwd) and 1/3 DY (9m fwd). 
 
 This is our vanilla dividend yield portfolio i.e. just ranks according to the highest dividend payers. 
 
-*Value Portfolio*:
+### DIVI3
 
 Rank score (i.e. between 0 and 100):
 
 We use the P/E ratio as the alternative proxy to value. 
 
-*Dividend Growth Portolio (DG)*:
+### DIVI4
 Rank score (i.e. between 0 and 100) calculated using:
 
 Using:
@@ -590,14 +588,13 @@ consistency_df <- list(a, b, c, d, e,f,g,h,i,j,k) %>%
   reduce(inner_join, by='date') %>% 
   gather(IR , ret, -date) 
  
- plot <-  consistency_df %>%
+consistency_df %>%
   ggplot() + 
   geom_line(aes(date, ret), color = "steelblue", size = 1.1, alpha = 0.8) +
   geom_hline(yintercept = 0, color = "red", size = 0.3, alpha = 0.5) +
   facet_wrap(~IR) +
-  labs(x = "", y = "Information Ratio", title = "Performance Consistency", subtitle = "", caption = "Source: Bloomberg and authors own calculations ")
-
-plot 
+  gabriel_theme + 
+  labs(title = "", x = NULL)
 ```
 Suppose we consider the red line to be a measure of a startegy delivering acceptable returns over time. From this metric we notice that the UK_HY has delivered undesirable consistency in returns over the sample period, thus had struggled to give the bang for buck effect and harvest premiums for value equity overtime. The emerging market and Japan portfolios had a polarizing performances throught the sample period. For one, from 2005 to 2015, returns for the portfolio were consistently positive. Since then, over the last 8 years rolling returns for these portfolis have been negative. This contrasts South African portfolios, of which dividend growth portfolios have since 2010 to 2020 have shown psotive information ratios. The SA_HY only turned positive since 2017. US and EU indexes have mirror intra geography performance. In line with the results from our stratification based on market cycles and interest rate regimes, we observed that the majority of HY experienced declines in rolling information ratios, while DG portfolios incurred losses. This trend was particularly evident during the period following the global financial crisis in late 2008 to late 2009. This period was characterized by high volatility and falling interest rates. Conversely, the subsequent crisis, which occurred after the COVID-19 pandemic and was marked by rising interest rates, favored SA , JP and EM, a (SA). These observations align with the major findings on the influence of interest rates from the previous section.
 
@@ -615,13 +612,13 @@ cum_df$Year <- as.Date(paste0(cum_df$Year, "-01-01"))
 
 source("code/order.R")
 
-plot <- cum_df %>% 
+cum_df %>% 
   plot_order(., Column = "Funds", Order = order) %>% 
   ggplot() +
   geom_line(aes(Year, DD), color = "steelblue", size = 1.1, alpha = 0.8) + facet_wrap(~Funds) + 
-labs(x = "", y = " Max Drawdowns (%)", title = "Yearly Drawdowns", subtitle = "", caption = "Source:Bloomberg and\n Authors Calculations")
+  gabriel_theme + 
+  labs(title = "Relative Return Performance", x = NULL)
 
-plot
 
 ```
 
@@ -641,6 +638,7 @@ Loc <- "J433_J406/Divi/"
 Loc_2 <- "J433_J406/Divi/Capped_SWIX/"
 source("/Users/gabrielrambanapasi/Desktop/Much Ado Dividends/Much-Ado-Dividends/Thesis/write up/code/Get_dat_1.R")
 source("/Users/gabrielrambanapasi/Desktop/Much Ado Dividends/Much-Ado-Dividends/Thesis/write up/code/EOM.R")
+source("code/Theme.R")
 
 
 df1 <- Get_dat(Loc, Loc_2,Port = "Divi1","Returns")
@@ -652,12 +650,12 @@ df <- bind_rows(df1, df2, df3, df4, dfbm %>% rename(Returns = BM_Returns) %>% mu
 
 # get the cumulative returns 
 
-df %>% group_by(Portfolio) %>%  mutate(ROI = cumprod(1+Returns), ROI = ROI/first(ROI)) %>% ggplot + geom_line(aes(date, ROI, color = Portfolio))
+df %>% group_by(Portfolio) %>%  mutate(ROI = cumprod(1+Returns), ROI = ROI/first(ROI)) %>% ggplot + geom_line(aes(date, ROI, color = Portfolio))+gabriel_theme +  
+  labs(title = "Cumulative Return", x = NULL)+
+  gabriel_theme
 ```
 
 Tables \ref{tab3} and \ref{tab4} provide a comprehensive breakdown of total investments during periods characterized by high interest rate volatility and distinct interest rate regimes. These periods are categorized as either high or low volatility, and they pertain to hiking or cutting cycles in response to the realized volatility and the interest rate regime of the market proxies. Specifically, we designate a period as "high volatility" when these measures fall below (above) the lowest (highest) quintile for at least 50 trading days and 5 quarters.However, mirroring our findings from internationally traded portfolios, we once again observe the advantageous qualities of dividend portfolios when stratified according to interest rate regimes and volatility levels. Notably, the dividend portfolios exhibit notable defensive attributes, with the price momentum-adjusted and sustainability portfolios yielding the highest returns during hiking periods and times of high volatility. Moreover, it is worth highlighting that our portfolios consistently outperform the market index during these periods.
-
-Nevertheless, during cutting cycles or in times of low volatility, we note a departure from this trend. In these scenarios, much like the overall return on investment, the market index appears to offer higher returns. Intriguingly, among our portfolios, it is the dividend yield (HY) portfolio that fails to deliver substantial returns compared to our other dividend-oriented strategies.This multifaceted analysis underscores the nuanced relationship between interest rate dynamics, market volatility, and the performance of different investment strategies, shedding light on the defensive characteristics of dividend portfolios in select economic environments while highlighting the contextual significance of interest rate fluctuations.
 
 ```{r, results='asis'}
 df_volatility <- bind_rows (df %>%  filter(date %in% hivol_per_vector_sa) %>% mutate(roi = cumprod(1+Returns)) %>% group_by(Portfolio) %>%  summarise(Months = n(),"Total ROI %" = last(roi),  "Annualized ROI%" = last(roi)^12/Months -1, SD = sd(roi)) %>% mutate(MarketCycle = "High Volatility ") %>% select(-Months),
@@ -677,7 +675,7 @@ table <- xtable(data, caption = "Market Cycle Perforomance \\label{tab3}")
              caption.placement = 'bottom'
              )
 ```
-
+Nevertheless, during cutting cycles or in times of low volatility, we note a departure from this trend. In these scenarios, much like the overall return on investment, the market index appears to offer higher returns. Intriguingly, among our portfolios, it is the dividend yield (HY) portfolio that fails to deliver substantial returns compared to our other dividend-oriented strategies.This multifaceted analysis underscores the nuanced relationship between interest rate dynamics, market volatility, and the performance of different investment strategies, shedding light on the defensive characteristics of dividend portfolios in select economic environments while highlighting the contextual significance of interest rate fluctuations.
 ```{r, results= "asis"}
 df_interest <- bind_rows(df %>%  filter(date %in% Hiking_date_vector_sa) %>% mutate(roi = cumprod(1+Returns)) %>% group_by(Portfolio) %>%  summarise(Months = n(), "Total ROI"  = last(roi),  Ann.roi = last(roi)^4/Months -1, SD = sd(roi)) %>% mutate(MarketCycle = "Hiking "),
 
@@ -698,10 +696,98 @@ table <- xtable(data, caption = "Interest Rate Regime Performance \\label{tab4}"
              caption.placement = 'bottom'
              )
 ```
+
+```{r}
+df1_h <- Get_dat(Loc, Loc_2,Port = "Divi1","Holds") %>% mutate(Portfolio = "Divi1")
+df2_h <- Get_dat(Loc, Loc_2,Port = "Divi2","Holds")%>% mutate(Portfolio = "Divi2")
+df3_h <- Get_dat(Loc, Loc_2,Port = "Divi3","Holds")%>% mutate(Portfolio = "Divi3")
+df4_h <- Get_dat(Loc, Loc_2,Port = "Divi4","Holds")%>% mutate(Portfolio = "Divi4")
+dfh <- bind_rows(df1_h, df2_h, df3_h, df4_h) %>% ungroup() %>% select(-YM)
+
+loc_bm <- list.files("J433_J406/Divi/Capped_SWIX/", pattern = "\\.rds$", full.names = TRUE)
+
+dfh_bm <- loc_bm[grepl("Holdings.rds", loc_bm)] %>% read_rds(.) %>% select(date, Tickers, Name, BM_Weight = Weight, Sector ) %>% mutate(Sector = gsub("N/A", NA, Sector))  %>% Make_calendar_EOM(.)%>% arrange(date) %>%  ungroup()
+
+dfh_bm <- dfh_bm  %>%
+  mutate(Month = format(date, "%b"),Year = format(date, "%Y")) %>% 
+  group_by(Year, Name) %>% 
+  filter(Month %in% c("Oct")) %>% ungroup() %>% select(-Year , -Month) 
+  
+# selecting last quarter rebalancing
+
+dfh <- dfh  %>%
+  mutate(Month = format(date, "%b"),Year = format(date, "%Y")) %>% 
+  group_by(Year, Name, Portfolio) %>% 
+  filter(Month %in% c("Oct"))%>% ungroup() %>% select( -Month, -Year)
+
+# get the deviations
+dates_to_filter <- full_join(dfh, dfh_bm, by = c("date", "Name", "Tickers")) %>% select(-YM) %>% mutate(excess_wts = Weight - BM_Weight) %>% filter(!is.na(Weight)) %>% select(date) %>% arrange(date) %>% pull() %>% unique()
+
+# I am looking into return attribution more than risk attribution, so lets analyze the impact of the active decisions from the divi portfolios. Maybe bring in some aspects of micro attribution, ones that are consistent with style.
+
+# accucracy is imparove in short time intervals, most appropriate for little turnover
+```
+
+```{r}
+# from our excess returns calc , this data just has divi excess returns, join by date
+Excess_returs_divi <- df %>% 
+  filter(date %in% dates_to_filter) %>% 
+  spread(Portfolio, Returns) %>%
+  mutate_at(3:6, ~ (.)- BM ) %>% select(-BM) %>% ungroup() %>% 
+  gather(index, ex_ret, -date)
+
+#  excess weights 
+
+Excess_weights <-  full_join(dfh_bm, dfh, by = c("date", "Name", "Tickers"))  %>%
+  arrange(date) %>% 
+filter(date %in% dates_to_filter) %>% 
+filter(!is.na(Portfolio)) %>% 
+group_by(Portfolio, date) %>%
+summarize(Index_Weight =Weight/sum(Weight), BM_Weight = BM_Weight/sum(BM_Weight)) %>%
+mutate(ExcessWeight = (Index_Weight - BM_Weight)) %>% 
+  summarize( ExcessWeight= mean(ExcessWeight)) %>% spread(Portfolio, ExcessWeight) %>%
+  gather(index, ex_weight, -date)
+
+# combine to get the BR DF 
+BF_df <- left_join(Excess_weights, Excess_returs_divi, c("date", "index")) %>% filter(!is.na(ex_weight)) %>%  mutate(BR = ex_weight * ex_ret) %>% select(date, BR, index)
+
+#  there are momnets in which we dont have the ex_weight for all portfolios in 2008, just going to excleude them from the anal;ysis
+
+
+g <- BF_df %>% 
+  ggplot(aes(date, BR)) + 
+  geom_smooth() + 
+  facet_grid(~index) +
+  gabriel_theme + 
+  labs(title = "Relative Return Performance", x = NULL)
+g <- g + scale_y_continuous(labels = scales::number_format(scale = 0.01))
+
+# get the hit range of the strategy throughout time 
+Hit_df <- left_join(Excess_weights, Excess_returs_divi, by = c("date", "index")) %>%
+  filter(!is.na(ex_weight)) %>%
+  mutate(BR = ex_weight * ex_ret) %>%
+  select(date, BR, index) %>%
+  group_by(index) %>%
+  mutate(Positive = sum(BR > 0), Tot = n()) %>% summarize(`Hit Rate` = mean(Positive/Tot ))
+
+g +
+  geom_text(
+    data = Hit_df,
+    aes(label = paste("Hit Rate:", scales::percent(`Hit Rate`))),
+    x = Inf,
+    y = Inf,
+    hjust = 1,
+    vjust = 1,
+    show.legend = FALSE,
+    nudge_x = -0.02
+  )
+```
+
+
 \newpage
 # Conclusion
 
-Over time, dividend portfolios, whether HY or DGPS, have exhibited positive excess returns as indicated by cumulative returns. While the UK_HY index has shown the highest cumulative return, this trend is not consistently observed across other regional indexes. Consequently, when assessing the aggregate perspective on investor portfolio value, dividend portfolios may not offer a reliable means to capture the value premium consistently. However, upon stratifying these portfolios according to different periods of market volatility, it becomes evident that during low volatility periods, the primary determinant of performance is not the geographical region but rather the specific investment strategy employed. In this case, HY strategies.  Surprisingly, portfolios based in South Africa (SA) tend to perform well during these high volatility periods, which is somewhat unconventional as such times are typically associated with a flight to safety, and Emerging Markets (EM) and, by extension, South Africa, are considered riskier. When extending our analysis to encompass interest rate cycles, we observe a contrasting effect compared to the volatility-based stratification. We find that all strategies appear to give the highest return in hiking cycles. 
+Over time, dividend portfolios, whether HY or DG, have exhibited positive excess returns as indicated by cumulative returns. While the UK_HY index has shown the highest cumulative return, this trend is not consistently observed across other regional indexes. Consequently, when assessing the aggregate perspective on investor portfolio value, dividend portfolios may not offer a reliable means to capture the value premium consistently. However, upon stratifying these portfolios according to different periods of market volatility, it becomes evident that during low volatility periods, the primary determinant of performance is not the geographical region but rather the specific investment strategy employed. In this case, HY strategies.  Surprisingly, portfolios based in South Africa (SA) tend to perform well during these high volatility periods, which is somewhat unconventional as such times are typically associated with a flight to safety, and Emerging Markets (EM) and, by extension, South Africa, are considered riskier. When extending our analysis to encompass interest rate cycles, we observe a contrasting effect compared to the volatility-based stratification. We find that all strategies appear to give the highest return in hiking cycles. 
 
 In assessing consistency, we employ the information ratio. Initially, we discern that, at a broad level, dividend portfolios do not consistently maintain a positive ratio over an extended investment horizon. However, disparities in performance emerge. Notably, South African (SA) and dividend indexes have consistently delivered positive ratios over the past decade. In contrast, Emerging Markets (EM) and Japanese (JP) indexes have experienced substantial declines in their information ratios, despite seemingly consistent performance prior to 2015. Meanwhile, the United States (US), European Union (EU), and United Kingdom (UK) indexes have exhibited unpredictable performance over the sampled period.
 

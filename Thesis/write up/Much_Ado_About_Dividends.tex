@@ -238,8 +238,7 @@ risk measures within the same period.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \pagestyle{fancy}
 \chead{}
-\rhead{A Practical Investiagtion of the Mechanics Behind Dividend Return
-Signalling}
+\rhead{}
 \lfoot{}
 \rfoot{\footnotesize Page \thepage}
 \lhead{}
@@ -266,14 +265,13 @@ capital budgeting decision. When a stock goes ex-dividend, its price
 falls by the same amount as the dividend payment. Therefore, no wealth
 is created through paying a dividend; rather, the payment reduces
 retained earnings. This means that share price should decrease
-accordingly thus share holders should be worse off.
-
-Thus, brings in the question of why dividend strategies provide for a
-return signalling cue. First, there should exists a rationale beyond
-dividend payment effect on share price, perhaps in line with theories
-regarding dividend relevance. Second, if the signals provide some type
-excess return beyond their market index, does it continuously provide
-the premium to be harvested by a systematic investment strategy.
+accordingly thus share holders should be worse off. Thus, brings in the
+question of why dividend strategies provide for a return signalling cue.
+First, there should exists a rationale beyond dividend payment effect on
+share price, perhaps in line with theories regarding dividend relevance.
+Second, if the signals provide some type excess return beyond their
+market index, does it continuously provide the premium to be harvested
+by a systematic investment strategy.
 
 \hypertarget{research-aim}{%
 \section{Research Aim}\label{research-aim}}
@@ -689,7 +687,8 @@ specifically using a proxy for dividend yield (DY) and dividend growth
 per share (DG). The procedure and characteristics of each portfolio are
 given as;
 
-\emph{Price Momnetum Sustainability Adjusted Portfolio}:
+\hypertarget{divi1}{%
+\subsubsection{DIVI1}\label{divi1}}
 
 Rank score (i.e.~between 0 and 100) calculated using:
 
@@ -707,7 +706,10 @@ to the dividend yield. This rewards sustainability in dividend paymensts
 and avoids comapnies that companies that can not afford to pay
 shareholders dividends thus avoid reactionary capital gain losses.
 
-\emph{High Yield (HY) Portfolio}: Rank score (i.e.~between 0 and 100):
+\hypertarget{divi2}{%
+\subsubsection{DIVI2}\label{divi2}}
+
+Rank score (i.e.~between 0 and 100):
 
 We use the dividend as the only signal. Similar to Divi1 its a blend of
 forwarding looking metrics. That is, 2/3 DY (3m fwd) and 1/3 DY (9m
@@ -716,14 +718,17 @@ fwd).
 This is our vanilla dividend yield portfolio i.e.~just ranks according
 to the highest dividend payers.
 
-\emph{Value Portfolio}:
+\hypertarget{divi3}{%
+\subsubsection{DIVI3}\label{divi3}}
 
 Rank score (i.e.~between 0 and 100):
 
 We use the P/E ratio as the alternative proxy to value.
 
-\emph{Dividend Growth Portolio (DG)}: Rank score (i.e.~between 0 and
-100) calculated using:
+\hypertarget{divi4}{%
+\subsubsection{DIVI4}\label{divi4}}
+
+Rank score (i.e.~between 0 and 100) calculated using:
 
 Using: DPS\_Growth\_1Y = 40\%, DPS\_Growth\_3Y = 30\%, Fwd\_3 = 20\%,
 Fwd\_9 = 10\%
@@ -1018,7 +1023,7 @@ narrative undergoes a transformation. The UK High Yield and Japan High
 Yield strategies are revealed to be more volatile, being susceptible to
 significant fluctuations. In juxtaposition, emerging markets, with South
 Africa as a case in point, manifest a more stabilized profile, evidenced
-by diminished variation in their drawdowns.
+by diminished variation in their drawdowns. \newpage
 
 \hypertarget{application-to-south-africa}{%
 \section{Application to South
@@ -1071,18 +1076,6 @@ periods and times of high volatility. Moreover, it is worth highlighting
 that our portfolios consistently outperform the market index during
 these periods.
 
-Nevertheless, during cutting cycles or in times of low volatility, we
-note a departure from this trend. In these scenarios, much like the
-overall return on investment, the market index appears to offer higher
-returns. Intriguingly, among our portfolios, it is the dividend yield
-(HY) portfolio that fails to deliver substantial returns compared to our
-other dividend-oriented strategies.This multifaceted analysis
-underscores the nuanced relationship between interest rate dynamics,
-market volatility, and the performance of different investment
-strategies, shedding light on the defensive characteristics of dividend
-portfolios in select economic environments while highlighting the
-contextual significance of interest rate fluctuations.
-
 \begin{table}[H]
 \centering
 \begin{tabular}{rlrrrlr}
@@ -1104,6 +1097,18 @@ contextual significance of interest rate fluctuations.
 \caption{Market Cycle Perforomance \label{tab3}} 
 \end{table}
 
+Nevertheless, during cutting cycles or in times of low volatility, we
+note a departure from this trend. In these scenarios, much like the
+overall return on investment, the market index appears to offer higher
+returns. Intriguingly, among our portfolios, it is the dividend yield
+(HY) portfolio that fails to deliver substantial returns compared to our
+other dividend-oriented strategies.This multifaceted analysis
+underscores the nuanced relationship between interest rate dynamics,
+market volatility, and the performance of different investment
+strategies, shedding light on the defensive characteristics of dividend
+portfolios in select economic environments while highlighting the
+contextual significance of interest rate fluctuations.
+
 \begin{table}[H]
 \centering
 \begin{tabular}{rlrrrlr}
@@ -1124,12 +1129,15 @@ contextual significance of interest rate fluctuations.
 \end{tabular}
 \caption{Interest Rate Regime Performance \label{tab4}} 
 \end{table}
+
+\includegraphics{Much_Ado_About_Dividends_files/figure-latex/unnamed-chunk-5-1.pdf}
+
 \newpage
 
 \hypertarget{conclusion}{%
 \section{Conclusion}\label{conclusion}}
 
-Over time, dividend portfolios, whether HY or DGPS, have exhibited
+Over time, dividend portfolios, whether HY or DG, have exhibited
 positive excess returns as indicated by cumulative returns. While the
 UK\_HY index has shown the highest cumulative return, this trend is not
 consistently observed across other regional indexes. Consequently, when
