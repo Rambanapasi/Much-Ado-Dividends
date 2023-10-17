@@ -85,8 +85,7 @@ a <- loc_bm[grepl("Holdings.rds", loc_bm)] %>% read_rds(.) %>% select(date, Tick
 dfh_bm <- dfh_bm  %>%
   mutate(Month = format(date, "%b"),Year = format(date, "%Y")) %>% 
   group_by(Year, Name) %>% 
-  filter(Month %in% c("Oct")) %>% ungroup() %>% select(-Year , -Month) %>% merge(., sectors_to_merge
-  )
+  filter(Month %in% c("Oct")) %>% ungroup() %>% select(-Year , -Month) 
   
 # selecting last quarter rebalancing
 
@@ -149,7 +148,7 @@ BF_df <- left_join(Excess_weights, Excess_returs_divi, c("date", "index")) %>% f
 
 #  there are momnets in which we dont have the ex_weight for all portfolios in 2008, just going to excleude them from the anal;ysis
 
-Source("write up/code/Theme.R")
+source("write up/code/Theme.R")
 
 g <- BF_df %>% 
   ggplot(aes(date, BR)) + 
@@ -157,7 +156,8 @@ g <- BF_df %>%
   facet_grid(~index) +
   gabriel_theme + 
   labs(title = "Relative Return Performance", x = NULL)
-g 
+g <- g + scale_y_continuous(labels = scales::number_format(scale = 0.01))
+
 # get the hit range of the strategy throughout time 
 Hit_df <- left_join(Excess_weights, Excess_returs_divi, by = c("date", "index")) %>%
   filter(!is.na(ex_weight)) %>%
@@ -165,6 +165,18 @@ Hit_df <- left_join(Excess_weights, Excess_returs_divi, by = c("date", "index"))
   select(date, BR, index) %>%
   group_by(index) %>%
   mutate(Positive = sum(BR > 0), Tot = n()) %>% summarize(`Hit Rate` = mean(Positive/Tot ))
+
+g +
+  geom_text(
+    data = Hit_df,
+    aes(label = paste("Hit Rate:", scales::percent(`Hit Rate`))),
+    x = Inf,
+    y = Inf,
+    hjust = 1,
+    vjust = 1,
+    show.legend = FALSE,
+    nudge_x = -0.02
+  )
                             
 ```
 
