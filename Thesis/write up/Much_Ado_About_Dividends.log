@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.13)  17 OCT 2023 03:12
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.10.13)  24 OCT 2023 06:34
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -23,8 +23,8 @@ Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
 \@bls=\dimen140
 (/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2023/05/17 v1.4n Standard LaTeX document class
-(/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/tex/latex/base/size10.clo
-File: size10.clo 2023/05/17 v1.4n Standard LaTeX file (size option)
+(/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/tex/latex/base/size11.clo
+File: size11.clo 2023/05/17 v1.4n Standard LaTeX file (size option)
 )
 \c@part=\count187
 \c@section=\count188
@@ -620,11 +620,7 @@ Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1373.
 Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1374.
 Package xcolor Info: Model `Gray' substituted by `gray' on input line 1375.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1376.
-) (./Much_Ado_About_Dividends.aux
-
-LaTeX Warning: Label `tab3' multiply defined.
-
-)
+) (./Much_Ado_About_Dividends.aux)
 \openout1 = `Much_Ado_About_Dividends.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 175.
@@ -670,10 +666,10 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 * \topmargin=-38.1381pt
 * \headheight=12.0pt
 * \headsep=25.0pt
-* \topskip=10.0pt
+* \topskip=11.0pt
 * \footskip=30.0pt
-* \marginparwidth=65.0pt
-* \marginparsep=11.0pt
+* \marginparwidth=59.0pt
+* \marginparsep=10.0pt
 * \columnsep=10.0pt
 * \skip\footins=24.0pt
 * \hoffset=0.0pt
@@ -694,125 +690,136 @@ Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: threeparttable package is loaded.
 Package caption Info: wrapfig package is loaded.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 231.
+LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 234.
 (/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OML+lmm on input line 231.
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 234.
 (/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 231.
+LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 234.
 (/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 231.
+LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 234.
 (/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 231.
+(Font)              <9> on input line 234.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 231.
+(Font)              <6> on input line 234.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 231.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 231.
+(Font)              <5> on input line 234.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 234.
 (/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 231.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 234.
 (/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 231.
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 234.
 (/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 231.
+(Font)              <10.95> on input line 234.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 231.
+(Font)              <8> on input line 234.
 [1
 
 
-{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}] [2] [3] [4] [5{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}]
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 622.
+{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}] [2] [3] [4{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}] [5{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}]
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 567.
 (/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-Underfull \hbox (badness 10000) in paragraph at lines 638--639
+Underfull \hbox (badness 10000) in paragraph at lines 583--584
 
  []
 
-[6{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}] [7]
+[6{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}] [7]
 
-LaTeX Warning: Reference `reftab' on page 8 undefined on input line 760.
+LaTeX Warning: Reference `reftab' on page 8 undefined on input line 716.
 
-[8] [9] [10]
-Underfull \hbox (badness 1132) in paragraph at lines 960--965
-[]\T1/lmr/m/n/10 Within ge-ogra-phies then, EM_HY (Hik-ing), EU_DG (Cut-ting), JP_HY (Neu-tral),SA_DG (Hik-ing),
- []
-
-<Much_Ado_About_Dividends_files/figure-latex/unnamed-chunk-1-1.png, id=276, 505.89pt x 289.08pt>
+[8] [9] [10] [11]
+<Much_Ado_About_Dividends_files/figure-latex/unnamed-chunk-1-1.png, id=271, 505.89pt x 289.08pt>
 File: Much_Ado_About_Dividends_files/figure-latex/unnamed-chunk-1-1.png Graphic file (type png)
 <use Much_Ado_About_Dividends_files/figure-latex/unnamed-chunk-1-1.png>
-Package pdftex.def Info: Much_Ado_About_Dividends_files/figure-latex/unnamed-chunk-1-1.png  used on input line 983.
+Package pdftex.def Info: Much_Ado_About_Dividends_files/figure-latex/unnamed-chunk-1-1.png  used on input line 996.
 (pdftex.def)             Requested size: 505.88875pt x 289.07928pt.
 
-Overfull \hbox (22.4766pt too wide) in paragraph at lines 983--984
+Overfull \hbox (22.4766pt too wide) in paragraph at lines 996--997
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 983--984
+Underfull \hbox (badness 10000) in paragraph at lines 996--997
 
  []
 
-[11]
-<Much_Ado_About_Dividends_files/figure-latex/Figure2-1.png, id=283, 505.89pt x 289.08pt>
-File: Much_Ado_About_Dividends_files/figure-latex/Figure2-1.png Graphic file (type png)
-<use Much_Ado_About_Dividends_files/figure-latex/Figure2-1.png>
-Package pdftex.def Info: Much_Ado_About_Dividends_files/figure-latex/Figure2-1.png  used on input line 1017.
-(pdftex.def)             Requested size: 505.88875pt x 289.07928pt.
-
-Overfull \hbox (22.4766pt too wide) in paragraph at lines 1017--1018
-[][]
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1017--1018
-
- []
-
-[12 <./Much_Ado_About_Dividends_files/figure-latex/unnamed-chunk-1-1.png>]
-
-LaTeX Warning: Reference `[' on page 13 undefined on input line 1022.
-
-[13 <./Much_Ado_About_Dividends_files/figure-latex/Figure2-1.png>]
-<Much_Ado_About_Dividends_files/figure-latex/Figure3-1.png, id=317, 505.89pt x 289.08pt>
+[12]
+<Much_Ado_About_Dividends_files/figure-latex/Figure3-1.png, id=278, 505.89pt x 289.08pt>
 File: Much_Ado_About_Dividends_files/figure-latex/Figure3-1.png Graphic file (type png)
 <use Much_Ado_About_Dividends_files/figure-latex/Figure3-1.png>
-Package pdftex.def Info: Much_Ado_About_Dividends_files/figure-latex/Figure3-1.png  used on input line 1071.
+Package pdftex.def Info: Much_Ado_About_Dividends_files/figure-latex/Figure3-1.png  used on input line 1034.
 (pdftex.def)             Requested size: 505.88875pt x 289.07928pt.
 
-Overfull \hbox (22.4766pt too wide) in paragraph at lines 1071--1072
+Overfull \hbox (22.4766pt too wide) in paragraph at lines 1034--1035
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1071--1072
+Underfull \hbox (badness 10000) in paragraph at lines 1034--1035
 
  []
 
-[14 <./Much_Ado_About_Dividends_files/figure-latex/Figure3-1.png>] [15]
-<Much_Ado_About_Dividends_files/figure-latex/unnamed-chunk-5-1.pdf, id=342, 433.62pt x 361.35pt>
+[13 <./Much_Ado_About_Dividends_files/figure-latex/unnamed-chunk-1-1.png>] [14 <./Much_Ado_About_Dividends_files/figure-latex/Figure3-1.png>] [15]
+<Much_Ado_About_Dividends_files/figure-latex/unnamed-chunk-5-1.pdf, id=323, 433.62pt x 361.35pt>
 File: Much_Ado_About_Dividends_files/figure-latex/unnamed-chunk-5-1.pdf Graphic file (type pdf)
 <use Much_Ado_About_Dividends_files/figure-latex/unnamed-chunk-5-1.pdf>
-Package pdftex.def Info: Much_Ado_About_Dividends_files/figure-latex/unnamed-chunk-5-1.pdf  used on input line 1177.
+Package pdftex.def Info: Much_Ado_About_Dividends_files/figure-latex/unnamed-chunk-5-1.pdf  used on input line 1132.
 (pdftex.def)             Requested size: 433.61894pt x 361.34912pt.
-[16 <./Much_Ado_About_Dividends_files/figure-latex/unnamed-chunk-5-1.pdf>] [17] [18] [19] [20]
+[16 <./Much_Ado_About_Dividends_files/figure-latex/unnamed-chunk-5-1.pdf>] [17]
+
+Package hyperref Warning: Difference (2) between bookmark levels is greater 
+(hyperref)                than one, level fixed on input line 1272.
+
+[18] [19]
+Overfull \hbox (144.93623pt too wide) in paragraph at lines 1340--1359
+ [][] 
+ []
+
+
+Overfull \hbox (257.7531pt too wide) in paragraph at lines 1363--1381
+ [][] 
+ []
+
+
+Overfull \hbox (346.7357pt too wide) in paragraph at lines 1385--1404
+ [][] 
+ []
+
+
+Overfull \hbox (346.7357pt too wide) in paragraph at lines 1408--1427
+ [][] 
+ []
+
+[20]
+Overfull \hbox (548.53517pt too wide) in paragraph at lines 1431--1450
+ [][] 
+ []
+
+
+Overfull \hbox (548.53517pt too wide) in paragraph at lines 1454--1473
+ [][] 
+ []
+
+[21] [22] [23] [24]
 No file Much_Ado_About_Dividends.bbl.
-[21] (./Much_Ado_About_Dividends.aux)
+[25] (./Much_Ado_About_Dividends.aux)
  ***********
 LaTeX2e <2023-06-01> patch level 1
 L3 programming layer <2023-10-10>
@@ -820,28 +827,25 @@ L3 programming layer <2023-10-10>
 
 LaTeX Warning: There were undefined references.
 
-
-LaTeX Warning: There were multiply-defined labels.
-
 Package rerunfilecheck Info: File `Much_Ado_About_Dividends.out' has not changed.
-(rerunfilecheck)             Checksum: B38BE906EE0DE5AB72A1EF534DDD9F08;4259.
+(rerunfilecheck)             Checksum: 0D6EFE9D1CFFB2B02C45340BA70025DB;3730.
  ) 
 Here is how much of TeX's memory you used:
- 18269 strings out of 476470
- 338939 string characters out of 5800451
- 1945040 words of memory out of 5000000
- 39548 multiletter control sequences out of 15000+600000
- 621858 words of font info for 78 fonts, out of 8000000 for 9000
+ 18258 strings out of 476470
+ 338198 string characters out of 5800451
+ 1947040 words of memory out of 5000000
+ 39533 multiletter control sequences out of 15000+600000
+ 619168 words of font info for 78 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,11n,79p,561b,1038s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,12n,79p,561b,1048s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
 pdfTeX warning (dest): name{ref-baker2009understanding} has been referenced but does not exist, replaced by a fixed one
 
-</Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx8.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmex10.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi5.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi7.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr5.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr6.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr9.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri7.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri8.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy6.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt8.pfb>
-Output written on Much_Ado_About_Dividends.pdf (21 pages, 466746 bytes).
+</Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx9.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmex10.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi6.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi8.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr6.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr9.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri7.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri9.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy6.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt9.pfb>
+Output written on Much_Ado_About_Dividends.pdf (25 pages, 422871 bytes).
 PDF statistics:
  514 PDF objects out of 1000 (max. 8388607)
- 437 compressed objects within 5 object streams
- 124 named destinations out of 1000 (max. 500000)
- 253 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 438 compressed objects within 5 object streams
+ 130 named destinations out of 1000 (max. 500000)
+ 224 words of extra memory for PDF output out of 10000 (max. 10000000)
 

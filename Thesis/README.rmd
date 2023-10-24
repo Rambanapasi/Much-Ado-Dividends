@@ -3,21 +3,20 @@ output:
   md_document:
     variant: markdown_github
 ---
-# Goal 
 
-- what is the performance of dividend portfolios. 
+# Brain wave
 
-- interested in regional performance of indexes that are constrcuted either through HY or DG growth as signals
+Focusing on the risk sources, I wan to donduct a simlar analysis to returns bit on risk sources.
 
-- the next chunk achieves and now dividend portfolios are proxies for their jurisdiction. 
+We will need add some more value portfolios, just to make that argument that divi strategies are a poor proxy for return, MSCI, FTSE and SP
 
-- include how divident portfolios have diffrent constituents. 
-- how those operate in diffrent market cycles. 
 ```{r}
 # loadings
-pacman::p_load("xts", "tidyverse", "tbl2xts", "PerformanceAnalytics", 
-               "lubridate", "glue", "zoo")
-
+if (!require("fEcofin")) install.packages("fEcofin", repos = "http://R-Forge.R-project.org")
+library(fEcofin)
+library(PerformanceAnalytics)
+library(tidyverse)
+pacman::p_load("tidyr", "dplyr")
 df<- readxl::read_xlsx("data/MAD .xlsx")
 
 #  change the column names for ease of analysis
@@ -28,116 +27,48 @@ colnames(df)[2:23] <- geographical_codenames
 
 ```
 
-# Goal and Steps to Acheive them
+# Total Return
 
-- Look at aggregate return effects across regions. 
-- Stratify by interest rate and market volatility.
-- Assess return consistency. 
-- and get an idea of risk attributes of constituents - maybe drawdowns could be a tool that we could employ. 
-
-# But first, lets describe what constitutes these indexes
-
-- we need to classify by style what the index offers. There are value, these are stock that trade below their perceived intrinsic value. 
-
-- Next, we consider high yield and growth in dividends per share as our value signals. Why? The indexes we investigate are return oriented factor based strategies, that dividend yield can be either absolute value or growth. 
-
-- HY, are companies that have a history of paying high dividends per share or have dividend yield . if we hold the payout ratio constant, that yield is a function of earnings yield. To achieve that HY status, its either earnings are high or price is low. They are typically in industries such as telecoms and utilities, and REITS (real estate assets) have cash flows that are more steady and predictable, which enables them to distribute a larger dividend. These businesses typically have better-developed business models and depend less on expansion to produce returns. These companies carry high risk of financial distress, because of being part of a value trap. 
-
-- DG, are companies that have experienced, significant grow its dividend distribution. In other words, have seen their dividend yield ratio go up with time. This could be a function of either, the payout ratio, or earnings yield or both.
-Companies in this category typically have higher-quality, cash-rich operations that perform well in both up and down markets and can provide excess returns throughout a complete market cycle. There are less likely to experience losses when interest rates are rising.
-
-- in a nutshell, companines that display the ability to increase their dividend overtime are considered to be much safer, because there have good cash management practices but lack of investmnet opportunities. whereas, high dividend payers, that are more vumnerable to financial distress can be catergorized as the more risky companies. 
-
-The next table just shows each index and its benchmark, for ease of analysis later.
-
-- The data used is from 20-09-03 to 20-09-23, 20 years because that is the maximum we could retrive for all indexes on Bloomberg. 
-
-```{r}
-library(kableExtra)
-indexes <- readxl::read_xlsx("data/Index Description.xlsx")
-
-kable(indexes)
-```
-
-
-We want to investigate the performance of dividend paying portfolios across different regions. Firstly we will asess the performance of dividend portfolios over market cycles and interest rate regimes.   dynamic performance measures and risk analysis of these portfolios. in essence, why do these portfolios work or not and when they seem to add value to a portfolio. We also high the distinction in growth versus HY performance. 
-
-So, Return, Risk and a combination of the two (IR) will guide the analysis. 
-
-# Objective
-
-Literature has shown that they provide greater excess return over time versus the s&p because the dividend component over and above the capital gains. We expand this to other indices, FTSE, MSCI and try to pick up overall value proposition of dividend indices. 
-
-- So its risk and return that we need to evaluate, so do they provide that excess return over time that is significantly better than its parent index. 
-
-- If they do what are the drivers, we note the construction of the indexes by the different providers. 
-are they exposed to higher risk assets. lets mention the composition of different sectors in the index. are some sectors prone to paying higher dividend than others and what is the relationship between return and dividend paynig stock. 
-
-- if they do provide more return do they give more risk. what measure of risk can we give to illustrate this and how do these indexes cover against these risks of the value trap. What other measures of risk will be important to measure over time for these portfolios in the various regions. Mentioning the correlations to market is important 
-
-- finally we consider south African portfolios, are they able to consistently give a return. Lets use the sharpe ratios to determine the consistency of the portfolios. 
-
-##  Compounding Returns, Aggregate effects of Portfolios
-
-- calculate excess returns as the monthly difference return for index and benchmark, then geometrically chain the excess return to compute the cumulative excess returns. 
-
-- correct for differing inception dates. The indices across regions have different inception dates therefore not purely comparable across regions. To correct for this we start the series will start from the first date for all indices and standardized to 1, ie all indices start from the same point. However these indices are not purely comparable, inceptions date may lead to differing momentum effects.
-
-With that caveat, lets start the analysis.
-
+-   take a look at cumulative excess return, stand dev, sortino and max drawdown just from a entire sample perspective
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
 source("code/EXCESSRETURN.R")
 library(glue)
 library(stats)
 
+
+
+
 #   calculate simple returns just simple excess returns
 a <- df %>% My_excess_return(., "UK_HY", "UK") 
 b <- df %>% My_excess_return(., "UK_HY_B", "UK_B")
-
 c <- df %>% My_excess_return(., "US_HY", "US")
 d <- df %>% My_excess_return(., "US_DG", "US_2")
 
 e <- df %>% My_excess_return(., "EU_HY", "EU")
 f <- df %>% My_excess_return(., "EU_DG", "EU_2")
-
 g <- df %>% My_excess_return(., "JP_HY", "JP")
 h <- df %>% My_excess_return(., "JP_DG", "JP")
 
 i <- df %>% My_excess_return(., "EM_HY", "EM")
-
 j <- df %>% My_excess_return(., "SA_HY", "SA")
 k <- df %>% My_excess_return(., "SA_DG", "SA")
-
 l <- df %>% My_excess_return(., "W_HY", "W")
 
+#  some high level descriptive stats 
 
-# Table to describe excess returns
+des_df <- list( a, b, c, d, e,f,g,h,i,j,k, l) %>%
+   reduce(inner_join, by='Measure')
 
+# this is the pre ample to the overall portfolio nalaysis that I will be conductin
 
-excess_return_df <- list( a, b, c, d, e,f,g,h,i,j,k, l) %>%
-  reduce(inner_join, by='date')
-
-table_df <- excess_return_df %>% 
-  gather(Regions, Cumulative_Excess_Return, -date) %>% 
-  group_by(Regions) %>% 
-  summarise("Start Date" = first(date) , "Total Years"  = round( n()/12,0),  Median = median(Cumulative_Excess_Return),  "Cumulative Excess Return" = last(Cumulative_Excess_Return))
-
-table_df
-
+write_xlsx(des_df, "data/output.xlsx")
 ```
-- notice that growth portfolios dont add value, SA offers similar to HY and DG. Whats the reason?
 
-- HY did good in most advanced market economies. Gving more than 1X in excess cumulatively, the best being UK assets high yeild. EM not so well on a cumulative basis
+# Return Stratification
 
-
-## Stratification 
-
-- to get a more nuanced picture of the performance over time, but first 
-
-- some settings - top percentile is 95th and bottom is 5 percentile. 
-
-
+-   to get a more nuanced picture of the performance over time, but first
+-   some settings - top percentile is 95th and bottom is 5 percentile.
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
 #   get the vol data and get some dates
@@ -147,7 +78,6 @@ table_df
              sqrt(12)) %>% 
     filter(!is.na(RollSD))
 ```
-
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
 # # get the top quartile and bottom quartile
@@ -222,22 +152,6 @@ stratifying_df <-  bind_rows(
 
 stratifying_df %>% arrange(Name)
 ```
-- not entirely confident with my methodology  and I need help on this. 
-- after stratification i simple calc returns similar to having the full sample of dates. I knowledge that this may lead suspicious results not be enough data points to string good representation of returns
-- but general trends for HY indexes.  EM HY > Low Vol. EU_HY> Hi Vol.  JP_HY > Low Vol. SA_HY >High Vol. UK_HY (Both) Low Vol. US _HY > Low vol and W_HY > Low Vol. 
-- and DG . EU_DG > Low vol . JP> High Vol. SA > HI Vol, US > Low_Vol
-
- Within regions SA_HY(H), UK_HY_B(L), US_DG(L), EM_HY(L), EU_HY(L), JP_HY(L). So this simply means that for our different portfolios, HY performs well and mostly in low volatile periods. Linking that back to our definition for HY index assets it is rationale that most of the value stock that are vulnerable to financial distress would find favor from investors in a very risky environment (Low volatility). 
-
-# Interest rate cycles
-
-Given a series of central bank interest rates. I want to get dates of n consecutive interest rate changes. 
-
-To do this I will
-
-- create a column that conditions if there was a rate change or nt.
-- apply a rolling function that counts a desired number of consistent hikes or cuts or neutral/hold period.
-- similar to the vol, aggregate performance in those dates. 
 
 ```{r}
 rate_data <- readxl::read_xlsx("data/Policy Rates.xlsx") 
@@ -333,26 +247,6 @@ CB_df %>% rename(Quarters = "Months") %>% arrange(desc("Annualized Return"))
 
 #  need to aggregate that into a single number 
 ```
-- confident with this stratification
-- huge idiosyncratic factors that have influenced the results thus performance of equity within each region. We will not get into that for now. 
-- for HY returns, EM  H>C>N. EU N>C>H, SA H>C>N, UK H>C>N , US C>H>N
-- for DG returns, US H>C>N, SA H>C>N,  EU N>C>H
-- so HY indexes generally perform well in rising interest rate environments and have the lowest return in Neutral interest rate environments and DG dividend growth strategies follow a similar pattern. 
-- Similar to the market cycle stratification, some regimes have less data points than other which may affect the returns. 
-
-Within geographies then, EM - HY (H), EU - DG (C), JP - HY (N) , SA-DG (H) , UK HY - B  (H), US_DG (H), So mostly perform well in Hiking periods but their strategies are evenly split given our sample. However there is no clear relationship between which strategy works best.  This contradicts what some pundits advocate, they believe that  investors looking for yield in low rate environments would cause the price action to favor such stock (we have only seen this in the EU DG ), thus give higher returns. 
-
-
-# Rolling consistency
-
-- How much bang for buck do these strategies give and how consistent are there at acheiving said return
-
-To do this we will first 
-
-- calculate the returns for both benchmark and index and get the tracking error of the each index to its benchmark.
-- then simply on a rolling basis depict the movement of each pair. 
-- we then graph that. 
-
 
 ```{r}
 #  source 
@@ -383,77 +277,164 @@ facet_wrap(~IR) +
 labs(x = "", y = "Information Ratio", title = "Performance Consistency", subtitle = "Deeply Inconcsistent", caption = "Source:Bloomberg and\n Authors Calculations")
 
 plot
-
 ```
-- we notive choppy IR for the different indexes across regions. 
-- difficult for strategies to consistently deliver IR above zero across varying volatiliy and interest rate regimes. 
-- but having said that, lets consider the redline to be a measure of strategy working or not.
-- The UK_HY stands out as one that has struggled to give that bang for buck effect. 
-- EM  and JP HY and JP DG from 2005 to 2015 return positive IR then since then until the start of 2022 its been negative. 
-- SA indexes , a tale of two have shown 2010 to 2020 in positive for DG but the SA HY IR from 2017 to date for HY
-- US indexes have been mirroring each other. However difficult to conclude. 
 
-We notice that UK HY portfolios have not been working. Whilst SA HY has deliverd some respectable consistency for several years. However EM _HY  like the UK since 2015 has delivered negative information ratio. Are there common risk factors that give opposite effects?
-#  Drawdowns
+# Risk Source Analysis
 
-Drawdowns give a more detailed picture of the risk attributes of the constituents of a data series. Their importance for our study is to uncover latent relationship between performance and drawdown.
+## Description
+
+This here tries to give an analytical base to what drives the returns from the choosen divi portfolios.
+
+Use a EFA to acheive the desired returns based factor analysis, just to get a more structural flow of how things actually affcet each other
 
 ```{r}
-# lets get cumulative returns for our dividend strategies and Max drawdowns
+library(psych)
+source("code/impute.R")
 
-cum_df <- excess_return_df %>% 
-  gather(Funds, ret, -date) %>% mutate(Year = format(date, "%Y")) %>% group_by(Year, Funds) %>% summarize(DD = (max(ret) - min(ret))/max(ret)* 100, Range = range(ret)) %>% arrange(desc(Range)) 
+#  the series of returns not excess returns, does this change affect the interpreation, just returns leaves a lot to wonder, can collapse the information set to just a few variables
+# source("code/Factor_model_return.R")
+# 
+# a <- df %>% monthly_excess_return(., "UK_HY", "UK") 
+# b <- df %>% monthly_excess_return(., "UK_HY_B", "UK_B")
+# c <- df %>% monthly_excess_return(., "US_HY", "US")
+# d <- df %>% monthly_excess_return(., "US_DG", "US_2")
+# 
+# e <- df %>% monthly_excess_return(., "EU_HY", "EU")
+# f <- df %>% monthly_excess_return(., "EU_DG", "EU_2")
+# g <- df %>% monthly_excess_return(., "JP_HY", "JP")
+# h <- df %>% monthly_excess_return(., "JP_DG", "JP")
+# 
+# i <- df %>% monthly_excess_return(., "EM_HY", "EM")
+# j <- df %>% monthly_excess_return(., "SA_HY", "SA")
+# k <- df %>% monthly_excess_return(., "SA_DG", "SA")
+# l <- df %>% monthly_excess_return(., "W_HY", "W")
 
- order <- cum_df %>% pull(Funds) %>% unique()
+#  some high level descriptive stats 
 
-cum_df$Year <- as.Date(paste0(cum_df$Year, "-01-01"))
+ fact_df <- df %>% 
+  arrange(Date) %>%
+  mutate_at(vars(-Date), ~log(.) - lag(log(.))) %>% 
+  rename(date = Date) %>%
+  gather(index, ret,-date) %>% spread(index, ret) %>% impute_missing_returns(., "Drawn_Distribution_Collective")
 
-source("code/order.R")
 
-plot <- cum_df %>% 
-  plot_order(., Column = "Funds", Order = order) %>% 
-  ggplot() +
-  geom_line(aes(Year, DD), color = "steelblue", size = 1.1, alpha = 0.8) + 
-fmxdat::theme_fmx() + 
-facet_wrap(~Funds) +
-labs(x = "", y = " Max Drawdowns (%)", title = "Yearly Drawdowns", subtitle = "", caption = "Source:Bloomberg and\n Authors Calculations")
+# fill the missiing returns by a distribution of others, in the analysis mention that all variables now have some level of return
 
-plot
+
+violinBy(fact_df %>% select(-date) %>% as.matrix())
+
+# lets get an idea of how many factors to include. It says one but lets take it to town and say 4, there seems to be anaother drop off in returns
+
+pca <- princomp(fact_df %>% select(-date), cor=F)
+plot(pca, type = "l")
+
 ```
 ```{r}
-# lets get returns for the index versus those for the benchmark
+# lets get our principal components
 
- df %>% 
-  mutate_at(2:23, list(~ ((.))/lag(.)-1)) %>% gather(index, ret, -Date)
+pcaseries <- fact_df %>% select(-date)
+demean = scale(pcaseries, center=TRUE, scale=TRUE)
+# Probably should consider a more robustifid covariance matrix here (as in previous tuts)
+sigma <- cov(demean)
 
-# create a data frame with the two varaibeles that you are interested in 
+evec <- eigen(sigma, symmetric=TRUE)$vector #eigen vectors
+eval <- eigen(sigma, symmetric=TRUE)$values #eigen values
 
+# or done automagically (using standard covariance matrix warts and all):
+pcrun <- prcomp(demean, center = T, scale. = T)
+ev <- pcrun$rotation
+  
+e_min1 <- solve(ev) # Invert eigenvector as in equation above)
+R_PCA <- e_min1 %*% t(pcaseries) # Note: pcaseries, not demean.
 
+PC_Series <- t(R_PCA) %>% tibble::as_tibble()
+
+PC_Series <- 
+  PC_Series %>% mutate(date = unique(fact_df$date)) %>% gather(Type, Val, -date) %>%  filter(Type %in% paste0("PC", 1:5)) 
+
+#---- Let's look at these series:
+
+# Returns:
+PC_Series %>% filter(Type %in% paste0("PC", 1:5)) %>% ggplot() + geom_line(aes(date, Val, color = Type))
+
+```
+```{r}
+
+#  lets see how they evolve overtime
+PC_Series %>% filter(Type %in% paste0("PC", 1:5)) %>% 
+  
+  group_by(Type) %>% mutate(Idx = cumprod(1+Val)) %>% 
+  
+  ggplot() + 
+  
+  geom_line(aes(date, Idx, color = Type), size = 1.2, alpha = 0.7) 
 ```
 
 
-Draw downs in this study are defined as the difference between low and high values of cumulative excess returns within a time period. From our dividend portfolios we notice that drawdowns are similar in regions and across strategies. 
+```{r}
+#  now lets merge the previous to our old index data and see what we get 
 
-- Both indexes in SA have shown decreasing levels in drawdowns.  
-- US, Japan, EM have shown some level of increasing drawdowns. 
-- EU most stable. Low levels
+PC_Series <- PC_Series %>% spread(Type, Val)
+
+Regression_data <- left_join(fact_df, PC_Series, "date") %>%  gather(index , ret, -date , -PC1, -PC2, -PC3, -PC4, -PC5) 
+
+# lets do a regression
+
+Regressions <- 
+  
+    Regression_data %>%
+  
+    group_by(index) %>% 
+  
+    do(reg = lm(ret ~ lag(ret) + PC1 + PC2 + PC3, data = .)) %>% ungroup()
+
+tidymaker <- function(X){ 
+  X %>% pull(reg) %>% .[[1]] %>% broom::tidy() %>% 
+    # Add spots label
+    mutate(Spots = X$Spots)
+  }
+
+RegressionCoeffs <- 
+  Regressions %>% group_split(index) %>% map_df(~tidymaker(.))
+
+# Previously, this worked:
+# RegressionCoeffs <- 
+#   Regressions %>% rowwise() %>% tidy(reg)
+
+head(RegressionCoeffs)
+
+# Regressions that im into 
+
+indexes_to_table <- fact_df %>% gather(index, ret, -date) %>% select(index) %>% distinct() %>% pull()
 
 
-# Putting it together
+Title <- "PCA Regression Table"
+
+          ht <- 
+            huxreg(Regressions %>% filter(index %in% indexes_to_table) %>% 
+                     select(reg) %>% .[[1]], 
+                statistics = c(N = "nobs", R2 = "r.squared"), 
+                note = "%stars%." )
+          
+  for(i in 1:(ncol(ht)-1)) {
+    ht[1,][[1+i]] <- indexes_to_table[i]  
+  }
+
+ht <- ht %>% set_caption(Title)
+
+df_huxreg <- as.data.frame(ht)
+
+write_xlsx(df_huxreg, "regression_results.xlsx")
 
 
-Over time, dividend portfolios, whether HY or DGPS, have exhibited positive excess returns as indicated by cumulative returns. While the UK_HY index has shown the highest cumulative return, this trend is not consistently observed across other regional indexes. Consequently, when assessing the aggregate perspective on investor portfolio value, dividend portfolios may not offer a reliable means to capture the value premium consistently. However, upon stratifying these portfolios according to different periods of market volatility, it becomes evident that during low volatility periods, the primary determinant of performance is not the geographical region but rather the specific investment strategy employed. In this case, HY strategies.  Surprisingly, portfolios based in South Africa (SA) tend to perform well during these high volatility periods, which is somewhat unconventional as such times are typically associated with a flight to safety, and Emerging Markets (EM) and, by extension, South Africa, are considered riskier.
 
-When extending our analysis to encompass interest rate cycles, we observe a contrasting effect compared to the volatility-based stratification. We find that all strategies appear to give the highest return in hiking cycles. 
 
-In assessing consistency, we employ the information ratio. Initially, we discern that, at a broad level, dividend portfolios do not consistently maintain a positive ratio over an extended investment horizon. However, disparities in performance emerge. Notably, South African (SA) and dividend indexes have consistently delivered positive ratios over the past decade. In contrast, Emerging Markets (EM) and Japanese (JP) indexes have experienced substantial declines in their information ratios, despite seemingly consistent performance prior to 2015. Meanwhile, the United States (US), European Union (EU), and United Kingdom (UK) indexes have exhibited unpredictable performance over the sampled period.
+```
+# Problem Statement 
 
-When we integrate our information ratio findings with drawdown analysis, we observe that advanced economies have experienced the fewest drawdowns over the sample period, with the exception of the UK. This could suggest a relatively lower level of systematic risk in these economies. Conversely, South African (SA) and Emerging Market (EM) drawdowns have exhibited a declining trend, possibly indicating a reduced perception of risk in emerging markets over time.
+As summarized by Vanguard (2017) succinctly,  “the focus of high dividend-yielding equities is often their income potential, but higher yields do not necessarily translate into higher returns. This is because, for all companies, whether or not to pay a dividend is a capital budgeting decision. When a stock goes ex-dividend, its price falls by the same amount as the dividend payment. Therefore, no wealth is created through paying a dividend; rather, the payment reduces retained earnings. This means that share price should decrease accordingly thus share holders should be worse off. Thus, brings in the question of why dividend strategies provide for a return signalling cue. First, there should exists a rationale beyond dividend payment effect on share price, perhaps in line with theories regarding dividend relevance. Second, if the signals provide some type excess return beyond their market index, does it continuously provide the premium to be harvested by a systematic investment strategy.
 
-# In a nutshell,
+# Research Aim 
 
-- HY divi strategies work in low volatility.
-- All seem to perform well in hiking cycles, but mostly HY portfolios. 
-- SA and EM indexes at different periods gave the highest informatio ratio. We know from our cumulative returns that this could be only due to lower risk. Once we look at drawdowns, they reduced overtime. A more direct measure can help explain this point better. 
-
+The aim of this study is to test whether and why dividend strategies contain a profitable investment signal to potential investors. There exists various international studies testing this hypothesis across geographies, underscoring that dividend can be used as a profitable future return signal. Studies conducted for the South African market such as @fakir2013dividend employ methodologies that do not inform readers on mechanisms behind why the dividend signal works or provide an indication of returns for a  systematic dividend investment strategy. Moreover, the study uses data on the JSE that presents low signal-to-noise ratio on regressed stock returns, implying that the modeler's ability to accurately attribute return differences to a variable of interest (e.g., DY) is severely undermined. Also, studies using parametric techniques seek to infer statistical significance, often leaving the more applied reader with limited knowledge gained as to the actual profitability of considering said signal from a portfolio context. Secondly, returns tend to be non-normally distributed and have large outliers. The combination of these problems can easily lead to a small sample size, non-normally distributed, and noisy inference series (especially in a local application) with limited practical application. We take a more applied approach by constructing portfolio and comapre in sample performances @damodaran2004investment We aim to fill this gap by testing various portfolios constructed based on dividend information in South Africa. 
 

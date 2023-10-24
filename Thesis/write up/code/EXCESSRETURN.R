@@ -1,23 +1,35 @@
 My_excess_return <- function(df, index_name, benchmark_name) {
-  df <- df %>%
+  df <- df %>% arrange(Date) %>% 
     dplyr::rename(Index = index_name, Benchmark = benchmark_name) %>% 
     select(Date, Index, Benchmark) %>% 
-    gather(Vehicle, Value, -Date) %>%
-    mutate(YM = format(Date, "%b %y")) %>% 
-    group_by(YM, Vehicle) %>% 
+    gather(index, px, -Date) %>% 
+    mutate(Y = format(Date, "%Y %B")) %>% 
+    group_by(Y, index) %>%
+    mutate(ret = px/lag(px) - 1) %>% 
+    mutate(ret = coalesce(ret, 0)) %>% 
     filter(Date == last(Date)) %>% 
-    group_by(Vehicle) %>% 
-    mutate(Return = Value / lag(Value) - 1) %>%
-    mutate(Return = coalesce(Return, 0)) %>% 
-    tbl_xts(., cols_to_xts = Return, spread_by = Vehicle) %>% 
-    xts_tbl() %>% 
-    mutate(ex.ret = Index - Benchmark) %>% 
-    mutate(ret  = cumprod(1 + ex.ret)) %>% 
-    mutate(ret  = ret/first(ret)) %>% 
-    select(date, ret) %>% 
     ungroup()
+
+  Act_ret <-  PerformanceAnalytics::ActivePremium(df %>% filter(index == "Index")%>% tbl_xts(., cols_to_xts = ret),
+  df %>% filter(index == "Benchmark") %>% tbl_xts(., cols_to_xts = ret), scale= 12)
   
-  df <- df %>%  rename(!!sym(glue::glue("{index_name}")) := ret)
+  SD <- PerformanceAnalytics::sd.annualized(df %>% filter(index == "Index")%>% tbl_xts(., cols_to_xts = ret), scale = 12)
   
-  df
+  Drwdowns <- PerformanceAnalytics::maxDrawdown(df %>% filter(index == "Index")%>% tbl_xts(., cols_to_xts = ret),geometric = T)
+  
+  Cum_ret <- PerformanceAnalytics::Return.cumulative(df %>% filter(index == "Index")%>% tbl_xts(., cols_to_xts = ret),geometric = T)
+  
+  summary <- data.frame(
+    Measure = c("Ann Return", "Std dev", "Max Drawdowns", "Cumulative Return"),
+    Value = c(Act_ret, SD, Drwdowns, Cum_ret)
+    
+    
+  )
+
+summary <- summary %>% rename(!!glue::glue("{index_name}") := Value)
+
+summary
+
+
 }
+ 
