@@ -92,7 +92,7 @@ output:
     fig_width: 3.5 # Adjust default figure sizes. This can also be done in the chunks of the text.
     fig_height: 3.5
 abstract: |
- This paper tests wheter dividends signals provide informative return predictors. We consider total return global indexes constructed using high yield (HY) or dividend growth per share signals (DG) over a sample of 20 years. We find that global indexes fail to meaningfully  outperform their market index as measured by cumulative excess return and mean return. Upon stratification, we observe that all stratgeies offer defensive charcateristics in periods of high volatility and HY strategies give their highest return in periods of low interest rates. Underscoring our total return analysis we conclude that all strategies have underperfomed on a rolling 60 month basis in most geographies, hence they are a poor proxy for capturing the value premium. For the local, we construct our own dividend portfolios, using a Maximum Utility Optimizer, applying a ranking criteria similar to @damodaran2004investment and find that both DG and HY underperform the Capped SWIX Top 50. However, our value proxy (price to earnings) outperforms our dividend signals. We opine that if investors are inclined to have dividend exposure in their, portfolio we recommnded investors use DG considering that being a delta to HY offers a purer measure of value. 
+ This paper investigates dividends return predictive signals, focusing on Dividend Yield (DY) and Dividend Growth (DG) signals, within both domestic and international contexts. Over an extended investment horizon, dividend portfolios consistently exhibit positive excess returns, with notable variations across regional indexes. Notably, these portfolios demonstrate capital protection during periods of heightened market volatility, particularly the DY strategies. Surprisingly, South African portfolios perform well during market turbulence, a departure from the typical flight to safety. In contrast, during interest rate cycles, all strategies perform optimally in low-interest-rate environments. Information ratio analysis highlights that dividend strategies do not uniformly maintain positive ratios, with varying performance patterns across different regions. When integrated with drawdown analysis, advanced economies exhibit lower systematic risk, while South African and Emerging Market drawdowns suggest reduced systematic risk in these markets. Within the South African context, dividend portfolios display potential value during high volatility and rising interest rate cycles, though P/E-based portfolios outperform them in other scenarios. Consequently, dividend portfolios may not be an ideal proxy for value. Investors with specific preferences may still find value in these strategies, but for those constrained by investment policy statements, DG portfolios offer practical, lower-volatility alternatives to achieve returns akin to the market index. This study contributes insights into dividend portfolio dynamics, enabling investors to make informed choices based on their objectives and constraints.
 ---
 <!-- First: Set your default preferences for chunk options: -->
 
@@ -130,48 +130,74 @@ geographical_codenames <- c("UK_HY", "EM_HY", "UK", "EM", "UK_HY_B", "UK_B", "JP
 # always working with those indexes
 colnames(df)[2:23] <- geographical_codenames
 
+?PerformanceAnalytics::Return.cumulative()
 ```
+
 <!-- ############################## -->
 <!-- # Start Writing here: -->
 <!-- ############################## -->
 # Introduction {-}
 
-This paper seeks to investigate the return signalling cue of dividend paying stock. The value of dividends towards shareholders has long been debated with academics and practitioners providing evidence for their irrelevance and relevance. @miller proposed the dividend irrelevance theorem that essentially argues that dividend payments were irrelevant as this detracted from the shareholder value as wealth is affected by the income a firm generates, not the way the firm distributes that income. Against this, @gordon1962 argued that cash flows should be preferred by investors , as they are certain, as opposed to the riskier capital gains according this theory, Bird in hand Theorem is used to justify demand for dividend stock, especially for the less riskier investor. Moreover, a deeper assessment of the MM theory reveals unrealistic assumptions, rendering arguments immaterial once real world constraints such as taxes and transactions cost, behavioural biases are considered.  Consequently theories that consider information asymmetries, tax considerations, signalling all give convincing arguments of dividend payment address some real world considerations. @campbell2017financial opines that the value of a stock is a function of its future cashflow, if  markets are assumed to be efficient then companies that do not pay dividends should have a value of zero unless there is some expectation of the future reciepts of investment is said company. Therefore, we can safely assume a direct relationship between share price and new information that affects future cash flows. Event studies on types dividend payments address this and often times it is noted that the payment of dividends leads to a decrease in prices thus stock valuation, @suwanna2012impacts shows that dividend announcement decrease share prices to the value of the dividend. This could be that dividend are a capital budgeting decision and their payment reduces retained earnings and consequently affects that the share price. 
+This paper aims to investigate the return predictive signal of dividend-paying stocks. The value of dividends to shareholders has long been a subject of debate among academics and practitioners, with evidence both for their relevance and irrelevance. @miller proposed the dividend irrelevance theorem, which argues that dividend payments are irrelevant because they do not affect shareholder wealth, as it is the income a firm generates that impacts wealth, not the way the firm distributes that income. In contrast, @gordon1962 argued that investors should prefer cash flows because they are certain, as opposed to the riskier capital gains. According to this theory, the "Bird in Hand Theorem" is used to justify the demand for dividend stocks, especially for less risk-tolerant investors. Moreover, a closer examination of the @miller theory reveals unrealistic assumptions, rendering arguments immaterial once real-world constraints, such as taxes, transaction costs, and behavioral biases, are considered. Consequently, theories that consider information asymmetries, tax considerations, and signaling provide convincing arguments for the relevance of dividend payments in addressing real-world considerations. Campbell (2017) posits that the value of a stock is a function of its future cash flow. If markets are assumed to be efficient, then companies that do not pay dividends should have a value of zero unless there is an expectation of future receipts from the investment in said company. Therefore, we can safely assume a direct relationship between share price and new information that affects future cash flows. Event studies on various types of dividend payments address this, and it is often noted that the payment of dividends leads to a decrease in stock prices and thus stock valuation. Suwanna (2012) demonstrates that dividend announcements decrease share prices by the value of the dividend. This could be because dividends are a capital budgeting decision, and their payment reduces retained earnings, consequently affecting the share price.
 
-This study provides an extensive investigation into the return signaling of dividend portfolios. Firstly, looking at past literature on dividend payments, their rationale, theories for and against their relevance in the literature review. Secondly, outline our methodology in constructing our dividend portfolios, which includes our utility optimizer along with constraints.  Thirdly, start to discuss the results of our study by answering the first question of when do dividend signals work? To achieve this we first look at the cumulative excess returns offered by globally dividend indexes, to give a holistic picture of geographical dividend portfolio performance. Our analysis shows us that dividend portfolios, wheter high yield (HY) or dividend growth (DG) do not give an clear signal to return, however once we stratify our sample according to interest rate cycles (Hiking,  Cutting and Neutral) and market regimes (High and Low Volatility), unique to geography and we start to find that within market regimes,  dividend signals offer defensive characteristics, thus giving higher excess returns in periods of High Volatility. This does not infer positive return for all indexes, our proxies for United States (US) HY , UK HY and World indexes returned negative over their respective periods. On performance consistency, rolling information ratio, we note an inherent lack of consistency in dividend portfolios performance, with most staretgies underperforming the benchmark over the past 15 years. However, coupled with draw downs experienced in different jurisdictions, we acknowledge that advanced market dividend portfolios experience the least variation in draw downs compared to emerging markets. The results indicate that both growth and high-yield dividend portfolios tend to under perform relative to their benchmarks, raising questions about their ability to extract a value premium. Lastly, move on to how dividend portfolios work, with the goal of constructing a portfolio that can best harness the existing premium. We use share data from the Johannesburg Stock Exchange (JSE), with our benchmark being the Capped SWIX Top 50. We construct four portfolios using 3-month and 9 month measures of HY, 1 and 3 year DG measures together with price momentum and dividend coverage ratios. Similar to the analysis on international dividend portfolios, our portfolios exhibit defensive properties in High volatility periods but fail to capture a premium consistently over investing in a market index.  
+This study provides an extensive investigation into the return signaling of dividend portfolios. Firstly, it reviews existing literature on dividend payments, their rationale, and the theories both for and against their relevance. Secondly, it outlines our methodology for constructing dividend portfolios, which includes our utility optimizer and associated constraints. Thirdly, the study discusses the results by addressing the first question: When do dividend signals work? To answer this, we initially examine the cumulative excess returns offered by global dividend indexes to provide a comprehensive overview of the performance of geographical dividend portfolios. Our analysis shows that dividend portfolios, whether high yield (HY) or dividend growth (DG), do not consistently provide a clear signal for returns. However, when we stratify our sample according to interest rate cycles (Hiking, Cutting, and Neutral) and market regimes (High and Low Volatility), unique to each geographical region, we begin to find that within specific market regimes, dividend signals exhibit defensive characteristics and offer higher excess returns during periods of High Volatility. This, however, does not guarantee positive returns for all indexes, as our proxies for the United States (US) HY, UK HY, and World indexes returned negative results over their respective periods.
 
-# Literature Review {-}
-## What are dividends {-}
+Regarding performance consistency, when examining the rolling information ratio, we observe an inherent lack of consistency in dividend portfolio performance, with most strategies underperforming the benchmark over the past 15 years. Nevertheless, coupled with drawdowns experienced in different jurisdictions, we acknowledge that advanced market dividend portfolios experience the least variation in drawdowns compared to emerging markets. The results indicate that both growth and high-yield dividend portfolios tend to underperform relative to their benchmarks, raising questions about their ability to extract a value premium.
 
-Dividends constitute a form of capital distribution by corporations towards shareholders. They exist in various forms, such as cash, stock, liquidating, scrip, or property dividends  @baker1999corporate, of which cash dividends and share repurchases being the most commonly used in practice. Within cash dividends, regular dividends are widely used by corporations and payment frequency across jurisdictions. The decision to issue dividends is typically made by the board of directors, and approved by shareholders, however practiced more in Europe and less so in the United States. The payout policy policy of a corporation, which are guiding principles for management and board of directors towards capital distributions considers company investment and is closely watched by investors and analysts. As such, management strives to grow or maintain a certain level of dividend payouts as this signals firm growth and investors share of profitability in the company. 
+Lastly, the paper delves into how dividend portfolios work with the goal of constructing a portfolio that can best harness the existing premium. We utilize share data from the Johannesburg Stock Exchange (JSE), with our benchmark being the Capped SWIX Top 50. We construct four portfolios using 3-month and 9-month measures of HY, 1 and 3-year DG measures, together with price momentum and dividend coverage ratios. Similar to the analysis of international dividend portfolios, our portfolios exhibit defensive properties in high-volatility periods but fail to consistently capture a premium over investing in a market index.
 
-## Theorectical Arguments on Dividend Payments {-}
+# Dividend Payments{-}
 
-Given the apparent decrease in shareholder value, the logical question has encouraged a long running debate on dividend relevance and irrelevance. In 1961, @miller1985dividend opined that dividends are irrelevant (MM theory), he argued that shareholders are indifferent to dividend payments, thus implying that there is no optimal dividend policy and that all dividend policies are equally good and payments of dividends could easily be reinvested in shares and make no difference to share holder wealth. However, the MM theorem fails to consider real-world market imperfections that may give relevance to dividend payments. The bird in the arguments opposes the MM theory, suggesting that investor would prefer to receive less risky cash flow in the form of dividends instead of potential capital gains at some point in the future [@gordon1962]. This permeates to the cost of equity, since dividends are less risky, companies that issue more dividends should have higher share prices.  However, propoents of the MM theory contend this suggesting the risk of future cash flow is affected by the payment of dividend, leading to negative effects on share prices after the ex-dividend date. The dividend puzzle considers real world constraints and gives an interesting take on its relevance and irrelevance, by suggesting that dividends reduce equity value and make investors worse off; however, are a reward to investors who bear the risk associated with their investments as it provides an additional source of return on investment from a share  @black1996dividend. Various literature has made convincing arguments for corporations to pay dividends which include tax considerations, dividend signalling and agency costs in issuing dividends.Tax considerations argue in favor for dividend relevance. Across jurisdiction dividends have different tax treatments to capital gains and often tax at a higher income tax rate, thus investors that have higher tax rates choose stocks with lower dividend payouts and transversly pushes up the stock price, this is called the clientele effect [@van2013advanced \& @baker1999corporate]. However a major pushback emanates from proponents of the MM theory, that suggest the client effect causes major substitution effect, meaning that if companies change their dividend policy, investors with preferential tax treatment will simply allocate more capital to that stock and those out of favor will sell their shares. Given the large number of investors versus listed companies the process is instantaneously causing a net zero effect on prices[@baker1999corporate].  Second, flotation costs refer to the opportunity costs incurred by a firm when paying dividends. Through distributing dividends, companies forego opportunities to expand their operations using retained earnings. In a world without flotation costs, as suggested by the MM theorem, management would be indifferent between issuing dividends and borrowing from the market thus have no effect on shares prices. However, in reality, external financing comes at a higher cost, leading to trade-offs in dividend policy decisions and ultimately share prices.
+Dividends represent a form of capital redistribution that are transferred through either cash or stock dividends by a company to its shareholders. Depending on either cash or stock dividend their impact to equity and/or cash accounts is recorded differently thus having different effects on company valuation. To understand, consider the fundamental law of valuation that describes equity value as a function of assets and liabilities of a company.  For a stock dividends, a company distributions additional shares to its shareholders, typically these are paid relative to outstanding shares traded on the market. For instance, a 5 percent stock dividends declared by company means an investor with 100 shares would receive an additional shares in the company. On the balance,  the resulting effect are that  retained earnings (asset) are decreased and conversely shareholder equity (asset) is increased to give a net zero effect on company valuation, essentially this is converting an asset into another form.  The newly issued shares would only dilute shareholders ownership thus have a negative effect on shareholders. Cash dividends have a different effect, impacting affect both the equity and cash accounts of a company. Their declaration results in a dividend payable (liability) on the balance sheet and a decrease in retained earning (asset) and once paid decreases, dividend payable and reduces cash balance (asset), thus the net effect is a reduction of firm value. That is, on ex dividend day, theoretically we expect that a stock value a company should decrease by a proportion equal to the amount that dividends are declared.
 
-Information asymmetry between shareholders and managers is another factor that gives relevance to dividend payments. Managers of businesses have greater knowledge of operations thus value of a business at any given point more than shareholders. As such,  investors rely on dividend announcements to assess a company's valuation. Dividend signaling conveys information about the company's quality [@al2018revisiting \& @baker1999corporate]. Investors compare dividend announcements to historical levels while considering company fundamentals. However, a major concern towards its ability to be "gamed' by management, making the dividend signal imperfect for determining share prices.  Principal agency issues may give another reason for issuance of dividends. The free cash flow hypothesis suggests that dividend payments force management to raise capital from external sources, which increases borrowing costs and scrutiny from capital markets. This, in turn, reduces management's ability to make sub optimal investments and aligning management and shareholder objectives [@baker1999corporate]. Supporters of this theory ascertain that dividends payments by the mechanism encourage good business practices.
+Empirically there a caveat to this relationship, early studies from Campbell and Beranek (1955) and Durand and May (1960), has shown that stock prices consistently fall by less than the amount of the dividend declared, a fact that is often attributed different tax treatment of dividends to captial gains. In soppurt, Elton and Gruber (1970) interpret the ex-dividend day behavior of common stock prices as evidence that differential rates of taxation cause investors to discount the value of taxable cash dividends relative to capital gains. They argue that the marginal investor who wishes to sell near the ex-dividend day is indifferent between selling on the ex-dividend day and selling on the previous day. More recently, Connelly, 2017 show that prices devaiations are caused by frictions within markets, that is 
 
-## Constructed Dividend Portfolios {-}
+The logical then becomes why companies pay dividends. 
 
-From the dividend relevance theories we can conclude that the payments of dividends emanates from proxy arguments (as opposed to it being considered an attractive feature in itself).  High dividend-paying companies could proxy for the quality of management structures over time (through their ability to consistently afford dividend payments) or similarly point to prudent cash-flow management capabilities and stock closely resemble value stock. @basu1977investment used price to earnings ratios of companies to predict stock performance of companies, and found that low price to earnings stock overtime out perform their more expensive counterparts that have high PE ratios. So when we consider the following, $D Y=\frac{E P S}{\text { Price }} \times Payout Ratio$, dividend yield, once payout ratio is held constant, is a function of earnings yield, therefore identifying low price to earnings through dividends can lead us to use it as a proxy for value. This measure is not full proof, value stock carry  high levels of risk as there more prone to be under financial distress and face uncertainty in future earnings [@chen1998risk]. For this reason, the use of dividend growth (DG) as a signal provides attributes that aim to curtail negative aspects of dividend yield (HY). That is, DG stock, unlike HY, it is not affected by price but maintains properties that allow for inference into management quality. As management is aware of the signaling effect of dividends, this may induce the value trap, forcing management to continually increase dividends to maintain a certain valuation. However, such companies are more vulnerable to facing financial distress [@baker2009understanding]. @o1991beating constructed a portfolio of companies that used constituents of the  Dow Jones Industrial Average (DJIA) called the "Dogs of the Dow" (DOD). By ranking 30 companies by HY and including only the 10 highest-yielding shares in a portfolio, this achieved a return higher than the DJIA (16.6% per annum versus the DJIA's 10.4%). This had lower risk than the DJIA, thus achieving a higher Sharpe Ratio. Testing @o1991beating's strategy resulted in "Beat the Dow 5," which involved annually investing in only the five lowest-priced of the HY10 shares each year, in other words, high dividend yield. This strategy gave superior returns of 19.4% versus the DJIA. As opined by @gardner2002motley, this strategy leverages the fact that low-priced stocks experience the most volatility, by courting future volatility in the 10 stocks that have some potential upside, expecting their stock prices to rise in return. Other studies across jurisdiction came to similar conclusions, @lemmon2015dividend in Hong Kong, @brzeszczynski2007dividend in Poland, @visscher2003dividend in Canada, @filbeck1997 in Britain, and @wang2011dogs in China. More recently, @filbeck2017dividend investigated the performance of DOD against a high-yield portfolio of Fortune Most Desired Companies (MAC) compared to the Dow Jones Industrial Average and the S&P 500. The study found significantly higher risk-adjusted returns for the DOD strategy. In South Africa, @fakir2013dividend employs a parametric approach to investigate dividends as an investment strategy.
+# Constructed Dividend Portfolios {-}
 
-# Methodology {-}
-To evaluate the return predictive signal of dividends, we employ an applied approach that constitutes constructing subset portfolios and compare in sample performances. Our approach aims to give valuable insights based on risk and return for systematically constructed dividend portfolios.  
+From the dividend relevance theories, it can be concluded that dividend payments emanate from proxy arguments, rather than being considered an attractive feature in themselves. High dividend-paying companies can act as proxies for the quality of management structures over time, indicating their ability to consistently afford dividend payments. They can also signal prudent cash-flow management capabilities and often resemble value stocks (Basu, 1977). This is supported by research by Basu (1977), who used price-to-earnings ratios to predict stock performance and found that low price-to-earnings stocks tend to outperform their higher price-to-earnings counterparts.
 
-## Portfolio optimzation{-}
+When we consider the formula for dividend yield: $DY = \frac{EPS}{Price} \times Payout Ratio$, it becomes evident that dividend yield, when the payout ratio is held constant, is a function of earnings yield. Therefore, identifying low price-to-earnings stocks through dividends can serve as a proxy for value. However, it's important to note that value stocks carry higher levels of risk as they are more prone to financial distress and uncertainty in future earnings (Chen, 1998).
 
-The Modern Portfolio Theory defines risk of a portfolio of ($n$) assets as the variance ($\sigma^2$) of its returns ($r_{t}$). We add a refinement to this, and our definition returns is achieved by decomposing it into common factor ($Xf$) and specific return ($u$) as ($r = Xf+ u$). From these returns we create a factor covariance matrix, defined as ($X F X^T+D$) in which we derive our multiple factor universe consists of ($k$) common factors.
+To address some of the negative aspects of high dividend yield (HY), dividend growth (DG) is used as a signal. DG stocks, unlike HY, are not affected by stock price but maintain properties that allow for inferences about management quality. As management is aware of the signaling effect of dividends, this may induce a "value trap," forcing management to continually increase dividends to maintain a certain valuation. However, such companies are more vulnerable to financial distress (Baker, 2009).
 
-$\begin{array} {ll}X & =n \times k \text { matrix of asset exposures to the factors, } \\ F \quad &= k \times k \text { positive semi-definite factor covariance matrix, and } \\ D \quad &=n \times n \text { positive semi-definite covariance matrix representing a } \\ & \text { forecast of asset specific risk. }\end{array}$
+The "Dogs of the Dow" strategy, as explored by O'Higgins (1991), involves ranking 30 companies by HY and selecting the 10 highest-yielding shares for a portfolio. This strategy has shown superior returns compared to the Dow Jones Industrial Average (DJIA) and lower risk, achieving a higher Sharpe Ratio. Other studies across jurisdictions have yielded similar conclusions (Lemmon, 2015; Brzeszczynski, 2007; Visscher, 2003; Filbeck, 1997; Wang, 2011).
 
-We periodically calculate each asset exposure to the common factors calculated in the factor covariance matrix. This then assists us in computing forecasts of the level of each asset specific risk. The short term risk forecasts will then be used to gauge contribution of each asset to a portfolio over risk which contributes to the portfolio construction process. For our optimization,  risk takes on two forms being total risk (only portfolio holdings are considered and benchmark holdings are irrelevant for the optimization process) and active risk (difference between portfolio holdings and benchmark holdings are given consideration in the optimization problem). 
+In South Africa, Fakir (2013) employed a parametric approach to investigate dividends as an investment strategy, further contributing to the literature on the topic.
 
-Defined as:
+# Data and Methodology {-}
+
+## Data Treatment for Globally Traded Portfolios\label{int}
+
+We use historical price data in table \ref{tabdes} from January 1 2003 to January 1 2023, a 20 year sample period. All of the studied indexes are considered gross total return in the same currency. Full descriptions on benchmark, dividend indexes are given in \ref{tabdes}.  Our metric of interest are annualized excess returns of individual indexes to their respective benchmarks following @bacon2023practical. To achieve this we scale observations to an annual scale by raising the compound return to the number of periods in a year, following this we take the root of total observations:
+
+$\operatorname{Annualized Return} =\sqrt[n]{\operatorname{prod}\left(1+R_a\right)^{\text {scale}}}-1$
+
+where $R_a$ is the return on the asset, $scale$ is the number of periods in a year, $n$ is the total number of periods. Following this, we simply take the difference of annualized return to get our excess return:
+
+$\operatorname{Excess Return}=R_{p a}-R_{b a}$
+
+where $R_{pa}$ are annualized return on the asset and $R_{ba}$ are annualized return of the benchmark. To calculate cumulative excess return, we take the product of excess returns over a period of time:
+
+$\operatorname{Cumulative Excess Return}=\operatorname{prod}(1+ ER)-1$
+
+We make other transformations to our international portfolio sample to get a nuanced perspective on performance during different time periods. For interest rate regime cycles we use interest rate schedules from central banks for country of domicile of the index. Likewise, we use proxies for volatility such as the VIX index in the United States, V2X in Europe and JALSH RV in South Africa.  That is, to proxy periods of high and low interest rates we stratify our sample interest rate hiking and cutting cycles where periods of sustained changes rate changes occur at least every five quarters. We also consider implied and realized equity market volatilities to proxy for different periods of market stability. After stratification, we geometrically chain the excess returns for the different periods before annualizing. To stratify amount of daily data for the respective interest rate cycles has to be large enough to annualized, however, if our proxies for volatility breach the top or bottom quintile for less than 50 trading days, the period is excluded in order to avoid annualizing small frequencies.
+
+## South African Dividend Portfolios
+
+We use historical daily price data in table \ref{tabdes} from January 1 2003 to July 7 2023, a roughly 20 year sample period for equity listed in the Johannesburg Stock Exchange and retrieve dividend yield ratios, dividend cover ratio, price momentum, price to earnings ratio, dividend growth per share. We construct our portfolios using signals on fundamental ratios and price momentum that are a blend of our selected ratios as described in Table \ref{signal} below. 
+
+We construct our dividend by feeding into the optimizer ranked signals that does a aplha transformation on the signal. The optimizer makes slight modifications to the mean variance portfolio that considers risk preferences of investors [@markowitz1959portfolio]. Risk ($n$) assets is defined ($\sigma^2$) based on individual asset returns ($R_a$). We decompose returns into common factor ($X_f$) and specific return ($u$) as ($R_{a} = X_f+ u$). We the compute our covariance matrix as:
+
+$XFX^T + D$,$\begin{array} {ll}X & =n \times k \text { matrix of asset exposures to the factors, } \\ F \quad &= k \times k \text { positive semi-definite factor covariance matrix, and } \\ D \quad &=n \times n \text { positive semi-definite covariance matrix representing a } \\ & \text { forecast of asset specific risk. }\end{array}$ 
+
+For optimization purposes, our  $\sigma^2$) is considered in two forms: total risk, where only portfolio holdings are considered (benchmark holdings are irrelevant for the optimization process), and active risk, which takes into account the difference between portfolio holdings and benchmark holdings defined as:
+
 *Total Risk*: $\quad h^T\left(\lambda_F X F X^T+\lambda_D D\right) h$
 
 *Active Risk*: $\left(h-h_B\right)^T\left(\lambda_F X F X^T+\lambda_D D\right)\left(h-h_B\right)$
-
-where,
+Where:
 $$
 \begin{aligned}
 \lambda_F & =\text { common factor risk aversion parameter, } \\
@@ -180,96 +206,16 @@ h & =n \times 1 \text { vector of managed portfolio's holdings, and } \\
 h_B & =n \times 1 \text { vector of normal (benchmark) portfolio's holdings }
 \end{aligned}
 $$
-## Constraints{-}
 
-Optimization involves using set of constraints that helps in attaining convergence, i.e giving a set of weights that determine our optimum portfolio. In practice, this is unique to portfolio managers given their risk objectives and goals^[see https://www.sciencedirect.com/science/article/pii/S1057521921002556 for a detailed explanation on advantages of using maximum utility operators to efficiently factor investor risk preferences]. 
-
-We use: 
-
-- Common factor and specific risk aversion parameters of 0.0075 and 1, respectively. 
-- Our investment universe is the Top 50 stock listed on the JSE,therefore our selection criteria depends on market capitalization and liquidity. We use the Capped SWIX as the benchmark. 
-- Portfolios  are re-balanced quarterly. 
-- Active risk constraints to parent benchmark 5%
-- Our sector exposure has a +/-10% limit; holds no property stocks in the portfolio
-- Individual stock have a 15% max exposure limit
-- Quarterly turnover is limited to 10%. \
-
-### Tax considerations{-}
-
-Portfolio theory was developed in a perfect world without friction. In practice, frictions need to be considered and in portfolio construction this often entails considering the effect of taxes on income and capital gains as they can erode returns and significantly alter risks and return characteristics of shares. The contribution of dividends and capital gains to total return can lead to varying tax inefficiencies for shares as most  jurisdictions imposed higher taxes than on capital gains. Therefore shares with higher contribution of dividends will be less tax efficient than those with a higher capital gains component and with timing most jurisdictions tax dividends in the year that they are receive^[See Deloitte’s tax guides and country highlights: https://dits.deloitte.com/#TaxGuides].
-
-Jurisdictional laws can also affect the distribution of taxable returns amongst shares depending on their class namely ordinary shares or preferred shares. Preferred shares are viewed as a substitute for bonds and income from preferred shares are often given tax at a lower rate than those from dividends from ordinary shares.
-
-We will not survey global tax regimes or incorporate all potential tax complexities into the portfolio construction but  assume a  high level commonalities exists amongst all jurisdictions this study  uses. This is a reasonable assumption considering  the summary of taxes on dividends and capital gains from major economies.  For simplicity, we will assume a basic tax regime  includes the key elements of investment-related taxes that are representative of what a typical taxable asset owner of a global portfolio will contend with. The proposed methodology to employ on the dividend portfolios use the following methodology. 
-
-\begin{align}
-r_{a t}=p_d r_{p t}\left(1-t_d\right)+p_a r_{p t}\left(1-t_{c g}\right) \notag
-\end{align}
-
-where:
-$$
-\begin{aligned}
-r_{at} & =\text { the after tax return} \\
-p_{d} & =\text {total return from to dividend income } \\
-p_{a} &= \text { total return from capital appreciation } \\
-t_{d}&= \text { tax on dividends}\\
-t_{a}& = \text { tax on capital gains }
-\end{aligned}
-$$
-
-## Dividend Signals{-}
-
- In constructing our portfolios, we rank the stocks on the capped SWIX according to the either a dividend yield and dividend growth per share. Our in house measures for dividend yield (DY 3m fwd and DY 9m fwd) are constructed based on industry analyst estimates on future earnings, hence the appeal is that the measure is a forward looking estimate^[ this ensures that we mitigate against the *value trap*.] Similarly,  dividend growth measure of either 1 and 3 years are constructed on forward looking estimates for the same reasons. We employ a price momentum  and dividend coverage filters to construct portfolios that reward companies which have had strong price momentum and sustainable dividend practices[mention studies that have shown that employing price momentum filters helps with picking the right stock for a portfolio].  
-
-### DIVI1 {-}
-
-Rank score (i.e. between 0 and 100) calculated using:
-
-We use a combination of 2/3 DY (3m fwd) and 1/3 DY (9m fwd), Dividend Coverage Ratio and Price Momentum. The signal uses conditions:
-- if dvd_cover score is in bottom quintile, then add it at 15% (15% dvd cover, 66.667% * 0.85 DY3m, 33.333% * 0.85)
-if Price momentum score is in bottom quintile, then add it at 35% (35% PX momentum score = 66.667% * 0.65 DY3m, 33.333% * 0.65)
-- if both dvdcover and momentum in bottom quintile, then: ( 15% dvd cover score=  35% PX momentum score, 66.667% * 0.5 DY3-month, 33.333% * 0.5)
-
-This portfolio uses price momentum and dividend cover ratio as filters to the dividend yield. This rewards sustainability in dividend paymensts and avoids comapnies that  companies that can not afford to pay shareholders dividends thus avoid reactionary capital gain losses. 
-
-### DIVI2 {-}
-Rank score (i.e. between 0 and 100):
-
-We use the dividend as the only signal. Similar to Divi1 its a blend of forwarding looking metrics. That is,  2/3 DY (3m fwd) and 1/3 DY (9m fwd). 
-
-This is our vanilla dividend yield portfolio i.e. just ranks according to the highest dividend payers. 
-
-### DIVI3 {-}
-
-Rank score (i.e. between 0 and 100):
-
-We use the P/E ratio as the alternative proxy to value. 
-
-### DIVI4 {-}
-Rank score (i.e. between 0 and 100) calculated using:
-
-Using:
-DPS_Growth_1Y = 40%, DPS_Growth_3Y = 30%, Fwd_3 = 20%, Fwd_9 = 10%
-
-Our dividend growth portfolio using trailing dividend growth rates coupled with 3 and 9 month forward measures. 
-
-
-## Data {-}
-
-Our metric of interests in this study are return and risk measures to evaluate dividend signals as an ionvestment strategy. We use data from dividend portfolios over the period 30/06/03–30/06/23, with the start date and the end date purely driven by data availability on the selected dividend indices at the time of writing. We obtained historical daily price data of the dividend portfolios and constituents of the Capped SWIX Top 50 listed in the Johannesburg Stock Exchange (JSE) from Bloomberg^[see \ref{reftab} for a detailed guide to indices used and codenames used later in the results and analysis]. Also we retrieved volatility and interest rate proxies for geograhies under investigation for the same sample period as our dividend portfolios. That is, Chicago Board of Options Exchange (CBOE) VIX Index for the US and EM, V2X for Europe, IVUK for UK and JALSH VR for SA volatility proxies. For interest rate data we considered policy rates for central banks for instruments geography within our study, these are the Federal Fund rate for the US and EM, Minimum Deposit Financing Rate for the EU, Bank of England Bank Rate and the South African Reserve Bank Repo rate. To this end, we calculate our excess returns, we geometrically chain the excess returns for the different periods before annualizing. This produces comparable cumulative annualized excess return (CAER) results in \ref{tab1}, defined as:
-\begin{align}
-C A E R=\left[\prod_{t=1}^n\left(1+E R_t\right)\right]^{\frac{222}{n}}-1 \notag
-\end{align}
-
-Our rule to identifying volatility periods either high volatility (Hi-vol) or low volatility (Lo-vol) is achieved by computing the top and bottom quantile in standard deviation for our respective proxies. We then pull the dates corresponding to the periods, and compute annualized returns after geometrically chaining the monthly returns. The amount of daily data for the respective interest rate cycles is large enough to annualized, however, when the VIX,
-V2X or JALSH RV breach the top or bottom quintile for less than 50 trading days, the period is excluded in order to
-avoid annualizing small samples. To stratifying between Hiking, Cutting and Neutral interest rate cycles we define these periods as either 5 quarters of changes (upwards for Hiking and downwards for Cutting) or otherwise if central bank held interest rates constant. 
+The following accounts for practical considerations in construct our portfolios. We use the Capped SWIX as our benchmark and $\lambda_f$ and $\lambda_D$ are set to 0.0075 and 1, respectively,  with active risk have an upper limit of 5%. For our box constraints, sector exposure can deviate from a range of 10% relative to the Capped SWIX and individual asset exposure is limited to 15%. Our portfolio turnover is limited to 10% and we exclude the property sector from our portfolios. 
 
 # Results and Discussion{-}
 
-## When Do Dividend Strategies Work {-}
+We begin our analysis by evaluating several performance metrics of globally traded dividend portfolios. It is important to note that Table \ref{tab1} does not facilitate direct comparisons across indexes and regions due to differences in the inception dates of the respective instruments. Table \ref{tab1} presents four key performance measures, encompassing relative return (annualized excess return), total return (cumulative return), maximum drawdowns, and standard deviation. The latter two measures provide an initial insight into the risk characteristics of our selected investment universe, though a more detailed risk analysis will follow in our subsequent analysis.
 
-We first evaluate several performance metrics of globally traded dividend portfolios^[ Table \ref{tab1} does not compare across indexes and regions as instruments have different inception dates ]. Table \ref{tab1} shows four performance measures in relative return (annualized excess return) and total return(cumulative return), maximum draw downs and standard deviation. The last two measures give an idea of risk characteristics of our selected investment universe, however  an in depth analysis will follow in our analysis. Immediately we notice that total returns as measured by cumulative returns for the dividend portfolios that we investigate are positive for approximately 42% of the sample. Specifically, HY strategies provide the highest total returns, and coupled with annualized excess returns assessement, we notice that most strategies beat their benchmark, however, their relative performance against their respective benchmarks is marginal with relative performance being +/- 0.01%. Looking at risk from a very high level, there exists a tight range in annualized standard deviation with most strategies, however draw downs vary across strategies and regions and dont give a clear pciture of return characteristics of the constituents, but broadly HY strategies have lower draw downs than DG strageties. Therefore, from table \ref{tab1} there exists no clear evidence that dividend signals are able to capture some premium over the market index regardless of region.
+An immediate observation from the table is that total returns, as assessed by cumulative returns, are positive for approximately 42% of the sample. Specifically, dividend yield (DY) strategies exhibit the highest total returns. When examining annualized excess returns, we notice that the majority of strategies outperform their respective benchmarks. However, it's worth noting that the relative performance against their benchmarks is marginal, with relative performance between - 0.01% to 0.01%.
+
+Turning our attention to risk, we find that there is a narrow range in annualized standard deviation across most strategies. Nevertheless, drawdowns exhibit variation across strategies and regions. Drawdowns do not provide a definitive picture of the return characteristics of the constituents, but in broad terms, DY strategies tend to experience lower drawdowns compared to dividend growth (DG) strategies.
 
 ```{r Table1, results='asis'}
 
@@ -290,7 +236,14 @@ table <- xtable(data, caption = "Global Index  Portfolio Performance \\label{tab
              )
 ```
 
-We see a clearer picture emerge once we stratify dividend global portfolio performance according to market volatility and interest rate cycles. Our market volatility is categorized into two distinct cycles: the "High Vol" and "Low Vol", this is conducted by first, calculating the rolling 12 month standard deviations of volatility proxies, second taking the 5 and 95 percentile of observations and pulling corresponding dates. Subsequent to this stratification, we geometrically chain excess returns in these periods and annualize excess returns with the appropriate periodicy.  Table \ref{tab2} and \ref{tab3} shows performance in periods of market distress (Hi Vol) or market calm (Lo vol). Unlike our results from \ref{tab1}, stratification enables comparison across regions and strategies, however, being cognizant of duration in market volatility and may affect strategy performance. From our stratification, 37.5% of observations yield positive excesss returns. Of those, HY indexes (which make up a proportion of 67% of those with positive returns), we notice that most strategies give the highest return in periods of market distress versus  market calm and most index in this market distress give returns close to 0%.  Considering Hi Vol, HY always outperform DG strategies, i.e. SA_HY (2.74%) outperforms SA_DG (-4.07%) , EU_HY (0.08%) outperforms EU_DG (-4.84%)  and  US_HY (-0.35%) outperforms US_DG (-0.68%). In Lo Vol periods, we notice greater dispersion in annualized excess returns and thus no real indication of wheter longer duration of calmness lead to lower returns, the performance is less concrete in low volatility periods. From our market cycle stratification HY and DG strategies offer defensive characteristics in periods of higher volatility however, only a few of our portfolios give positive excess return in those periods, as such idiosyncrasies within market determine signal performance. 
+
+A more discernible picture emerges as we stratify the performance of global dividend portfolios according to market volatility and interest rate cycles. Our categorization of market volatility into "High Vol" and "Low Vol" cycles is achieved through a two-step process. First, we calculate the rolling 12-month standard deviations of volatility proxies. Second, we identify the 5th and 95th percentiles of observations and extract the corresponding dates. Following this stratification, we calculate excess returns within these periods, geometrically chaining them and subsequently annualizing the excess returns with the appropriate periodicity.
+
+Tables \ref{tab2} and \ref{tab3} present the performance of dividend portfolios during periods of market distress (Hi Vol) and market calm (Lo Vol). This stratification allows for comparisons across regions and strategies, although it's crucial to be aware that the duration of market volatility can impact strategy performance.
+
+From our stratification, we find that 37.5% of observations yield positive excess returns. Among those, HY indexes, which constitute approximately 67% of the portfolios with positive returns, tend to perform better in periods of market distress compared to market calm. In fact, most indexes in the high volatility periods exhibit returns close to 0%. For instance, in Hi Vol conditions, HY consistently outperforms DG strategies, with SA_HY (2.74%) outperforming SA_DG (-4.07%), EU_HY (0.08%) outperforming EU_DG (-4.84%), and US_HY (-0.35%) outperforming US_DG (-0.68%).
+
+In contrast, during Lo Vol periods, we observe greater dispersion in annualized excess returns, making it less clear whether prolonged periods of market calm lead to lower returns. The performance is less consistent in low volatility periods. Overall, our market cycle stratification reveals that DY and DG strategies tend to offer defensive characteristics in periods of higher volatility. However, it's important to note that only a few of our portfolios generate positive excess returns in these periods. Therefore, idiosyncrasies within the market play a significant role in determining the performance of these signals.
 
 ```{r Table2, results='asis'}
 
@@ -420,7 +373,11 @@ table <- xtable(data_u, caption = "Under Performance Volatility Stratification\\
              )
 
 ```
-Once we consider stratifying according to interest rate cyles in Table \ref{tab4} and \ref{tab5}, specifically assessing excess returns in Hiking, Cutting, and Neutral cycles. Japan stands as an anomaly among these economies i.e. it does not have  hiking or cutting cycles, its central bank largely maintained constant rates. Consequently, we assess its performance exclusively within the confides of a neutral interest rate cycle. Once stratified, we geometrically chain, quarterly excess returns before we annualized to compare between indices. We find that the average and median annualized cumulative excess returns of the US and EU  dividend indexes during cutting cycles indicate that DG strategies outperform, especially when interest rates decline.  Under performance during hiking cycles is less pronounced in the US when taking into account annualized excess ruturn between Hiking and Cutting cyclees. In the EU, HY and growth both outperform during hiking cycles (dividend growth outperforms to a larger extent). To aid this analysis, in Appendix 2 we show results of  a principal component analysis on returns of each dividend portfolio and benchmark. After finding the principal components,  we regress the first 3 principal components to returns to formalize our assessment on the return drivers for our portfolios. Dividend portfolios either HY or DG have similar loading their relative benchmarks, albeit slightly larger. As there are practical considerations in constructing indexes and coupled with results from our models, we opine that dividend portfolio may proxy the market index and thus give investors exposure similar to the hypothetical index. 
+
+When we stratify our analysis according to interest rate cycles in Tables \ref{tab4} and \ref{tab5,} focusing on Hiking, Cutting, and Neutral cycles, we encounter an interesting anomaly in Japan. Unlike other economies, Japan does not have distinct hiking or cutting cycles, as its central bank has largely maintained constant interest rates. Therefore, we exclusively assess Japan's performance within the confines of a neutral interest rate cycle.
+Upon stratification, we geometrically chain quarterly excess returns and then annualize them to enable comparisons across indices. Our analysis reveals several insights. The average and median annualized cumulative excess returns of the US and EU dividend indexes during cutting cycles suggest that DG strategies tend to outperform, particularly when interest rates are declining. Underperformance during hiking cycles is less pronounced in the US, especially when considering annualized excess returns between Hiking and Cutting cycles. Finally, EU, both DY and DG strategies exhibit outperformance during hiking cycles, with dividend growth strategies outperforming to a greater extent. To provide further context for this analysis, we include results from a principal component analysis on returns of each dividend portfolio and its benchmark in Appendix 2. After identifying the principal components, we regress the first three principal components against returns to formalize our assessment of the return drivers for our portfolios. Notably, dividend portfolios, whether high yield (HY) or dividend growth (DG), exhibit similar loadings relative to their benchmarks, although the loadings are slightly larger. Given practical considerations in constructing indexes and the results from our models, we posit that dividend portfolios may effectively proxy the market index, providing investors with exposure similar to the hypothetical index.
+
+
 ```{r Table3, results='asis'}
 rate_data <- readxl::read_xlsx("data/Policy Rates.xlsx") 
 
@@ -565,7 +522,10 @@ table <- xtable(r, caption = "Under Performance in Interest Rate Regimes\\label{
 
 ```
 
-Finally we consider a dynamic measure we evaluate risk adjusted performance dividend portfolios achieving their returns overtime. Figure \ref{fig1} illustrates the consistency in the performance of dividend portfolios by employing a rolling 60 month information ratio to avoid looking at short term events that may skew performance results. This ratio is computed by determining the rolling excess return of the index relative to its benchmark and then dividing this by the volatility of those excess returns. The red line represents out performance to the benchmark, whilst considering risk, thus a yardstick to consider satisfactory performance. UK_HY has delivered undesirable consistency in returns over the sample period, whilst The EM  and Japan dividend portfolios had a polarizing performances throughout the sample period. For one, from 2005 to 2015, returns for the portfolio were consistently positive. Since then, over the last 8 years information ratios for these portfolios have been negative. This contrasts South African portfolios, of which dividend growth portfolios have since 2010 to 2020 have shown positive information ratios. The SA_HY only turned positive since 2017. US and EU indexes have mirroring in intra region performance i.e. deliver ratios that close to 0 and dont deviate much from that mark over time. Therefore our analysis based on information ratios shows the same as our whole sample analysis on total return in \ref{tab1}, dividend strategies fail to out perform their benchmark, barring SA_HY (of which its information ratio has been in a steady decline). This is opposite to our results from stratification, where we see out performance of dividend strategies in low interest rate environment or periods of high volatility.  
+
+In our final analysis, we consider a dynamic measure to evaluate the risk-adjusted performance of dividend portfolios over time. Figure \ref{fig1} provides a visual representation of the consistency in the performance of dividend portfolios. We achieve this by employing a rolling 60-month information ratio, which helps avoid the influence of short-term events that may skew performance results. This ratio is computed by determining the rolling excess return of the index relative to its benchmark and then dividing this by the volatility of those excess returns. The red line in the figure represents out performance relative to the benchmark while considering risk, serving as a yardstick to assess satisfactory performance. From Figure \ref{fig1}, UK_HY exhibits undesirable consistency in returns over the sample period. The EM and Japan dividend portfolios exhibit polarizing performances throughout the sample period. From 2005 to 2015, returns for these portfolios were consistently positive, but over the last eight years, information ratios have been negative.
+
+In contrast, South African portfolios, particularly dividend growth portfolios, have shown positive information ratios since 2010 to 2020. SA_HY only turned positive since 2017. The US and EU indexes exhibit similar intra-region performance, with information ratios that remain close to 0 and show minimal deviation over time. Overall, our analysis based on information ratios yields similar results to our whole sample analysis on total return in Table \ref{tab1}. It suggests that dividend strategies, with the exception of SA_HY (which has seen a steady decline in its information ratio), generally fail to outperform their benchmark. This result contradicts our findings from stratification, where we observed outperformance of dividend strategies in low-interest rate environments or periods of high volatility. The varying performance of these strategies highlights their sensitivity to the economic and market conditions in which they operate.  
 
 ```{r, fig.align='left', fig.cap="Rolling 3 Year Returns \\label{fig1}", fig.ext='png', fig.height=4, fig.width=7}
 
@@ -600,9 +560,10 @@ consistency_df %>%
 
 ## Backtest Results from Dividend Portfolio Signals{-}
 
-Figure \ref{fig3} illustrates the cumulative returns of our dividend portfolios, accompanied by a display of the total capital invested during the sample period. The portfolio categories include those structured around Dividend Yield (DY), Dividend Growth (DG), Price Momentum, and Sustainability. These portfolios are compared to the performance benchmark represented by the SWIX Top 40 index.Consistent with our previous analysis of the SA_HY and SA_DG portfolios, a discernible pattern emerges, showing that the returns over the sample period fall short of the benchmark set by the market index. Additionally, our vanilla portfolio, the Dividend High Yield (HY), exhibits the lowest cumulative returns. Similarly, the Price Momentum and Sustainability portfolios demonstrate diminished performance when compared to both the Value and DG portfolios. This observation underscores a trend of under performance in our portfolios when evaluated against the broader market index.
 
-This result calls for further examination and investigation to discern the underlying factors and potential implications within the context of dividend-oriented investment strategies.
+Figure \ref{fig3} provides a visual representation of the cumulative returns of our dividend portfolios, along with a display of the total capital invested during the sample period. These portfolios are categorized into Dividend Yield (DY), Dividend Growth (DG), Price Momentum, and Sustainability, and they are compared to the performance benchmark represented by the SWIX Top 40 index. In line with our earlier analysis of the SA_HY and SA_DG portfolios, a noticeable pattern emerges, indicating that the returns over the sample period fall short of the benchmark set by the market index. Furthermore, our vanilla portfolio, Dividend High Yield (HY), displays the lowest cumulative returns. Similarly, the Price Momentum and Sustainability portfolios exhibit diminished performance when compared to both the Value and DG portfolios. This observation highlights a consistent trend of underperformance in our portfolios when evaluated against the broader market index.
+
+This outcome prompts further examination and investigation to uncover the underlying factors and potential implications within the context of dividend-oriented investment strategies. It is essential to understand the reasons behind this consistent underperformance and consider adjustments or enhancements to the strategies to potentially improve their effectiveness.
 ```{r Figure3,  warning =  FALSE, fig.align = 'left', fig.cap = "Rolling 3 Year Returns \\label{fig3}", fig.ext = 'png', fig.height = 4, fig.width =7}
 # Visuals on total ROI 
 
@@ -627,7 +588,11 @@ df %>% group_by(Portfolio) %>%  mutate(ROI = cumprod(1+Returns), ROI = ROI/first
   gabriel_theme
 ```
 
-Tables \ref{tab6} and \ref{tab7} provide a breakdown of total investments during periods characterized by market cycles and interest rate regimes. These periods are categorized as either high or low volatility and pertain to hiking or cutting cycles in response to realized market volatility and the interest rate regime, our stratifcation dates are etracted from those used in our analysis of \ref{tab2} and \ref{tab3} for the SA_HY and SA_DG indexes. Similar to that analysis, in our findings from internationally traded portfolios, we once again observe the advantageous qualities of dividend portfolios when stratified according to interest rate regimes and volatility levels. Notably, the dividend portfolios exhibit notable defensive attributes, with the price momentum-adjusted and sustainability portfolios yielding the highest returns during hiking periods and times of high volatility. Moreover, it is worth highlighting that our portfolios consistently outperform the market index during these periods.
+Tables \ref{tab6} and \ref{tab7} offer a detailed breakdown of total investments during periods characterized by market cycles and interest rate regimes, specifically high or low volatility, and hiking or cutting cycles. These categorizations align with the realized market volatility and interest rate regime stratification dates we used in our analysis of Tables \ref{tab2} and \ref{tab3} for the SA_HY and SA_DG indexes.
+
+Consistent with our findings from internationally traded portfolios, we once again observe the favorable characteristics of dividend portfolios when stratified according to interest rate regimes and volatility levels. Notably, these dividend portfolios exhibit significant defensive attributes, with the price momentum-adjusted and sustainability portfolios generating the highest returns during hiking periods and times of high volatility. Furthermore, it's essential to emphasize that our portfolios consistently outperform the market index during these periods.
+
+These results highlight the resilience and attractiveness of dividend-oriented investment strategies in challenging market conditions, underscoring their potential as a valuable component of an investor's portfolio. Further analysis and research could shed more light on the underlying factors contributing to this outperformance and help investors make informed decisions in constructing their portfolios.
 
 ```{r, results='asis'}
 df_volatility <- bind_rows (df %>%  filter(date %in% hivol_per_vector_sa) %>% mutate(roi = cumprod(1+Returns)) %>% group_by(Portfolio) %>%  summarise(Months = n(), ROI  = last(roi),  `Ann ROI %` = ROI^Months/12 -1, `SD %` = sd(roi)) %>% mutate(MarketCycle = "High Volatility "),
@@ -647,7 +612,8 @@ table <- xtable(data, caption = "Market Cycle Perforomance \\label{tab6} ")
              caption.placement = 'bottom'
              )
 ```
-Moerver, during cutting cycles or in times of low volatility, we observe the relationship is maintained as our market cycle analsysis on South African portfolios. In these scenarios, much like the overall return on investment, the market index appears to offer higher returns. Notably, among our portfolios, our HY portfolio that fails to deliver substantial returns compared to our other dividend-oriented strategies. Given this, we conclude that that dividend portfolios can be used as a tool for investors to add return in period of heightened market volatility. 
+
+During cutting cycles or during periods characterized by low market volatility, an examination of the correlation between market cycles and the performance of South African portfolios reveals a consistent and noteworthy relationship. Specifically, in such scenarios, akin to the broader spectrum of return on investment, it becomes evident that the market index tends to yield relatively superior returns. It is worth noting that among the various portfolios under scrutiny, our DIVI2 portfolio has exhibited a relative underperformance when compared to our other dividend portfolios. Consequently, this analysis leads to the inference that dividend-oriented portfolios can serve as an effective instrument for investors seeking to augment their returns during phases of heightened market volatility.
 
 ```{r, results= "asis"}
 df_interest <- bind_rows(df %>%  filter(date %in% Hiking_date_vector_sa) %>% mutate(roi = cumprod(1+Returns)) %>% group_by(Portfolio) %>%  summarise(Months = n(), ROI  = last(roi),  `Ann ROI %` = ROI^4/Months -1, `SD %` = sd(roi))  %>% mutate(MarketCycle = "Hiking")%>% filter(Months >1),
@@ -701,9 +667,10 @@ dates_to_filter <- full_join(dfh, dfh_bm, by = c("date", "Name", "Tickers")) %>%
 # accucracy is imparove in short time intervals, most appropriate for little turnover
 ```
 
-Finally, to assess when our dividend portfolios provide value, we evaluate their relative performance by taking the product excess returns and excess weights to give a relative performance measure. To do this, we simply calculated the difference in monthly excess returns from the last re balancing date in our back-test, which was October of each year, spanning from 2007-10-30 to 2022-10-30^[In our back-test results, on the date 2008-10-30, there were no weights available for any of the portfolios, so we excluded these dates from our analysis. As these were point measures and had no significant impact on long-term trends, our overall analysis remains unaffected.] While we do not consider sector returns and weights for portfolios and benchmarks, we modify the measure by collapsing the excess returns and excess weights to obtain return attribution for the overall strategy. Consequently, we can now assess nuances in performance that reward overweight/underweight decisions when it was opportune^[For a more in-depth background and the merits of our using this return attribution, see @brinson1985measuring.]
+To ascertain the periods during which our dividend portfolios offer value, we implement a relative performance evaluation method by computing the product of excess returns and excess weights, yielding a relative performance metric. This involves calculating the disparity in monthly excess returns from the most recent rebalancing date within our back-testing, conducted annually in October, covering the period from October 30, 2007, to October 30, 2022^[It is crucial to note that within our analysis of back-test results, there were instances, specifically on October 30, 2008, where no weight data was available for any of the portfolios. Consequently, these specific data points have been excluded from our analysis, as their isolated occurrence did not exert a significant influence on the overarching long-term trends, thus upholding the overall integrity of our analysis. Also, it is important to emphasize that our analysis does not consider sector-specific returns and weights for the portfolios and benchmarks. Nevertheless, we enhance our measurement by amalgamating the excess returns and excess weights to derive a return attribution analysis for the comprehensive strategy. This refined approach enables us to discern subtle performance nuances attributed to strategic decisions concerning the overweighting or underweighting of assets during opportune moments. For an in-depth exploration of the rationale underlying our use of this return attribution methodology and its merits, interested readers are encouraged to refer to the work of @brinson1985measuring ]
 
-Figure \ref{fig4} illustrates our measure of relative return performance, considering the excess weights throughout our investment horizon.
+
+Figure \ref{fig4}, visually represents our metric for assessing relative return performance, encompassing the influence of excess weights across our entire investment horizon.
 
 ```{r,  warning =  FALSE, fig.align = 'left', fig.cap = "Rolling 3 Year Returns \\label{fig4}", fig.ext = 'png', fig.height = 4, fig.width =7}
 # from our excess returns calc , this data just has divi excess returns, join by date
@@ -759,16 +726,25 @@ g +
     nudge_x = -0.02
   )
 ```
-In contrast to the results in Figure \ref{fig3}, where all dividend signals resulted in lower ROI over our back-test period, here our dividend portfolio outperformed the Capped SWIX Top 50 at different rates, measured by Hit Rates (HR). Specifically, Divi1 had a HR of 50%, Divi2 at 42.9%, Divi3 at 68.8%, and Divi4 at 31.2% of the time. Notably, our value portfolio (Divi 3) shows the highest HR, followed by Divi 1, Divi 2, and Divi 4, in that order. While the result from our ROI analysis is consistent with the first portfolio, the order of performance is different for portfolios Divi 4, Divi 1, and Divi 2. From this analysis, we conclude that using a proxy for value rather than a dividend signal adds more value to portfolio performance.
+In contrast to the findings presented in \ref{fig3}, where all dividend signals yielded diminished Return on Investment (ROI) over the course of our comprehensive back-test period, our dividend portfolio displayed superior performance compared to the Capped SWIX Top 50 index, as measured by Hit Rates (HR). Specifically, Divi1 exhibited a HR of 50%, Divi2 achieved a HR of 42.9%, Divi3 attained a remarkable HR of 68.8%, and Divi4 registered a HR of 31.2% during the observed period.
+
+Significantly, our value-oriented portfolio (Divi 3) exhibited the highest HR among the dividend portfolios, followed by Divi 1, Divi 2, and Divi 4, in descending order. While these results align with our ROI analysis for the first portfolio, it is important to note that the sequence of performance differs for Divi 4, Divi 1, and Divi 2.
+
+Based on this comprehensive analysis, we draw the conclusion that the utilization of a proxy for value, as opposed to a strict dividend signal, contributes more significantly to the overall performance of 
 
 \newpage
 # Conclusion {-}
 
-Over time, dividend portfolios, whether HY or DG, have exhibited positive excess returns as indicated by excess cumulative returns. While the UK_HY index has shown the highest cumulative return, this trend is not consistently observed across other regional indexes. However, upon stratifying these portfolios according to different periods of market volatility, it becomes evident that during high volatility periods, dividend strategies offer capital protection when addeed to a portfolio of assets.Moreover,  in this case, HY strategies outperform DG strategies.  Surprisingly, portfolios based in South Africa (SA) tend to perform well during these high volatility periods, which is somewhat unconventional as such times are typically associated with a flight to safety, and Emerging Markets (EM) and, by extension, South Africa, are considered riskier. When extending our analysis to encompass interest rate cycles, we observe a contrasting effect compared to the volatility-based stratification. We find that all strategies appear to give the highest return in low interest rate cycles. 
 
-Dividend strategies offer poor deliver poor return consistency, as measured by our information ratio. Initially, we discern that, at a broad level, dividend portfolios do not consistently maintain a positive ratio over an extended investment horizon. However, disparities in performance emerge. Notably, South African (SA) and dividend indexes have consistently delivered positive ratios over the past decade. In contrast, Emerging Markets (EM) and Japanese (JP) indexes have experienced substantial declines in their information ratios, despite seemingly consistent performance prior to 2015. Meanwhile, the United States (US), European Union (EU), and United Kingdom (UK) indexes have exhibited unpredictable performance over the sampled period.When we integrate our information ratio findings with drawdown analysis, we observe that advanced economies have experienced the fewest draw downs over the sample period, with the exception of the UK. This could suggest a relatively lower level of systematic risk in these economies. Conversely, South African (SA) and Emerging Market (EM) drawdowns have lower draawdowns, possibly indicating a reduced systematic risk in emerging markets.
+Over the course of time, dividend portfolios, encompassing both DY and DG strategies, have consistently displayed positive excess returns, evident in the cumulative excess return figures. Although the UK_HY index notably exhibits the highest cumulative return, this trend is not uniformly observed across various regional indexes. However, when we segment these portfolios based on different periods of market volatility, a distinct pattern emerges. During phases of heightened market volatility, dividend strategies prove to be effective in providing capital protection when integrated into a diversified asset portfolio. Furthermore, during such high volatility periods, DY strategies outperform the  DG strategies. An intriguing observation is that South African portfolios tend to perform well during these high volatility periods, which is somewhat unconventional, given that such times are typically associated with a flight to safety. Emerging Markets (EM) and, by extension, South Africa, are generally perceived as riskier investments.
 
-In the context of South Africa and considering the top 50 companies by market capitalization, we note similar performance to our international analysis. Firstly, dividend portfolios don't offer convincing total returns, as measured by our cumulative returns calculations. However, their value emerges from high volatility and hiking cycles. Moreover, we observe that once we consider more traditional proxies for value, such as the Price to Earnings (P/E) ratio, the value of dividend signals diminishes. In other words, the P/E portfolios perform highly according to our backtest and performance criteria, notably outperforming the market index 68.8% of the time. To conclude, dividend portfolios are a poor proxy for value and investors are better placed to look into investment products to give an income component to portfolio total returns.  However, we note that investor preferences vary thus may propel demand for specific strategies for dividend portfolios. Given our evidence, investors under constraints investment policy statements should opt for equity portfolios constructed DG strategies, despite their lower hit rate, they possess lower volatility  in acheiving returns,  this will be the most profitable practical way of attaining returns close to the market index which is uninvestable. 
+Expanding our analysis to incorporate interest rate cycles reveals a contrasting effect compared to the volatility-based stratification. It becomes evident that all strategies tend to yield the highest returns during low interest rate cycles. Information ratio analysis indicates that dividend strategies generally do not exhibit consistent return performance. At a broader level, these portfolios do not consistently maintain a positive information ratio over an extended investment horizon. However, disparities in performance emerge, with South African dividend indexes consistently delivering positive ratios over the past decade. Conversely, Emerging Markets and Japanese indexes have experienced substantial declines in their information ratios, despite seemingly consistent performance prior to 2015. Meanwhile, the United States, European Union, and United Kingdom indexes have exhibited unpredictable performance over the sampled period.
+
+When we combine our information ratio findings with drawdown analysis, we observe that advanced economies have experienced fewer drawdowns over the sample period, with the exception of the UK. This could suggest a relatively lower level of systematic risk in these economies. Conversely, South African and Emerging Market drawdowns have been less severe, possibly indicating reduced systematic risk in emerging markets.
+
+In the context of South Africa, focusing on the top 50 companies by market capitalization, we observe a performance pattern similar to our international analysis. Firstly, dividend portfolios do not convincingly deliver superior total returns, as calculated by cumulative returns. However, their value becomes apparent during periods of high volatility and rising interest rate cycles. Moreover, when we consider more traditional proxies for value, such as the Price to Earnings (P/E) ratio, the efficacy of dividend signals diminishes. In other words, portfolios constructed based on P/E ratios perform exceptionally well in our back-test and performance criteria, outperforming the market index 68.8% of the time.
+
+In conclusion, dividend portfolios may not serve as an ideal proxy for value, and investors may benefit more from exploring investment products that provide an income component to their total returns. However, it's worth noting that investor preferences can vary, potentially driving demand for specific dividend portfolio strategies. Based on the evidence, investors constrained by investment policy statements may find value in equity portfolios constructed using Dividend Growth (DG) strategies as these use signals that do a better job of capturing company cash flow management and managerial qualities. Despite their lower hit rate, DG portfolios exhibit lower volatility in achieving returns, making them a practical and profitable means of attaining returns that closely align with the market index.
 
 \newpage
 # Appendix {-}
@@ -838,92 +814,7 @@ capitalization issue
 # Principal Component Analysis Results {-}
 
 ```{r, results='asis'}
-library(xtable)
- z <- readxl::read_xlsx("data/EM Index.xlsx")
 
-table <- xtable(z, caption = "PCA Results")
-  print.xtable(table,
-             # tabular.environment = "longtable",
-             floating = TRUE,
-             table.placement = 'H',
-             # scalebox = 0.3,
-             comment = FALSE,
-             caption.placement = 'bottom'
-             )
-  
-w <- readxl::read_xlsx("data/EU index .xlsx")
-
- table <- xtable(w,  caption = "PCA Results")
-   print.xtable(table,
-              # tabular.environment = "longtable",
-              floating = TRUE,
-              table.placement = 'H',
-              # scalebox = 0.3,
-              comment = FALSE,
-              caption.placement = 'bottom'
-              )
-
- j <- readxl::read_xlsx("data/JP Index.xlsx")
-
- table <- xtable(j, caption = "PCA Results")
-   print.xtable(table,
-              # tabular.environment = "longtable",
-              floating = TRUE,
-              table.placement = 'H',
-              # scalebox = 0.3,
-              comment = FALSE,
-              caption.placement = 'bottom'
-              )
-
- t <- readxl::read_xlsx("data/SA index .xlsx")
-
- table <- xtable(t, caption = "PCA Results")
-   print.xtable(table,
-              # tabular.environment = "longtable",#
-              floating = TRUE,
-              table.placement = 'H',
-             # scalebox = 0.3,
-              comment = FALSE,
-              caption.placement = 'bottom'
-              )
-
- u <- readxl::read_xlsx("data/UK index.xlsx")
-
- table <- xtable(u, caption = "PCA Results")
-   print.xtable(table,
-              # tabular.environment = "longtable",
-              floating = TRUE,
-              table.placement = 'H',
-              # scalebox = 0.3,
-              comment = FALSE,
-              caption.placement = 'bottom'
-              )
-
- v <- readxl::read_xlsx("data/US index.xlsx")
-
- table <- xtable(v, caption = "PCA Results")
-   print.xtable(table,
-             # tabular.environment = "longtable",
-              floating = TRUE,
-              table.placement = 'H',
-              # scalebox = 0.3,
-              comment = FALSE,
-              caption.placement = 'bottom'
-              )
-
-   
-   
- k <- readxl::read_xlsx("data/World Index.xlsx")
-             
- table <- xtable(k, caption = "PCA Results")
-   print.xtable(table,
-              # tabular.environment = "longtable",
-              floating = TRUE,
-              table.placement = 'H',
-              # scalebox = 0.3,
-              comment = FALSE,
-              caption.placement = 'bottom'
-              )
 ```
 \newpage
 # References {-}
