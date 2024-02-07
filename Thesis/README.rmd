@@ -4,155 +4,285 @@ output:
     variant: markdown_github
 ---
 
-# Brain wave
+# Ojective
 
-Focusing on the risk sources, I wan to donduct a simlar analysis to returns bit on risk sources.
-
-We will need add some more value portfolios, just to make that argument that divi strategies are a poor proxy for return, MSCI, FTSE and SP
+these are systematic portfolios, is there some general signal that they all give. thats all we need to find out for our calcs. 
 
 ```{r}
+rm(list = ls())
 # loadings
-if (!require("fEcofin")) install.packages("fEcofin", repos = "http://R-Forge.R-project.org")
-library(fEcofin)
 library(PerformanceAnalytics)
 library(tidyverse)
 pacman::p_load("tidyr", "dplyr")
-df<- readxl::read_xlsx("data/MAD .xlsx")
-
-#  change the column names for ease of analysis
-
-geographical_codenames <- c("UK_HY", "EM_HY", "UK", "EM", "UK_HY_B", "UK_B", "JP_HY", "EU", "US_HY", "US", "W_HY", "W", "EU_DG", "EU_2", "JP_DG", "US_DG", "US_2", "JP", "SA_DG", "SA", "SA_HY", "EU_HY", "W_HY", "W")
-
-colnames(df)[2:23] <- geographical_codenames
-
+df<- readxl::read_xlsx("data/MAD Dividend index series.xlsx") %>% as.tibble()
 ```
+# relative perfroance calcs
 
-# Total Return
-
--   take a look at cumulative excess return, stand dev, sortino and max drawdown just from a entire sample perspective
+this section involves the wrangling needed to make analysis. so here we create the data for analysis.
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
-source("code/EXCESSRETURN.R")
-library(glue)
-library(stats)
+# lets get monthly returns for each, annulizae then get the excess returns 
+# for analysis 
+index_starts <- df %>% gather(index, px, -Date) %>% 
+  rename(date = Date) %>%
+  mutate(YM = format(date, "%y %b")) %>% 
+  group_by(index, YM) %>%
+  arrange(date) %>% filter(date == first(date)) %>% filter(!is.na(px)) %>% group_by(index) %>% 
+  filter(date == first(date)) %>% distinct(date)
 
+# monthly returns 
+rets <- df %>% gather(index, px, -Date) %>% 
+  rename(date = Date)%>% filter(date <= ymd(20230101)) %>% 
+  mutate(YM = format(date, "%y %b")) %>% 
+  group_by(index, YM) %>%
+  arrange(date) %>%
+  filter(date == last(date))%>% 
+  group_by(index) %>% 
+  mutate(ret = px/lag(px)-1) %>%
+  mutate(ret = coalesce(ret, 0)) %>% ungroup() %>% select(-YM, -px)
 
+# execss returns and second moment function 
+moments <- function(df, index_name, bm_name) {
+  annulized.return <- df %>%
+    mutate(Y = format(date, "%y")) %>%
+    group_by(index) %>%
+    summarise(
+      date = last(date),
+      N = n(),
+      "Ann Return" = (prod(1 + ret))^(12 / N) - 1
+    ) %>%
+    select(-N)
 
+  annulized_return <- annulized.return %>%
+    filter(index %in% c(index_name, bm_name)) %>%
+    pivot_wider(names_from = index, values_from = "Ann Return") %>%rename(ind = index_name, bm = bm_name) %>%
+    mutate(excess_return = ind - bm) %>%
+    select(date, excess_return)
 
-#   calculate simple returns just simple excess returns
-a <- df %>% My_excess_return(., "UK_HY", "UK") 
-b <- df %>% My_excess_return(., "UK_HY_B", "UK_B")
-c <- df %>% My_excess_return(., "US_HY", "US")
-d <- df %>% My_excess_return(., "US_DG", "US_2")
+  timeseries.ann.ret <- df %>%
+    mutate(Y = format(date, "%y")) %>%
+    group_by(index, Y) %>%
+    summarise(
+      date = last(date),
+      N = n(),
+      "Ann Return" = (prod(1 + ret))^(12 / N) - 1
+    ) %>%
+    ungroup() %>%
+    select(-N, -Y)
 
-e <- df %>% My_excess_return(., "EU_HY", "EU")
-f <- df %>% My_excess_return(., "EU_DG", "EU_2")
-g <- df %>% My_excess_return(., "JP_HY", "JP")
-h <- df %>% My_excess_return(., "JP_DG", "JP")
+  trackingerror <- timeseries.ann.ret %>%
+    filter(index %in% c(index_name, bm_name)) %>%
+    pivot_wider(names_from = index, values_from = "Ann Return") %>% rename(ind = index_name, bm = bm_name) %>%
+    mutate(excess_return = ind - bm) %>%
+    select(date, excess_return) %>%
+    summarise(te = sd(excess_return))
 
-i <- df %>% My_excess_return(., "EM_HY", "EM")
-j <- df %>% My_excess_return(., "SA_HY", "SA")
-k <- df %>% My_excess_return(., "SA_DG", "SA")
-l <- df %>% My_excess_return(., "W_HY", "W")
+  moments <- bind_cols(annulized_return, trackingerror) %>%
+    mutate(Index = index_name)
 
-#  some high level descriptive stats 
+}
+# get excess returns
+excess.returns.te <- bind_rows(moments(rets, "FUDP", "TUKXG"),
+    moments(rets, "M2GBDY", "GDDUUK"),
+       moments(rets, "M2WDHDVD...12", "GDDUWI"),
+        moments(rets, "SPDAEET", "SPTR350E"),
+        results <-  moments(rets, "SPDAUDT", "SPXT"),
+          moments(rets, "SPJXDAJT", "TPXDDVD"),
+             moments(rets, "SPSADAZT", "JALSH"),
+             moments(rets, "TJDIVD", "JALSH"))
 
-des_df <- list( a, b, c, d, e,f,g,h,i,j,k, l) %>%
-   reduce(inner_join, by='Measure')
+saveRDS(excess.returns.te, "data/moments.rds")
 
-# this is the pre ample to the overall portfolio nalaysis that I will be conductin
+# cumulative return function 
+cumulative_series <- function(df, index_name, bm_name){
+  
+  cumul <- df %>%
+    filter(index %in% c(index_name, bm_name)) %>%
+    pivot_wider(names_from = index, values_from = ret) %>%
+    rename(ind = index_name, bm = bm_name) %>%
+    mutate(excess_return = ind - bm) %>%
+    select(date, excess_return) %>% 
+    mutate(roi = cumprod(1 + excess_return)) %>%
+    select(-excess_return) %>%
+    rename(!!glue::glue("{index_name}_roi") := roi)
+  
+ cumul 
+}
+    a <- cumulative_series(rets, "FUDP", "TUKXG")
+    b <- cumulative_series(rets, "M2GBDY", "GDDUUK")
+    c <- cumulative_series(rets, "M2WDHDVD...12", "GDDUWI")
+    d <- cumulative_series(rets, "SPDAEET", "SPTR350E")
+    e <- cumulative_series(rets, "SPDAUDT", "SPXT")
+    f <- cumulative_series(rets, "SPJXDAJT", "TPXDDVD")
+    g <- cumulative_series(rets, "SPSADAZT", "JALSH")
+    h <- cumulative_series(rets, "TJDIVD", "JALSH")
 
-write_xlsx(des_df, "data/output.xlsx")
+# convert to list then provide in a single df
+cumulative_returns <- list(a, b, c, d, e, f, g, h) %>%
+  reduce(inner_join, by = 'date') %>%
+  gather(index, "Excess Cumu", -date) %>%
+  mutate(index = str_remove(index, "_roi"))
+
+saveRDS(cumulative_returns, "data/cumulative.rds")
+
+# get excess
+
+excess_series <- function(df, index_name, bm_name){
+  
+  cumul <- df %>%
+    filter(index %in% c(index_name, bm_name)) %>%
+    pivot_wider(names_from = index, values_from = ret) %>%
+    rename(ind = {{index_name}}, bm = {{bm_name}}) %>%
+    mutate(excess_return = ind - bm) %>%
+    select(date, excess_return) %>% 
+    rename(!!glue::glue("{index_name}" ):= excess_return)
+
+  
+  cumul 
+}
+# get the excess return df 
+
+    a <- excess_series(rets, "FUDP", "TUKXG")
+    b <- excess_series(rets, "M2GBDY", "GDDUUK")
+    c <- excess_series(rets, "M2WDHDVD...12", "GDDUWI")
+    d <- excess_series(rets, "SPDAEET", "SPTR350E")
+    e <- excess_series(rets, "SPDAUDT", "SPXT")
+    f <- excess_series(rets, "SPJXDAJT", "TPXDDVD")
+    g <- excess_series(rets, "SPSADAZT", "JALSH")
+    h <- excess_series(rets, "TJDIVD", "JALSH")
+
+# convert to list then provide in a single df
+excess_returns <- list(a, b, c, d, e, f, g, h) %>%
+  reduce(inner_join, by = 'date') %>%
+  gather(index, "Excess", -date)
+
+name_mapping <- excess_returns %>%  mutate(
+    Country = case_when(
+      index == "FUDP" ~ "US",
+      index == "M2GBDY" ~ "UK",
+      index == "M2WDHDVD...12" ~ "UK",  
+      index == "SPDAEET" ~ "EU",
+      index == "SPDAUDT" ~ "UK",
+      index == "SPJXDAJT" ~ "JP",
+      index == "SPSADAZT" ~ "SA",
+      index == "TJDIVD" ~ "SA"
+    )
+  , Signal = case_when(
+      index == "FUDP" ~ "Dividend Yield",
+      index == "M2GBDY" ~ "Dividend Yield",
+      index == "M2WDHDVD...12" ~ "Dividend Yield",  
+      index == "SPDAEET" ~ "Dividend Growth Per Share",
+      index == "SPDAUDT" ~ "Dividend Yield",
+      index == "SPJXDAJT" ~ "Dividend Yield",
+      index == "SPSADAZT" ~ "Dividend Growth Per Share",
+      index == "TJDIVD" ~ "Dividend Yield"
+    )) %>% select(index, Country, Signal) %>% distinct()
+
+cumulative_returns <- cumulative_returns %>% merge(., name_mapping, "index")
+
+saveRDS(cumulative_returns, "data/cumulative.rds")
 ```
 
 # Return Stratification
 
 -   to get a more nuanced picture of the performance over time, but first
--   some settings - top percentile is 95th and bottom is 5 percentile.
+-   select dates from the top percentile is 95th and bottom is 5 percentile.
+
+## Market volatility 
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
-#   get the vol data and get some dates
-
- vol_data <- readxl::read_xlsx("data/volatility for indexes.xlsx") %>% gather(index, px , -Date) %>% 
+#   get rolling volatility periods for the past 36 months, gives a wider range of analysis, make the data monthly. 
+ vol_data <- readxl::read_xlsx("data/volatility for indexes.xlsx") %>% arrange(Date) %>% 
+  gather(index, px , -Date) %>% rename(date = Date) %>% 
+  mutate(YM = format(date, "%y %b")) %>% 
+  group_by(YM, index) %>% filter(date == last(date)) %>% group_by(index) %>% 
   mutate(ret = px/lag(px)-1, RollSD = RcppRoll::roll_sd(1 + ret, 12, fill = NA, align = "right") * 
              sqrt(12)) %>% 
     filter(!is.na(RollSD))
-```
 
-```{r echo=TRUE, message=FALSE, warning=FALSE}
-# # get the top quartile and bottom quartile
- strat_df <- vol_data %>% filter(index == "VIX") %>%  mutate(topQ = quantile(RollSD, probs = 0.95), 
-               botQ = quantile(RollSD, probs = 0.05),
-               Strat = ifelse(RollSD >= topQ, "HiVol", 
-                           ifelse(RollSD <= botQ, "LowVol", "Normal_Vol")))
- 
-# # US strat
- 
- hivol_per_vector_us <- strat_df %>% filter(Strat %in% "HiVol") %>% pull(Date)
- lovol_per_vector_us <- strat_df %>% filter(Strat %in% "LowVol") %>% pull(Date)
+vol_data_list <- vol_data %>% group_split(index)
 
- # UK 
+# create and save dates in a list
+hivol_stratification_dates <- list()
 
- strat_df <-vol_data %>% filter(index == "IVIUK") %>% mutate(topQ = quantile(RollSD, probs = 0.95), 
-               botQ = quantile(RollSD, probs = 0.05),
-              Strat = ifelse(RollSD >= topQ, "HiVol", 
-                          ifelse(RollSD <= botQ, "LowVol", "Normal_Vol")))
-# 
- hivol_per_vector_uk  <- strat_df %>% filter(Strat %in% "HiVol") %>% pull(Date)
- lovol_per_vector_uk  <- strat_df %>% filter(Strat %in% "LowVol") %>% pull(Date)
-#  EU 
- 
- strat_df <-vol_data %>% filter(index == "V2X") %>% mutate(topQ = quantile(RollSD, probs = 0.95), 
-               botQ = quantile(RollSD, probs = 0.05),
-              Strat = ifelse(RollSD >= topQ, "HiVol", 
-                          ifelse(RollSD <= botQ, "LowVol", "Normal_Vol")))
-# 
- hivol_per_vector_eu  <- strat_df %>% filter(Strat %in% "HiVol") %>% pull(Date)
- lovol_per_vector_eu  <- strat_df %>% filter(Strat %in% "LowVol") %>% pull(Date) 
-# # SA 
-
- strat_df <-vol_data %>% filter(index == "SAVIT40") %>% mutate(topQ = quantile(RollSD, probs = 0.95), 
-               botQ = quantile(RollSD, probs = 0.05),
-               Strat = ifelse(RollSD >= topQ, "HiVol", 
-                           ifelse(RollSD <= botQ, "LowVol", "Normal_Vol")))
-# 
- hivol_per_vector_sa <- strat_df %>% filter(Strat %in% "HiVol") %>% pull(Date)
- lovol_per_vector_sa <- strat_df %>% filter(Strat %in% "LowVol") %>% pull(Date)
-
-#  High Vol df 
- 
-source("code/Stratifier.R")
+for (i in seq_along(vol_data_list)) {
+  df <- vol_data_list[[i]] %>% as.tibble()
   
-stratifying_df <-  bind_rows(
- stratifier(df, "EU_HY", "EU", hivol_per_vector_eu, "High Vol" ),
- stratifier(df, "EU_DG", "EU_2", hivol_per_vector_eu, "High Vol" ),
- stratifier(df, "UK_HY", "UK", hivol_per_vector_eu, "High Vol" ),
- stratifier(df, "UK_HY_B", "UK", hivol_per_vector_eu, "High Vol"),
- stratifier(df, "JP_HY", "JP", hivol_per_vector_us, "High Vol"),
- stratifier(df, "JP_DG", "JP", hivol_per_vector_us, "High Vol"),
- stratifier(df, "EM_HY", "EM", hivol_per_vector_us, "High Vol"),
- stratifier(df, "SA_HY", "SA", hivol_per_vector_sa, "High Vol"),
- stratifier(df, "SA_DG", "SA", hivol_per_vector_sa, "High Vol"),
- stratifier(df, "US_HY", "US", hivol_per_vector_us, "High Vol"), 
- stratifier(df, "US_DG", "US", hivol_per_vector_us, "High Vol"), 
- stratifier(df , "W_HY", "W", hivol_per_vector_us, "High Vol"), 
- stratifier(df, "EU_HY", "EU", lovol_per_vector_eu, "Low Vol Period" ),
- stratifier(df, "EU_DG", "EU_2", lovol_per_vector_eu, "Low Vol Period" ),
- stratifier(df, "UK_HY", "UK", lovol_per_vector_eu, "Low Vol Period" ),
- stratifier(df, "UK_HY_B", "UK", lovol_per_vector_eu, "Low Vol Period" ),
- stratifier(df, "JP_HY", "JP", lovol_per_vector_us, "Low Vol Period" ),
- stratifier(df, "JP_DG", "JP", lovol_per_vector_us, "Low Vol Period" ),
- stratifier(df, "EM_HY", "EM", lovol_per_vector_us, "Low Vol Period" ),
- stratifier(df, "SA_HY", "SA", lovol_per_vector_sa, "Low Vol Period" ),
- stratifier(df, "SA_DG", "SA", lovol_per_vector_sa, "Low Vol Period" ),
- stratifier(df, "US_HY", "US", lovol_per_vector_us, "Low Vol Period" ), 
- stratifier(df, "US_DG", "US", lovol_per_vector_us, "Low Vol Period" ), 
- stratifier(df, "W_HY", "W", lovol_per_vector_us, "Low Vol Period")
- )
+  vol_strat <- df %>%  
+    mutate(topQ = quantile(RollSD, probs = 0.90), 
+           botQ = quantile(RollSD, probs = 0.1),
+           Strat = ifelse(RollSD >= topQ, "HiVol", 
+                          ifelse(RollSD <= botQ, "LowVol", "Normal_Vol")))
+  
+  hivol_dates <- vol_strat %>% 
+    filter(Strat %in% "HiVol") %>% 
+    pull(date)
+  
+  hivol_stratification_dates[[i]] <- hivol_dates
+}
 
-stratifying_df %>% arrange(Name)
+# give names 
+names(hivol_stratification_dates) <- c("hivol_per_vector_uk", "hivol_per_vector_sa", "hivol_per_vector_eu", "hivol_per_vector_us")
+
+# repeat for low vol
+lovol_stratification_dates <- list()
+
+for (i in seq_along(vol_data_list)) {
+  
+  df <- vol_data_list[[i]] %>% as.tibble()
+  
+vol_strat <- df %>%  mutate(topQ = quantile(RollSD, probs = 0.95), 
+               botQ = quantile(RollSD, probs = 0.05),
+               Strat = ifelse(RollSD >= topQ, "HiVol", 
+                           ifelse(RollSD <= botQ, "LowVol", "Normal_Vol")))
+ lovol_dates <- vol_strat %>% filter(Strat %in% "LowVol") %>% pull(date)  
+
+lovol_stratification_dates[[i]] <-  lovol_dates 
+}
+
+names(lovol_stratification_dates) <- c("lovol_per_vector_uk", "lovol_per_vector_sa", "lovol_per_vector_eu", "lovol_per_vector_us")
+
+# get everything to environment 
+list2env(hivol_stratification_dates, envir = .GlobalEnv)
+list2env(lovol_stratification_dates, envir = .GlobalEnv)
+
+
+# get stratified returns
+stratifier <- function(raw_df, index_name, Date_vector, Description) {
+
+  Mk_df <- raw_df %>%
+    filter(date %in% Date_vector & index == index_name) %>%
+    group_by(index) %>%
+    summarize( "Cycle" = Description, Months = n(), "Ann Ret" = (prod(1+Excess)^(12/Months)-1) *100)
+
+  Mk_df
+}
+
+# get the market cycle dfs  
+High_vol_cycle_returns <- bind_rows (stratifier(excess_returns, "FUDP", hivol_per_vector_us, "High Vol" ),
+  stratifier(excess_returns, "M2GBDY", hivol_per_vector_uk, "High Vol" ),
+   stratifier(excess_returns, "M2WDHDVD...12", hivol_per_vector_uk, "High Vol" ), 
+    stratifier(excess_returns, "SPDAEET", hivol_per_vector_eu, "High Vol" ), 
+     stratifier(excess_returns, "SPDAUDT", hivol_per_vector_uk, "High Vol" ), 
+      stratifier(excess_returns, "SPJXDAJT", hivol_per_vector_us, "High Vol" ), 
+       stratifier(excess_returns, "SPSADAZT", hivol_per_vector_sa, "High Vol" ),
+        stratifier(excess_returns, "TJDIVD", hivol_per_vector_sa, "High Vol" ))%>% merge(., name_mapping, "index")
+
+saveRDS(High_vol_cycle_returns, "data/highvol.rds")
+ 
+Lo_vol_cycle_returns <- bind_rows (stratifier(excess_returns, "FUDP", lovol_per_vector_us, "lo Vol" ),
+  stratifier(excess_returns, "M2GBDY", lovol_per_vector_uk, "lo Vol" ),
+   stratifier(excess_returns, "M2WDHDVD...12", lovol_per_vector_uk, "lo Vol" ), 
+    stratifier(excess_returns, "SPDAEET", lovol_per_vector_eu, "lo Vol" ), 
+     stratifier(excess_returns, "SPDAUDT", lovol_per_vector_uk, "lo Vol" ), 
+      stratifier(excess_returns, "SPJXDAJT", lovol_per_vector_us, "lo Vol" ), 
+       stratifier(excess_returns, "SPSADAZT", lovol_per_vector_sa, "lo Vol" ),
+        stratifier(excess_returns, "TJDIVD", lovol_per_vector_sa, "lo Vol" ))%>% merge(., name_mapping, "index")
+
+saveRDS(Lo_vol_cycle_returns, "data/lovol.rds")
 ```
 
+## Interest Rate Volatility
 ```{r}
 rate_data <- readxl::read_xlsx("data/Policy Rates.xlsx") 
 
@@ -165,12 +295,8 @@ UK_rates <- rate_data %>% select(Date, UK)
 JP_rates <- rate_data %>% select(Date, JP)
 SA_rates <- rate_data %>% select(Date, SA)
 ECB_rates <- rate_data %>% select(Date, ECB)
-# Get Rates for the US
-source("code/Interest_Regime.R")
-source("code/Stratifier_rates.R")
-
-
 #  rename the columns for the function to work
+source(file = "code/Interest_Regime.R")
 
 Regime_df <- Regime_change_df(US_rates, "US", 5)
 Hiking_date_vector_us <- Regime_df %>% filter(regime %in% "Hiking") %>% pull(Date)
@@ -196,245 +322,34 @@ Regime_df <- Regime_change_df(ECB_rates, "ECB", 5)
 Hiking_date_vector_eu <- Regime_df %>% filter(regime %in% "Hiking") %>% pull(Date)
 Cutting_date_vector_eu <- Regime_df %>% filter(regime %in% "Cutting") %>% pull(Date)
 Neutral_date_vector_eu <- Regime_df %>% filter(regime %in% "Neutral") %>% pull(Date) 
+
 # Hiking Performance
 
-Hiking_performance <-  bind_rows(
- stratifier_rates(df, "EU_HY", "EU", Hiking_date_vector_eu, "Hiking" ),
- stratifier_rates(df, "EU_DG", "EU_2", Hiking_date_vector_eu, "Hiking" ),
- stratifier_rates(df, "UK_HY", "UK", Hiking_date_vector_uk, "Hiking" ),
- stratifier_rates(df, "UK_HY_B", "UK", Hiking_date_vector_uk, "Hiking" ),
- stratifier_rates(df, "EM_HY", "EM", Hiking_date_vector_us, "Hiking"),
- stratifier_rates(df, "SA_HY", "SA", Hiking_date_vector_sa, "Hiking" ),
- stratifier_rates(df, "SA_DG", "SA", Hiking_date_vector_sa, "Hiking" ),
- stratifier_rates(df, "US_HY", "US", Hiking_date_vector_us, "Hiking" ), 
- stratifier_rates(df, "US_DG", "US", Hiking_date_vector_us, "Hiking" )
- )
-
-#  Cutting Perfromance
-
-Cutting_performance <-  bind_rows(
- stratifier_rates(df, "EU_HY", "EU", Cutting_date_vector_eu, "Cut" ),
- stratifier_rates(df, "EU_DG", "EU_2", Cutting_date_vector_eu, "Cut" ),
- stratifier_rates(df, "UK_HY", "UK", Cutting_date_vector_uk, "Cut" ),
- stratifier_rates(df, "UK_HY_B", "UK", Cutting_date_vector_uk, "Cut" ),
- stratifier_rates(df, "EM_HY", "EM", Cutting_date_vector_us, "Cut"),
- stratifier_rates(df, "SA_HY", "SA", Cutting_date_vector_sa, "Cut" ),
- stratifier_rates(df, "SA_DG", "SA", Cutting_date_vector_sa, "Cut" ),
- stratifier_rates(df, "US_HY", "US", Cutting_date_vector_us, "Cut" ), 
- stratifier_rates(df, "US_DG", "US", Cutting_date_vector_us, "Cut" )
- )
-
-# Nuetral 
-
-Nuetral_perfromance <-  bind_rows(
- stratifier_rates(df, "EU_HY", "EU", Neutral_date_vector_eu, "Neutral" ),
- stratifier_rates(df, "EU_DG", "EU_2", Neutral_date_vector_eu, "Neutral" ),
- stratifier_rates(df, "UK_HY", "UK", Neutral_date_vector_uk, "Neutral" ),
- stratifier_rates(df, "UK_HY_B", "UK", Neutral_date_vector_uk, "Neutral" ),
- stratifier_rates(df, "JP_HY", "JP", Neutral_date_vector_jp, "Neutral" ),
- stratifier_rates(df, "JP_DG", "JP", Neutral_date_vector_jp, "Neutral" ),
- stratifier_rates(df, "EM_HY", "EM", Neutral_date_vector_us, "Neutral"),
- stratifier_rates(df, "SA_HY", "SA", Neutral_date_vector_sa, "Neutral" ),
- stratifier_rates(df, "SA_DG", "SA", Neutral_date_vector_sa, "Neutral" ),
- stratifier_rates(df, "US_HY", "US", Neutral_date_vector_us, "Neutral" ), 
- stratifier_rates(df, "US_DG", "US", Neutral_date_vector_us, "Neutral" )
- )
-
-CB_df <- bind_rows(Nuetral_perfromance, 
- Cutting_performance, Hiking_performance) %>% arrange(Name)
-
-CB_df %>% rename(Quarters = "Months") %>% arrange(desc("Annualized Return"))
-
-#  need to aggregate that into a single number 
-```
-
-```{r}
-#  source 
-
-source("code/InformationRatioRoll.R")
-
-a <-  df %>% Information_Ratio_Roll(., "EU_HY", "EU", 20030808, 36)
-b <-  df %>% Information_Ratio_Roll(., "EU_DG", "EU_2",20030808, 36)
- c <- df %>% Information_Ratio_Roll(., "UK_HY", "UK", 20030808, 36)
- d <- df %>% Information_Ratio_Roll(., "UK_HY_B", "UK", 20030808, 36)
- e <- df %>% Information_Ratio_Roll(., "JP_HY", "JP", 20030808, 36)
- f <- df %>% Information_Ratio_Roll(., "JP_DG", "JP", 20030808, 36)
- g <- df %>% Information_Ratio_Roll(., "EM_HY", "EM", 20030808, 36)
- h <- df %>% Information_Ratio_Roll(., "SA_HY", "SA", 20030808, 36)
- i <- df %>% Information_Ratio_Roll(., "SA_DG", "SA", 20030808, 36)
- j <- df %>% Information_Ratio_Roll(., "US_HY", "US", 20030808, 36)
- k <- df %>% Information_Ratio_Roll(., "US_DG", "US_2", 20030808, 36)
-
-consistency_df <- list(a, b, c, d, e,f,g,h,i,j,k) %>%
-  reduce(inner_join, by='date') %>% 
-  gather(IR , ret, -date) 
+Hiking_cycle_returns <- bind_rows (stratifier(excess_returns, "FUDP", Hiking_date_vector_uk, "Hiking" ),
+  stratifier(excess_returns, "M2GBDY", Hiking_date_vector_uk , "Hiking" ),
+   stratifier(excess_returns, "M2WDHDVD...12", Hiking_date_vector_uk , "Hiking" ), 
+    stratifier(excess_returns, "SPDAEET", Hiking_date_vector_eu, "Hiking" ), 
+     stratifier(excess_returns, "SPDAUDT", Hiking_date_vector_uk , "Hiking" ), 
+      stratifier(excess_returns, "SPJXDAJT", Hiking_date_vector_us, "Hiking" ), 
+       stratifier(excess_returns, "SPSADAZT", Hiking_date_vector_sa, "Hiking"),
+        stratifier(excess_returns, "TJDIVD", Hiking_date_vector_sa, "Hiking")) %>% merge(., name_mapping, "index")
  
-plot <- consistency_df %>%   ggplot() + 
-geom_line(aes(date, ret), color = "steelblue", size = 1.1, alpha = 0.8) +
-geom_hline(yintercept = 0, color = "red", size = 0.3, alpha = 0.5)+
-fmxdat::theme_fmx() + 
-facet_wrap(~IR) + 
-labs(x = "", y = "Information Ratio", title = "Performance Consistency", subtitle = "Deeply Inconcsistent", caption = "Source:Bloomberg and\n Authors Calculations")
+saveRDS(Hiking_cycle_returns, "data/hikingcycle.rds")
 
-plot
-```
+Cutting_cycle_returns <- bind_rows (stratifier(excess_returns, "FUDP", hivol_per_vector_us, "Cutting" ),
+  stratifier(excess_returns, "M2GBDY", Cutting_date_vector_uk , "Cutting" ),
+   stratifier(excess_returns, "M2WDHDVD...12", Cutting_date_vector_uk , "Cutting" ), 
+    stratifier(excess_returns, "SPDAEET", Cutting_date_vector_eu, "Cutting" ), 
+     stratifier(excess_returns, "SPDAUDT", Cutting_date_vector_uk , "Cutting" ), 
+      stratifier(excess_returns, "SPJXDAJT", Cutting_date_vector_us, "Cutting" ), 
+       stratifier(excess_returns, "SPSADAZT", Cutting_date_vector_sa, "Cutting"),
+        stratifier(excess_returns, "TJDIVD", Cutting_date_vector_sa, "Cutting")) %>% merge(., name_mapping, "index")
 
-# Risk Source Analysis
-
-## Description
-
-This here tries to give an analytical base to what drives the returns from the choosen divi portfolios.
-
-Use a EFA to acheive the desired returns based factor analysis, just to get a more structural flow of how things actually affcet each other
-
-```{r}
-library(psych)
-source("code/impute.R")
-
-#  the series of returns not excess returns, does this change affect the interpreation, just returns leaves a lot to wonder, can collapse the information set to just a few variables
-# source("code/Factor_model_return.R")
-# 
-# a <- df %>% monthly_excess_return(., "UK_HY", "UK") 
-# b <- df %>% monthly_excess_return(., "UK_HY_B", "UK_B")
-# c <- df %>% monthly_excess_return(., "US_HY", "US")
-# d <- df %>% monthly_excess_return(., "US_DG", "US_2")
-# 
-# e <- df %>% monthly_excess_return(., "EU_HY", "EU")
-# f <- df %>% monthly_excess_return(., "EU_DG", "EU_2")
-# g <- df %>% monthly_excess_return(., "JP_HY", "JP")
-# h <- df %>% monthly_excess_return(., "JP_DG", "JP")
-# 
-# i <- df %>% monthly_excess_return(., "EM_HY", "EM")
-# j <- df %>% monthly_excess_return(., "SA_HY", "SA")
-# k <- df %>% monthly_excess_return(., "SA_DG", "SA")
-# l <- df %>% monthly_excess_return(., "W_HY", "W")
-
-#  some high level descriptive stats 
-
- fact_df <- df %>% 
-  arrange(Date) %>%
-  mutate_at(vars(-Date), ~log(.) - lag(log(.))) %>% 
-  rename(date = Date) %>%
-  gather(index, ret,-date) %>% spread(index, ret) %>% impute_missing_returns(., "Drawn_Distribution_Collective")
-
-
-# fill the missiing returns by a distribution of others, in the analysis mention that all variables now have some level of return
-
-
-violinBy(fact_df %>% select(-date) %>% as.matrix())
-
-# lets get an idea of how many factors to include. It says one but lets take it to town and say 4, there seems to be anaother drop off in returns
-
-pca <- princomp(fact_df %>% select(-date), cor=F)
-plot(pca, type = "l")
+saveRDS(Cutting_cycle_returns, "data/cuttingcycle.rds")
 
 ```
-```{r}
-# lets get our principal components
 
-pcaseries <- fact_df %>% select(-date)
-demean = scale(pcaseries, center=TRUE, scale=TRUE)
-# Probably should consider a more robustifid covariance matrix here (as in previous tuts)
-sigma <- cov(demean)
-
-evec <- eigen(sigma, symmetric=TRUE)$vector #eigen vectors
-eval <- eigen(sigma, symmetric=TRUE)$values #eigen values
-
-# or done automagically (using standard covariance matrix warts and all):
-pcrun <- prcomp(demean, center = T, scale. = T)
-ev <- pcrun$rotation
-  
-e_min1 <- solve(ev) # Invert eigenvector as in equation above)
-R_PCA <- e_min1 %*% t(pcaseries) # Note: pcaseries, not demean.
-
-PC_Series <- t(R_PCA) %>% tibble::as_tibble()
-
-PC_Series <- 
-  PC_Series %>% mutate(date = unique(fact_df$date)) %>% gather(Type, Val, -date) %>%  filter(Type %in% paste0("PC", 1:5)) 
-
-#---- Let's look at these series:
-
-# Returns:
-PC_Series %>% filter(Type %in% paste0("PC", 1:5)) %>% ggplot() + geom_line(aes(date, Val, color = Type))
-
-```
-```{r}
-
-#  lets see how they evolve overtime
-PC_Series %>% filter(Type %in% paste0("PC", 1:5)) %>% 
-  
-  group_by(Type) %>% mutate(Idx = cumprod(1+Val)) %>% 
-  
-  ggplot() + 
-  
-  geom_line(aes(date, Idx, color = Type), size = 1.2, alpha = 0.7) 
-```
+# Structure of the analysis in the write up 
 
 
-```{r}
-#  now lets merge the previous to our old index data and see what we get 
-
-PC_Series <- PC_Series %>% spread(Type, Val)
-
-Regression_data <- left_join(fact_df, PC_Series, "date") %>%  gather(index , ret, -date , -PC1, -PC2, -PC3, -PC4, -PC5) 
-
-# lets do a regression
-
-Regressions <- 
-  
-    Regression_data %>%
-  
-    group_by(index) %>% 
-  
-    do(reg = lm(ret ~ lag(ret) + PC1 + PC2 + PC3, data = .)) %>% ungroup()
-
-tidymaker <- function(X){ 
-  X %>% pull(reg) %>% .[[1]] %>% broom::tidy() %>% 
-    # Add spots label
-    mutate(Spots = X$Spots)
-  }
-
-RegressionCoeffs <- 
-  Regressions %>% group_split(index) %>% map_df(~tidymaker(.))
-
-# Previously, this worked:
-# RegressionCoeffs <- 
-#   Regressions %>% rowwise() %>% tidy(reg)
-
-head(RegressionCoeffs)
-
-# Regressions that im into 
-
-indexes_to_table <- fact_df %>% gather(index, ret, -date) %>% select(index) %>% distinct() %>% pull()
-
-
-Title <- "PCA Regression Table"
-
-          ht <- 
-            huxreg(Regressions %>% filter(index %in% indexes_to_table) %>% 
-                     select(reg) %>% .[[1]], 
-                statistics = c(N = "nobs", R2 = "r.squared"), 
-                note = "%stars%." )
-          
-  for(i in 1:(ncol(ht)-1)) {
-    ht[1,][[1+i]] <- indexes_to_table[i]  
-  }
-
-ht <- ht %>% set_caption(Title)
-
-df_huxreg <- as.data.frame(ht)
-
-write_xlsx(df_huxreg, "regression_results.xlsx")
-
-
-
-
-```
-# Problem Statement 
-
-As summarized by Vanguard (2017) succinctly,  “the focus of high dividend-yielding equities is often their income potential, but higher yields do not necessarily translate into higher returns. This is because, for all companies, whether or not to pay a dividend is a capital budgeting decision. When a stock goes ex-dividend, its price falls by the same amount as the dividend payment. Therefore, no wealth is created through paying a dividend; rather, the payment reduces retained earnings. This means that share price should decrease accordingly thus share holders should be worse off. Thus, brings in the question of why dividend strategies provide for a return signalling cue. First, there should exists a rationale beyond dividend payment effect on share price, perhaps in line with theories regarding dividend relevance. Second, if the signals provide some type excess return beyond their market index, does it continuously provide the premium to be harvested by a systematic investment strategy.
-
-# Research Aim 
-
-The aim of this study is to test whether and why dividend strategies contain a profitable investment signal to potential investors. There exists various international studies testing this hypothesis across geographies, underscoring that dividend can be used as a profitable future return signal. Studies conducted for the South African market such as @fakir2013dividend employ methodologies that do not inform readers on mechanisms behind why the dividend signal works or provide an indication of returns for a  systematic dividend investment strategy. Moreover, the study uses data on the JSE that presents low signal-to-noise ratio on regressed stock returns, implying that the modeler's ability to accurately attribute return differences to a variable of interest (e.g., DY) is severely undermined. Also, studies using parametric techniques seek to infer statistical significance, often leaving the more applied reader with limited knowledge gained as to the actual profitability of considering said signal from a portfolio context. Secondly, returns tend to be non-normally distributed and have large outliers. The combination of these problems can easily lead to a small sample size, non-normally distributed, and noisy inference series (especially in a local application) with limited practical application. We take a more applied approach by constructing portfolio and comapre in sample performances @damodaran2004investment We aim to fill this gap by testing various portfolios constructed based on dividend information in South Africa. 
 

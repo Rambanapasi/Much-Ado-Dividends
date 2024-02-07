@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2024.1.24)  7 FEB 2024 14:13
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2024.1.24)  7 FEB 2024 15:37
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**Much_Ado_About_Dividends.tex
-(./Much_Ado_About_Dividends.tex
+**MuchAdoDivs.tex
+(./MuchAdoDivs.tex
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
 (/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/tex/latex/elsarticle/elsarticle.cls
@@ -75,7 +75,7 @@ File: pdftex.def 2022/09/22 v1.2b Graphics/color driver for pdftex
 \@enLab=\toks19
 \@sep=\skip50
 \@@sep=\skip51
-(./Much_Ado_About_Dividends.spl) (/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/tex/latex/natbib/natbib.sty
+(./MuchAdoDivs.spl) (/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/tex/latex/natbib/natbib.sty
 Package: natbib 2010/09/13 8.31b (PWD, AO)
 \bibhang=\skip52
 \bibsep=\skip53
@@ -83,7 +83,7 @@ LaTeX Info: Redefining \cite on input line 694.
 \c@NAT@ctr=\count269
 )
 \splwrite=\write3
-\openout3 = `Much_Ado_About_Dividends.spl'.
+\openout3 = `MuchAdoDivs.spl'.
 
 \appnamewidth=\dimen147
 ) (/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/tex/latex/lm/lmodern.sty
@@ -618,7 +618,7 @@ Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1370.
 Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1371.
 Package xcolor Info: Model `Gray' substituted by `gray' on input line 1372.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1373.
-) (./Much_Ado_About_Dividends.aux
+) (./MuchAdoDivs.aux
 
 LaTeX Warning: Label `tab1' multiply defined.
 
@@ -626,7 +626,7 @@ LaTeX Warning: Label `tab1' multiply defined.
 LaTeX Warning: Label `tab1' multiply defined.
 
 )
-\openout1 = `Much_Ado_About_Dividends.aux'.
+\openout1 = `MuchAdoDivs.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 175.
 LaTeX Font Info:    ... okay on input line 175.
@@ -687,9 +687,9 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 Package hyperref Info: Link coloring ON on input line 175.
-(./Much_Ado_About_Dividends.out) (./Much_Ado_About_Dividends.out)
+(./MuchAdoDivs.out) (./MuchAdoDivs.out)
 \@outlinefile=\write4
-\openout4 = `Much_Ado_About_Dividends.out'.
+\openout4 = `MuchAdoDivs.out'.
 
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: threeparttable package is loaded.
@@ -736,23 +736,23 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 [1
 
 
-{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}] [2] [3] [4] [5{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}] [6]
+{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}] [2] [3] [4] [5{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}]
 
-LaTeX Warning: Reference `signal' on page 7 undefined on input line 686.
+LaTeX Warning: Reference `signal' on page 6 undefined on input line 611.
 
-[7{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}] [8]
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 731.
+[6{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}] [7]
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 656.
 (/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-<Much_Ado_About_Dividends_files/figure-latex/unnamed-chunk-2-1.pdf, id=193, 433.62pt x 361.35pt>
-File: Much_Ado_About_Dividends_files/figure-latex/unnamed-chunk-2-1.pdf Graphic file (type pdf)
-<use Much_Ado_About_Dividends_files/figure-latex/unnamed-chunk-2-1.pdf>
-Package pdftex.def Info: Much_Ado_About_Dividends_files/figure-latex/unnamed-chunk-2-1.pdf  used on input line 758.
+<MuchAdoDivs_files/figure-latex/unnamed-chunk-2-1.pdf, id=160, 433.62pt x 361.35pt>
+File: MuchAdoDivs_files/figure-latex/unnamed-chunk-2-1.pdf Graphic file (type pdf)
+<use MuchAdoDivs_files/figure-latex/unnamed-chunk-2-1.pdf>
+Package pdftex.def Info: MuchAdoDivs_files/figure-latex/unnamed-chunk-2-1.pdf  used on input line 683.
 (pdftex.def)             Requested size: 433.61894pt x 361.34912pt.
-[9{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc} <./Much_Ado_About_Dividends_files/figure-latex/unnamed-chunk-2-1.pdf>] [10] [11] [12] [13] [14] [15]
-No file Much_Ado_About_Dividends.bbl.
-[16] (./Much_Ado_About_Dividends.aux)
+[8{/Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc} <./MuchAdoDivs_files/figure-latex/unnamed-chunk-2-1.pdf>] [9] [10] [11] [12] [13]
+No file MuchAdoDivs.bbl.
+[14] (./MuchAdoDivs.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
@@ -763,25 +763,22 @@ LaTeX Warning: There were undefined references.
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package rerunfilecheck Info: File `Much_Ado_About_Dividends.out' has not changed.
-(rerunfilecheck)             Checksum: 6CBAED769D5CDFEA8DD516938C5D81CF;2121.
+Package rerunfilecheck Info: File `MuchAdoDivs.out' has not changed.
+(rerunfilecheck)             Checksum: EC59DC66C63B92F0B119D61142C60FA7;1811.
  ) 
 Here is how much of TeX's memory you used:
- 18159 strings out of 476188
- 336471 string characters out of 5793935
+ 18139 strings out of 476188
+ 335746 string characters out of 5793935
  1955975 words of memory out of 5000000
- 39772 multiletter control sequences out of 15000+600000
+ 39766 multiletter control sequences out of 15000+600000
  613173 words of font info for 76 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,14n,79p,561b,1017s stack positions out of 10000i,1000n,20000p,200000b,200000s
-
-pdfTeX warning (dest): name{ref-bacon2023practical} has been referenced but does not exist, replaced by a fixed one
-
+ 75i,14n,79p,548b,1017s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmex10.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi10.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi6.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi8.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr6.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr9.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri7.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri9.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy6.pfb></Users/gabrielrambanapasi/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt9.pfb>
-Output written on Much_Ado_About_Dividends.pdf (16 pages, 328002 bytes).
+Output written on MuchAdoDivs.pdf (14 pages, 320715 bytes).
 PDF statistics:
- 345 PDF objects out of 1000 (max. 8388607)
- 287 compressed objects within 3 object streams
- 78 named destinations out of 1000 (max. 500000)
- 126 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 305 PDF objects out of 1000 (max. 8388607)
+ 249 compressed objects within 3 object streams
+ 64 named destinations out of 1000 (max. 500000)
+ 102 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1,17 +1,14 @@
-Get_dat <- function(Loc,
-                    BM = "J433",
-                    Unisel = "J406",
-                    Nam = "Satrix_Lowvol",
-                    Port = "SatrixVol",
-                    Which = c("Holds", "Holds_BM", "Factors_BM", "Ret", "Ret_BM", "Ret_Uni", "ARC", "ARC_BM", "ARC_Uni", "TO")){
+Get_dat <- function( Nam,
+                    Port,
+                    Which){
 
-    locr <- glue("{Loc}/{BM}_{Unisel}/{Nam}/{Port}") %>% list.files(., full.names = T)
-    locr_bm <- glue("{Loc}/Capped_SWIX") %>% list.files(., full.names = T)
+    locr <- glue("J433_J406/Divi/{Nam}/{Port}") %>% list.files(., full.names = T)
+    locr_bm <- glue("J433_J406/Capped_SWIX") %>% list.files(., full.names = T)
     
     source("code/EOM.R")
 
     Which <- match.arg(Which)
-    if(Which == "Holds") dfl <- locr[grepl("Holds_", locr)] %>% read_rds(.) %>% rename(Name = `Asset Name`) %>% select(date, Tickers, Name, Weight) %>% Make_calendar_EOM() %>% arrange(date)
+    if(Which == "Holds_") dfl <- locr[grepl("Holds_", locr)] %>% read_rds(.) %>% rename(Name = `Asset Name`) %>% select(date, Tickers, Name, Weight) %>% Make_calendar_EOM() %>% arrange(date)
     if(Which == "Holds_BM") dfl <- locr_bm[grepl("Holdings.rds", locr_bm)] %>% read_rds(.) %>% select(date, Tickers, Name, BM_Weight = Weight, Sector ) %>% mutate(Sector = gsub("N/A", NA, Sector)) %>% Make_calendar_EOM() %>% arrange(date)
     if(Which == "Factors_BM") dfl <- locr_bm[grepl("Holdings.rds", locr_bm)] %>% read_rds(.) %>% select(date, Tickers, Name, ESG, DY, ends_with(" Exp")  ) %>% Make_calendar_EOM() %>% arrange(date)
     if(Which == "TO") dfl <- locr[grepl("BTDetails", locr)] %>% read_rds(.) %>% Make_calendar_EOM() %>% arrange(date)

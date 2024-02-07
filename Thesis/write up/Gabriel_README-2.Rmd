@@ -6,8 +6,11 @@ output:
 
 # Purpose
 
-- list the returns according to divi portfolios. be cognizant of that returns Bm, Return Uni and returns rds may be different returns that mean many things. 
+Purpose of this work folder.
 
+Ideally store a minimum working example data set in data folder.
+
+Add binary files in bin, and closed R functions in code. Human Readable settings files (e.g. csv) should be placed in settings/
 
 
 ```{r}
@@ -15,16 +18,7 @@ output:
 rm(list = ls()) # Clean your environment:
 gc() # garbage collection - It can be useful to call gc after a large object has been removed, as this may prompt R to return memory to the operating system.
 library(tidyverse)
-library(pacman)
-library(glue)
-if (!require("rmsfuns")) install.packages("rmsfuns")
-p_load("RA")
-install.packages("RA")
-
-
-source("code/Get_dat.R")
-source("code/EOM.R")
-
+# Source Get_dat.R function...
 ```
 
 
@@ -32,87 +26,30 @@ Portfolio considered:
 
 
 ```{r}
-Loc <- "/Users/gabrielrambanapasi/Desktop/Much Ado Dividends/Much-Ado-Dividends/Thesis/write up"
+
+Loc <- "XXXXYOURLOCHEREXXXX"
 
 BM <- "J433"
 Unisel <- "J406"
 Nam <- "Satrix_Lowvol"
 Port <- "Pxvol"
 Port <- "SatrixVol"
-```
 
+# Holdings comparison:    
+dfh <- Get_dat(Loc,BM = BM,Unisel = Unisel,Nam = Nam,Port = Port,Which = c("Holds"))
+dfh_bm <- Get_dat(Loc,BM = BM,Unisel = Unisel,Nam = Nam,Port = Port,Which = c("Holds_BM"))
+Factors_BM <- Get_dat(Loc,BM = BM,Unisel = Unisel,Nam = Nam,Port = Port,Which = c("Factors_BM"))
 
-```{r}
-# Holdings comparison
-loc_h <- "data/holdings/"
-dfh <- list.files(loc_h, pattern = "\\.rds$", full.names = TRUE)
+ARC_P <- Get_dat(Loc,BM = BM,Unisel = Unisel,Nam = Nam,Port = Port,Which = c("ARC"))
 
-dfh <- lapply(dfh, readRDS) 
-
-loc_b <- "J433_J406/Capped_SWIX/Holdings.rds"
-dfh_bm <- readRDS("data/Capped_SWIX/Holdings.rds")
-```
-
-
-```{r}
-# Factors 
-
-Factors_BM <- readRDS(file = "data/Capped_SWIX/Holdings.rds") %>%  select(date, Tickers, Name, ESG, DY, ends_with(" Exp")) %>%  mutate(YM = format(date , "%b %y")) %>% group_by(YM) %>% filter(date == last(date)) %>% arrange(date)
-```
-
-
-```{r}
-# Turnover, get the 
-
-loc_r <- "data/SatrixVol/BTDetails/"
-
-TO <- list.files(loc_r, pattern = "\\.rds$", full.names = TRUE)
-
-TO <- lapply(TO, readRDS) 
-
-TO <- do.call(rbind, TO) %>%  mutate(YM = format(date , "%b %y")) %>% group_by(YM) %>% filter(date == last(date)) %>% arrange(date)
-```
-# returns 
-```{r}
-#  get returns and put them in one df
-
-loc_r <- "data/Returns for all/"
-
-df <- list.files(loc_r, pattern = "\\.rds$", full.names = TRUE)
-
-returns.list <- lapply(df, readRDS)
-
-names(returns.list) <- c("CappedSWIX", "Divi1", "Divi2", "Divi3", "Divi4", "SatLow")
-
-# get everything to environment 
-list2env(returns.list, envir = .GlobalEnv)
-
-# clean the BM df 
-CappedSWIX_returns <- CappedSWIX %>% mutate(Name = "Capped SWIX" , Portfolio = "BM")
-
-diviportfolio_returns <- bind_rows( Divi1, Divi2, Divi3, 
-                                Divi4) %>% select(-BM, -Uni)
-
-```
-- cant really make like for like comparison since BM BOM and Portfolios are EOM observations
-
-```{r}
-# ARC 
-
-loc_h <- "data/SatrixVol/ARC/"
-ARC_P <- list.files(loc_h, pattern = "\\.rds$", full.names = TRUE)
-
-ARC_P <- lapply(ARC_P, readRDS) 
-
-ARC_P <- do.call(rbind, ARC_P)%>% mutate(YM = format(date , "%b %y")) %>% group_by(YM) %>% filter(date == last(date)) %>% arrange(date)
-
-# df of weights and sectors
 dfcomp <- 
-    full_join(bind_rows(dfh) %>% rename(Name = "Asset Name"), dfh_bm, by = join_by(date, Tickers, Name)) %>% tidyr::fill(Sector, .direction = "downup") 
+    full_join(dfh, dfh_bm, by = join_by(date, Tickers, Name)) %>% tidyr::fill(Sector, .direction = "downup")
+
+# Check TO calc:
+TO <- Get_dat(Loc,BM = BM,Unisel = Unisel,Nam = Nam,Port = Port,Which = c("TO"))
 
 # Factor Comparison:
 
-# these are individual portfolios and benchmark sensitivities
 left_join(dfh, Factors_BM, by = join_by(date, Tickers, Name))
 left_join(dfh_bm, Factors_BM, by = join_by(date, Tickers, Name))
 
@@ -122,7 +59,7 @@ Factors_BM %>% names
 # orthogonalized to the Beta and Size factors
 # See: ZAE4 Descriptor Details.pdf
 factosel <- "Residual Volatility Exp"
-factosel <- "Value Exp" 
+factosel <- "Volatility Sensitivity Exp"
 
 
 left_join(
@@ -135,6 +72,9 @@ left_join(dfh_bm, Factors_BM, by = join_by(date, Tickers, Name)) %>% rename(fact
 
 ```
 
+
+
+
 # Returns Comparison:
 
 ```{r}
@@ -145,13 +85,7 @@ df2 <- Get_dat(Loc,BM = BM,Unisel = Unisel,Nam = Nam,Port = "Divi2",Which = c("R
 df3 <- Get_dat(Loc,BM = BM,Unisel = Unisel,Nam = Nam,Port = "Divi3",Which = c("Ret"))
 df4 <- Get_dat(Loc,BM = BM,Unisel = Unisel,Nam = Nam,Port = "Divi4",Which = c("Ret"))
 dfbm <- Get_dat(Loc,BM = BM,Unisel = Unisel,Nam = Nam,Port = "Divi1",Which = c("Ret_BM"))
-
-#  I need an explain of the difference in numbers??
-ret <- readRDS("data/SatrixVol/Divi1/Returns.rds") %>% select(Portfolio) %>% distinct()
-
-dfbm <- readRDS("data/Capped_SWIX/Returns_BM.rds")
-
-df <- bind_rows(df, dfbm %>% rename(Returns = BM_Returns) %>% mutate(Portfolio = "BM")) %>% select(date, Portfolio, Returns)
+df <- bind_rows(df1, df2, df3, df4, dfbm %>% rename(Returns = BM_Returns) %>% mutate(Portfolio = "BM")) %>% select(date, Portfolio, Returns)
 df %>%
     group_by(Portfolio) %>% mutate(cp = cumprod(1+Returns)) %>%
     ggplot() + geom_line(aes(date, cp, color = Portfolio))
