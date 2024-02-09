@@ -196,36 +196,6 @@
 
 \cortext[cor]{Corresponding author: Gabriel Rambanapasi}
 
-\begin{abstract}
-\small{
-This paper investigates dividends return predictive signals, focusing on
-Dividend Yield (DY) and Dividend Growth (DG) signals, within both
-domestic and international contexts. Over an extended investment
-horizon, dividend portfolios consistently exhibit positive excess
-returns, with notable variations across regional indexes. Notably, these
-portfolios demonstrate capital protection during periods of heightened
-market volatility, particularly the DY strategies. Surprisingly, South
-African portfolios perform well during market turbulence, a departure
-from the typical flight to safety. In contrast, during interest rate
-cycles, all strategies perform optimally in low-interest-rate
-environments. Information ratio analysis highlights that dividend
-strategies do not uniformly maintain positive ratios, with varying
-performance patterns across different regions. When integrated with
-drawdown analysis, advanced economies exhibit lower systematic risk,
-while South African and Emerging Market drawdowns suggest reduced
-systematic risk in these markets. Within the South African context,
-dividend portfolios display potential value during high volatility and
-rising interest rate cycles, though P/E-based portfolios outperform them
-in other scenarios. Consequently, dividend portfolios may not be an
-ideal proxy for value. Investors with specific preferences may still
-find value in these strategies, but for those constrained by investment
-policy statements, DG portfolios offer practical, lower-volatility
-alternatives to achieve returns akin to the market index. This study
-contributes insights into dividend portfolio dynamics, enabling
-investors to make informed choices based on their objectives and
-constraints.
-}
-\end{abstract}
 
 \vspace{1cm}
 
@@ -266,105 +236,29 @@ constraints.
 \section*{Introduction}\label{introduction}}
 \addcontentsline{toc}{section}{Introduction}
 
-This paper aims to investigate the return predictive signal of
-dividend-paying stocks. The value of dividends to shareholders has long
-been a subject of debate among academics and practitioners, with
-evidence both for their relevance and irrelevance. Miller \& Modigliani
-(\protect\hyperlink{ref-miller}{1961}) proposed the dividend irrelevance
-theorem, which argues that dividend payments are irrelevant because they
-do not affect shareholder wealth, as it is the income a firm generates
-that impacts wealth, not the way the firm distributes that income. In
-contrast, Gordon (\protect\hyperlink{ref-gordon1962}{1962}) argued that
-investors should prefer cash flows because they are certain, as opposed
-to the riskier capital gains. According to this theory, the ``Bird in
-Hand Theorem'' is used to justify the demand for dividend stocks,
-especially for less risk-tolerant investors. Moreover, a closer
-examination of the Miller \& Modigliani
-(\protect\hyperlink{ref-miller}{1961}) theory reveals unrealistic
-assumptions, rendering arguments immaterial once real-world constraints,
-such as taxes, transaction costs, and behavioral biases, are considered.
-Consequently, theories that consider information asymmetries, tax
-considerations, and signaling provide convincing arguments for the
-relevance of dividend payments in addressing real-world considerations.
-Campbell (2017) posits that the value of a stock is a function of its
-future cash flow. If markets are assumed to be efficient, then companies
-that do not pay dividends should have a value of zero unless there is an
-expectation of future receipts from the investment in said company.
-Therefore, we can safely assume a direct relationship between share
-price and new information that affects future cash flows. Event studies
-on various types of dividend payments address this, and it is often
-noted that the payment of dividends leads to a decrease in stock prices
-and thus stock valuation. Suwanna (2012) demonstrates that dividend
-announcements decrease share prices by the value of the dividend. This
-could be because dividends are a capital budgeting decision, and their
-payment reduces retained earnings, consequently affecting the share
-price.
-
-This study provides an extensive investigation into the return signaling
-of dividend portfolios. Firstly, it reviews existing literature on
-dividend payments, their rationale, and the theories both for and
-against their relevance. Secondly, it outlines our methodology for
-constructing dividend portfolios, which includes our utility optimizer
-and associated constraints. Thirdly, the study discusses the results by
-addressing the first question: When do dividend signals work? To answer
-this, we initially examine the cumulative excess returns offered by
-global dividend indexes to provide a comprehensive overview of the
-performance of geographical dividend portfolios. Our analysis shows that
-dividend portfolios, whether high yield (HY) or dividend growth (DG), do
-not consistently provide a clear signal for returns. However, when we
-stratify our sample according to interest rate cycles (Hiking, Cutting,
-and Neutral) and market regimes (High and Low Volatility), unique to
-each geographical region, we begin to find that within specific market
-regimes, dividend signals exhibit defensive characteristics and offer
-higher excess returns during periods of High Volatility. This, however,
-does not guarantee positive returns for all indexes, as our proxies for
-the United States (US) HY, UK HY, and World indexes returned negative
-results over their respective periods.
-
-Regarding performance consistency, when examining the rolling
-information ratio, we observe an inherent lack of consistency in
-dividend portfolio performance, with most strategies underperforming the
-benchmark over the past 15 years. Nevertheless, coupled with drawdowns
-experienced in different jurisdictions, we acknowledge that advanced
-market dividend portfolios experience the least variation in drawdowns
-compared to emerging markets. The results indicate that both growth and
-high-yield dividend portfolios tend to underperform relative to their
-benchmarks, raising questions about their ability to extract a value
-premium.
-
-Lastly, the paper delves into how dividend portfolios work with the goal
-of constructing a portfolio that can best harness the existing premium.
-We utilize share data from the Johannesburg Stock Exchange (JSE), with
-our benchmark being the Capped SWIX Top 50. We construct four portfolios
-using 3-month and 9-month measures of HY, 1 and 3-year DG measures,
-together with price momentum and dividend coverage ratios. Similar to
-the analysis of international dividend portfolios, our portfolios
-exhibit defensive properties in high-volatility periods but fail to
-consistently capture a premium over investing in a market index.
-\newpage
-
 \hypertarget{literature-review}{%
 \section{Literature Review}\label{literature-review}}
 
 \hypertarget{introduction-1}{%
 \subsection{Introduction}\label{introduction-1}}
 
-This literature review delves into the popular theories behind the
-rationale of dividends issuance. We first unpack dividend theorems
-whilst juxtaposing with empirical evidence to reveal the information
-content within the issuance of dividends. Our review of emprical
-literature unveils a paradox, where market prices exhibit less decline
-than the theoretical prescription once we consider real world
-constraints investing. This phenomenon hints at concealed market
-frictions, suggesting that dividends might indeed carry valuable
-information content.Subsequently we discuss studies that opine these
-market frictions to come from stock liquidity, differences in taxes on
-dividends and captial gains, and signaling effects. The literature is
-inconclusive however we conjuncture that to discern the true
-informational value, a thorough examination of individual dividend
-policy relative to company fundamentals is crucial. To get a general
-signal we explore various literature employ systematic approach to
-determine wheter dividends provide a return invest cue.
+The debate surrounding the relevance of dividends in firm valuation has
+been a longstanding topic in finance literature. Pioneered Miller \&
+Modigliani (\protect\hyperlink{ref-miller}{1961}), with the irrelevance
+of dividends theory (MM theory) posits that, in a perfect market,
+investors should be indifferent to receiving dividends as firm value is
+derived from earnings resulting from investment policy. However, critics
+have challenged this school of thought, by considering investor
+preferences and information asymmetries. Their findings offers insights
+into the significance of dividends in conveying information to investors
+about company prospects. Empirically,we find studies that conform to
+literature pertaining to the bird in the hand theory, signalling theory
+and agency cost theory. We find that high dividend yield and dividend
+growth ratios could be used to proxy value for our dividend paying
+companies, showing predictive power of dividend metrics on stock
+returns. By synthesizing and analyzing these studies, we gain a deeper
+understanding of the role of dividends in firm valuation and investor
+decision-making processes.
 
 \hypertarget{dividend-theories}{%
 \subsection{\texorpdfstring{Dividend Theories
@@ -372,28 +266,28 @@ determine wheter dividends provide a return invest cue.
 
 The debate surrounding the irrelevance of dividends pioneered by Miller
 \& Modigliani (\protect\hyperlink{ref-miller}{1961}), gave insight into
-firm valuation. He posited that in a perfect market, one that is devoid
-od market frictions and transaction costs, investors should be
+firm valuation. He posited that in a perfect market, one that is free
+from market frictions and transaction costs, investors should be
 indifferent to receiving dividends, as firm value is derived from
-earning which result from investment policy. They reinforced the
+earnings which result from investment policy. They reinforced the
 dividend irrelevance theorem by arguing that if the dividend practice
 adopted by any firm corresponds to the dividend preference of its
 shareholders each firm would attract its clientele based on its dividend
 policy practice. Moreover given their assumptions, a change in dividend
 policy will not materially affect any firm valuation because with the
 existence of several competing firms, a firm that changes dividend
-policy may not act by the preference of some shareholder simply induce a
-movement across firms as investors try to align with firms whose
-dividend practice corresponds with their dividend preference.
+policy may not act by the preference of some shareholders to simply
+induce a movement across firms as investors try to align with firms
+whose dividend practice corresponds with their dividend preference.
 Consequently, in the long run, equilibrium in terms of choice of
 investment and dividend preference will be attained and shareholders
 valuation of the firm will not be different from those of firms with
 different dividend policy.
 
 Miller \& Modigliani (\protect\hyperlink{ref-miller}{1961}) shortfalls
-in unrealistic real world assumptions resulted in opposing arguments.
-The bird in the hand theory a common argument that is used to make a
-case for investor preferences for dividend payment, Walter
+emanates from unrealistic assumptions resulting in opposing arguments.
+Firstly, the bird in the hand theory, a common argument that is used to
+make a case for investor preferences for dividend payment, Walter
 (\protect\hyperlink{ref-walter1963dividend}{1963}) suggests that
 investors prefer dividends to capital gains because the nature payment
 of dividends effectively guarantees income towards investors against
@@ -413,15 +307,16 @@ reinvestment of company profits through keeping it as retained earning.
 Consequently, investors expect a higher expected return with the payment
 of dividend which ultimately raises the costs of capital from investors.
 
-Lintner (\protect\hyperlink{ref-lintner1956distribution}{1956})
-suggested that information asymmetry between shareholders and
-management, brings into focus management decisions and their impact on
-firm prospects. Cognizant of this, managers of dividend paying companies
-are more willing to raise rather than reduce dividend levels, and this
-is construed to mean that given dividend payment history decreases are
-associated with negative signals while dividend increases signal
-positive news signal positive news. Bhattacharyya
-(\protect\hyperlink{ref-bhattacharyya2007dividend}{1979}), presents a
+Secondly, Lintner
+(\protect\hyperlink{ref-lintner1956distribution}{1956}) suggested that
+information asymmetry between shareholders and management, brings into
+focus management decisions and their impact on firm prospects. Cognizant
+of this, managers of dividend paying companies are more willing to raise
+rather than reduce dividend levels, and this is construed to mean that
+given dividend payment history decreases are associated with negative
+signals while dividend increases signal positive news signal positive
+news. More formally, Bhattacharyya
+(\protect\hyperlink{ref-bhattacharyya2007dividend}{1979}) presents a
 signaling model where the liquidation of the firm is related to the
 actual dividend paid and any change in dividend alters the liquidation
 value of the firm. The liquidation value represents the amount of money
@@ -434,27 +329,30 @@ and future prospects.Changes in dividend under the signalling model
 convey important information about a firm's outlook. for the quality of
 firms assets.
 
-Jensen \& Meckling (\protect\hyperlink{ref-jensen1976theory}{1976})
-argued for agency costs, managerial behavior and ownership structure in
-advocating for the relevance of dividend payments. The separation of
-control and ownership gives rise to a principle-agent problem because
-managers have the responsibility of acting in the best interest of the
-owners, however, there are possibilities for conflicts between the
-managers and shareholders. A high level of retained may motivate
-managers to pursue decisions that promote their own self interests,
-therefore shareholders mimimize the amount of retained earnings on hand
-available to managers to mitigate the risk of acting out of self
-interest. Jensen \& Meckling
+Lastly, Jensen \& Meckling
+(\protect\hyperlink{ref-jensen1976theory}{1976}) argued for agency
+costs, managerial behavior and ownership structure in advocating for the
+relevance of dividend payments. The separation of control and ownership
+gives rise to a principle-agent problem because managers have the
+responsibility of acting in the best interest of the owners, however,
+there are possibilities for conflicts between the managers and
+shareholders. A high level of retained may motivate managers to pursue
+decisions that promote their own self interests, therefore shareholders
+mimimize the amount of retained earnings on hand available to managers
+to mitigate the risk of acting out of self interest. Jensen \& Meckling
 (\protect\hyperlink{ref-jensen1976theory}{1976}) proposes a free cash
 flow model that states ``when a firm has financed all its positive net
 present value investments, it should distribute all its free cash flow
-as dividends''. This prescription should reduce agency costs.
+as dividends''. This prescription should reduce agency costs. The
+insights gained from these opposing theories to Miller \& Modigliani
+(\protect\hyperlink{ref-miller}{1961}) do make thought interesting
+arguments to the issuance of dividends by companies.
 
 \hypertarget{empirical-studies-and-their-return-predictive-signal}{%
 \subsection{Empirical studies and their return predictive
 signal}\label{empirical-studies-and-their-return-predictive-signal}}
 
-Empirical studies we aseesss are concerned with finding factors that
+Empirical studies we asesss are concerned with finding factors that
 influence dividend policy, thus relating them underlying theories in
 section \ref{theory}. Baker \& Wurgler
 (\protect\hyperlink{ref-baker2006investor}{2006}) show that investor
@@ -474,26 +372,26 @@ group of stock experiences low returns.
 Grullon, Larkin \& Michaely
 (\protect\hyperlink{ref-grullon2019dividend}{2019}) analyse managerial
 decisions to distribute cash flows in industries with varying levels of
-competitiveness.Albeit this study was conducted in the manufacturing
-sector,its insights indicates that firms operating in competitive
+competitiveness. Although this study was conducted in the manufacturing
+sector, its insight indicates that firms operating in competitive
 industries tend to have lower payout ratios.Thus firms in highly
 competitive environments prioritize investment and innovation over
 dividend payments, moreover whose overall characteristics suggest that
-lower agency costs and less likely to be a target of predation.
-Interestingly, the authors allude to disciplinary forces that follow
-Jensen \& Meckling (\protect\hyperlink{ref-jensen1976theory}{1976}) free
-cash flow theory, that is, managers in competitive industries payout
-excess cash and with the idea that corporate payouts are the ``outcome''
-of external factors. Denis \& Osobov
-(\protect\hyperlink{ref-denis2008firms}{2008}) provide cross-country
-evidence on the determinants of dividend policy, revealing that larger,
-more profitable firms with higher retained earnings are more likely to
-pay dividends across US, Canada, UK, Germany, France, and Japan. In each
-country, aggregate dividend payments concentrated among the largest,
-most profitable firms. Outside of the US there is little evidence of a
-systematic positive relation between relative prices of dividend paying
-and non-paying firms and the propensity to pay dividends. These
-reconcile with Jensen \& Meckling
+lower agency costs and less likely to be a target of predation. In other
+words, dividends act as a tool to reduce agency costs. Interestingly,
+the authors allude to disciplinary forces that follow Jensen \& Meckling
+(\protect\hyperlink{ref-jensen1976theory}{1976}) free cash flow theory,
+that states, managers in competitive industries payout excess cash and
+with the idea that corporate payouts are the ``outcome'' of external
+factors. Denis \& Osobov (\protect\hyperlink{ref-denis2008firms}{2008})
+provide cross-country evidence on the determinants of dividend policy,
+revealing that larger, more profitable firms with higher retained
+earnings are more likely to pay dividends across US, Canada, UK,
+Germany, France, and Japan. In each country, aggregate dividend payments
+concentrated among the largest, most profitable firms. Outside of the US
+there is little evidence of a systematic positive relation between
+relative prices of dividend paying and non-paying firms and the
+propensity to pay dividends. These reconcile with Jensen \& Meckling
 (\protect\hyperlink{ref-jensen1976theory}{1976}) \& Lintner
 (\protect\hyperlink{ref-lintner1956distribution}{1956}) as these studies
 posit that firms with strong financial performance and stability are
@@ -505,10 +403,10 @@ Grullon \emph{et al.}
 (\protect\hyperlink{ref-grullon2019dividend}{2019}) \& Denis \& Osobov
 (\protect\hyperlink{ref-denis2008firms}{2008}) show that dividend paying
 companies usually comprise of larger more profitable firms. An intuitive
-proxy for why companies with high dividend yields might outperform their
-more miserly counterparts, is that dividend yield proxies for the Value
+proxy for why companies with high dividend yields might outperform non
+dividend paying companies, is that dividend yield proxies for the value
 factor (\protect\hyperlink{ref-basu1977investment}{Basu, 1977}).
-Consider the equation below:
+Consider the equation below to understand this arguemnet:
 
 \begin{align*}
 DY = \frac{EPS}{\text{Price}} \times \text{Payout Ratio}
@@ -525,7 +423,7 @@ verify the existence of the value-signal \footnote{Value as an
   where cheap stocks outperform their more expensive counterparts over
   time.}. Notably, Cornell
 (\protect\hyperlink{ref-cornell2014dividend}{2014}) studied the
-predictive power of dividend-price ratios using US data. The findings
+predictive power of dividend-price ratios using US data. Their findings
 revealed that higher dividend-price ratios are associated with higher
 future stock returns, suggesting stock-return predictability based on
 dividend-price ratios. This implies that investors may be able to
@@ -561,14 +459,30 @@ investment strategies.
 \subsection{\texorpdfstring{Data for Globally Traded Dividend
 Indexes\label{int}}{Data for Globally Traded Dividend Indexes}}\label{data-for-globally-traded-dividend-indexes}}
 
-We use historical price data for globally traded dividend indexes in
-Table \ref{tabdes} from January 1 2003 to January 1 2023, a 20 year
-sample period. All of the studied indexes are constructed in gross total
-return in the same currency. Full descriptions on benchmark, dividend
-indexes are given in Table \ref{tabdes}. Our metric of interest are
-annualized excess returns of individual indexes to their respective
-benchmarks following Bacon
-(\protect\hyperlink{ref-bacon2023practical}{2023}). To achieve this we
+We utilize historical price data for globally traded dividend indexes
+spanning from January 1, 2003, to January 1, 2023, constituting a
+20-year sample period. These indexes are constructed in gross total
+return and denominated in the same currency, the full list of names and
+tickers are given in \ref{tabdes}. We MSCI ,Standard and Poor's (S\&P)
+and FTSE High Yield and Dividend Growth constructed indexes. S\&P
+Dividend Aristocrats indexes: these indexes measure the performance of
+companies that have a history of consistently increasing dividends on an
+equal weighted basis and years of required dividend growth varies across
+countries. MSCI High Dividend Yield indexes: indexes are designed to
+measure the performance of companies with high dividend yields. The
+indexes exclude companies that do not exhibit dividend sustainability,
+persistence and quality. Constituents are first screened for
+deteriorating fundamentals, thus attempting to explicitly avoid
+associated `yield traps'. Constituents are then weighted by size. FTSE
+Dividend Plus indexes (UK and SA only): the constituents of the Divi
+Plus indexes are chosen based on the one-year dividend per share
+forecast. Constituent weights are determined by forward dividend yields.
+The UK index comprises of 50 constituents whereas the SA index comprises
+of 30 constituents.
+
+Our metric of interest are annualized excess returns of individual
+indexes to their respective benchmarks following Bacon
+(\protect\hyperlink{ref-bacon2023practical}{2023}). To acheive this, we
 scale observations to an annual scale by raising the compound return to
 the number of periods in a year, following this we take the root of
 total observations: \begin{align*}
@@ -599,23 +513,31 @@ our proxies for volatility breach the top or bottom quintile for less
 than 50 trading days, the period is excluded in order to avoid
 annualizing small frequencies.
 
-\hypertarget{local-dividend-portfolios}{%
-\subsection{Local Dividend Portfolios}\label{local-dividend-portfolios}}
+\hypertarget{local-dividend-portfolio-construction}{%
+\subsection{Local Dividend Portfolio
+Construction}\label{local-dividend-portfolio-construction}}
 
 We use historical daily price data in table \ref{tabdes} from January 1
 2003 to July 7 2023, a roughly 20 year sample period for equity listed
 in the Johannesburg Stock Exchange and retrieve dividend yield ratios,
 dividend cover ratio, price momentum, price to earnings ratio, dividend
-growth per share from Bloomberg. We construct our portfolios using
-signals on fundamental ratios and price momentum that are a blend of our
-selected ratios as described in Table \ref{signal} below.
+growth per share from Bloomberg to construct dividend portfolios.
 
-Our dividend portfolios are constructed by feeding into the optimizer
-ranked signals, of which the optimizer does a aplha transformation on
-the signal. Our optimizer makes slight modifications to the mean
-variance portfolio that considers risk preferences of investors
-(\protect\hyperlink{ref-markowitz1959portfolio}{Markowitz, 1959}). Risk
-of \(n\) assets is defined \(\sigma^2\) based on individual asset
+We construct 4 factor portfolios namely; Divi1, Divi2, Divi3 and Divi4
+using ranked signals on fundamental and statistical factors . Divi1 is
+created through the conditional signal that adds 15\% or 35\% of
+dividend coverage or price momentum or both if it ranks in the bottom
+quantile in its own factor ranking to 2/3 DY(Fwd\_3) and 1/3 DY(Fwd\_9).
+Divi2 ranks based on the signal 67.7\% DY(Fwd\_3) and 33.3\% DY(Fwd\_9).
+Divi3 ranks based on the signal Price to Earnings Ratio and Divi4 ranks
+based on the signal Dividend Per Share Growth\_1Y = 40\% (DPS\_Growth),
+DPS\_Growth\_3Y = 30\%, Fwd\_3 = 20\% and Fwd\_9 = 10\%. Ranking score
+ranges from 0 to 100. We feed ranked signals in our optimizer, which
+does a aplha transformation on the signal. Our optimizer makes
+modifications to the mean variance portfolio that considers risk
+preferences of investors
+(\protect\hyperlink{ref-markowitz1959portfolio}{Markowitz, 1959}). We
+define risk of \(n\) assets as \(\sigma^2\) based on individual asset
 returns \(R_a\). We decompose returns into common factor \(X_f\) and
 specific return \(u\). Our covariance matrix is then defined as: \[
 \begin{aligned}
@@ -623,7 +545,7 @@ XFX^T + D
 \end{aligned}
 \] where: \begin{align*}
 X & : n \times k \text{ matrix of asset exposures to the factors,} \\ F & : k \times k \text{ positive semi-definite factor covariance matrix, and} \\ D & : n \times n \text{ positive semi-definite covariance matrix representing a forecast of asset-specific risk.}
-\end{align*} For optimization purposes, our \(\sigma^2\)) is considered
+\end{align*} For optimization purposes, our \(\sigma^2\) is considered
 in two forms: total risk, where only portfolio holdings are considered
 (benchmark holdings are irrelevant for the optimization process), and
 active risk, which takes into account the difference between portfolio
@@ -650,187 +572,47 @@ portfolios. \newpage
 \section*{Results}\label{results}}
 \addcontentsline{toc}{section}{Results}
 
-\begin{itemize}
-\tightlist
-\item
-  risk and return analsysis of internationally traded portfolios, this
-  is to find out how they have performed over their market indxes.
-\end{itemize}
+\hypertarget{globally-traded-portfolios-performance-results}{%
+\subsection{Globally traded portfolios performance
+results}\label{globally-traded-portfolios-performance-results}}
 
-\begin{longtable}{rrlrr}
-\caption{First and Second Moments of Globally traded Dividend Portfolios \label{tab1}} \\ 
-  \hline
- & date & Index & excess\_return & te \\ 
-  \hline
-1 & 1672358400.00 & FUDP & -8.41 & 7.95 \\ 
-  2 & 1672358400.00 & M2GBDY & -1.49 & 8.57 \\ 
-  3 & 1672358400.00 & M2WDHDVD...12 & -0.39 & 6.39 \\ 
-  4 & 1672358400.00 & SPDAEET & 0.78 & 6.84 \\ 
-  5 & 1672358400.00 & SPDAUDT & 1.64 & 5.59 \\ 
-  6 & 1672358400.00 & SPJXDAJT & -1.19 & 15.07 \\ 
-  7 & 1672358400.00 & SPSADAZT & -3.80 & 19.54 \\ 
-  8 & 1672358400.00 & TJDIVD & -2.39 & 19.81 \\ 
-   \hline
-\hline
-\end{longtable}
+Figure \ref{fig1} shows the cumulative monthly excess returns of the
+selected indexes relative to the universe benchmark from which
+constituents are chosen. The indexes start on different dates of
+inception, therefore cumulative excess returns for the period are not
+comparable across all indexes for the respective plot duration. Note the
+blue indexes are constructed using DY ratios, while the red lines
+constitute DPSG. The figure below is not entirely suggestive of a clear
+and consistent out performance of dividend strategies over the entire
+considered period, whether using DY or DPSG, globally. From \ref{fig1}
+we notice that two indices being SPDAEET and SPDAUDT over the investment
+horizon return multiples in excess of 1 suggesting that some benefit
+over holding the parent index.
 
-\begin{itemize}
-\tightlist
-\item
-  cumulative returns
-\end{itemize}
+\begin{figure}[H]
 
-\includegraphics{MuchAdoDivs_files/figure-latex/unnamed-chunk-2-1.pdf}
+{\centering \includegraphics{MuchAdoDivs_files/figure-latex/unnamed-chunk-1-1} 
 
-\begin{itemize}
-\tightlist
-\item
-  stratification results
-\end{itemize}
+}
 
-\begin{tabular}{rllrrll}
-  \hline
- & index & Cycle & Months & Ann Ret & Country & Signal \\ 
-  \hline
-1 & FUDP & High Vol &  20 & -2.84 & US & DY \\ 
-  2 & M2GBDY & High Vol &  14 & -12.62 & UK & HY \\ 
-  3 & M2WDHDVD...12 & High Vol &  14 & -8.47 & UK & HY \\ 
-  4 & SPDAEET & High Vol &   7 & 24.52 & EU & DGPS \\ 
-  5 & SPDAUDT & High Vol &  14 & -3.45 & UK & UK \\ 
-  6 & SPJXDAJT & High Vol &  20 & -0.70 & JP & HY \\ 
-  7 & SPSADAZT & High Vol &  17 & 14.43 & SA & DGPS \\ 
-  8 & TJDIVD & High Vol &  17 & 18.90 & SA & HY \\ 
-   \hline
-\end{tabular}
-\begin{longtable}{rllrrll}
-\caption{Low Market Volatility Perfromance \label{tab2}} \\ 
-  \hline
- & index & Cycle & Months & Ann Ret & Country & Signal \\ 
-  \hline
-1 & FUDP & lo Vol &   9 & -14.22 & US & DY \\ 
-  2 & M2GBDY & lo Vol &   7 & -2.11 & UK & HY \\ 
-  3 & M2WDHDVD...12 & lo Vol &   7 & -4.04 & UK & HY \\ 
-  4 & SPDAEET & lo Vol &   4 & -15.73 & EU & DGPS \\ 
-  5 & SPDAUDT & lo Vol &   7 & 0.08 & UK & UK \\ 
-  6 & SPJXDAJT & lo Vol &   9 & -28.43 & JP & HY \\ 
-  7 & SPSADAZT & lo Vol &   9 & 5.84 & SA & DGPS \\ 
-  8 & TJDIVD & lo Vol &   9 & 27.37 & SA & HY \\ 
-   \hline
-\hline
-\end{longtable}
-\begin{longtable}{rllrrll}
-\caption{Cutting Cycle Annualized Returns  \label{tab1}} \\ 
-  \hline
- & index & Cycle & Months & Ann Ret & Country & Signal \\ 
-  \hline
-1 & FUDP & lo Vol &   9 & -14.22 & US & DY \\ 
-  2 & M2GBDY & lo Vol &   7 & -2.11 & UK & HY \\ 
-  3 & M2WDHDVD...12 & lo Vol &   7 & -4.04 & UK & HY \\ 
-  4 & SPDAEET & lo Vol &   4 & -15.73 & EU & DGPS \\ 
-  5 & SPDAUDT & lo Vol &   7 & 0.08 & UK & UK \\ 
-  6 & SPJXDAJT & lo Vol &   9 & -28.43 & JP & HY \\ 
-  7 & SPSADAZT & lo Vol &   9 & 5.84 & SA & DGPS \\ 
-  8 & TJDIVD & lo Vol &   9 & 27.37 & SA & HY \\ 
-   \hline
-\hline
-\end{longtable}
-\begin{longtable}{rllrrll}
-\caption{Hiking Cycle Annualized Returns  \label{tab1}} \\ 
-  \hline
- & index & Cycle & Months & Ann Ret & Country & Signal \\ 
-  \hline
-1 & FUDP & Hiking &  29 & -15.70 & US & Dividend Yield \\ 
-  2 & M2GBDY & Hiking &  29 & -1.74 & UK & Dividend Yield \\ 
-  3 & M2WDHDVD...12 & Hiking &  29 & 3.83 & UK & Dividend Yield \\ 
-  4 & SPDAEET & Hiking &  26 & 1.08 & EU & Dividend Growth Per Share \\ 
-  5 & SPDAUDT & Hiking &  29 & 2.12 & UK & Dividend Yield \\ 
-  6 & SPJXDAJT & Hiking &  35 & -8.43 & JP & Dividend Yield \\ 
-  7 & SPSADAZT & Hiking &  38 & 1.54 & SA & Dividend Growth Per Share \\ 
-  8 & TJDIVD & Hiking &  38 & -3.87 & SA & Dividend Yield \\ 
-   \hline
-\hline
-\end{longtable}
+\caption{Full Sample Cumulative Returns \label{fig1}}\label{fig:unnamed-chunk-1}
+\end{figure}
 
-\newpage
+The table below shows greater detail to full sample performance.
+Firstly, SPDAEET and SPDAUDT represent the indexes that gave positive
+excess returns 1.6\% and 0.78\%, respectively. Coupled to this, their
+respective tracking error were the amongst the lowest at 5.4\% and
+6.8\%. Amongst the indexes that over the period return cumulative
+returns of less than 1, their respective annualized excess return were
+negative and tracking error were high, namely for the TJDIVD and
+SPSADAZT which are domiciled in SA at 20\% individually. Developed
+market indexes over the period had tracking error within a range of
+5.6\% to 8.6\%. Interestingly, SPDAJXT had a tracking error of 15\%.
+\begingroup\fontsize{12pt}{13pt}\selectfont
 
-\hypertarget{conclusion}{%
-\section*{Conclusion}\label{conclusion}}
-\addcontentsline{toc}{section}{Conclusion}
-
-Over the course of time, dividend portfolios, encompassing both DY and
-DG strategies, have consistently displayed positive excess returns,
-evident in the cumulative excess return figures. Although the UK\_HY
-index notably exhibits the highest cumulative return, this trend is not
-uniformly observed across various regional indexes. However, when we
-segment these portfolios based on different periods of market
-volatility, a distinct pattern emerges. During phases of heightened
-market volatility, dividend strategies prove to be effective in
-providing capital protection when integrated into a diversified asset
-portfolio. Furthermore, during such high volatility periods, DY
-strategies outperform the DG strategies. An intriguing observation is
-that South African portfolios tend to perform well during these high
-volatility periods, which is somewhat unconventional, given that such
-times are typically associated with a flight to safety. Emerging Markets
-(EM) and, by extension, South Africa, are generally perceived as riskier
-investments.
-
-Expanding our analysis to incorporate interest rate cycles reveals a
-contrasting effect compared to the volatility-based stratification. It
-becomes evident that all strategies tend to yield the highest returns
-during low interest rate cycles. Information ratio analysis indicates
-that dividend strategies generally do not exhibit consistent return
-performance. At a broader level, these portfolios do not consistently
-maintain a positive information ratio over an extended investment
-horizon. However, disparities in performance emerge, with South African
-dividend indexes consistently delivering positive ratios over the past
-decade. Conversely, Emerging Markets and Japanese indexes have
-experienced substantial declines in their information ratios, despite
-seemingly consistent performance prior to 2015. Meanwhile, the United
-States, European Union, and United Kingdom indexes have exhibited
-unpredictable performance over the sampled period.
-
-When we combine our information ratio findings with drawdown analysis,
-we observe that advanced economies have experienced fewer drawdowns over
-the sample period, with the exception of the UK. This could suggest a
-relatively lower level of systematic risk in these economies.
-Conversely, South African and Emerging Market drawdowns have been less
-severe, possibly indicating reduced systematic risk in emerging markets.
-
-In the context of South Africa, focusing on the top 50 companies by
-market capitalization, we observe a performance pattern similar to our
-international analysis. Firstly, dividend portfolios do not convincingly
-deliver superior total returns, as calculated by cumulative returns.
-However, their value becomes apparent during periods of high volatility
-and rising interest rate cycles. Moreover, when we consider more
-traditional proxies for value, such as the Price to Earnings (P/E)
-ratio, the efficacy of dividend signals diminishes. In other words,
-portfolios constructed based on P/E ratios perform exceptionally well in
-our back-test and performance criteria, outperforming the market index
-68.8\% of the time.
-
-In conclusion, dividend portfolios may not serve as an ideal proxy for
-value, and investors may benefit more from exploring investment products
-that provide an income component to their total returns. However, it's
-worth noting that investor preferences can vary, potentially driving
-demand for specific dividend portfolio strategies. Based on the
-evidence, investors constrained by investment policy statements may find
-value in equity portfolios constructed using Dividend Growth (DG)
-strategies as these use signals that do a better job of capturing
-company cash flow management and managerial qualities. Despite their
-lower hit rate, DG portfolios exhibit lower volatility in achieving
-returns, making them a practical and profitable means of attaining
-returns that closely align with the market index.
-
-\newpage
-
-\hypertarget{appendix}{%
-\section*{Appendix}\label{appendix}}
-\addcontentsline{toc}{section}{Appendix}
-
-\begingroup\fontsize{8pt}{9pt}\selectfont
-\begin{longtable}{llll}
+\begin{longtable}{lllll}
   \toprule
-TICKER & NAME & Codename & Inception Dates \\ 
+index & Country & Cumulative Return & Ann. Excess Return & Tracking Error \\ 
   \hline 
 \endhead 
 \hline 
@@ -838,32 +620,204 @@ TICKER & NAME & Codename & Inception Dates \\
 \endfoot 
 \endlastfoot 
  \midrule
-FUDP & FTSE UK Dividend+ Index & UK\_HY &  \\ 
-  M2EFDY & MSCI EM HY Gross Total Return USD Index & EM\_HY &  \\ 
-  M2GBDY & MSCI UK HY Gross Total Return USD Index & UK\_HY &  \\ 
-  M2JPDY & MSCI Japan HY Gross Total Return USD & JP\_HY &  \\ 
-  M2USADVD & MSCI USA HY Gross Total Return USD Index & US\_HY &  \\ 
-  M2WDHDVD & MSCI World HY Gross Total Return Total Return USD Index & W\_HY &  \\ 
-  SPDAEET & S\&P EU 350 Dividends Aristocrats Total Return Index & EU\_DG &  \\ 
-  SPJXDAJT & S\&P/JPX Dividend Aristocrats Total Return Index & JP\_DG &  \\ 
-  SPDAUDT & S\&P 500 Dividend Aristocrats Total Return Index & US\_DG &  \\ 
-  SPSADAZT & S\&P South Africa Dividend Aristocrats Index ZAR Gross TR & SA\_DG &  \\ 
-  TJDIVD & FTSE/JSE Dividend+ Index Total Return Index & SA\_HY &  \\ 
-  M2EUGDY & MSCI Europe Ex UK HYGross Total Return USD Index & EU\_HY &  \\ 
-  TUKXG & FTSE 100 Total Return Index GBP & UK &  \\ 
-  GDUEEGF & MSCI Daily TR Gross EM USD & EM &  \\ 
-  GDDUUK & MSCI UK Gross Total Return USD Index & UK\_B &  \\ 
-  TPXDDVD & Topix Total Return Index JPY & JP &  \\ 
-  GDDUUS & MSCI Daily TR Gross USA USD & US &  \\ 
-  GDDUWI & MSCI Daily TR Gross World USD & W &  \\ 
-  SPTR350E & S\&P Europe 350 Gross Total Return Index & EU\_2 &  \\ 
-  SPXT & S\&P 500 Total Return Index & JP &  \\ 
-  SPXT & S\&P 500 Total Return Index & US\_2 &  \\ 
-  JALSH & FTSE/JSE Africa All Share Index & SA &  \\ 
-  JALSH & FTSE/JSE Africa All Share Index & SA &  \\ 
-  GDDUE15X & MSCI Daily TR Gross Europe Ex UK USD & EU &  \\ 
+SPDAUDT & UK & 1.3 & 1.6\% & 5.6\% \\ 
+  SPDAEET & EU & 1.1 & 0.78\% & 6.8\% \\ 
+  M2WDHDVD...12 & UK & 0.9 & -0.39\% & 6.4\% \\ 
+  M2GBDY & UK & 0.77 & -1.5\% & 8.6\% \\ 
+  SPJXDAJT & JP & 0.69 & -1.2\% & 15\% \\ 
+  TJDIVD & SA & 0.54 & -2.4\% & 20\% \\ 
+  SPSADAZT & SA & 0.4 & -3.8\% & 20\% \\ 
+  FUDP & US & 0.2 & -8.4\% & 7.9\% \\ 
    \bottomrule
-\caption{Index Description \label{tabdes}} 
+\caption{Full Sample Period Absolute and Relative Return of Dividend Indexes} 
+\end{longtable}
+\endgroup
+
+Once we stratify excess return by time period we see different results.
+The table below shows stratified performance according to high market
+volatility. TJDIVD, SPSADAZT and SPDAEET exhibited strong excess
+positive annualized excess returns at 24.5\%,18.9\% and 14.4\%
+respectively. These represent DPGS signal and a DY signal. Their
+respective tracking error were the amongst the lowest at 5.4\% and
+6.8\%. Other indices with negative annual excess returns were in were
+indices domicile in developed markets.\\
+\begingroup\fontsize{12pt}{13pt}\selectfont
+
+\begin{longtable}{lllll}
+  \toprule
+Index & Country & Ann. Excess Return & Tracking Error & Signal \\ 
+  \hline 
+\endhead 
+\hline 
+{\footnotesize Continued on next page} 
+\endfoot 
+\endlastfoot 
+ \midrule
+SPDAEET & EU &  24.5\% & 2.6\% & DGPS \\ 
+  TJDIVD & SA &  18.9\% & 3.3\% & DY \\ 
+  SPSADAZT & SA &  14.4\% & 4.9\% & DGPS \\ 
+  SPJXDAJT & JP &  -0.7\% & 2.1\% & DY \\ 
+  FUDP & US &  -2.8\% & 2.2\% & DY \\ 
+  SPDAUDT & UK &  -3.5\% & 1.6\% & DY \\ 
+  M2WDHDVD...12 & UK &  -8.5\% & 2.1\% & DY \\ 
+  M2GBDY & UK & -12.6\% & 3.4\% & DY \\ 
+   \bottomrule
+\caption{Dividend Indexes Performance During High Volatility Periods} 
+\end{longtable}
+\endgroup
+
+A similar result is noticable when we consider low volatility periods.
+TJDIVD, SPSADAZT make up the top performing at 27.37\% and 5.84\%,
+albeit their difference in performance has greater disparity than in the
+high volatility market cycle. These represent DY signal and DGPS signal.
+Their respective tracking error were the amongst the lowest at 5.4\% and
+6.8\%. Other indices with negative annual excess returns were in were
+indices domiciled in developed markets.
+
+\begingroup\fontsize{12pt}{13pt}\selectfont
+\begin{longtable}{lllll}
+  \toprule
+Index & Country & Ann. Excess Return & Tracking Error & Signal \\ 
+  \hline 
+\endhead 
+\hline 
+{\footnotesize Continued on next page} 
+\endfoot 
+\endlastfoot 
+ \midrule
+TJDIVD & SA &  27.37\% & 4.04\% & DY \\ 
+  SPSADAZT & SA &   5.84\% & 3.55\% & DGPS \\ 
+  SPDAUDT & UK &   0.08\% & 1.11\% & DY \\ 
+  M2GBDY & UK &  -2.11\% & 1.06\% & DY \\ 
+  M2WDHDVD...12 & UK &  -4.04\% & 0.64\% & DY \\ 
+  FUDP & US & -14.22\% & 1.55\% & DY \\ 
+  SPDAEET & EU & -15.73\% & 1.64\% & DGPS \\ 
+  SPJXDAJT & JP & -28.43\% & 3.90\% & DY \\ 
+   \bottomrule
+\caption{Dividend Indexes Performance During Low Volatility Periods} 
+\end{longtable}
+\endgroup
+
+Next we consider interest rate hiking and cutting regimes with countries
+of domicile for the selected indexes. The table below shows stratified
+performance according to interest rate cutting. Firstly, here we notice
+a tight positive perfromance amongst a larger group of indexes, with a
+tight range range from 1.54\% to 5.27\%. Amongst these indexes, there
+domiciled in developed markets constructed using DY signals. Amongst the
+negative excess return series, the range is similarly tight at -0.61\%
+to -3.19\%. Amongst them, there is a mix of DGPS and DY, of either
+deveoping markets and emerging market (SA).
+
+\begingroup\fontsize{12pt}{13pt}\selectfont
+\begin{longtable}{lllll}
+  \toprule
+Index & Country & Ann. Excess Return & Tracking Error & Signal \\ 
+  \hline 
+\endhead 
+\hline 
+{\footnotesize Continued on next page} 
+\endfoot 
+\endlastfoot 
+ \midrule
+SPJXDAJT & JP &  5.27\% & 1.4\% & DY \\ 
+  M2WDHDVD...12 & UK &  4.39\% & 1.2\% & DY \\ 
+  SPDAUDT & UK &  2.19\% & 2.1\% & DY \\ 
+  SPDAEET & EU &  1.54\% & 1.3\% & DGPS \\ 
+  M2GBDY & UK & -0.61\% & 2.3\% & DY \\ 
+  TJDIVD & SA & -2.40\% & 3.3\% & DY \\ 
+  FUDP & US & -2.84\% & 2.2\% & DY \\ 
+  SPSADAZT & SA & -3.19\% & 3.5\% & DGPS \\ 
+   \bottomrule
+\caption{Dividend Indexes Performance During Cutting Interest Rate Periods} 
+\end{longtable}
+\endgroup
+
+The table below shows stratified performance according to interest rate
+hiking cycles. Again, there is a tight positive performance amongst a
+larger group of indexes, ranging from 1.03\% to 3.83\%. However, there
+is a variation in country of domcile in developed markets and with 2
+indexes constructed form DY and 2 indexes constructed from DGPS. Amongst
+the negative excess return series, the range is similarly tight at
+-0.61\% to -3.19\%. Amongst them, there is a mix of DGPS and DY, of
+either deveoping markets and emerging market (SA).
+\begingroup\fontsize{12pt}{13pt}\selectfont
+
+\begin{longtable}{lllll}
+  \toprule
+Index & Country & Ann. Excess Return & Tracking Error & Signal \\ 
+  \hline 
+\endhead 
+\hline 
+{\footnotesize Continued on next page} 
+\endfoot 
+\endlastfoot 
+ \midrule
+M2WDHDVD...12 & UK &   3.83\% & 1.2\% & DY \\ 
+  SPDAUDT & UK &   2.12\% & 1.1\% & DY \\ 
+  SPSADAZT & SA &   1.54\% & 4.4\% & DGPS \\ 
+  SPDAEET & EU &   1.08\% & 2.5\% & DGPS \\ 
+  M2GBDY & UK &  -1.74\% & 1.8\% & DY \\ 
+  TJDIVD & SA &  -3.87\% & 3.8\% & DY \\ 
+  SPJXDAJT & JP &  -8.43\% & 3.5\% & DY \\ 
+  FUDP & US & -15.70\% & 2.4\% & DY \\ 
+   \bottomrule
+\caption{Dividend Indexes Performance During Hiking Interest Rate Periods} 
+\end{longtable}
+\endgroup
+
+\hypertarget{locally-constrcucted-portfolio-results}{%
+\subsection{Locally Constrcucted portfolio
+results}\label{locally-constrcucted-portfolio-results}}
+
+\hypertarget{discussion}{%
+\section*{Discussion}\label{discussion}}
+\addcontentsline{toc}{section}{Discussion}
+
+\hypertarget{conclusion}{%
+\section*{Conclusion}\label{conclusion}}
+\addcontentsline{toc}{section}{Conclusion}
+
+\hypertarget{appendix}{%
+\section*{Appendix}\label{appendix}}
+\addcontentsline{toc}{section}{Appendix}
+
+\begingroup\fontsize{8pt}{9pt}\selectfont
+\begin{longtable}{ll}
+  \toprule
+Ticker & Name \\ 
+  \hline 
+\endhead 
+\hline 
+{\footnotesize Continued on next page} 
+\endfoot 
+\endlastfoot 
+ \midrule
+FUDP & FTSE UK Dividend+ Index \\ 
+  M2EFDY & MSCI EM HY Gross Total Return USD Index \\ 
+  M2GBDY & MSCI UK HY Gross Total Return USD Index \\ 
+  M2JPDY & MSCI Japan HY Gross Total Return USD \\ 
+  M2USADVD & MSCI USA HY Gross Total Return USD Index \\ 
+  M2WDHDVD & MSCI World HY Gross Total Return Total Return USD Index \\ 
+  SPDAEET & S\&P EU 350 Dividends Aristocrats Total Return Index \\ 
+  SPJXDAJT & S\&P/JPX Dividend Aristocrats Total Return Index \\ 
+  SPDAUDT & S\&P 500 Dividend Aristocrats Total Return Index \\ 
+  SPSADAZT & S\&P South Africa Dividend Aristocrats Index ZAR Gross TR \\ 
+  TJDIVD & FTSE/JSE Dividend+ Index Total Return Index \\ 
+  M2EUGDY & MSCI Europe Ex UK HYGross Total Return USD Index \\ 
+  TUKXG & FTSE 100 Total Return Index GBP \\ 
+  GDUEEGF & MSCI Daily TR Gross EM USD \\ 
+  GDDUUK & MSCI UK Gross Total Return USD Index \\ 
+  TPXDDVD & Topix Total Return Index JPY \\ 
+  GDDUUS & MSCI Daily TR Gross USA USD \\ 
+  GDDUWI & MSCI Daily TR Gross World USD \\ 
+  SPTR350E & S\&P Europe 350 Gross Total Return Index \\ 
+  SPXT & S\&P 500 Total Return Index \\ 
+  SPXT & S\&P 500 Total Return Index \\ 
+  JALSH & FTSE/JSE Africa All Share Index \\ 
+  JALSH & FTSE/JSE Africa All Share Index \\ 
+  GDDUE15X & MSCI Daily TR Gross Europe Ex UK USD \\ 
+   \bottomrule
+\caption{Index Names \label{tabdes}} 
 \end{longtable}
 \endgroup
 
@@ -909,10 +863,6 @@ evidence. \emph{Journal of Portfolio management}. 40(2):122.
 Denis, D.J. \& Osobov, I. 2008. Why do firms pay dividends?
 International evidence on the determinants of dividend policy.
 \emph{Journal of Financial economics}. 89(1):62--82.
-
-\leavevmode\vadjust pre{\hypertarget{ref-gordon1962}{}}%
-Gordon, M.J. 1962. The savings investment and valuation of a
-corporation. \emph{The Review of Economics and Statistics}. 37--51.
 
 \leavevmode\vadjust pre{\hypertarget{ref-gordon1963optimal}{}}%
 Gordon, M.J. 1963. Optimal investment and financing policy. \emph{The
